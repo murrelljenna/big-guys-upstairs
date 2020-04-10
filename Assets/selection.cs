@@ -23,12 +23,18 @@ public class selection : MonoBehaviour
  	int attackableMask;
  	int allMask;
  	int unitMask;
+
+ 	private const float QUICK_SELECT_RANGE = 5f;
+
+ 	private const float DOUBLE_CLICK_TIME = 0.2f;
+ 	private float lastClickTime;
     // Start is called before the first frame update
     void Start()
     {
     	selected = new List<GameObject>();
         layerMask = 1 << 12;
         terrainMask = 1 << 11;
+        unitMask = 1 << 12;
         attackableMask = (1 << 9) | (1 << 10) | (1 << 12);
         allMask = terrainMask | attackableMask;  // For terrain and attackable objects.
         player = this.transform.parent.parent.parent.parent.gameObject.GetComponent<game.assets.Player>();
@@ -51,54 +57,19 @@ public class selection : MonoBehaviour
 			if (Input.GetMouseButtonDown(0)) {
 				firstPointPlaced = false;
 				if (hit.collider.gameObject.GetComponent<ownership>().owner == player.playerID) {
-					if (selected.Count > 0 && selected.Exists(unit => unit.GetInstanceID() == hit.collider.gameObject.GetInstanceID())) {
-						deselectUnit(hit.collider.gameObject);
+					float lastClick = Time.time - lastClickTime;
+
+					if (lastClick <= DOUBLE_CLICK_TIME) {
+						selectUnitsInRadius(hit.point);
 					} else {
-						selectUnit(hit.collider.gameObject);
-					}
-				}
-			}
-		}
-
-		// Group select with shift-left-click
-
-		if (Input.GetKey(KeyCode.LeftShift)) {
-			if (Input.GetMouseButtonDown(0)) {
-				if (Physics.Raycast(ray, out hit, Mathf.Infinity, terrainMask)) {
-					if (!firstPointPlaced) {
-						firstPoint = hit.point;
-						firstPointPlaced = true;
-					} else {
-						lastPoint = hit.point;
-
-						float topX = firstPoint.x > lastPoint.x ? firstPoint.x : lastPoint.x;
-						float topZ = firstPoint.z > lastPoint.z ? firstPoint.z : lastPoint.z;
-						float bottomX = firstPoint.x < lastPoint.x ? firstPoint.x : lastPoint.x;
-						float bottomZ = firstPoint.z < lastPoint.z ? firstPoint.z : lastPoint.z;
-
-						Vector3 center = new Vector3(bottomX + (topX-bottomX)/2, 0, bottomZ + (topZ-bottomZ)/2);
-						Vector3 halfExtent = new Vector3(topX - bottomX, 20, topZ-bottomZ);
-
-						Collider[] selectedUnits = Physics.OverlapBox(center, halfExtent, Quaternion.identity, layerMask);
-
-						/*
-						Currently, this section does not properly implement the rotation of physics.OverlapBox. Will work on later.
-
-				        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-				        cube.transform.position = new Vector3(center.x, 0, center.z);
-
-				        cube.transform.rotation = Quaternion.FromToRotation(Vector3.up, transform.forward);
-						*/
-
-
-						foreach(Collider unit in selectedUnits) {
-							if (unit.gameObject.GetComponent<ownership>().owner == player.playerID) {
-								selectUnit(unit.gameObject);
-							}
+						if (selected.Count > 0 && selected.Exists(unit => unit.GetInstanceID() == hit.collider.gameObject.GetInstanceID())) {
+							deselectUnit(hit.collider.gameObject);
+						} else {
+							selectUnit(hit.collider.gameObject);
 						}
-
-						firstPointPlaced = false;
 					}
+
+					lastClickTime = Time.time;
 				}
 			}
 		}
@@ -106,7 +77,6 @@ public class selection : MonoBehaviour
 		if (Physics.Raycast(ray, out hit, Mathf.Infinity, allMask)) {
 			if (Input.GetMouseButtonDown(1)) {
 				Vector3 destination = hit.point;
-				bool alt = true; // Used to offset movement targets so not all units navigate to exact same positiln.
 
 				if (attackableMask == (attackableMask | (1 << hit.collider.gameObject.layer)) 
 					&& hit.collider.gameObject.GetComponent<ownership>().owned == true 
@@ -117,16 +87,6 @@ public class selection : MonoBehaviour
 							unit.gameObject.GetComponent<Unit>().cancelOrders();
 							photonView = unit.gameObject.GetComponent<PhotonView>();
 							photonView.RPC("callAttack", RpcTarget.All, hit.collider.gameObject.GetComponent<Attackable>().id);
-
-							/* Alternate between offsetting x and y so that all units aren't trying to navigate to same location */
-
-							if (alt = true) {
-								destination.x += 0.2f;
-							} else {
-								destination.z += 0.2f;
-							}
-
-							alt = !alt;
 						}
 					});
 				} else if (terrainMask == (terrainMask | (1 << hit.collider.gameObject.layer))) {
@@ -149,6 +109,39 @@ public class selection : MonoBehaviour
 				}	
 			}
 		}
+
+		// Group select with shift-left-click
+
+		if (Physics.Raycast(ray, out hit, Mathf.Infinity, terrainMask)) {
+			if (Input.GetMouseButtonDown(0)) {
+				firstPoint = hit.point;
+				firstPointPlaced = true;
+				return;
+			}
+
+			if (!Input.GetMouseButton(0)) return;
+
+			lastPoint = hit.point;
+
+			float topX = firstPoint.x > lastPoint.x ? firstPoint.x : lastPoint.x;
+			float topZ = firstPoint.z > lastPoint.z ? firstPoint.z : lastPoint.z;
+			float bottomX = firstPoint.x < lastPoint.x ? firstPoint.x : lastPoint.x;
+			float bottomZ = firstPoint.z < lastPoint.z ? firstPoint.z : lastPoint.z;
+
+			Vector3 center = new Vector3(bottomX + (topX-bottomX)/2, 0, bottomZ + (topZ-bottomZ)/2);
+			Vector3 halfExtent = new Vector3(topX - bottomX, 20, topZ-bottomZ);
+	        Vector3 something = new Vector3(cam.transform.position.x, 0, cam.transform.position.z);
+
+			Collider[] selectedUnits = Physics.OverlapBox(center, halfExtent, Quaternion.LookRotation(hit.point - something), layerMask);
+
+			foreach(Collider unit in selectedUnits) {
+				if (unit.gameObject.GetComponent<ownership>().owner == player.playerID && unit.gameObject.GetComponent<Unit>().isSelected == false) {
+					selectUnit(unit.gameObject);
+				}
+			}
+
+			firstPointPlaced = false;
+		}
     }
 
     void selectUnit(GameObject unit) {
@@ -157,6 +150,8 @@ public class selection : MonoBehaviour
 		if (unit.GetComponent<LineRenderer>() != null) {
 			unit.GetComponent<LineRenderer>().enabled = true;
 		}
+
+		unit.GetComponent<Unit>().onSelect();
     }
 
     public void deselectUnit(GameObject unit) {
@@ -167,8 +162,9 @@ public class selection : MonoBehaviour
 		if (unit.GetComponent<Collider>().gameObject.GetComponent<LineRenderer>() != null) {
 			unit.GetComponent<Collider>().gameObject.GetComponent<LineRenderer>().enabled = false;
 		}
-    }
 
+		unit.GetComponent<Unit>().onDeSelect();
+    }
 														// 0.3
     public List<Vector3> createGrid(Vector3 center, float noOfUnits, float unitSize, float gapSize) {
     	float offset = unitSize + gapSize;
@@ -194,18 +190,32 @@ public class selection : MonoBehaviour
     	return grid;
     }
 
-   	float getTerrainHeight(Vector3 point) {
+   	private float getTerrainHeight(Vector3 point) {
    		RaycastHit hit;
    		Physics.Raycast(new Vector3(point.x, 300, point.z), Vector3.down, out hit, Mathf.Infinity, terrainMask);
    		return hit.point.y;
    	}
 
-    void clearSelection() {
+    private void clearSelection() {
     	selected.ForEach(unit => {
     		if (unit != null && unit.GetComponent<LineRenderer>() != null) {
     			unit.GetComponent<LineRenderer>().enabled = false;
+    			unit.GetComponent<Unit>().onDeSelect();
     		}
     	});
     	selected.Clear();
+    }
+
+    private void selectUnitsInRadius(Vector3 point) {
+		Collider[] hitColliders = Physics.OverlapSphere(point, QUICK_SELECT_RANGE, unitMask);
+		Debug.Log(hitColliders.Length);
+		for (int i = 0; i < hitColliders.Length; i++) {
+			if (hitColliders[i].GetComponent<ownership>() != null &&
+                hitColliders[i].GetComponent<ownership>().owned == true && 
+                hitColliders[i].GetComponent<ownership>().owner == player.playerID) { 
+
+				selectUnit(hitColliders[i].gameObject);
+            }
+        }
     }
 }

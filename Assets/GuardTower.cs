@@ -39,7 +39,8 @@ public class GuardTower : Unit
     }
 
     public override void onCapture() {
-    	//this.gameObject.transform.Find("Capsule").GetComponent<MeshRenderer>().material.color = GetComponent<ownership>().playerColor;
+    	string colorName = GetComponent<ownership>().getPlayer().colorName;
+        this.transform.Find("Model").gameObject.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Buildings_" + colorName) as Texture));
     }
 
     public override IEnumerator moveAndAttack(int idOfThingToAttack) {
@@ -99,5 +100,24 @@ public class GuardTower : Unit
         sources[UnityEngine.Random.Range(0, sources.Length)].Play((ulong)UnityEngine.Random.Range(0l, 2l));
 
         base.takeDamage(damage);
+    }
+
+    public override void destroyObject() {
+        photonView.RPC("playDestructionEffect", RpcTarget.All);
+
+        base.destroyObject();
+    }
+    
+    [PunRPC]
+    private void playDestructionEffect() {
+        AudioSource[] sources = this.transform.Find("DestroySounds").GetComponents<AudioSource>();
+        AudioSource source = sources[UnityEngine.Random.Range(0, sources.Length)];
+        AudioSource.PlayClipAtPoint(source.clip, this.transform.position);
+
+        GameObject explosion = Instantiate(Resources.Load("FX_Building_Destroyed_mid") as GameObject);
+        explosion.transform.position = this.transform.position;
+        ParticleSystem effect = explosion.GetComponent<ParticleSystem>();
+        effect.Play();
+        Destroy(effect.gameObject, effect.duration);
     }
 }

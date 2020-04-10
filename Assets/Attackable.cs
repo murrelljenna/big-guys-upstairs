@@ -8,6 +8,7 @@ using Photon.Realtime;
 public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
 {
     public Animator animator;
+    [SerializeField]
     protected ownership owner;
 	protected GameObject info;
 	public bool canAttack = true;
@@ -24,11 +25,13 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
 	private GameObject canvas;
     private SimpleHealthBar healthBar;
 
+    public string color;
 	public int hp;
 	public int id;
 	public List<Unit> attackers;
 	public PhotonView photonView;
-	List<Color> colours = new List<Color>() { Color.black, Color.blue, Color.cyan, Color.green, Color.magenta, Color.red, Color.yellow };
+    List<Color> colours = new List<Color>() { Color.black, Color.blue, Color.white, Color.green, Color.magenta, Color.red, Color.yellow };
+    List<string> colourStrings = new List<string>() { "black", "blue", "white", "green", "pink", "red", "yellow" };
 
     // Start is called before the first frame update
     public virtual void Start()
@@ -68,7 +71,7 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     	if (playerCamera != null) {
         	canvas.transform.LookAt(transform.position + playerCamera.transform.rotation * Vector3.forward, playerCamera.transform.rotation * Vector3.up);   
     	} else {
-    		playerCamera = GameObject.Find("FirstPersonCharacter").GetComponent<Camera>(); 
+    		playerCamera = getLocalCamera();
     	}
 
     	if (this.hp != this.maxHP) {
@@ -127,4 +130,15 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     private void doubleSpeed() { // Parameterless for invoke
         modifySpeed(2);
     }
+
+    public Camera getLocalCamera() {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        for (int i = 0; i < players.Length; i++) {
+            if (players[i].GetComponent<PhotonView>().IsMine) {
+                return players[i].transform.Find("FPSController").transform.Find("FirstPersonCharacter").GetComponent<Camera>();
+            }
+        }
+        return null;
+    }
+    
 }

@@ -24,6 +24,8 @@ public class Unit : Attackable
 	protected int lastNoEnemies = 0;
     protected float responseRange;
 
+    
+
     void OnEnable() {
     	InvokeRepeating("checkEnemiesInRange", 0.5f, 0.5f);
 
@@ -47,7 +49,12 @@ public class Unit : Attackable
     }
 
     public override void onCapture() {
-    	this.gameObject.transform.Find("Model").transform.Find("Body_08b").GetComponent<SkinnedMeshRenderer>().material.color = GetComponent<ownership>().playerColor;
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        string colorName = GetComponent<ownership>().getPlayer().colorName;
+
+        for (int i = 0; i < renderers.Length; i++) {
+            renderers[i].material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Units_" + colorName) as Texture));
+        }
     }
 
     public override void destroyObject() {
@@ -63,6 +70,10 @@ public class Unit : Attackable
 
     public void move(Vector3 destination) {
         cancelOrders();
+        AudioSource[] sources = this.transform.Find("SelectionSounds").GetComponents<AudioSource>();
+        AudioSource source = sources[UnityEngine.Random.Range(0, sources.Length)];
+        AudioSource.PlayClipAtPoint(source.clip, this.transform.position);
+
         photonView.RPC("setDestination", RpcTarget.All, destination);
     }
 
@@ -89,7 +100,7 @@ public class Unit : Attackable
     		Attackable thingToAttack = thingToAttackObj.GetComponent<Attackable>();
     	 	if (thingToAttack.hp > 0) {
                 attackee = thingToAttack;
-                Debug.Log(attackee);
+
                 if (thingToAttackObj.tag == "unit") {
                     updateTargetLive = true;
                 }
@@ -98,7 +109,6 @@ public class Unit : Attackable
                 isAttacking = true;
 
 				GetComponent<NavMeshAgent>().SetDestination(attackee.gameObject.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
-                Debug.Log(attackee);
 				yield return new WaitUntil (() => isInRange(thingToAttack));
 				this.gameObject.GetComponent<NavMeshAgent>().isStopped = true;
 
@@ -145,8 +155,6 @@ public class Unit : Attackable
             float deltaX = this.gameObject.transform.position.x - closestPoint.x;
             float deltaZ = this.gameObject.transform.position.z - closestPoint.z; 
             float distance = Mathf.Sqrt(deltaX * deltaX + deltaZ * deltaZ);
-            Debug.Log(distance);
-            Debug.Log(distance < this.rng);
 
             return (distance < this.rng);
     	}
@@ -216,15 +224,11 @@ public class Unit : Attackable
         }
     }
 
-    public void onSelect() {
-
+    public virtual void onSelect() {
+        isSelected = true;
     }
 
-    public void onDeSelect() {
-        
-    }
-
-    void exitBuilding() {
-    	
+    public virtual void onDeSelect() {
+        isSelected = false;
     }
 }

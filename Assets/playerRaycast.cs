@@ -18,18 +18,21 @@ public class playerRaycast : MonoBehaviour
     GameObject up1;
     GameObject down1;
 
+    private TooltipController tooltips;
+
     void Start()
     {
         cam = GetComponent<Camera>();
         player = this.transform.parent.parent.gameObject.GetComponent<game.assets.Player>();
 
-
+        tooltips = GameObject.Find("Tooltips").GetComponent<TooltipController>();
     }
 
     // Update is called once per frame
     void Update()
     {
         RaycastHit hit;
+
         /* Interaction with resource tiles */    	
 
 		Ray ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
@@ -48,32 +51,41 @@ public class playerRaycast : MonoBehaviour
                 resourceViewed.transform.Find("1_Pressed").gameObject.SetActive(false);
             }
 
-            if (Input.GetKeyDown(KeyCode.E) && hit.collider.GetComponent<ownership>().owned == false && player.canAfford(tile.woodCost, tile.foodCost)) {
-                up1 = resourceViewed.transform.Find("1_Normal").gameObject;
-                down1 = resourceViewed.transform.Find("1_Pressed").gameObject;
+            if (Input.GetKeyDown(KeyCode.E) && hit.collider.GetComponent<ownership>().owned == false) {
+                if (player.canAfford(tile.woodCost, tile.foodCost)) {
+                    up1 = resourceViewed.transform.Find("1_Normal").gameObject;
+                    down1 = resourceViewed.transform.Find("1_Pressed").gameObject;
 
-                up1.SetActive(false);
-                down1.SetActive(true);
-                midAnimation = true;
-                Invoke("releaseButton1", 0.2f);
+                    up1.SetActive(false);
+                    down1.SetActive(true);
+                    midAnimation = true;
+                    Invoke("releaseButton1", 0.2f);
 
-            	Collider[] hitColliders = Physics.OverlapSphere(hit.collider.bounds.center, 10f);
-            	for (int i = 0; i < hitColliders.Length; i++) {
-            		if (hitColliders[i].tag == "town" && hitColliders[i].GetComponent<ownership>().owner == player.playerID) { // If there is a town in range that belongs to the player.
-                        player.makeTransaction(tile.woodCost, tile.foodCost);
-						hit.collider.GetComponent<ownership>().capture(player); 
-						break;
-            		} 
-            	}    	      	
-            } 
+                    bool inRange = false;
+
+                	Collider[] hitColliders = Physics.OverlapSphere(hit.collider.bounds.center, 10f);
+                	for (int i = 0; i < hitColliders.Length; i++) {
+                		if (hitColliders[i].tag == "town" && hitColliders[i].GetComponent<ownership>().owner == player.playerID) { // If there is a town in range that belongs to the player.
+                            player.makeTransaction(tile.woodCost, tile.foodCost);
+    						hit.collider.GetComponent<ownership>().capture(player);
+                            inRange = true;
+    						break;
+                		} 
+                	}
+
+                    if (!inRange) {
+                        tooltips.flashInsideTown();
+                    }
+                } else {
+                    tooltips.flashLackResources();
+                }      	
+            }
 	    } else if (resourceViewed != null) {
-            Debug.Log("SETTING FALSE");
             resourceViewed.SetActive(false);
             resourceViewed = null;
         }
 
         
-
         /* Interaction with towns */ 
 
         ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
@@ -109,8 +121,10 @@ public class playerRaycast : MonoBehaviour
                         GameObject militia = PhotonNetwork.Instantiate("Militia", spawnLocation, Quaternion.identity, 0);
 
                         militia.GetComponent<ownership>().capture(player);
+                    } else {
+                        tooltips.flashLackResources();
                     }
-                }
+                } 
             }
         }   else if (cityViewed != null) {
             cityViewed.SetActive(false);

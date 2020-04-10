@@ -11,11 +11,17 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
 	public Camera cam;
 	private Transform currentBuilding;
 	private int layerMask;
+
+    private TooltipController tooltips;
+    Color previousColor;
+
+    public AudioClip[] plopSounds;
     
     void Start()
     {
     	wallet = this.transform.parent.parent.parent.parent.GetComponent<game.assets.Player>();
         currentBuilding = null;
+        tooltips = GameObject.Find("Tooltips").GetComponent<TooltipController>();
         layerMask = 1 << 11;
     }
 
@@ -35,9 +41,8 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
 			Ray ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
 
 	    	if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)) {
-	    		currentBuilding.position = hit.point;
 
-	    		// Left-click to place building
+                currentBuilding.position = new Vector3(hit.point.x, hit.point.y+0.5f, hit.point.z);
 
 	    		if (Input.GetMouseButtonDown(0)) {
 
@@ -45,28 +50,33 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
                     int food = currentBuilding.GetComponent<Attackable>().foodCost;
 
 	    			if (wallet.canAfford(wood, food)) { // If can afford and no town radius overlapping
-                        if (currentBuilding.name == "town") {
-                            if (!townInRange(hit.point, 20f)) {
-        	    				wallet.makeTransaction(wood, food);
-                                GameObject placedBuilding = PhotonNetwork.Instantiate("Town", hit.point, Quaternion.identity, 0);
-                                placedBuilding.GetComponent<ownership>().capture(wallet);
-                                Destroy(currentBuilding.gameObject);
-                            }
-                        } else {
-                            if (townInRange(hit.point, 10f, wallet.playerID)) {
-                                wallet.makeTransaction(wood, food);
-                                GameObject placedBuilding = PhotonNetwork.Instantiate(currentBuilding.GetComponent<Attackable>().prefabName, hit.point, Quaternion.identity, 0);
-                                placedBuilding.GetComponent<ownership>().capture(wallet);
-                                Destroy(currentBuilding.gameObject);
-
-                                if (placedBuilding.GetComponent<LineRenderer>() != null) {
-                                    placedBuilding.GetComponent<LineRenderer>().enabled = false;
+                        if (!currentBuilding.GetComponent<buildingGhost>().colliding) {
+                            if (currentBuilding.name == "town") {
+                                if (!townInRange(hit.point, 20f)) {
+                                    StartCoroutine(plopBuilding(currentBuilding.gameObject, hit.point));
+                                    currentBuilding = null;
+                                } else { // if town is TOO close
+                                    StopAllCoroutines();
+                                    tooltips.flashCityRadius();
+                                    StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
+                                }
+                            } else {
+                                if (townInRange(hit.point, 10f, wallet.playerID)) {
+                                    StartCoroutine(plopBuilding(currentBuilding.gameObject, hit.point));
+                                    currentBuilding = null;
+                                } else { // If town is NOT in range
+                                    StopAllCoroutines();
+                                    tooltips.flashInsideTown();
+                                    StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
                                 }
                             }
+                        } else {
+                            tooltips.flashBuildingBlocked();
                         }
 	    			} else { // If cannot afford.
-                        Debug.Log("Starting coroutine");
-                        StartCoroutine(flashRed(currentBuilding.gameObject, 3f));
+                        StopAllCoroutines();
+                        tooltips.flashLackResources();
+                        StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
 	    			}
 	    		}
 	    	}
@@ -80,14 +90,17 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
     	}
     	
     	currentBuilding = ((GameObject)Instantiate(building)).transform;
+        currentBuilding.transform.Find("Model").gameObject.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Buildings_" + wallet.colorName) as Texture));
         currentBuilding.GetComponent<Attackable>().canAttack = false;
         currentBuilding.gameObject.name = currentBuilding.tag;
         currentBuilding.tag = "buildingGhost";
-        currentBuilding.GetComponent<Renderer>().material.color = wallet.playerColor;
+
+        Renderer renderer = currentBuilding.transform.Find("Model").gameObject.GetComponent<MeshRenderer>();
+
+        previousColor = renderer.material.color;
     }
 
-    private bool townInRange(Vector3 location, float range) {
-        
+    private bool townInRange(Vector3 location, float range) {       
         Collider[] hitColliders = Physics.OverlapSphere(location, range);
         for (int i = 0; i < hitColliders.Length; i++) {
             if (hitColliders[i].tag == "town") {
@@ -109,20 +122,50 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
         return false;
     }
 
-    private IEnumerator flashRed(GameObject building, float offset) {
-        Renderer[] renderers = GetComponentsInChildren<Renderer>();
-        List<Color> previousColors = new List<Color>();
-Debug.Log(renderers.Length);
-        for (int i = 0; i < renderers.Length; i++) {
-            Debug.Log(renderers[i].gameObject.name);
-            previousColors.Add(renderers[i].material.color);
-            renderers[i].material.color = Color.red;
-        }
+    private IEnumerator flashRed(GameObject building, float offset = 0.2f) {
+        Renderer renderer = building.transform.Find("Model").gameObject.GetComponent<MeshRenderer>();
+
+        renderer.material.color = Color.red;
 
         yield return new WaitForSeconds(offset);
 
-        for (int i = 0; i < renderers.Length; i++) {
-            renderers[i].material.color = previousColors[i];
+        renderer.material.color = previousColor; // Set when building gets selected in setBuilding.
+    }
+
+    private void clearColour(GameObject building) {
+        if (previousColor != null) {
+            Renderer renderer = building.transform.Find("Model").gameObject.GetComponent<MeshRenderer>();
+            renderer.material.color = previousColor;
         }
+    }
+
+    private IEnumerator plopBuilding(GameObject building, Vector3 destination) {
+        float startTime = Time.time;
+
+        while (Vector3.Distance(building.transform.position, destination) > 0.01f) {
+            float distCovered = (Time.time - startTime) * 0.5f;
+            float fractionOfJourney = distCovered / Vector3.Distance(building.transform.position, destination);
+
+            building.transform.position = Vector3.Lerp(building.transform.position, destination, fractionOfJourney);
+            yield return null;
+        }
+
+        int wood = building.GetComponent<Attackable>().woodCost;
+        int food = building.GetComponent<Attackable>().foodCost;
+
+        wallet.makeTransaction(wood, food);
+        GameObject placedBuilding = PhotonNetwork.Instantiate(building.GetComponent<Attackable>().prefabName, destination, Quaternion.identity, 0);
+        placedBuilding.GetComponent<ownership>().capture(wallet);
+        placedBuilding.GetComponent<buildingGhost>().active = false; // Disabling script makes collider callbacks error.
+
+        if (building.GetComponent<Attackable>().prefabName == "GuardTower" && placedBuilding.GetComponent<LineRenderer>() != null) {
+            placedBuilding.GetComponent<LineRenderer>().enabled = false;
+        }
+
+        placedBuilding.transform.Find("Dust").gameObject.GetComponent<ParticleSystem>().Emit(30);
+        
+        AudioSource.PlayClipAtPoint(plopSounds[Random.Range(0, plopSounds.Length - 1)], destination);
+
+        Destroy(building);
     }
 }

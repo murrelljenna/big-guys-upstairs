@@ -24,13 +24,15 @@ public class showMenu : MonoBehaviourPun
         up2 = GameObject.Find("2_Normal");
         down2 = GameObject.Find("2_Pressed");
 
-        if (down2 != null) {
+        if (down1 != null) {
             down1.SetActive(false);
         }
 
         if (down2 != null) {
             down2.SetActive(false);
         }
+        print("DOWN 2 KEY");
+        print(down2);
     }
 
     void OnDisable()
@@ -40,7 +42,9 @@ public class showMenu : MonoBehaviourPun
 
     void OnEnable()
     {
-        BuildingMenu.SetActive(true);
+        if (BuildingMenu != null) { // Resulting in exception at beginning of game unless inside this statement
+            BuildingMenu.SetActive(true);
+        }
     }
 
     // Update is called once per frame
@@ -59,6 +63,7 @@ public class showMenu : MonoBehaviourPun
 		}
         if (Input.GetKeyDown("2")) {
             up2.SetActive(false);
+            print(down2);
             down2.SetActive(true);
             Invoke("releaseButton2", 0.2f);
 

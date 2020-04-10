@@ -24,4 +24,12 @@ public class Militia : Unit
     void Update() {
         base.Update();
     }
+
+    public override void onSelect() {
+        AudioSource[] sources = this.transform.Find("SelectionSounds").GetComponents<AudioSource>();
+        AudioSource source = sources[UnityEngine.Random.Range(0, sources.Length)];
+        AudioSource.PlayClipAtPoint(source.clip, this.transform.position);
+
+        base.onSelect();
+    }
 }

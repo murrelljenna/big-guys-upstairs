@@ -18,7 +18,7 @@ public class ResourceTile : Attackable
         if (playerCamera != null && info != null) {
             info.transform.LookAt(playerCamera.transform);   
         } else {
-            playerCamera = GameObject.Find("FirstPersonCharacter").GetComponent<Camera>(); 
+            playerCamera = getLocalCamera();
         }
 
         base.Update();
@@ -26,8 +26,8 @@ public class ResourceTile : Attackable
 
     public override void Start()
     {
-        this.woodCost = 10;
-        this.foodCost = 10;
+        this.woodCost = 15;
+        this.foodCost = 15;
         this.hp = 75;
         ownerInfo = this.gameObject.GetComponent<ownership>();
         this.id = this.gameObject.GetComponent<PhotonView>().ViewID;

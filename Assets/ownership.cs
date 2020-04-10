@@ -11,18 +11,6 @@ public class ownership : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField]
     public int owner;
     public Color playerColor;
-    
-    // Start is called before the first frame upda
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void capture(game.assets.Player player) {
         this.playerColor = player.playerColor;
@@ -54,13 +42,10 @@ public class ownership : MonoBehaviourPunCallbacks, IPunObservable
 
     private IEnumerator waitForPlayerColour(GameObject player) {
         yield return new WaitUntil(() => {
-            Debug.Log(playerColor);
             return (getPlayer().hasColor != false);
         });
             this.playerColor = player.GetComponent<game.assets.Player>().playerColor;
-
-            this.gameObject.GetComponent<Renderer>().material.color = player.GetComponent<game.assets.Player>().playerColor;
-
+            this.gameObject.GetComponent<Renderer>().material.color = playerColor;
             this.gameObject.GetComponent<Attackable>().onCapture(); // Callback function that is overriden by various classes to respond to capture.
     }
 

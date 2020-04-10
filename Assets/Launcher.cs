@@ -58,7 +58,6 @@ public class Launcher : MonoBehaviourPunCallbacks
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message) {
-    	Debug.Log(message);
     	Debug.Log("No room available. Creating new room");
     	PhotonNetwork.CreateRoom(null, new RoomOptions {MaxPlayers = maxPlayersPerRoom});
     }
@@ -70,4 +69,8 @@ public class Launcher : MonoBehaviourPunCallbacks
 		    PhotonNetwork.LoadLevel("Flat");
 		}
 	}
+
+    public void exitGame() {
+        Application.Quit();
+    }
 }

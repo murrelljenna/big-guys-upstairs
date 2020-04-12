@@ -33,6 +33,15 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     List<Color> colours = new List<Color>() { Color.black, Color.blue, Color.white, Color.green, Color.magenta, Color.red, Color.yellow };
     List<string> colourStrings = new List<string>() { "black", "blue", "white", "green", "pink", "red", "yellow" };
 
+    protected TooltipController tooltips;
+    
+    // UI Animation
+    protected bool midAnimation;
+    protected GameObject up1;
+    protected GameObject down1;
+    protected GameObject up2;
+    protected GameObject down2;
+
     // Start is called before the first frame update
     public virtual void Start()
     {
@@ -40,6 +49,8 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     		this.enabled = false;
     	}
     	this.maxHP = hp;
+
+        tooltips = GameObject.Find("Tooltips").GetComponent<TooltipController>();
     }
 
     public virtual void OnEnable() {
@@ -140,5 +151,22 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
         }
         return null;
     }
-    
+
+    /* Run every frame that the entity is being looked at */
+    public virtual void interactionOptions(game.assets.Player player) {
+
+    } 
+
+    void releaseButton1() {
+        up1.SetActive(true);
+        down1.SetActive(false);
+        midAnimation = false;
+    }
+
+    void releaseButton2() {
+        up2.SetActive(true);
+        down2.SetActive(false);
+        midAnimation = false;
+    }
+
 }

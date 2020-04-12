@@ -5,7 +5,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class Town : Attackable, IPunObservable
+public class Town : Building, IPunObservable
 {
     private int yield = 1;
     private int lastNoEnemies = 0;
@@ -18,7 +18,7 @@ public class Town : Attackable, IPunObservable
     void Start() {
         prefabName = "Town";
 
-        this.hp = 200;
+        this.hp = 400;
         this.woodCost = 75;
         this.foodCost = 25;
 
@@ -103,7 +103,7 @@ public class Town : Attackable, IPunObservable
 
         if (hitColliders.Length != lastNoEnemies) {
         for (int i = 0; i < hitColliders.Length; i++) {
-                if (hitColliders[i].GetComponent<ownership>().owned == true) {
+                if (hitColliders[i].GetComponent<ownership>() != null && hitColliders[i].GetComponent<ownership>().owned == true) {
                     hitColliders[i].gameObject.GetComponent<ownership>().deCapture();
                 }
             }
@@ -116,6 +116,43 @@ public class Town : Attackable, IPunObservable
         photonView.RPC("playDestructionEffect", RpcTarget.All);
 
         base.destroyObject();
+    }
+
+    public override void interactionOptions(game.assets.Player player) {
+        GameObject cityViewed = this.transform.Find("Info").gameObject;
+        cityViewed.SetActive(true);
+
+        if (!midAnimation) {
+            cityViewed.transform.Find("1_Pressed").gameObject.SetActive(false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E)) {
+            int wood = 0; // Please replace with real values soon.
+            int food = 5;
+
+            up1 = cityViewed.transform.Find("1_Normal").gameObject;
+            down1 = cityViewed.transform.Find("1_Pressed").gameObject;
+
+            up1.SetActive(false);
+            down1.SetActive(true);
+            midAnimation = true;
+            Invoke("releaseButton1", 0.2f);
+
+            if (player.canAfford(wood, food)) {
+                player.makeTransaction(wood, food);
+
+                /* Instantiate new militia outside city */
+
+                Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
+                Vector3 spawnLocation = new Vector3(randomInCircle.x+this.transform.position.x, 0, randomInCircle.y+this.transform.position.z);
+
+                GameObject militia = PhotonNetwork.Instantiate("Militia", spawnLocation, Quaternion.identity, 0);
+
+                militia.GetComponent<ownership>().capture(player);
+            } else {
+                tooltips.flashLackResources();
+            }
+        } 
     }
 
     public override void takeDamage(int damage) {

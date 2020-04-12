@@ -1,22 +1,21 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Militia : Unit
+public class Archer : Unit
 {
-
     // Start is called before the first frame update
     void Start()
     {
     	this.movable = true;
     	this.responseRange = 2f;
-        this.woodCost = 1;
-        this.foodCost = 5;
+        this.woodCost = 2;
+        this.foodCost = 10;
 
-        this.atk = 1;
-        this.hp = 5;
+        this.atk = 2;
+        this.hp = 10;
         this.lastHP = this.hp;
-        this.rng = 0.3f;
+        this.rng = 3f;
 
         base.Start();
     }
@@ -38,7 +37,7 @@ public class Militia : Unit
     }
 
     private IEnumerator delayMovement(Vector3 destination) {
-        yield return new WaitForSeconds(Random.Range(0.05f, 1.25f));
+        yield return new WaitForSeconds(Random.Range(0.05f, 0.4f));
         base.move(destination);
     }
 }

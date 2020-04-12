@@ -15,6 +15,8 @@ public class showMenu : MonoBehaviourPun
     private GameObject down1;
     private GameObject up2;
     private GameObject down2;
+    private GameObject up3;
+    private GameObject down3;
     
     void Awake()
     {
@@ -23,6 +25,8 @@ public class showMenu : MonoBehaviourPun
         down1 = GameObject.Find("1_Pressed");
         up2 = GameObject.Find("2_Normal");
         down2 = GameObject.Find("2_Pressed");
+        up3 = GameObject.Find("3_Normal");
+        down3 = GameObject.Find("3_Pressed");
 
         if (down1 != null) {
             down1.SetActive(false);
@@ -31,8 +35,10 @@ public class showMenu : MonoBehaviourPun
         if (down2 != null) {
             down2.SetActive(false);
         }
-        print("DOWN 2 KEY");
-        print(down2);
+
+        if (down3 != null) {
+            down3.SetActive(false);
+        }
     }
 
     void OnDisable()
@@ -63,11 +69,18 @@ public class showMenu : MonoBehaviourPun
 		}
         if (Input.GetKeyDown("2")) {
             up2.SetActive(false);
-            print(down2);
             down2.SetActive(true);
             Invoke("releaseButton2", 0.2f);
 
             GetComponent<buildingPlacement>().setBuilding(options[1]); // Guard tower
+        }
+
+        if (Input.GetKeyDown("3")) {
+            up3.SetActive(false);
+            down3.SetActive(true);
+            Invoke("releaseButton3", 0.2f);
+
+            GetComponent<buildingPlacement>().setBuilding(options[2]); // Barracks
         }
     }
 
@@ -79,5 +92,10 @@ public class showMenu : MonoBehaviourPun
     void releaseButton2() {
         up2.SetActive(true);
         down2.SetActive(false);
+    }
+
+    void releaseButton3() {
+        up3.SetActive(true);
+        down3.SetActive(false);
     }
 }

@@ -68,7 +68,7 @@ public class Unit : Attackable
         base.destroyObject();
     }
 
-    public void move(Vector3 destination) {
+    public virtual void move(Vector3 destination) {
         cancelOrders();
         AudioSource[] sources = this.transform.Find("SelectionSounds").GetComponents<AudioSource>();
         AudioSource source = sources[UnityEngine.Random.Range(0, sources.Length)];

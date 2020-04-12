@@ -332,6 +332,7 @@ MonoBehaviour:
   options:
   - {fileID: 5207743826955958044, guid: d89b9a2bd7c0841419b1fad65827c5c9, type: 3}
   - {fileID: 7861718661335921003, guid: 71dd393d943a5c54b89dc79ef458ad71, type: 3}
+  - {fileID: 5049459853323472071, guid: 36c2f082e7fc58c4cbd122d34f2e8af8, type: 3}
 --- !u!114 &2849198778318830977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1006,6 +1007,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: bb867b7d47b4d4e428af0a2ac5abbcac, type: 3}
       propertyPath: m_Name
       value: FPSController
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: bb867b7d47b4d4e428af0a2ac5abbcac, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: bb867b7d47b4d4e428af0a2ac5abbcac, type: 3}
       propertyPath: m_LocalPosition.x

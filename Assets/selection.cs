@@ -35,7 +35,7 @@ public class selection : MonoBehaviour
         layerMask = 1 << 12;
         terrainMask = 1 << 11;
         unitMask = 1 << 12;
-        attackableMask = (1 << 9) | (1 << 10) | (1 << 12);
+        attackableMask = (1 << 9) | (1 << 10) | (1 << 12) | (1 << 14);
         allMask = terrainMask | attackableMask;  // For terrain and attackable objects.
         player = this.transform.parent.parent.parent.parent.gameObject.GetComponent<game.assets.Player>();
     }

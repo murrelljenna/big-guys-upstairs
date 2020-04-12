@@ -34,5 +34,7 @@ public class Building : Attackable
 
 	        militia.GetComponent<ownership>().capture(this.gameObject.GetComponent<ownership>().getPlayer());
 	    }
+
+	    base.destroyObject();
     }
 }

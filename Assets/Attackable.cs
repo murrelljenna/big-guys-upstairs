@@ -50,7 +50,10 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     	}
     	this.maxHP = hp;
 
-        tooltips = GameObject.Find("Tooltips").GetComponent<TooltipController>();
+        GameObject tooltipsGameObj = GameObject.Find("Tooltips");
+        if (tooltipsGameObj != null) {
+            tooltips = tooltipsGameObj.GetComponent<TooltipController>();
+        }
     }
 
     public virtual void OnEnable() {

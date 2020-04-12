@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 using Photon.Pun;
 using Photon.Realtime;
@@ -47,10 +48,17 @@ public class ResourceTile : Attackable
     // Update is called once per frame
 
     public override void onCapture() {
+        this.transform.Find("Info").Find("1_Normal").Find("Text").GetComponent<Text>().text = '\u2714'.ToString();
+        this.transform.Find("Info").Find("1_Pressed").Find("Text").GetComponent<Text>().text = '\u2714'.ToString();
+        this.transform.Find("Info").Find("Text").GetComponent<Text>().text = "Captured";
         StartCoroutine(checkOwnerAndCapture());
     }
 
     public override void onDeCapture() {
+        this.transform.Find("Info").Find("1_Normal").Find("Text").GetComponent<Text>().text = "E";
+        this.transform.Find("Info").Find("1_Pressed").Find("Text").GetComponent<Text>().text = "E";
+        this.transform.Find("Info").Find("Text").GetComponent<Text>().text = "Capture";
+
         destroyObject();
     }
 

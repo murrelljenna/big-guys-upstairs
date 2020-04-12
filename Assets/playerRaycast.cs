@@ -95,7 +95,6 @@ public class playerRaycast : MonoBehaviour
         ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, buildingMask)) {
             if (hit.collider.gameObject.tag != "buildingGhost" && hit.collider.GetComponent<ownership>().owner == player.playerID) {
-                print("Viewing");
                 buildingViewed = hit.collider.gameObject.transform.Find("Info").gameObject;
                 buildingViewed.SetActive(true);
 

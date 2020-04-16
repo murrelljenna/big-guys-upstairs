@@ -8,10 +8,12 @@ using Photon.Realtime;
 public class Wall : Building, IPunObservable
 {
     void Start() {
-        prefabName = "Wall";
-
-        this.hp = 100;
-        this.woodCost = 5;
+    	if (prefabName != "Wall_Corner") {
+        	prefabName = "Wall";
+        }
+        
+        this.hp = 200;
+        this.woodCost = 2;
         this.foodCost = 0;
 
         Transform infoTransform = this.gameObject.transform.Find("Info");

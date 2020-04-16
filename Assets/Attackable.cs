@@ -56,11 +56,19 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    public virtual void OnEnable() {
+    public override void OnEnable() {
+        PhotonNetwork.AddCallbackTarget(this);
         Transform model = this.transform.Find("Model");
         if (model != null) {
             animator = model.gameObject.GetComponent<Animator>();
         }
+
+        base.OnEnable();
+    }
+
+    public override void OnDisable() {
+        PhotonNetwork.RemoveCallbackTarget(this);
+        base.OnDisable();
     }
 
     public virtual void Awake() {

@@ -17,6 +17,8 @@ public class showMenu : MonoBehaviourPun
     private GameObject down2;
     private GameObject up3;
     private GameObject down3;
+    private GameObject up4;
+    private GameObject down4;
     
     void Awake()
     {
@@ -27,6 +29,8 @@ public class showMenu : MonoBehaviourPun
         down2 = GameObject.Find("2_Pressed");
         up3 = GameObject.Find("3_Normal");
         down3 = GameObject.Find("3_Pressed");
+        up4 = GameObject.Find("4_Normal");
+        down4 = GameObject.Find("4_Pressed");
 
         if (down1 != null) {
             down1.SetActive(false);
@@ -38,6 +42,10 @@ public class showMenu : MonoBehaviourPun
 
         if (down3 != null) {
             down3.SetActive(false);
+        }
+
+        if (down3 != null) {
+            down4.SetActive(false);
         }
     }
 
@@ -84,9 +92,9 @@ public class showMenu : MonoBehaviourPun
         }
 
         if (Input.GetKeyDown("4")) {
-            //up3.SetActive(false);
-            //down3.SetActive(true);
-            //Invoke("releaseButton3", 0.2f);
+            up4.SetActive(false);
+            down4.SetActive(true);
+            Invoke("releaseButton4", 0.2f);
 
             GetComponent<buildingPlacement>().setBuilding(options[3]); // Wall
         }
@@ -105,5 +113,10 @@ public class showMenu : MonoBehaviourPun
     void releaseButton3() {
         up3.SetActive(true);
         down3.SetActive(false);
+    }
+
+    void releaseButton4() {
+        up4.SetActive(true);
+        down4.SetActive(false);
     }
 }

@@ -18,10 +18,10 @@ public class Archer : Unit
         this.foodCost = 10;
 
         this.atk = 2;
-        this.hp = 7;
+        this.hp = 8;
         this.lastHP = this.hp;
         this.rng = 3f;
-        this.attackRate = 1.5f;
+        this.attackRate = 1.4f;
 
         base.Start();
     }

@@ -17,6 +17,7 @@ public class selection : MonoBehaviour
 	Vector3 firstPoint;
 	Vector3 lastPoint;
 	bool firstPointPlaced = false;
+	Vector3 destination;
 
  	int layerMask;
  	int terrainMask;
@@ -25,6 +26,7 @@ public class selection : MonoBehaviour
  	int unitMask;
 
  	private LineRenderer lineRen;
+ 	List<Vector3> grid;
 
  	private const float QUICK_SELECT_RANGE = 5f;
 
@@ -81,35 +83,17 @@ public class selection : MonoBehaviour
 
 		if (Physics.Raycast(ray, out hit, Mathf.Infinity, allMask)) {
 			if (Input.GetMouseButtonDown(1)) {
-				Vector3 destination = hit.point;
+				destination = hit.point;
 
 				if (attackableMask == (attackableMask | (1 << hit.collider.gameObject.layer)) 
 					&& hit.collider.gameObject.GetComponent<ownership>().owned == true 
 					&& hit.collider.gameObject.GetComponent<ownership>().owner != player.playerID) {
 
-					selected.ForEach(unit => {
-						if (unit != null) {
-							unit.gameObject.GetComponent<Unit>().cancelOrders();
-							photonView = unit.gameObject.GetComponent<PhotonView>();
-							photonView.RPC("callAttack", RpcTarget.All, hit.collider.gameObject.GetComponent<Attackable>().id);
-						}
-					});
+					StartCoroutine(sendAttackOrders(hit.collider.gameObject.GetComponent<Attackable>().id));
 				} else if (terrainMask == (terrainMask | (1 << hit.collider.gameObject.layer))) {
 					int i = 0;
-					List<Vector3> grid = createGrid(hit.point, selected.Count, 0.2f, 0.2f);
-					selected.ForEach(unit => {
-						if (unit != null) {
-							unit.gameObject.GetComponent<Unit>().cancelOrders();
-
-							destination = grid[i];
-
-							if (unit.gameObject.GetComponent<NavMeshAgent>() != null) {
-								unit.gameObject.GetComponent<Unit>().move(destination);
-							}
-
-							i++;
-					    }
-					});
+					grid = createGrid(hit.point, selected.Count, 0.2f, 0.2f);
+					StartCoroutine(sendMoveOrders());
 				}	
 			}
 		}
@@ -190,12 +174,12 @@ public class selection : MonoBehaviour
     			    	//GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
 		    	//cube.transform.position = new Vector3(center.x, 0, center.z);
     	float x; // Set beginning point of grid traversal.
-    	float z = center.z - (noOfUnits * (unitSize + gapSize)) / 8;
+    	float z = center.z - (noOfUnits/(8 + noOfUnits/8) * (unitSize + gapSize)) / 8;
 
     	List<Vector3> grid = new List<Vector3>();
 
     	for (int i = 0; i < Mathf.RoundToInt(Mathf.Ceil(Mathf.Sqrt(noOfUnits))); i++) {
-    		x = center.x - (noOfUnits/8 * (unitSize + gapSize));
+    		x = center.x - (noOfUnits/(8 + noOfUnits/8) * (unitSize + gapSize));
 
     		for (int j = 0; j < Mathf.RoundToInt(Mathf.Ceil(Mathf.Sqrt(noOfUnits))); j++) {
     			float y = getTerrainHeight(new Vector3(x, 0, z));
@@ -235,5 +219,39 @@ public class selection : MonoBehaviour
 				selectUnit(hitColliders[i].gameObject);
             }
         }
+    }
+
+    private IEnumerator sendAttackOrders(int id) {
+		for (int i = 0; i < selected.Count; i++) {
+			GameObject unit = selected[i];
+			if (unit != null) {
+				unit.gameObject.GetComponent<Unit>().cancelOrders();
+				photonView = unit.gameObject.GetComponent<PhotonView>();
+				photonView.RPC("callAttack", RpcTarget.All, id);
+			}
+
+			if (i % 10 == 0) {
+				yield return null;
+			}
+		}
+    }
+
+    private IEnumerator sendMoveOrders() {
+		for (int i = 0; i < selected.Count; i++) {
+			GameObject unit = selected[i];
+			if (unit != null) {
+				unit.gameObject.GetComponent<Unit>().cancelOrders();
+
+				destination = grid[i];
+
+				if (unit.gameObject.GetComponent<NavMeshAgent>() != null) {
+					unit.gameObject.GetComponent<Unit>().move(destination);
+				}
+		    }
+
+		    if (i % 10 == 0) {
+				yield return null;
+			}
+		}
     }
 }

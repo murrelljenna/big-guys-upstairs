@@ -28,10 +28,15 @@ public class Unit : Attackable
 
     
 
-    void OnEnable() {
+    public override void OnEnable() {
     	InvokeRepeating("checkEnemiesInRange", 0.5f, 0.5f);
-
+        PhotonNetwork.AddCallbackTarget(this);
         base.OnEnable();
+    }
+
+    public override void OnDisable() {
+        PhotonNetwork.RemoveCallbackTarget(this);
+        base.OnDisable();
     }
 
     // Update is called once per frame
@@ -233,6 +238,20 @@ public class Unit : Attackable
             Vector3 direction = (target.position - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(direction);
             this.transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * this.GetComponent<UnityEngine.AI.NavMeshAgent>().angularSpeed);
+        }
+    }
+
+    [PunRPC]
+    public void updatePosition(Vector3 pos) {
+        Debug.Log("RECEIVED");
+        this.transform.position = pos;
+    }
+
+    public override void OnPlayerEnteredRoom(Player other) {
+        Debug.Log("PLAYER ENTERED DA ROOM");
+        if (PhotonNetwork.IsMasterClient) {
+            Debug.Log("Sending RPC");
+            this.photonView.RPC("updatePosition", RpcTarget.OthersBuffered, this.transform.position);
         }
     }
 

@@ -26,7 +26,7 @@ public class Building : Attackable
     }
 
     public override void destroyObject() {
-    	if (this.photonView.IsMine) {
+    	if (this.photonView.IsMine && this.prefabName != "Wall") {
 	    	for (int i = 0; i < Random.Range(2, 5); i++) {
 		        Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
 		        Vector3 spawnLocation = new Vector3(randomInCircle.x+this.transform.position.x, 0, randomInCircle.y+this.transform.position.z);

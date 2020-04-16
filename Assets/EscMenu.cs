@@ -44,6 +44,7 @@ public class EscMenu : MonoBehaviourPun
     }
 
     public void exitToMenu() {
+        print(gameManager != null);
     	gameManager.LeaveRoom();
     	PhotonNetwork.LoadLevel("Launcher");
     }

@@ -13,6 +13,9 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
 	private Transform currentBuilding;
 	private int layerMask;
 
+    private bool firstPointSnapped = false;
+    private bool lastPointSnapped = false;
+
     private TooltipController tooltips;
     Color previousColor;
 
@@ -49,20 +52,45 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
 			Ray ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
 
 	    	if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)) {
-
-                currentBuilding.position = new Vector3(hit.point.x, hit.point.y+0.5f, hit.point.z);
-
-                if (firstPointPlaced) {
-                    Vector3[] positions = new Vector3[2];
-                    positions[0] = firstPoint;
-                    positions[1] = hit.point;
-                    lineRen.SetPositions(positions);
-
-                    currentBuilding.rotation = Quaternion.LookRotation(hit.point - firstPoint);
-                }
-                
+                currentBuilding.gameObject.SetActive(true);
                 if (currentBuilding.name == "wall") {
-                    currentBuilding.position = hit.point;   
+                    if (Input.GetMouseButtonDown(1)) {
+                        firstPointPlaced = false;
+                        lastPointSnapped = false;
+                        firstPointSnapped = false;
+                        lineRen.positionCount = 0;
+                    }
+
+                    if (wallInRange(hit.point, 0.5f)) {
+                        hit.point = snapWallInRange(hit.point, 0.5f);
+                        currentBuilding.gameObject.SetActive(false);
+
+                        if (firstPointPlaced) {
+                            lastPointSnapped = true;
+                        } else {
+                            firstPointSnapped = true;
+                        }
+                    } else {
+                        if (firstPointPlaced) {
+                            lastPointSnapped = false;
+                        } else {
+                            firstPointSnapped = false;
+                        }
+                    }
+
+                    currentBuilding.position = hit.point;
+
+                    if (firstPointPlaced) {
+                        Vector3[] positions = new Vector3[2];
+                        lineRen.positionCount = 2;
+                        positions[0] = firstPoint;
+                        positions[1] = hit.point;
+                        lineRen.SetPositions(positions);
+
+                        currentBuilding.rotation = Quaternion.LookRotation(hit.point - firstPoint);
+                    }
+                } else {
+                    currentBuilding.position = new Vector3(hit.point.x, hit.point.y+0.5f, hit.point.z);           
                 }
 
 	    		if (Input.GetMouseButtonDown(0)) {
@@ -83,29 +111,21 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
                                 }
                             } else if (currentBuilding.name == "wall") {
                                 if (firstPointPlaced) {
-                                    if (Input.GetMouseButtonDown(1)) {
-                                        firstPointPlaced = false;
-                                    }
                                     lastPoint = hit.point;
-                                    float wallUnitLength = currentBuilding.transform.Find("Model").GetComponent<MeshFilter>().mesh.bounds.size.z/2.3f * currentBuilding.transform.Find("Model").localScale.z;
+                                    float wallUnitLength = currentBuilding.transform.Find("Model").GetComponent<MeshFilter>().mesh.bounds.size.z/3f * currentBuilding.transform.Find("Model").localScale.z;
                                     float pointDistance = Vector3.Distance(firstPoint, lastPoint);
 
                                     float noWalls = pointDistance/wallUnitLength;
                                     int mapLayer = ~(1 <<11);
                                     if (wallet.canAfford(wood * (int)noWalls, food * (int)noWalls)) {
                                         RaycastHit info;
-                                        if (!Physics.Linecast(firstPoint, lastPoint, out info, mapLayer) || info.collider.gameObject.name == "wall") {
-                                            for (int i = 0; i < noWalls; i++) {
-                                                Vector3 destination = Vector3.Lerp(firstPoint, lastPoint, (float)i * (1f/noWalls));
-                                                wallet.makeTransaction(wood, food);
+                                        if (!Physics.Linecast(firstPoint, lastPoint, out info, mapLayer) || info.collider.gameObject.name == "wall" || info.collider.gameObject.GetComponent<Attackable>().prefabName == "Wall_Corner") {
+                                            wallet.makeTransaction(wood * (int)noWalls, food * (int)noWalls);
+                                            StartCoroutine(placeWalls(noWalls, firstPointSnapped, lastPointSnapped));
 
-                                                GameObject placedBuilding = PhotonNetwork.Instantiate(currentBuilding.GetComponent<Attackable>().prefabName, destination, Quaternion.LookRotation(lastPoint - destination), 0);
-                                                placedBuilding.transform.Find("Dust").gameObject.GetComponent<ParticleSystem>().Emit(30);
-                                                placedBuilding.GetComponent<buildingGhost>().active = false;
-                                                placedBuilding.GetComponent<ownership>().capture(wallet);
-                                            
-                                                AudioSource.PlayClipAtPoint(plopSounds[Random.Range(0, plopSounds.Length - 1)], destination);
-                                            }
+                                            firstPointPlaced = false;
+                                            lastPointSnapped = false;
+                                            firstPointSnapped = false;
                                         } else {
                                             StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
                                             StartCoroutine(flashRed(info.collider.gameObject, 0.2f));
@@ -116,8 +136,6 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
                                         tooltips.flashLackResources();
                                         StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
                                     }
-
-                                    firstPointPlaced = false;
                                 } else {
                                     firstPoint = hit.point;
                                     firstPointPlaced = true;
@@ -184,6 +202,28 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
         return false;
     }
 
+    private bool wallInRange(Vector3 location, float range) {
+        Collider[] hitColliders = Physics.OverlapSphere(location, range);
+        for (int i = 0; i < hitColliders.Length; i++) {
+            if (hitColliders[i].gameObject.GetComponent<Attackable>() != null && hitColliders[i].gameObject.GetComponent<Attackable>().prefabName == "Wall_Corner") {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private Vector3 snapWallInRange(Vector3 location, float range) {
+        Collider[] hitColliders = Physics.OverlapSphere(location, range);
+        for (int i = 0; i < hitColliders.Length; i++) {
+            if (hitColliders[i].gameObject.GetComponent<Attackable>() != null && hitColliders[i].gameObject.GetComponent<Attackable>().prefabName == "Wall_Corner") {
+                return hitColliders[i].transform.position;
+            }
+        }
+
+        return new Vector3(0, 0, 0);
+    }
+
     private IEnumerator flashRed(GameObject building, float offset = 0.2f) {
         Renderer renderer = building.transform.Find("Model").gameObject.GetComponent<MeshRenderer>();
 
@@ -229,5 +269,33 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
         AudioSource.PlayClipAtPoint(plopSounds[Random.Range(0, plopSounds.Length - 1)], destination);
 
         Destroy(building);
+    }
+
+    private IEnumerator placeWalls(float noWalls, bool firstPointSnapped, bool lastPointSnapped) {
+        print(firstPointSnapped);
+        print(lastPointSnapped);
+        for (int i = 0; i <= (int)noWalls; i++) {
+            Vector3 destination = Vector3.Lerp(firstPoint, lastPoint, (float)i * (1f/noWalls));
+            GameObject placedBuilding = null;
+            if ((i == 0 && !firstPointSnapped) || (i == (int)noWalls && !lastPointSnapped)) {
+                print("CREATING TOWER");
+                print(i);
+                placedBuilding = PhotonNetwork.Instantiate("Wall_Corner", destination, Quaternion.LookRotation(lastPoint - destination), 0);
+                placedBuilding.GetComponent<Wall>().prefabName = "Wall_Corner";
+            } else {
+                placedBuilding = PhotonNetwork.Instantiate("Wall", destination, Quaternion.LookRotation(lastPoint - destination), 0);
+            }
+
+            if (placedBuilding != null) {
+                placedBuilding.transform.Find("Dust").gameObject.GetComponent<ParticleSystem>().Emit(30);
+                placedBuilding.GetComponent<buildingGhost>().active = false;
+                placedBuilding.GetComponent<ownership>().capture(wallet);
+            
+                AudioSource.PlayClipAtPoint(plopSounds[Random.Range(0, plopSounds.Length - 1)], destination);
+            }
+            yield return null;
+        }
+
+        currentBuilding.gameObject.GetComponent<buildingGhost>().setColliding(false);
     }
 }

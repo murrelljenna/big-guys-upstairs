@@ -17,7 +17,7 @@ public class GuardTower : Unit
         this.woodCost = 40;
         this.foodCost = 0;
 
-        this.atk = 5;
+        this.atk = 3;
         this.hp = 125;
         this.lastHP = this.hp;
         this.rng = 4f;

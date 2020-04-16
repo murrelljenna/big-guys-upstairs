@@ -57,48 +57,37 @@ public class GameManager : MonoBehaviourPunCallbacks
 		    	for (int i = 0; i < colours.Count; i++) {
 					possibleColours.Add(i);
 				}
-/*
-				int index = UnityEngine.Random.Range(0, possibleColours.Count);
-				ExitGames.Client.Photon.Hashtable playerColour = new ExitGames.Client.Photon.Hashtable();
-		    	playerColour.Add("color", possibleColours[index].ToString());
-		    	possibleColours.RemoveAt(index);
-		    	PhotonNetwork.SetPlayerCustomProperties(playerColour);
-				*/
 
 		    	spawnManager = PhotonNetwork.InstantiateSceneObject(this.spawnManagerPrefab.name, new Vector3(0, 0, 0), Quaternion.identity, 0).GetComponent<SpawnManager>();
 		    	GameObject[] resourceSpawners = GameObject.FindGameObjectsWithTag("resourceSpawner");
 		    	for (int i = 0; i < resourceSpawners.Length; i++) {
 		    		resourceSpawners[i].GetComponent<SpawnTile>().spawnResource();
 				}
+		    } else {
+		    	StartCoroutine(getSpawnManager());
 		    }
 		}
 	}
 
+	void OnEnable() {
+		base.OnEnable();
+	}
+
+	void OnDisable() {
+		base.OnDisable();
+	}
+
     public override void OnPlayerEnteredRoom(Player other) {
     	Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName);
-    	Debug.Log(PhotonNetwork.IsMasterClient);
 	    if (PhotonNetwork.IsMasterClient) {
-	    	/*
-	    	int index = UnityEngine.Random.Range(0, possibleColours.Count);
-
-	    	ExitGames.Client.Photon.Hashtable playerSettings = new ExitGames.Client.Photon.Hashtable();
-	    	playerSettings.Add("color", possibleColours[index].ToString());
-	    	possibleColours.RemoveAt(index); 
-
-	    	Debug.Log("Printing Colours");
-	      	for (int i = 0; i < possibleColours.Count; i++) {
-		    	Debug.Log(possibleColours[i]);
-		    }            
-
-		    Debug.LogFormat("SETTING COLOUR FOR PLAYER {0}", other.NickName);
-	    	other.SetCustomProperties(playerSettings);
-*/
+	
 	        Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
 	    }
 	}
 
     public void LeaveRoom()
     {
+    	print(spawnManager != null);
     	spawnManager.cleanupSpawns();
         PhotonNetwork.LeaveRoom();
     }
@@ -157,5 +146,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     	if (stillPlaying == 1) {
     		winner.GetComponent<game.assets.Player>().win();
     	}
+    }
+
+    private IEnumerator getSpawnManager() {
+    	GameObject sm = GameObject.Find("SpawnManager(Clone)");
+    	print(sm.name);
+		if (spawnManager == null) {
+			yield return null;		
+		} else {
+			spawnManager = sm.GetComponent<SpawnManager>();
+		}
     }
 }

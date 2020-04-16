@@ -97,12 +97,10 @@ public class SpawnManager : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     public void cleanupSpawns() {
-    	Debug.Log("test");
     	clearPoint(spawnIndex);
 	}
     
     public void spawnPlayer() {
-    	Debug.Log("SPAWNING PLAYER?");
     	localPlayer = PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0, 0, 0), Quaternion.identity, 0);
 
 		Vector3 spawnPoint = getAvailableSpawn(localPlayer.GetComponent<game.assets.Player>().playerID);

@@ -104,6 +104,7 @@
     <Compile Include="Assets\Scripts\buildingGhost.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Blur.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\MotionBlur.cs" />
+    <Compile Include="Assets\Scripts\Src\Controllers\AudioController.cs" />
     <Compile Include="Assets\Standard Assets\Cameras\Scripts\ProtectCameraFromWallClip.cs" />
     <Compile Include="Assets\Standard Assets\Utility\WaypointProgressTracker.cs" />
     <Compile Include="Assets\Scripts\syncHealth.cs" />
@@ -258,7 +259,7 @@
     <Compile Include="Assets\Scripts\IdleGrouping.cs" />
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\Standard Assets\Utility\AutoMobileShaderSwitch.cs" />
-    <Compile Include="Assets\Scripts\Src\Controllers\AudioController.cs" />
+    <Compile Include="Assets\Scripts\Test\InitializeGameOnStart.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />

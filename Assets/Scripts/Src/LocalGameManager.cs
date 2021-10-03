@@ -63,8 +63,8 @@ namespace game.assets
 
         private void onSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            instantiateLocalPlayerStart();
             instantiateClientSingleton();
+            instantiateLocalPlayerStart();
             for (int i = 0; i < spawnPoints.Length; i++)
             {
                 // Spawn some ai shit or something

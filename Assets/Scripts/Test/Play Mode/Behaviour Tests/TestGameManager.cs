@@ -24,7 +24,7 @@ namespace Tests
 
             yield return new WaitForSeconds(1);
 
-            gameManager = GameObject.Find("GameManager").GetComponent<LocalGameManager>();
+            gameManager = GameObject.Find(MagicWords.GameObjectNames.GameManager).GetComponent<LocalGameManager>();
             yield return new EnterPlayMode();
         }
 

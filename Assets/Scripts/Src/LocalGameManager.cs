@@ -44,7 +44,6 @@ namespace game.assets
         private Vector3[] spawnPoints;
 
         // Initialize always with an empty player - this makes testing easier, as the ownership will work.
-
         public player.Player[] players = new player.Player[1] { new player.Player() };
 
         // Start is called before the first frame update
@@ -59,6 +58,11 @@ namespace game.assets
             SceneManager.sceneLoaded += onSceneLoaded;
             SceneManager.LoadScene(mapName);
             players = new player.Player[spawnPoints.Length];
+            for (int i = 0; i < players.Length; i++) {
+                PlayerColour colour = pickFirstAvailableColour();
+                players[i] = new player.Player();
+                players[i].colour = pickFirstAvailableColour();
+            }
         }
 
         private void onSceneLoaded(Scene scene, LoadSceneMode mode)

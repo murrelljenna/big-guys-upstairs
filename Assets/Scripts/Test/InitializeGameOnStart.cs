@@ -9,8 +9,6 @@ public class InitializeGameOnStart : MonoBehaviour
     public Vector3 playerSpawn;
     private const string scenePath = "Assets/Scenes/TestScenes/Manual Test Scenes/TestLoadGameAndPlay/TestPlayDontUseThisDirectly.unity";
 
-
-
     void Start()
     {
         LocalGameManager gameManager = GameObject.Find(MagicWords.GameObjectNames.GameManager).GetComponent<LocalGameManager>();

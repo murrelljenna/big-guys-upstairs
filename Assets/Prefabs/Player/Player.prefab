@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5412320224816988114}
   - component: {fileID: 5412320224816988140}
   - component: {fileID: 5412320224816988141}
+  - component: {fileID: 1345362037781516752}
   m_Layer: 13
   m_Name: Building Tool
   m_TagString: Untagged
@@ -46,9 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71445cd84a35ba24b82b69eecc55d556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 3289195153907509699, guid: 13d3dd0094aab5c4589a19a52dab62ea, type: 3}
   price:
-    wood: 0
+    wood: 75
     food: 0
     gold: 0
     stone: 0
@@ -143,6 +144,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1345362037781516752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5412320224816988112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d14972a4382c53641809be0ef6563b98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &5412320224967434352
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ using UnityEngine;
 using game.assets.ui;
 using game.assets.utilities;
 using game.assets.ai;
+using static game.assets.utilities.GameUtils;
 
 namespace game.assets.interaction
 {
@@ -18,13 +19,18 @@ namespace game.assets.interaction
 
         private MouseEvents mouseEvents;
 
-        CommandToolUIController uiController;
-
         public AttackAggregation attackAggregation = new AttackAggregation();
+
+        private CommandUIController uiController;
 
         private void OnDisable()
         {
             clearSelection();
+        }
+
+        private void OnEnable()
+        {
+            uiController = GameObject.Find(MagicWords.GameObjectNames.CommandMenu).GetComponent<CommandUIController>();
         }
 
         private void Start()
@@ -51,7 +57,17 @@ namespace game.assets.interaction
                 Attack attacker = hit.collider.gameObject.GetComponent<Attack>();
                 if (attacker != null && attacker.IsMine())
                 {
-                    attackAggregation.toggleInclude(attacker);
+                    if (attackAggregation.contains(attacker))
+                    {
+                        attackAggregation.remove(attacker);
+                        uiController.removeCard(attacker.GetComponent<Health>());
+                    }
+                    else
+                    {
+                        attacker.select();
+                        attackAggregation.add(attacker);
+                        uiController.addCard(attacker.GetComponent<Health>());
+                    }
                 }
             }
         }
@@ -78,9 +94,10 @@ namespace game.assets.interaction
             {
                 Attack unit = hitColliders[i].GetComponent<Attack>();
 
-                if (unit != null && unit.IsMine())
+                if (unit != null && unit.IsMine() && !attackAggregation.contains(unit))
                 {
                     attackAggregation.add(unit);
+                    uiController.addCard(unit.GetComponent<Health>()); //TODO: Rethink this a bit, I'm doing unsafe things for convenience
                 }
             }
         }
@@ -106,6 +123,7 @@ namespace game.assets.interaction
 
         private void clearSelection() {
             attackAggregation.clear();
+            uiController.clearCards();
         }
     }
 }

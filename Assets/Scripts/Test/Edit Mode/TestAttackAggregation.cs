@@ -55,22 +55,6 @@ namespace Tests
         }
 
         [Test]
-        public void TestToggleIncludeAddsWhenNotPresent()
-        {
-            attackAggregation.toggleInclude(attacks[1]);
-            Assert.True(attackAggregation.units.Contains(attacks[1]));
-        }
-
-        [Test]
-        public void TestToggleIncludeRemovesWhenPresent()
-        {
-            Attack unit = attacks[1];
-            attackAggregation.add(unit);
-            attackAggregation.toggleInclude(unit);
-            Assert.False(attackAggregation.units.Contains(unit));
-        }
-
-        [Test]
         public void TestCanGrabAllUnitsThatMove()
         {
             attackAggregation = new AttackAggregation(new List<Attack>(attacks));

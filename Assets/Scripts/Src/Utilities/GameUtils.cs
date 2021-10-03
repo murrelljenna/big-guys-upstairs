@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text.RegularExpressions;
 
 namespace game.assets.utilities {
     public static class GameUtils
@@ -37,6 +38,13 @@ namespace game.assets.utilities {
             public static PlayerColour Pink = new PlayerColour("pink", "#FF80EB", Color.magenta);
             public static PlayerColour White = new PlayerColour("white", "#FFFFFF", Color.white);
             public static PlayerColour Black = new PlayerColour("black", "#9F9F9F", Color.black);
+        }
+
+        public static string normalizePrefabName(string name)
+        {
+            string rx = "\\(([0-9]*|Clone)\\)";
+
+            return Regex.Replace(name, rx, "");
         }
 
         public static GameObject[] findGameObjectsInRange(Vector3 center, float range)
@@ -78,6 +86,7 @@ namespace game.assets.utilities {
                 public static string ClientSingleton = "ClientSingleton";
                 public static string FirstPersonCharacter = "FirstPersonCharacter";
                 public static string BuildingMenu = "BuildingMenu";
+                public static string CommandMenu = "CommandMenu";
             }
         }
 

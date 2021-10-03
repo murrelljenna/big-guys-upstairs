@@ -604,7 +604,7 @@ GameObject:
   - component: {fileID: 2511031493098999184}
   - component: {fileID: 5410483921936076578}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -820,7 +820,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7463016634798160902}
-  - component: {fileID: 6299632303596031154}
+  - component: {fileID: 3019430115377983314}
   m_Layer: 5
   m_Name: unitCardC
   m_TagString: unitCard
@@ -852,7 +852,7 @@ RectTransform:
   m_AnchoredPosition: {x: -25.599997, y: 126.7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6299632303596031154
+--- !u!114 &3019430115377983314
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -861,7 +861,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 490756027705442977}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -1140,7 +1140,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6308455091931954243}
-  - component: {fileID: 607243820695329903}
+  - component: {fileID: 7272851196195076379}
   m_Layer: 5
   m_Name: unitCardF
   m_TagString: unitCard
@@ -1172,7 +1172,7 @@ RectTransform:
   m_AnchoredPosition: {x: 1.4000032, y: 126.7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &607243820695329903
+--- !u!114 &7272851196195076379
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1181,7 +1181,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 621667458917743974}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -1495,7 +1495,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6853087901106447254}
-  - component: {fileID: 4424083624883615554}
+  - component: {fileID: 4064095238262302768}
   m_Layer: 5
   m_Name: unitCardI
   m_TagString: unitCard
@@ -1527,7 +1527,7 @@ RectTransform:
   m_AnchoredPosition: {x: 28.400003, y: 126.7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4424083624883615554
+--- !u!114 &4064095238262302768
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1536,7 +1536,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 762821869067930225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -1775,7 +1775,7 @@ GameObject:
   - component: {fileID: 5182499335955975591}
   - component: {fileID: 8670137270286875640}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2136,7 +2136,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7339889626664787018}
-  - component: {fileID: 8991611191986869314}
+  - component: {fileID: 383140195023453542}
   m_Layer: 5
   m_Name: unitCardJ
   m_TagString: unitCard
@@ -2168,7 +2168,7 @@ RectTransform:
   m_AnchoredPosition: {x: 37.4, y: 126.7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8991611191986869314
+--- !u!114 &383140195023453542
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2177,7 +2177,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1170495056495852554}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -2954,7 +2954,7 @@ GameObject:
   - component: {fileID: 6176992550586987149}
   - component: {fileID: 3913639946935120710}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3026,7 +3026,7 @@ GameObject:
   - component: {fileID: 4339328433577653083}
   - component: {fileID: 9210658405025297904}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3249,7 +3249,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6941351171926893485}
-  - component: {fileID: 2097293350222742820}
+  - component: {fileID: 2857364457402658767}
   m_Layer: 5
   m_Name: unitCardX
   m_TagString: unitCard
@@ -3281,7 +3281,7 @@ RectTransform:
   m_AnchoredPosition: {x: 46.4, y: 80}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2097293350222742820
+--- !u!114 &2857364457402658767
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3290,7 +3290,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1658639167407219851}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -3565,7 +3565,7 @@ GameObject:
   - component: {fileID: 2864046479593616342}
   - component: {fileID: 8273441594846018271}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4018,7 +4018,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7756491020774581570}
-  - component: {fileID: 5045872153119411240}
+  - component: {fileID: 2641804757769136640}
   m_Layer: 5
   m_Name: unitCardG
   m_TagString: unitCard
@@ -4050,7 +4050,7 @@ RectTransform:
   m_AnchoredPosition: {x: 10.400003, y: 126.7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5045872153119411240
+--- !u!114 &2641804757769136640
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4059,7 +4059,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1995162026325268123}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -4333,7 +4333,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6032291802894210063}
-  - component: {fileID: 4292836785203285096}
+  - component: {fileID: 6852765833036389503}
   m_Layer: 5
   m_Name: unitCardL
   m_TagString: unitCard
@@ -4365,7 +4365,7 @@ RectTransform:
   m_AnchoredPosition: {x: 55.4, y: 126.7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4292836785203285096
+--- !u!114 &6852765833036389503
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4374,7 +4374,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2049523546147990087}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -4390,7 +4390,7 @@ GameObject:
   - component: {fileID: 1434701991206104560}
   - component: {fileID: 965754300333237605}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4717,7 +4717,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7106052937669520744}
-  - component: {fileID: 8655094805812217284}
+  - component: {fileID: 926724845922414386}
   m_Layer: 5
   m_Name: unitCardQ
   m_TagString: unitCard
@@ -4749,7 +4749,7 @@ RectTransform:
   m_AnchoredPosition: {x: -16.599997, y: 80}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8655094805812217284
+--- !u!114 &926724845922414386
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4758,7 +4758,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2276280725516911797}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -4843,7 +4843,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6624278453166633996}
-  - component: {fileID: 8800746384480213769}
+  - component: {fileID: 3112915046486222166}
   m_Layer: 5
   m_Name: unitCardU
   m_TagString: unitCard
@@ -4875,7 +4875,7 @@ RectTransform:
   m_AnchoredPosition: {x: 19.400003, y: 80}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8800746384480213769
+--- !u!114 &3112915046486222166
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4884,7 +4884,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2352155474327248598}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -5044,7 +5044,7 @@ GameObject:
   - component: {fileID: 3544888545840310186}
   - component: {fileID: 6042558582631975626}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5260,7 +5260,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8054681195965759886}
-  - component: {fileID: 344120082883074150}
+  - component: {fileID: 2780736537608089436}
   m_Layer: 5
   m_Name: unitCardB
   m_TagString: unitCard
@@ -5292,7 +5292,7 @@ RectTransform:
   m_AnchoredPosition: {x: -34.6, y: 126.7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &344120082883074150
+--- !u!114 &2780736537608089436
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5301,7 +5301,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2638268498642041769}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -5314,7 +5314,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1373278844833935529}
-  - component: {fileID: 8922181681338434664}
+  - component: {fileID: 4494961770879535772}
   m_Layer: 5
   m_Name: unitCardH
   m_TagString: unitCard
@@ -5346,7 +5346,7 @@ RectTransform:
   m_AnchoredPosition: {x: 19.400003, y: 126.7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8922181681338434664
+--- !u!114 &4494961770879535772
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5355,7 +5355,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2697845836970997877}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -5521,7 +5521,7 @@ GameObject:
   - component: {fileID: 8990713167474525753}
   - component: {fileID: 165892389340120089}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6406,7 +6406,7 @@ GameObject:
   - component: {fileID: 3797309884600598353}
   - component: {fileID: 7291561755594426602}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6893,7 +6893,7 @@ GameObject:
   - component: {fileID: 8865899159170984729}
   - component: {fileID: 802206748211842530}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6962,7 +6962,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6039901944073102318}
-  - component: {fileID: 6657815811554688213}
+  - component: {fileID: 4767008290031562452}
   m_Layer: 5
   m_Name: unitCardZ
   m_TagString: unitCard
@@ -6994,7 +6994,7 @@ RectTransform:
   m_AnchoredPosition: {x: 64.4, y: 80}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6657815811554688213
+--- !u!114 &4767008290031562452
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7003,7 +7003,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3578779333303043898}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -7823,7 +7823,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2232095037387624359}
-  - component: {fileID: 7955397482977622495}
+  - component: {fileID: 6902912085198593237}
   m_Layer: 5
   m_Name: unitCardN
   m_TagString: unitCard
@@ -7855,7 +7855,7 @@ RectTransform:
   m_AnchoredPosition: {x: -43.6, y: 80}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7955397482977622495
+--- !u!114 &6902912085198593237
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7864,7 +7864,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4076557695724073884}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -8222,7 +8222,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3255485688681291319}
-  - component: {fileID: 918847280888792616}
+  - component: {fileID: 6522484834377177924}
   m_Layer: 5
   m_Name: unitCardO
   m_TagString: unitCard
@@ -8254,7 +8254,7 @@ RectTransform:
   m_AnchoredPosition: {x: -34.6, y: 80}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &918847280888792616
+--- !u!114 &6522484834377177924
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8263,7 +8263,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4201699217322648599}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -8540,7 +8540,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4796153441281450707}
-  - component: {fileID: 2458900345675162640}
+  - component: {fileID: 2664291571173069405}
   m_Layer: 5
   m_Name: unitCardD
   m_TagString: unitCard
@@ -8572,7 +8572,7 @@ RectTransform:
   m_AnchoredPosition: {x: -16.599997, y: 126.7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2458900345675162640
+--- !u!114 &2664291571173069405
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8581,7 +8581,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4335454262179768059}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -8899,7 +8899,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7865069151565566386}
-  - component: {fileID: 5188156668108550290}
+  - component: {fileID: 6061570689988946045}
   m_Layer: 5
   m_Name: unitCardR
   m_TagString: unitCard
@@ -8931,7 +8931,7 @@ RectTransform:
   m_AnchoredPosition: {x: -7.5999966, y: 80}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5188156668108550290
+--- !u!114 &6061570689988946045
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8940,7 +8940,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4660958022824873660}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -9097,7 +9097,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2261293923079451671}
-  - component: {fileID: 1294853183383219146}
+  - component: {fileID: 11189019657341275}
   m_Layer: 5
   m_Name: CommandMenu
   m_TagString: Untagged
@@ -9126,7 +9126,7 @@ RectTransform:
   m_AnchoredPosition: {x: 23.813293, y: -198}
   m_SizeDelta: {x: 491.78, y: 100.57}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1294853183383219146
+--- !u!114 &11189019657341275
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9135,7 +9135,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4677287248785821407}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6844699bb82b6a046a56fa1acc37d20b, type: 3}
+  m_Script: {fileID: 11500000, guid: 492fc62614ce1924f858c87d26ea7720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4716650262890962775
@@ -9592,7 +9592,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3216220349941433890}
-  - component: {fileID: 8469709060570887117}
+  - component: {fileID: 4281010786135646549}
   m_Layer: 5
   m_Name: unitCardK
   m_TagString: unitCard
@@ -9624,7 +9624,7 @@ RectTransform:
   m_AnchoredPosition: {x: 46.4, y: 126.7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8469709060570887117
+--- !u!114 &4281010786135646549
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9633,7 +9633,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5026199493417043911}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -9724,7 +9724,7 @@ GameObject:
   - component: {fileID: 3979624180975818708}
   - component: {fileID: 2163605980363070221}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9865,7 +9865,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8257162454246110480}
-  - component: {fileID: 2783141262438311980}
+  - component: {fileID: 2122898438236403468}
   m_Layer: 5
   m_Name: unitCardW
   m_TagString: unitCard
@@ -9897,7 +9897,7 @@ RectTransform:
   m_AnchoredPosition: {x: 37.4, y: 80}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2783141262438311980
+--- !u!114 &2122898438236403468
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9906,7 +9906,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5305993797837073576}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -10839,7 +10839,7 @@ GameObject:
   - component: {fileID: 182447129764617195}
   - component: {fileID: 658410158061792909}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11150,7 +11150,7 @@ GameObject:
   - component: {fileID: 8566490507110118138}
   - component: {fileID: 2409811531472649135}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11502,7 +11502,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5040064274653692828}
-  - component: {fileID: 5099250754379691024}
+  - component: {fileID: 890616824214387902}
   m_Layer: 5
   m_Name: unitCardT
   m_TagString: unitCard
@@ -11534,7 +11534,7 @@ RectTransform:
   m_AnchoredPosition: {x: 10.400003, y: 80}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5099250754379691024
+--- !u!114 &890616824214387902
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11543,7 +11543,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6102868163265001834}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -12235,7 +12235,7 @@ GameObject:
   - component: {fileID: 693429707537714387}
   - component: {fileID: 9103369371310742033}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12419,7 +12419,7 @@ GameObject:
   - component: {fileID: 7882641648934420736}
   - component: {fileID: 8418334967796088778}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13184,7 +13184,7 @@ GameObject:
   - component: {fileID: 8150139847185459340}
   - component: {fileID: 7412621060569846188}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13555,7 +13555,7 @@ GameObject:
   - component: {fileID: 1252674387656018357}
   - component: {fileID: 8976436368783248306}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14071,7 +14071,7 @@ GameObject:
   - component: {fileID: 7367106741506150327}
   - component: {fileID: 7339582958801242527}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14140,7 +14140,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3930336964936293957}
-  - component: {fileID: 6513728415164033639}
+  - component: {fileID: 2268292831639356419}
   m_Layer: 5
   m_Name: unitCardA
   m_TagString: unitCard
@@ -14172,7 +14172,7 @@ RectTransform:
   m_AnchoredPosition: {x: -43.6, y: 126.7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6513728415164033639
+--- !u!114 &2268292831639356419
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14181,7 +14181,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7394292252378096162}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -14358,7 +14358,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1508003387355942833}
-  - component: {fileID: 5084471609464424526}
+  - component: {fileID: 5021427864748429920}
   m_Layer: 5
   m_Name: unitCardM
   m_TagString: unitCard
@@ -14390,7 +14390,7 @@ RectTransform:
   m_AnchoredPosition: {x: 64.4, y: 126.7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5084471609464424526
+--- !u!114 &5021427864748429920
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14399,7 +14399,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7497416567826718151}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -14415,7 +14415,7 @@ GameObject:
   - component: {fileID: 1084101218287738032}
   - component: {fileID: 5378246943337805494}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15097,7 +15097,7 @@ GameObject:
   - component: {fileID: 6483562548823122568}
   - component: {fileID: 7377710470525320692}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15389,7 +15389,7 @@ GameObject:
   - component: {fileID: 5831754523110238642}
   - component: {fileID: 6403380199204903628}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16168,7 +16168,7 @@ GameObject:
   - component: {fileID: 5282743337755215434}
   - component: {fileID: 5648818796579441074}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16312,7 +16312,7 @@ GameObject:
   - component: {fileID: 4338340035904569270}
   - component: {fileID: 6664809934905527359}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16384,7 +16384,7 @@ GameObject:
   - component: {fileID: 6233637092466738028}
   - component: {fileID: 3237244272050787126}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16600,7 +16600,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5389365276601905168}
-  - component: {fileID: 2121312801526971069}
+  - component: {fileID: 373065934583747690}
   m_Layer: 5
   m_Name: unitCardV
   m_TagString: unitCard
@@ -16632,7 +16632,7 @@ RectTransform:
   m_AnchoredPosition: {x: 28.400003, y: 80}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2121312801526971069
+--- !u!114 &373065934583747690
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -16641,7 +16641,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8586916054027415125}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -16962,7 +16962,7 @@ GameObject:
   - component: {fileID: 914313030365666257}
   - component: {fileID: 6968690029702027123}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17031,7 +17031,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4747492940563714759}
-  - component: {fileID: 1338509223059018236}
+  - component: {fileID: 2494136910052351312}
   m_Layer: 5
   m_Name: unitCardS
   m_TagString: unitCard
@@ -17063,7 +17063,7 @@ RectTransform:
   m_AnchoredPosition: {x: 1.4000032, y: 80}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1338509223059018236
+--- !u!114 &2494136910052351312
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17072,7 +17072,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8822534197382400069}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -17126,7 +17126,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1358356597108980203}
-  - component: {fileID: 3527076109764836918}
+  - component: {fileID: 7562637255290031878}
   m_Layer: 5
   m_Name: unitCardY
   m_TagString: unitCard
@@ -17158,7 +17158,7 @@ RectTransform:
   m_AnchoredPosition: {x: 55.4, y: 80}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3527076109764836918
+--- !u!114 &7562637255290031878
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17167,7 +17167,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8882072087418615165}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -17410,7 +17410,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4373139893155040600}
-  - component: {fileID: 7818684574357018835}
+  - component: {fileID: 8501819683094193191}
   m_Layer: 5
   m_Name: unitCardE
   m_TagString: unitCard
@@ -17442,7 +17442,7 @@ RectTransform:
   m_AnchoredPosition: {x: -7.5999966, y: 126.7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7818684574357018835
+--- !u!114 &8501819683094193191
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17451,7 +17451,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8931028464608101711}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -17467,7 +17467,7 @@ GameObject:
   - component: {fileID: 3961536996994430661}
   - component: {fileID: 3077701316056440616}
   m_Layer: 5
-  m_Name: Militia
+  m_Name: Worker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17837,7 +17837,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2347162404623220244}
-  - component: {fileID: 8422725986163486830}
+  - component: {fileID: 725211101063378884}
   m_Layer: 5
   m_Name: unitCardP
   m_TagString: unitCard
@@ -17869,7 +17869,7 @@ RectTransform:
   m_AnchoredPosition: {x: -25.599997, y: 80}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8422725986163486830
+--- !u!114 &725211101063378884
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17878,7 +17878,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9222481693052407215}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d8efe3389b67a46bd129e8bf5dad21, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bff61eeceef0469172de2efa8bc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}

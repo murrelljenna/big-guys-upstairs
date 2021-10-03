@@ -30,17 +30,14 @@ public class AttackAggregation : IAttack
         }
     }
 
-    public void toggleInclude(Attack unit)
+    public void remove(Attack unit)
     {
-        if (units.Contains(unit))
-        {
-            units.Remove(unit);
-        }
-        else
-        {
-            unit.select();
-            units.Add(unit);
-        }
+        units.Remove(unit);
+    }
+
+    public bool contains(Attack unit)
+    {
+        return units.Contains(unit);
     }
 
     public MovementAggregation unitsThatCanMove()

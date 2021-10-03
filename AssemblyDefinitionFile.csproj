@@ -259,6 +259,9 @@
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\Standard Assets\Utility\AutoMobileShaderSwitch.cs" />
     <Compile Include="Assets\Scripts\Test\InitializeGameOnStart.cs" />
+    <Compile Include="Assets\Scripts\Src\UI\Controllers\CommandUIController.cs" />
+    <Compile Include="Assets\Scripts\Src\UI\Controllers\CommandUICardController.cs" />
+    <Compile Include="Assets\Scripts\Src\UI\SwitchOffCommandUI.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />

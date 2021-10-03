@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 909204577485714841}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: NetworkBehaviour
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 8034361885205570884}
   - component: {fileID: 260442186284174856}
   - component: {fileID: 5888268543141131556}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Unit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -362,7 +362,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7437027141639411846}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: ClientBehaviour
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -450,6 +450,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Audio
+      objectReference: {fileID: 0}
+    - target: {fileID: 3737650219146999214, guid: 4c668226947932c4d99b9cb4f2c4c6a1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1765820547613332980, guid: 4c668226947932c4d99b9cb4f2c4c6a1, type: 3}
@@ -577,6 +582,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5512006293938087309, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5512006293938179049, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 5840929741215055898, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
         type: 3}

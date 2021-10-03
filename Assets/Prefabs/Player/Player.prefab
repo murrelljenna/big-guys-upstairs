@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5412320224816988114}
   - component: {fileID: 5412320224816988140}
   - component: {fileID: 5412320224816988141}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Building Tool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5412320225745691966}
   - component: {fileID: 5412320225745691967}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Tools
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 5412320225776288591}
   - component: {fileID: 5412320225776288590}
   - component: {fileID: 5412320225776288589}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: PlayerName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -346,7 +346,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5412320225974601537}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -381,7 +381,7 @@ GameObject:
   - component: {fileID: 5412320226099153209}
   - component: {fileID: 5412320226099153208}
   - component: {fileID: 5412320226099153211}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -491,7 +491,7 @@ GameObject:
   - component: {fileID: 5412320226224618373}
   - component: {fileID: 5412320226224618375}
   - component: {fileID: 5412320226224618374}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Command Tool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -575,6 +575,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cloud
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a6acf282455bcbe49b74fd34fff0a6be, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a6acf282455bcbe49b74fd34fff0a6be, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -649,6 +653,14 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_Name
       value: FPSController
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_LocalPosition.x

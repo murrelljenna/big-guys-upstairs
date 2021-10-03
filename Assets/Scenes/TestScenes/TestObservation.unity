@@ -247,7 +247,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2024771847}
   - component: {fileID: 2024771846}
-  - component: {fileID: 2024771845}
   - component: {fileID: 2024771848}
   m_Layer: 0
   m_Name: Observer
@@ -256,14 +255,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &2024771845
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2024771844}
-  m_Enabled: 1
 --- !u!20 &2024771846
 Camera:
   m_ObjectHideFlags: 0

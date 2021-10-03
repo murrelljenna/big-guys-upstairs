@@ -25,12 +25,10 @@ public class MouseEvents : MonoBehaviour
             if (lastClick <= DOUBLE_CLICK_TIME)
             {
                 leftDoubleClick.Invoke();
-                Debug.Log("DoubleLeftClick");
             }
             else
             {
                 leftClick.Invoke();
-                Debug.Log("LeftClick");
             }
 
             lastClickTime = Time.time;

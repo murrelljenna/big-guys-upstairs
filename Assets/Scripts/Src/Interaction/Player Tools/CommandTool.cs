@@ -109,7 +109,7 @@ namespace game.assets.interaction
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity)) {
                 Health health = hit.collider.GetComponent<Health>();
-                if (health != null && !health.IsMine())
+                if (health != null && health.IsEnemy())
                 {
                     attackAggregation.attack(health);
                 }

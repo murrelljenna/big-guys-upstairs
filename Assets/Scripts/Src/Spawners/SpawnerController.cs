@@ -21,6 +21,15 @@ namespace game.assets.spawners
             return null;
         }
 
+        public GameObject SpawnAsPlayer(GameObject prefab, ResourceSet price, Vector3 spawnLocation, Quaternion rotation, player.Player player) {
+            if (transactor.canAfford(price))
+            {
+                transactor.takeResources(price);
+                return instantiator.InstantiateAsPlayer(prefab, spawnLocation, rotation, player);
+            }
+            return null;
+        }
+
         public void setInstantiator(IInstantiator instantiator)
         {
             this.instantiator = instantiator;

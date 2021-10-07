@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\Attackables\WoodTile.cs" />
     <Compile Include="Assets\Scripts\MapReader.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\GlobalFog.cs" />
+    <Compile Include="Assets\Scripts\Src\UI\Controllers\CommandUICardController.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\ContrastStretch.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\VignetteAndChromaticAberration.cs" />
     <Compile Include="Assets\Scripts\Src\Spawners\SpawnerController.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\VirtualInput.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\ColorCorrectionCurves.cs" />
     <Compile Include="Assets\Pause Menu Assets\Scripts\Pausemenu\SaveSettings.cs" />
+    <Compile Include="Assets\Scripts\Src\UI\SwitchOffCommandUI.cs" />
     <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\Hose.cs" />
     <Compile Include="Assets\Scripts\Attackables\LightInfantry.cs" />
     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\TiltInput.cs" />
@@ -123,11 +125,13 @@
     <Compile Include="Assets\Standard Assets\Utility\DragRigidbody.cs" />
     <Compile Include="Assets\Scripts\Attackables\Archery.cs" />
     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\Joystick.cs" />
+    <Compile Include="Assets\Scripts\Src\AI\AIUnitRecruiter.cs" />
     <Compile Include="Assets\Standard Assets\Utility\CameraRefocus.cs" />
     <Compile Include="Assets\Standard Assets\Utility\PlatformSpecificContent.cs" />
     <Compile Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\Scripts\ThirdPersonCharacter.cs" />
     <Compile Include="Assets\Standard Assets\Editor\Water\Water4\GerstnerDisplaceEditor.cs" />
     <Compile Include="Assets\Standard Assets\Utility\ActivateTrigger.cs" />
+    <Compile Include="Assets\Scripts\Src\UI\Controllers\CommandUIController.cs" />
     <Compile Include="Assets\Scripts\Utility\GameObjectSearcher.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Triangles.cs" />
     <Compile Include="Assets\Pause Menu Assets\Scripts\Utlities\Rotate.cs" />
@@ -158,6 +162,7 @@
     <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\AfterburnerPhysicsForce.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\DepthOfField.cs" />
     <Compile Include="Assets\Fantasy Skybox FREE\Demo\Scripts\GE_FantasySkyboxFREE_UIs.cs" />
+    <Compile Include="Assets\Scripts\Test\InitializeGameOnStart.cs" />
     <Compile Include="Assets\Scripts\Src\Spawners\Instantiation\LocalInstantiator.cs" />
     <Compile Include="Assets\Scripts\Src\PlayerTools\BuilderTool.cs" />
     <Compile Include="Assets\Scripts\Attackables\GuardTower.cs" />
@@ -176,6 +181,7 @@
     <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\ExplosionFireAndDebris.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\ScreenSpaceAmbientOcclusion.cs" />
     <Compile Include="Assets\Scripts\buildingPlacement.cs" />
+    <Compile Include="Assets\Scripts\Src\AI\AIUnitGrouping.cs" />
     <Compile Include="Assets\Scripts\Src\OwnershipOps.cs" />
     <Compile Include="Assets\Standard Assets\Environment\Water\Water\Scripts\SpecularLighting.cs" />
     <Compile Include="Assets\Standard Assets\Utility\WaypointCircuit.cs" />
@@ -258,12 +264,8 @@
     <Compile Include="Assets\Scripts\IdleGrouping.cs" />
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\Standard Assets\Utility\AutoMobileShaderSwitch.cs" />
-    <Compile Include="Assets\Scripts\Test\InitializeGameOnStart.cs" />
-    <Compile Include="Assets\Scripts\Src\UI\Controllers\CommandUIController.cs" />
-    <Compile Include="Assets\Scripts\Src\UI\Controllers\CommandUICardController.cs" />
-    <Compile Include="Assets\Scripts\Src\UI\SwitchOffCommandUI.cs" />
-    <Compile Include="Assets\Scripts\Src\AI\AIUnitGrouping.cs" />
-    <Compile Include="Assets\Scripts\Src\AI\AIUnitRecruiter.cs" />
+    <Compile Include="Assets\Scripts\Src\AI\Barbarian\BarbarianPlayer.cs" />
+    <Compile Include="Assets\Scripts\Src\AI\Barbarian\BarbarianOwnership.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />

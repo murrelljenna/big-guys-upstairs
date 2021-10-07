@@ -16,12 +16,10 @@ namespace game.assets.spawners
         [Tooltip("Networked. Requires Photon network access when ticked.")]
         public bool networked = false;
 
-        protected SpawnerController spawnerController;
+        protected SpawnerController spawnerController = new SpawnerController();
 
-        public void OnEnable()
+        public void Start()
         {
-            spawnerController = new SpawnerController();
-
             spawnerController.setInstantiator(InstantiatorFactory.getInstantiator(networked));
             spawnerController.setTransactor(LocalPlayer.getPlayerDepositor());
         }
@@ -50,6 +48,11 @@ namespace game.assets.spawners
                 spawnCenter.y,
                 randomInCircle.y + spawnCenter.z
             );
+        }
+
+        public GameObject SpawnForPlayer(player.Player player) {
+            Vector3 spawnLocation = getSpawnLocation(this.transform.position);
+            return spawnerController.SpawnAsPlayer(prefab, price, spawnLocation, Quaternion.identity, player);
         }
 
         public void InvokeSpawn()

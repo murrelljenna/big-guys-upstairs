@@ -58,10 +58,9 @@ namespace game.assets.economy {
             Transform tMin = null;
             float minDist = Mathf.Infinity;
             Vector3 currentPos = transform.position;
-            Debug.Log(depositors.Length);
+
             foreach (Depositor depositor in depositors)
             {
-                Debug.Log(depositor.IsMine());
                 if (depositor.IsMine())
                 {
                     float dist = Vector3.Distance(depositor.transform.position, currentPos);

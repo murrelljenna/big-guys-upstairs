@@ -54,6 +54,18 @@ public class AttackAggregation : IAttack
         return new MovementAggregation(unitsThatCanMove);
     }
 
+    public Vector3 location()
+    {
+        if (units.Count > 0)
+        {
+            return units[0].transform.position;
+        }
+        else
+        {
+            return new Vector3(0, 0, 0);
+        }
+    }
+
     public void clear()
     {
         units.Clear();

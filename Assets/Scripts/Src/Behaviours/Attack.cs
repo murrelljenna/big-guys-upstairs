@@ -82,7 +82,7 @@ namespace game.assets.ai
         private Health firstWithReasonablePath(Health[] units) {
             for (int i = 0; i < units.Length; i++)
             {
-                if (units[i].IsEnemy() && units[i].HP > 0)
+                if (units[i].IsEnemyOf(this) && units[i].HP > 0)
                 {
                     float dist = movement.pathLength(units[i].GetComponent<Transform>().position);
                     if (isInRange(units[i].GetComponent<Health>()) || dist < 3f)
@@ -97,7 +97,7 @@ namespace game.assets.ai
 
         public void attack(Health attackee)
         {
-            if (attackee.IsMine())
+            if (!attackee.IsEnemyOf(this))
             {
                 return;
             }

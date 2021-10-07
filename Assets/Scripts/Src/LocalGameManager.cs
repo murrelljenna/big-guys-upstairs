@@ -43,6 +43,8 @@ namespace game.assets
 
         private Vector3[] spawnPoints;
 
+        public BarbarianPlayer barbarianPlayer = new BarbarianPlayer();
+
         // Initialize always with an empty player - this makes testing easier, as the ownership will work.
         public player.Player[] players = new player.Player[1] { new player.Player() };
 
@@ -73,6 +75,7 @@ namespace game.assets
             {
                 // Spawn some ai shit or something
             }
+            barbarianPlayer.Awake();
         }
 
         private void instantiateLocalPlayerStart()
@@ -109,6 +112,11 @@ namespace game.assets
             }
 
             throw new ArgumentException("No available colours found", nameof(availableColours));
+        }
+
+        public static LocalGameManager Get()
+        {
+            return GameObject.Find(MagicWords.GameObjectNames.GameManager).GetComponent<LocalGameManager>();
         }
     }
 }

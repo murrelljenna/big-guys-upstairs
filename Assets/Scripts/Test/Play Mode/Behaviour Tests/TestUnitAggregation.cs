@@ -57,6 +57,11 @@ namespace Tests
             return ret;
         }
 
+        private void createGameObjectWithColliderAt(Vector3 position)
+        {
+
+        }
+
         [UnitySetUp]
         public IEnumerator SetUp()
         {

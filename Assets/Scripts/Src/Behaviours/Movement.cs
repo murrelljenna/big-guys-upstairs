@@ -93,5 +93,15 @@ namespace game.assets.ai
         {
             return GetComponent<NavMeshAgent>().velocity.magnitude;
         }
+
+        public void OnDestroy()
+        {
+            CancelInvoke();
+        }
+
+        public void OnDisable()
+        {
+            CancelInvoke();
+        }
     }
 }

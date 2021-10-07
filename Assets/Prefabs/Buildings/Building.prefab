@@ -422,6 +422,7 @@ GameObject:
   - component: {fileID: 1992698477826989192}
   - component: {fileID: 4584360897601484519}
   - component: {fileID: 9210190332770586156}
+  - component: {fileID: 2796874934670888133}
   m_Layer: 0
   m_Name: Building
   m_TagString: Untagged
@@ -518,7 +519,19 @@ MonoBehaviour:
   maxHP: 200
   onZeroHP:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2796874934670888133}
+        m_TargetAssemblyTypeName: Destroy, AssemblyDefinitionFile
+        m_MethodName: destroy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onMaxHP:
     m_PersistentCalls:
       m_Calls:
@@ -614,6 +627,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 507fdde6f5bf19c428f6e29592faf50c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2796874934670888133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6439999395031838839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8d7b7a84798bc2419f45f089e03b262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &363210224367859632

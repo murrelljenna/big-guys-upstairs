@@ -202,5 +202,15 @@ namespace game.assets.ai
         {
             onSelect.Invoke();
         }
+
+        public void OnDestroy()
+        {
+            CancelInvoke();
+        }
+
+        public void OnDisable()
+        {
+            CancelInvoke();
+        }
     }
 }

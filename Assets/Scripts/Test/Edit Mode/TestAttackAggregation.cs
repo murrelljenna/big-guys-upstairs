@@ -25,6 +25,8 @@ namespace Tests
             for (int i = 0; i < gameObjects.Length / 2; i++)
             {
                 gameObjects[i] = new GameObject("DOESNT MATTER");
+                Health ignore = gameObjects[i].AddComponent(typeof(Health)) as Health;
+                ignore.onZeroHP = new UnityEvent<Health>();
                 attacks[i] = gameObjects[i].AddComponent(typeof(Attack)) as Attack;
                 attacks[i].onSelect = new UnityEvent();
             }
@@ -59,11 +61,23 @@ namespace Tests
         {
             attackAggregation = new AttackAggregation(new List<Attack>(attacks));
             MovementAggregation movementAggregation = attackAggregation.unitsThatCanMove();
-            Debug.Log(movementAggregation.units.Count);
             for (int i = 0; i < movements.Length; i++)
             {
                 Assert.True(movementAggregation.units.Contains(movements[i]));
             }
+        }
+
+        [Test]
+        public void TestRemovesDeadUnits()
+        {
+            Attack attack = attacks[0];
+            Health health = attack.GetComponent<Health>();
+
+            attackAggregation = new AttackAggregation(new List<Attack>(attacks));
+            health.onZeroHP.Invoke(health);
+
+            Assert.False(attackAggregation.contains(attack));
+
         }
 
         [Test]

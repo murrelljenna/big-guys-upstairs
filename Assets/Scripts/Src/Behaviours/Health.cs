@@ -22,7 +22,7 @@ namespace game.assets.ai
         public int maxHP;
 
         [Tooltip("Invoked when HP reaches zero")]
-        public UnityEvent onZeroHP;
+        public UnityEvent<Health> onZeroHP;
 
         [Tooltip("Invoked when HP reaches max")]
         public UnityEvent onMaxHP;
@@ -41,7 +41,7 @@ namespace game.assets.ai
             if (zero())
             {
                 HP = 0;
-                onZeroHP.Invoke();
+                onZeroHP.Invoke(this);
             }
         }
 

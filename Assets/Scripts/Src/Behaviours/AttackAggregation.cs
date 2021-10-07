@@ -10,6 +10,17 @@ public class AttackAggregation : IAttack
     public AttackAggregation(List<Attack> units)
     {
         this.units = units;
+
+        this.units.ForEach(unit => registerDeathCallbackIfCanDie(unit));
+    }
+
+    private void registerDeathCallbackIfCanDie(Attack unit) {
+        Health health = unit.GetComponent<Health>();
+
+        if (health != null)
+        {
+            health.onZeroHP.AddListener(removeOnUnitDied);
+        }
     }
 
     public AttackAggregation()
@@ -22,11 +33,16 @@ public class AttackAggregation : IAttack
         units.ForEach(unit => unit.attack(attackee));
     }
 
+    public void removeOnUnitDied(Health health) {
+        units.Remove(health.GetComponent<Attack>());
+    }
+
     public void add(Attack unit)
     {
         if (!units.Contains(unit))
         {
             units.Add(unit);
+            registerDeathCallbackIfCanDie(unit);
         }
     }
 

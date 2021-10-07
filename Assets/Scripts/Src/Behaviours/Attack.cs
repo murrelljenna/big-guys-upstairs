@@ -185,6 +185,11 @@ namespace game.assets.ai
             }
         }
 
+        public void cancelOrders(Health health)
+        {
+            cancelOrders();
+        }
+
         public void cancelOrders()
         {
             updateTargetLive = false;

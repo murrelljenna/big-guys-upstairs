@@ -22,6 +22,11 @@ namespace Tests
             listenerInvoked = true;
         }
 
+        public void listener(Health health)
+        {
+            listenerInvoked = true;
+        }
+
         [SetUp]
         public void SetUp()
         {
@@ -29,7 +34,7 @@ namespace Tests
             health = gameObject.AddComponent(typeof(Health)) as Health;
 
             health.onLowerHP = new UnityEvent<float, float>();
-            health.onZeroHP = new UnityEvent();
+            health.onZeroHP = new UnityEvent<Health>();
             health.onRaiseHP = new UnityEvent<float, float>();
             health.onMaxHP = new UnityEvent();
 

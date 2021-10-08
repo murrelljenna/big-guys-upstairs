@@ -34,7 +34,7 @@ namespace game.assets.ai
         public UnityEvent onSelect;
 
 
-        private Health attackee;
+        protected Health attackee;
 
         private bool isAttacking = false;
         
@@ -128,7 +128,7 @@ namespace game.assets.ai
                 yield return new WaitUntil (() => isInRange(attackee));
                 movement.stop();
 
-                InvokeRepeating("doDamage", this.attackRate, this.attackRate);
+                InvokeRepeating("doDamageIfShould", this.attackRate, this.attackRate);
             }
 
         }
@@ -144,24 +144,29 @@ namespace game.assets.ai
 
                 yield return new WaitUntil (() => isInRange(attackee));
 
-                InvokeRepeating("doDamage", this.attackRate, this.attackRate);
+                InvokeRepeating("doDamageIfShould", this.attackRate, this.attackRate);
             }
         }
 
-        private void doDamage()
+        private void doDamageIfShould()
         {
             if (isAttackable(attackee))
             {
-
-                onAttack.Invoke();
-                faceTarget(this.attackee.transform.position);
-                this.attackee.lowerHP(this.attackPower);
+                doDamage();
             }
             else
             {
                 cancelOrders();
             }
         }
+
+        protected virtual void doDamage()
+        {
+            onAttack.Invoke();
+            faceTarget(attackee.transform.position);
+            this.attackee.lowerHP(attackPower);
+        }
+
 
         private bool isAttackable(Health attackee) {
             return (attackee != null && attackee.HP > 0);
@@ -177,7 +182,7 @@ namespace game.assets.ai
             return (distance < this.attackRange);
         }
 
-        private void faceTarget(Vector3 position)
+        protected void faceTarget(Vector3 position)
         {
             if (canMove)
             {
@@ -193,7 +198,7 @@ namespace game.assets.ai
         public void cancelOrders()
         {
             updateTargetLive = false;
-            CancelInvoke("doDamage");
+            CancelInvoke("doDamageIfShould");
             // Cancel animation stuff - CancelInvoke("fireProjectile");
             if (canMove)
             {

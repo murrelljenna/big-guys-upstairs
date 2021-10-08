@@ -117,7 +117,7 @@ namespace game.assets.ai
         private IEnumerator moveUntilInRangeAndAttack(Health attackee)
         {
              if (attackee.HP > 0) {
-                if (attackee.tag == "unit") {
+                if (attackee.GetComponent<Movement>() != null) {
                     updateTargetLive = true;
                 }
 
@@ -135,7 +135,7 @@ namespace game.assets.ai
 
         private IEnumerator waitUntilInRangeAndAttack(Health attackee) {
             if (attackee.HP > 0) {
-                if (attackee.tag == "unit") {
+                if (attackee.GetComponent<Movement>() != null) {
                     updateTargetLive = true;
                 }
 

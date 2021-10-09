@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using game.assets.audio;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -105,13 +106,19 @@ namespace game.assets.spawners
                 yield return null;
             }
 
-            GameObject effects = gameObject.transform.Find(GameObjectNames.Effects)?.gameObject;
-            if (effects != null)
-            {
-                effects.GetComponent<EffectsController>()?.PlayRandom("PlopEffects", 30);
-            }
+            playPlopSoundIfCan(gameObject);
+            playPlopEffectIfCan(gameObject);
         }
 
+        private void playPlopSoundIfCan(GameObject gameObject)
+        {
+            gameObject.transform.Find(GameObjectNames.Audio)?.gameObject.GetComponent<AudioController>()?.PlayRandom("PlopSounds");
+        }
+
+        private void playPlopEffectIfCan(GameObject gameObject)
+        {
+            gameObject.transform.Find(GameObjectNames.Effects)?.gameObject.GetComponent<EffectsController>()?.PlayRandom("PlopEffects", 30);
+        }
 
         private Vector3? raycastFromCamera(Camera cam)
         {

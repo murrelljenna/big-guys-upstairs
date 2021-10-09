@@ -21,7 +21,7 @@ namespace game.assets.spawners
 
         public Camera cam;
 
-        private void Start()
+        public override void Start()
         {
             if (cam == null)
             {
@@ -29,6 +29,8 @@ namespace game.assets.spawners
             }
 
             layerMask = 1 << layer;
+
+            base.Start();
         }
 
         public override GameObject Spawn()

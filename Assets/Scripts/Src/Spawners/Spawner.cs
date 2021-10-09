@@ -18,7 +18,7 @@ namespace game.assets.spawners
 
         protected SpawnerController spawnerController = new SpawnerController();
 
-        public void Start()
+        public virtual void Start()
         {
             spawnerController.setInstantiator(InstantiatorFactory.getInstantiator(networked));
             spawnerController.setTransactor(LocalPlayer.getPlayerDepositor());

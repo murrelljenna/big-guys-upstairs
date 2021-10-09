@@ -23,13 +23,10 @@ namespace game.assets.ai {
             Spawner[] spawners = GameObject.FindObjectsOfType<Spawner>();
             Transform tMin = null;
             float minDist = Mathf.Infinity;
-            Debug.Log(spawners.Length);
             foreach (Spawner spawner in spawners)
             {
-                Debug.Log(spawner.name);
                 if (spawner.BelongsTo(player))
                 {
-                    Debug.Log("lol");
                     float dist = Vector3.Distance(spawner.transform.position, position);
                     if (dist < minDist)
                     {

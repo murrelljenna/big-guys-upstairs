@@ -15,13 +15,15 @@ namespace game.assets.economy {
 
         [Tooltip("Invoked each time worker drops off resources at a Town")]
         public UnityEvent dropOffResource;
+        [Tooltip("Invoked each time worker swings their hammer to construct something")]
+        public UnityEvent buildTick;
 
         public int maxInventory = 5;
         public ResourceSet inventory = new ResourceSet();
 
         Movement movement;
 
-        private Health building;
+        private Construction construction;
 
         /* Getting resources */
         private Resource resource;
@@ -31,6 +33,8 @@ namespace game.assets.economy {
 
         private const float COLLECT_RANGE = 0.3f;
         private const float COLLECT_RATE = 2.5f;
+        private const float BUILD_RATE = 2.5f;
+        private const int BUILD_AMT = 2;
 
         private bool collectingResources;
 
@@ -110,35 +114,29 @@ namespace game.assets.economy {
             return this.resource.workers;
         }
 
-/*        public void setBuildingTarget(Building building) {
-            StartCoroutine(orderToBuild(building));
+        public void setBuildingTarget(Construction construction) {
+            StartCoroutine(orderToBuild(construction));
         }
 
-        public IEnumerator orderToBuild(Building building) {
-            Vector3 destination = building.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position);
-            this.building = building;
-            move(destination);
-            yield return new WaitUntil (() => isInRange(destination, this.COLLECT_RANGE));
-            InvokeRepeating("build", 0f, buildRate);
+        public IEnumerator orderToBuild(Construction construction) {
+            Vector3 destination = construction.GetComponent<Collider>().ClosestPointOnBounds(gameObject.transform.position);
+            this.construction = construction;
+            movement.goTo(destination);
+            yield return new WaitUntil (() => gameObject.isInRangeOf(destination, COLLECT_RANGE));
+            movement.stop();
+            InvokeRepeating("build", 0f, BUILD_RATE);
         }
 
         private void build() {
-            if (building.underConstruction) {
-                building.build(buildPer);
-                if (animator != null) {
-                    animator.SetTrigger("attack");
-                }
-            } else {
-                CancelInvoke("build");
-
-                GameObject building = game.assets.utilities.ObjFinder.findNearbyConstruction(this.transform.position, this.owner);
-                if (building != null)
-                {
-                    print(building.name);
-                    print(building.GetComponent<Building>().underConstruction);
-                    setBuildingTarget(building.GetComponent<Building>());
-                }
+            if (construction != null)
+            {
+                construction.build(BUILD_AMT);
+                buildTick.Invoke();
             }
-        }*/
+            else
+            {
+                CancelInvoke("build");
+            }
+        }
     }
 }

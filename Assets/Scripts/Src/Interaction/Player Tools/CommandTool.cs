@@ -143,6 +143,16 @@ namespace game.assets.interaction
                     StartCoroutine(assignWorkersToResource(resource, workers));
                     return;
                 }
+
+                Construction construction = hit.collider.GetComponent<Construction>();
+
+                if (construction != null && construction.IsMine())
+                {
+                    List<Worker> workers = attackAggregation.unitsThatCanWork();
+
+                    workers.ForEach(worker => worker.setBuildingTarget(construction));
+                    return;
+                }
             }
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Terrain))

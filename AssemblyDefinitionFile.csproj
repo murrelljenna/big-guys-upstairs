@@ -131,6 +131,7 @@
     <Compile Include="Assets\Standard Assets\Utility\PlatformSpecificContent.cs" />
     <Compile Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\Scripts\ThirdPersonCharacter.cs" />
     <Compile Include="Assets\Standard Assets\Editor\Water\Water4\GerstnerDisplaceEditor.cs" />
+    <Compile Include="Assets\Scripts\Src\Behaviours\Projectile.cs" />
     <Compile Include="Assets\Standard Assets\Utility\ActivateTrigger.cs" />
     <Compile Include="Assets\Scripts\Src\UI\Controllers\CommandUIController.cs" />
     <Compile Include="Assets\Scripts\Utility\GameObjectSearcher.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="Assets\Scripts\Src\PlayerTools\BuilderTool.cs" />
     <Compile Include="Assets\Scripts\Attackables\GuardTower.cs" />
     <Compile Include="Assets\Standard Assets\Environment\Water (Basic)\Scripts\WaterBasic.cs" />
+    <Compile Include="Assets\Scripts\Src\Spawners\Destruction\Destroy.cs" />
     <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\FireLight.cs" />
     <Compile Include="Assets\Scripts\Src\UI\Controllers\UnitColourController.cs" />
     <Compile Include="Assets\Standard Assets\Cameras\Scripts\AbstractTargetFollower.cs" />
@@ -255,6 +257,7 @@
     <Compile Include="Assets\Scripts\Attackables\FoodTile.cs" />
     <Compile Include="Assets\Scripts\Src\Behaviours\Movement.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\EdgeDetection.cs" />
+    <Compile Include="Assets\Scripts\Src\Behaviours\RangedAttack.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\ColorCorrectionLookup.cs" />
     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\PlatformSpecific\StandaloneInput.cs" />
     <Compile Include="Assets\Simple Health Bar\Editor\SimpleHealthBarEditor.cs" />
@@ -266,9 +269,7 @@
     <Compile Include="Assets\Scripts\IdleGrouping.cs" />
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\Standard Assets\Utility\AutoMobileShaderSwitch.cs" />
-    <Compile Include="Assets\Scripts\Src\Spawners\Destruction\Destroy.cs" />
-    <Compile Include="Assets\Scripts\Src\Behaviours\RangedAttack.cs" />
-    <Compile Include="Assets\Scripts\Src\Behaviours\Projectile.cs" />
+    <Compile Include="Assets\Models and Textures\TinyFire VFX\LightControl.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />
@@ -279,6 +280,7 @@
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseAndGrain.shader" />
      <None Include="Assets\Simple Health Bar\README.txt" />
      <None Include="Assets\Standard Assets\Effects\Projectors\Shaders\ProjectorLight.shader" />
+     <None Include="Assets\Models and Textures\Wood Barricade\ReadMe.txt" />
      <None Include="Assets\Standard Assets\Effects\Projectors\Shaders\ProjectorMultiply.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\DLAA.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\frag_ao.cginc" />

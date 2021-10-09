@@ -82,6 +82,11 @@ public class AttackAggregation : IAttack
         }
     }
 
+    public int Count()
+    {
+        return units.Count;
+    }
+
     public void clear()
     {
         units.Clear();

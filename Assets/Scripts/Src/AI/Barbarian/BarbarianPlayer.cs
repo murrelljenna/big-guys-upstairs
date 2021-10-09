@@ -4,6 +4,7 @@ using UnityEngine;
 using game.assets.player;
 using static game.assets.utilities.GameUtils;
 using game.assets.ai;
+using game.assets.spawners;
 
 public class BarbarianPlayer : Player
 {
@@ -16,6 +17,22 @@ public class BarbarianPlayer : Player
 
     public void Awake()
     {
-        units = new AIUnitGrouping(this, 15, 10, new Vector3(0, 0, 0));
+        Spawner[] spawners = GameObject.FindObjectsOfType<Spawner>();
+
+        for (int i = 0; i < spawners.Length; i++)
+        {
+            if (spawners[i].BelongsTo(this))
+            {
+                Vector3 location = spawners[i].transform.position;
+                units = new AIUnitGrouping(this, 15, 10, location);
+
+                units.onMaxUnits.AddListener(fortify);
+            }
+        }
+    }
+
+    private void fortify()
+    {
+
     }
 }

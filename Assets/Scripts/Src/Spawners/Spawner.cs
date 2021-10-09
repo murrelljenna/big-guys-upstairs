@@ -15,6 +15,8 @@ namespace game.assets.spawners
         public ResourceSet price = new ResourceSet();
         [Tooltip("Networked. Requires Photon network access when ticked.")]
         public bool networked = false;
+        [Tooltip("Radius in which units spawn")]
+        public float spawnRadius = 1.2f;
 
         protected SpawnerController spawnerController = new SpawnerController();
 
@@ -41,7 +43,7 @@ namespace game.assets.spawners
 
         private Vector3 getSpawnLocation(Vector3 spawnCenter)
         {
-            Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
+            Vector2 randomInCircle = RandomPointOnUnitCircle(spawnRadius);
 
             return new Vector3(
                 randomInCircle.x + spawnCenter.x,

@@ -58,6 +58,7 @@ namespace game.assets.ai
 
         private void checkEnemiesInRange()
         {
+            Debug.Log(isAttacking);
             if (isAttacking || (canMove && movement.moveOrdered)) {
                 return;
             }
@@ -128,7 +129,7 @@ namespace game.assets.ai
                 yield return new WaitUntil (() => isInRange(attackee));
                 movement.stop();
 
-                                attackee.onZeroHP.AddListener(cancelOrders);
+                attackee.onZeroHP.AddListener(cancelOrders);
                 InvokeRepeating("doDamageIfShould", 0f, this.attackRate);
             }
 

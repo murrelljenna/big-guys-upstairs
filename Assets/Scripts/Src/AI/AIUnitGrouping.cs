@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace game.assets.ai {
     public class AIUnitGrouping
@@ -14,7 +15,10 @@ namespace game.assets.ai {
 
         private Vector3 location;
 
+        public UnityEvent onMaxUnits;
+
         public AIUnitGrouping(player.Player player, int maxUnits, int recruitRateInSeconds, Vector3 startingLocation) {
+            onMaxUnits = new UnityEvent();
             this.maxUnits = maxUnits;
             this.recruitRateInSeconds = recruitRateInSeconds;
             this.player = player;
@@ -51,8 +55,17 @@ namespace game.assets.ai {
             while (true)
             {
                 yield return new WaitForSecondsRealtime(time);
-                Attack unit = replenishUnit(location);
-                units.add(unit);
+                if (units.Count() < maxUnits)
+                {
+                    Attack unit = replenishUnit(location);
+                    units.add(unit);
+
+                    if (units.Count() == maxUnits)
+                    {
+                        onMaxUnits.Invoke();
+                    }
+
+                }
 
                 location = groupLocation();
             }

@@ -25,10 +25,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 144c8b0fc94b46848b1f2e7ed0f351e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 0
-  attackRate: 0
-  attackRange: 0
-  responseRange: 0
+  attackPower: 2
+  attackRate: 2.5
+  attackRange: 3
+  responseRange: 3
   onAttack:
     m_PersistentCalls:
       m_Calls:
@@ -643,6 +643,16 @@ PrefabInstance:
       propertyPath: onZeroHP.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 3434930777481433582}
+    - target: {fileID: 3407638207687962992, guid: dacf0adaab418dd43a5ea0b119fa06a6,
+        type: 3}
+      propertyPath: HP
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3407638207687962992, guid: dacf0adaab418dd43a5ea0b119fa06a6,
+        type: 3}
+      propertyPath: maxHP
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3300823746633853468, guid: dacf0adaab418dd43a5ea0b119fa06a6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dacf0adaab418dd43a5ea0b119fa06a6, type: 3}

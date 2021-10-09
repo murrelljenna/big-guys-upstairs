@@ -16,13 +16,13 @@ namespace game.assets.ai
         public int attackPower;
 
         [Tooltip("Attack Rate")]
-        public int attackRate;
+        public float attackRate;
 
         [Tooltip("Attack Range")]
-        public int attackRange;
+        public float attackRange;
 
         [Tooltip("Range at which unit will automatically engage")]
-        public int responseRange;
+        public float responseRange;
 
         [Tooltip("Invoked on each attack")]
         public UnityEvent onAttack;

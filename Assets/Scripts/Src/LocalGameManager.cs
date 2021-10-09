@@ -54,17 +54,19 @@ namespace game.assets
             DontDestroyOnLoad(gameObject);
         }
 
-        public void Initialize(string mapName, Vector3[] spawnPoints)
+        public Scene Initialize(string mapName, Vector3[] spawnPoints)
         {
             this.spawnPoints = spawnPoints;
             SceneManager.sceneLoaded += onSceneLoaded;
-            SceneManager.LoadScene(mapName);
+            Scene scene = SceneManager.LoadScene(mapName, new LoadSceneParameters(LoadSceneMode.Single));
             players = new player.Player[spawnPoints.Length];
             for (int i = 0; i < players.Length; i++) {
                 PlayerColour colour = pickFirstAvailableColour();
                 players[i] = new player.Player();
                 players[i].colour = pickFirstAvailableColour();
             }
+
+            return scene;
         }
 
         private void onSceneLoaded(Scene scene, LoadSceneMode mode)

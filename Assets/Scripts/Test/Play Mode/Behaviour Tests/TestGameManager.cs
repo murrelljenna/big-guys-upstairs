@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using game.assets;
 using static game.assets.utilities.GameUtils;
 
-namespace Tests
+namespace InsaneTests
 {
     public class TestGameManager
     {
@@ -31,6 +31,10 @@ namespace Tests
         [UnityTearDown]
         public IEnumerator TearDown()
         {
+            foreach (GameObject g in SceneManager.GetActiveScene().GetRootGameObjects())
+            {
+                Object.Destroy(g);
+            }
             yield return new ExitPlayMode();
         }
 
@@ -38,40 +42,56 @@ namespace Tests
         public IEnumerator testGameManagerPersists()
         {
             Vector3[] spawnPoints = new Vector3[] { new Vector3(0, 0, 0) };
-            gameManager.Initialize(Test.TestUtils.testSceneDirPath + "Empty.unity", spawnPoints);
+            Scene scene = gameManager.Initialize(Test.TestUtils.testSceneDirPath + "Empty.unity", spawnPoints);
             yield return new WaitForSeconds(1);
 
             Assert.True(GameObject.Find(MagicWords.GameObjectNames.GameManager) != null);
+            foreach (GameObject g in SceneManager.GetActiveScene().GetRootGameObjects())
+            {
+                g.SetActive(false);
+            }
         }
 
         [UnityTest, Order(2)]
         public IEnumerator testGameManagerSpawnsPlayer()
         {
             Vector3[] spawnPoints = new Vector3[] { new Vector3(0, 0, 0) };
-            gameManager.Initialize(Test.TestUtils.testSceneDirPath + "Empty.unity", spawnPoints);
+            Scene scene = gameManager.Initialize(Test.TestUtils.testSceneDirPath + "Empty.unity", spawnPoints);
             yield return new WaitForSeconds(1);
 
             Assert.True(GameObject.Find(MagicWords.GameObjectNames.Player) != null);
+            foreach (GameObject g in SceneManager.GetActiveScene().GetRootGameObjects())
+            {
+                g.SetActive(false);
+            }
         }
 
         [UnityTest, Order(3)]
         public IEnumerator testGameManagerInstantiatesClientSingleton()
         {
             Vector3[] spawnPoints = new Vector3[] { new Vector3(0, 0, 0) };
-            gameManager.Initialize(Test.TestUtils.testSceneDirPath + "Empty.unity", spawnPoints);
+            Scene scene = gameManager.Initialize(Test.TestUtils.testSceneDirPath + "Empty.unity", spawnPoints);
             yield return new WaitForSeconds(1);
 
             Assert.True(GameObject.Find(MagicWords.GameObjectNames.ClientSingleton) != null);
+            foreach (GameObject g in SceneManager.GetActiveScene().GetRootGameObjects())
+            {
+                g.SetActive(false);
+            }
         }
 
         [UnityTest, Order(4)]
         public IEnumerator testGameManagerSpawnsPlayerStartingCity()
         {
             Vector3[] spawnPoints = new Vector3[] { new Vector3(0, 0, 0) };
-            gameManager.Initialize(Test.TestUtils.testSceneDirPath + "Empty.unity", spawnPoints);
+            Scene scene = gameManager.Initialize(Test.TestUtils.testSceneDirPath + "Empty.unity", spawnPoints);
             yield return new WaitForSeconds(1);
 
             Assert.True(GameObject.Find(MagicWords.GameObjectNames.StartingCity) != null);
+            foreach (GameObject g in SceneManager.GetActiveScene().GetRootGameObjects())
+            {
+                g.SetActive(false);
+            }
         }
     }
 }

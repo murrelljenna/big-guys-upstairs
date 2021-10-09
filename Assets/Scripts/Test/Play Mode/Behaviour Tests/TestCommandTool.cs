@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using game.assets.interaction;
 using game.assets.utilities;
+using game.assets;
 
 namespace Tests {
     public static class Helpers
@@ -116,6 +117,7 @@ namespace Tests {
             attackee = GameObject.Find("Attackee").GetComponent<Health>();
             destination = GameObject.Find("Destination").transform.position;
             setOwnershipToPlayer(attackers);
+            attackee.SetAsPlayer(LocalGameManager.Get().barbarianPlayer);
 
             callBackTriggered = false;
 

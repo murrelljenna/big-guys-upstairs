@@ -1,4 +1,5 @@
 ﻿using game.assets.ai;
+using game.assets.economy;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -68,6 +69,21 @@ public class AttackAggregation : IAttack
             }
         });
         return new MovementAggregation(unitsThatCanMove);
+    }
+
+    public List<Worker> unitsThatCanWork()
+    {
+        List<Worker> unitsThatCanWork = new List<Worker>();
+        units.ForEach(unit =>
+        {
+            Worker movement = unit.GetComponent<Worker>();
+            if (movement != null)
+            {
+                unitsThatCanWork.Add(movement);
+            }
+        });
+
+        return unitsThatCanWork;
     }
 
     public Vector3 location()

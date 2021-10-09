@@ -56,7 +56,7 @@ namespace Tests
 
             yield return null;
 
-            obsAgent = GameObject.Find("Observer").GetComponent<ObservationAgent>();
+            obsAgent = GameObject.Find("FirstPersonCharacter").GetComponent<ObservationAgent>();
             obsEvents = GameObject.Find("ClientBehaviour").GetComponent<ObservationEvents>();
 
             yield return new EnterPlayMode();

@@ -76,6 +76,11 @@ public static class OwnershipOps
         gameObj.SetAsPlayer(LocalPlayer.get());
     }
 
+    public static void SetAsPlayer(this MonoBehaviour behaviour, game.assets.player.Player player)
+    {
+        behaviour.gameObject.SetAsPlayer(player);
+    }
+
     public static void SetAsPlayer(this GameObject gameObj, game.assets.player.Player player)
     {
         Ownership ownership = gameObj.GetComponent<Ownership>();

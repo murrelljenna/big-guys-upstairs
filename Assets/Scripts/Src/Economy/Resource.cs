@@ -58,7 +58,6 @@ namespace game.assets.economy {
             Transform tMin = null;
             float minDist = Mathf.Infinity;
             Vector3 currentPos = transform.position;
-
             foreach (Depositor depositor in depositors)
             {
                 if (depositor.IsMine())

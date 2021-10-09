@@ -5,6 +5,7 @@ using game.assets.ui;
 using game.assets.utilities;
 using game.assets.ai;
 using static game.assets.utilities.GameUtils;
+using game.assets.economy;
 
 namespace game.assets.interaction
 {
@@ -64,11 +65,7 @@ namespace game.assets.interaction
                 {
                     if (attackAggregation.contains(attacker))
                     {
-                        attackAggregation.remove(attacker);
-                        if (useUi)
-                        {
-                            uiController.removeCard(attacker.GetComponent<Health>());
-                        }
+                        removeUnit(attacker);
                     }
                     else
                     {
@@ -80,6 +77,15 @@ namespace game.assets.interaction
                         }
                     }
                 }
+            }
+        }
+
+        private void removeUnit(Attack attacker)
+        {
+            attackAggregation.remove(attacker);
+            if (useUi)
+            {
+                uiController.removeCard(attacker.GetComponent<Health>());
             }
         }
 
@@ -120,19 +126,48 @@ namespace game.assets.interaction
         {
             RaycastHit hit;
             Ray ray = camera.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
-
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Terrain))
-            {
-                attackAggregation.unitsThatCanMove().goTo(hit.point);
-                return;
-            }
-
             if (Physics.Raycast(ray, out hit, Mathf.Infinity)) {
                 Health health = hit.collider.GetComponent<Health>();
                 if (health != null && health.IsEnemy())
                 {
                     attackAggregation.attack(health);
                     return;
+                }
+
+                Resource resource = hit.collider.GetComponent<Resource>();
+
+                if (resource != null)
+                {
+                    List<Worker> workers = attackAggregation.unitsThatCanWork();
+
+                    StartCoroutine(assignWorkersToResource(resource, workers));
+                    return;
+                }
+            }
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Terrain))
+            {
+                attackAggregation.unitsThatCanMove().goTo(hit.point);
+                return;
+            }
+        }
+
+        private IEnumerator assignWorkersToResource(Resource resourceTile, List<Worker> workers)
+        {
+            foreach (Worker worker in workers)
+            {
+                int runCount = 0;
+
+                bool added = resourceTile.addWorker(worker); // True if worker was successfully added (there was an available slot) false otherwise.
+                if (added)
+                {
+                    removeUnit(worker.GetComponent<Attack>());
+                }
+
+                runCount++;
+                if (runCount % 2 == 0)
+                {
+                    yield return null;
                 }
             }
         }

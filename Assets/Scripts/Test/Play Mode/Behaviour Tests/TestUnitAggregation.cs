@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using game.assets.ai;
 using game.assets.utilities;
+using game.assets;
 
 namespace Tests
 {
@@ -33,6 +34,7 @@ namespace Tests
                 Attack attack = units[i].GetComponent<Attack>();
                 if (attack != null)
                 {
+                    attack.SetAsMine();
                     ret.Add(attack);
                 }
             }
@@ -76,6 +78,7 @@ namespace Tests
             movers = getMovers();
             attackee = GameObject.Find("Attackee").GetComponent<Health>();
             destination = GameObject.Find("Destination").GetComponent<Transform>().position;
+            attackee.SetAsPlayer(LocalGameManager.Get().barbarianPlayer);
 
             yield return new EnterPlayMode();
         }

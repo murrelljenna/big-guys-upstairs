@@ -83,7 +83,7 @@ namespace game.assets
         private void instantiateLocalPlayerStart()
         {
             IInstantiator instantiator = InstantiatorFactory.getInstantiator();
-            GameObject localCityObject = instantiator.Instantiate(cityPrefab, spawnPoints[0], Quaternion.identity);
+            GameObject localCityObject = instantiator.InstantiateAsMine(cityPrefab, spawnPoints[0], Quaternion.identity);
             localCityObject.name = MagicWords.GameObjectNames.StartingCity;
 
             Vector3 playerSpawn = randomPointOnUnitCircle(spawnPoints[0], MagicNumbers.PlayerSpawnRadius);

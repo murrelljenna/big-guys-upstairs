@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2300000}
   - component: {fileID: 9500000}
   - component: {fileID: 3234223228033691166}
+  - component: {fileID: -6958418923715840621}
   m_Layer: 0
   m_Name: Barricade_D
   m_TagString: Untagged
@@ -115,11 +116,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 397c6e4f7b6e4d44f98cf2bbeeb0e2f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 15
-  maxHP: 15
+  HP: 200
+  maxHP: 200
   onZeroHP:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -6958418923715840621}
+        m_TargetAssemblyTypeName: Destroy, AssemblyDefinitionFile
+        m_MethodName: destroy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onMaxHP:
     m_PersistentCalls:
       m_Calls: []
@@ -129,6 +142,18 @@ MonoBehaviour:
   onRaiseHP:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-6958418923715840621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8d7b7a84798bc2419f45f089e03b262, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4341313180283798590
 GameObject:
   m_ObjectHideFlags: 0

@@ -58,7 +58,6 @@ namespace game.assets.ai
 
         private void checkEnemiesInRange()
         {
-            Debug.Log(isAttacking);
             if (isAttacking || (canMove && movement.moveOrdered)) {
                 return;
             }

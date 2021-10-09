@@ -128,7 +128,7 @@ namespace game.assets.ai
                 yield return new WaitUntil (() => isInRange(attackee));
                 movement.stop();
 
-                InvokeRepeating("doDamageIfShould", this.attackRate, this.attackRate);
+                InvokeRepeating("doDamageIfShould", 0f, this.attackRate);
             }
 
         }
@@ -144,7 +144,7 @@ namespace game.assets.ai
 
                 yield return new WaitUntil (() => isInRange(attackee));
 
-                InvokeRepeating("doDamageIfShould", this.attackRate, this.attackRate);
+                InvokeRepeating("doDamageIfShould", 0f, this.attackRate);
             }
         }
 

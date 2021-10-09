@@ -61,8 +61,42 @@ namespace Tests
         public IEnumerator testRangedAttackSpawnsProjectile()
         {
             attacker.attack(attackee);
-            yield return new WaitForSeconds(1);
+            yield return null;
+            yield return null;
+            yield return null;
             Assert.True(GameObject.Find("Projectile(Clone)") != null);
+        }
+
+        [UnityTest, Order(2)]
+        public IEnumerator testRangedAttackProjectileCausesDamage()
+        {
+            attacker.attack(attackee);
+            attackee.onLowerHP.AddListener(onTookDamageCallback);
+            yield return new WaitForSeconds(1);
+            Assert.True(attackeeTookDamage);
+        }
+
+        [UnityTest, Order(3)]
+        public IEnumerator testRangedAttackDoesNotCauseItsOwnDamage()
+        {
+            attacker.attack(attackee);
+            attackee.onLowerHP.AddListener(onTookDamageCallback);
+            yield return null;
+            yield return null;
+            yield return null;
+            Assert.False(attackeeTookDamage);
+        }
+
+        [UnityTest, Order(4)]
+        public IEnumerator testRangedAttackProjectileDisapearsAfterColl()
+        {
+            attacker.attack(attackee);
+            yield return null;
+            yield return null;
+            yield return null;
+            GameObject projectile = GameObject.Find("Projectile(Clone)");
+            yield return new WaitForSeconds(1);
+            Assert.True(projectile == null);
         }
     }
 }

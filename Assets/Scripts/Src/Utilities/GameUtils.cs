@@ -87,6 +87,7 @@ namespace game.assets.utilities {
                 public static string FirstPersonCharacter = "FirstPersonCharacter";
                 public static string BuildingMenu = "BuildingMenu";
                 public static string CommandMenu = "CommandMenu";
+                public static string Effects = "Effects";
             }
         }
 

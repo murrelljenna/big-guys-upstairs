@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+using static game.assets.utilities.GameUtils.MagicWords;
 
 namespace game.assets.spawners
 {
@@ -80,12 +80,11 @@ namespace game.assets.spawners
 
                 if (spawnedObject != null)
                 {
+                    if (ghostInstance != null)
+                    {
+                        Destroy(ghostInstance);
+                    }
                     StartCoroutine(plop(spawnedObject, endSpawnLocation));
-                }
-
-                if (ghostInstance != null)
-                {
-                    Destroy(ghostInstance);
                 }
 
                 return spawnedObject;
@@ -104,6 +103,12 @@ namespace game.assets.spawners
 
                 gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, destination, fractionOfJourney);
                 yield return null;
+            }
+
+            GameObject effects = gameObject.transform.Find(GameObjectNames.Effects)?.gameObject;
+            if (effects != null)
+            {
+                effects.GetComponent<EffectsController>()?.PlayRandom("PlopEffects", 30);
             }
         }
 

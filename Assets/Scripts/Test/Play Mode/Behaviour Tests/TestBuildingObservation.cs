@@ -62,6 +62,12 @@ namespace Tests
             yield return new EnterPlayMode();
         }
 
+        [UnityTearDown]
+        public IEnumerator TearDown()
+        {
+            yield return new ExitPlayMode();
+        }
+
         /*
          * Test our ObservationEvents script - the observed gameObject.
          */

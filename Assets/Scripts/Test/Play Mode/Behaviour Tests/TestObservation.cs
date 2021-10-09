@@ -12,6 +12,8 @@ namespace Tests
 {
     public class TestObservation
     {
+        private Scene scene;
+
         private bool onObserveFired = false;
         private bool onBreakObserveFired = false;
 
@@ -48,7 +50,7 @@ namespace Tests
             onBreakObserveFired = false;
             onObserveFired = false;
 
-            EditorSceneManager.LoadSceneInPlayMode(
+            scene = EditorSceneManager.LoadSceneInPlayMode(
                 Test.TestUtils.testSceneDirPath + "TestObservation.unity",
                 new LoadSceneParameters(LoadSceneMode.Single)
             );
@@ -59,6 +61,12 @@ namespace Tests
             obsEvents = GameObject.Find("Observed").GetComponent<ObservationEvents>();
 
             yield return new EnterPlayMode();
+        }
+
+        [UnityTearDown]
+        public IEnumerator TearDown()
+        {
+            yield return new ExitPlayMode();
         }
 
         /*

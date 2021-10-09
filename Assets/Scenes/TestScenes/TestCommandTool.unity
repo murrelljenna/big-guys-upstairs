@@ -213,6 +213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 41373756}
+  useUi: 0
 --- !u!114 &41373759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,6 +304,9 @@ MonoBehaviour:
   halted:
     m_PersistentCalls:
       m_Calls: []
+  newMoveOrdered:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!195 &46960667
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -345,6 +349,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onAttackOrdered:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelect:
     m_PersistentCalls:
       m_Calls: []
 --- !u!136 &46960669
@@ -557,6 +564,9 @@ MonoBehaviour:
   halted:
     m_PersistentCalls:
       m_Calls: []
+  newMoveOrdered:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!195 &459204442
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -599,6 +609,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onAttackOrdered:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelect:
     m_PersistentCalls:
       m_Calls: []
 --- !u!136 &459204444
@@ -972,6 +985,9 @@ MonoBehaviour:
   onAttackOrdered:
     m_PersistentCalls:
       m_Calls: []
+  onSelect:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!136 &1187222908
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1090,6 +1106,9 @@ MonoBehaviour:
   halted:
     m_PersistentCalls:
       m_Calls: []
+  newMoveOrdered:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!195 &1319655115
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1132,6 +1151,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onAttackOrdered:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelect:
     m_PersistentCalls:
       m_Calls: []
 --- !u!136 &1319655117

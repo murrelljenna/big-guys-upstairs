@@ -57,6 +57,12 @@ namespace Tests
             yield return new EnterPlayMode();
         }
 
+        [UnityTearDown]
+        public IEnumerator TearDown()
+        {
+            yield return new ExitPlayMode();
+        }
+
         [UnityTest, Order(1)]
         public IEnumerator testRangedAttackSpawnsProjectile()
         {

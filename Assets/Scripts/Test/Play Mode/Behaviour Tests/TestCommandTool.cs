@@ -122,6 +122,12 @@ namespace Tests {
             yield return new EnterPlayMode();
         }
 
+        [UnityTearDown]
+        public IEnumerator TearDown()
+        {
+            yield return new ExitPlayMode();
+        }
+
         [UnityTest, Order(1)]
         public IEnumerator TestCommandToolSelectAndAttack()
         {
@@ -134,7 +140,7 @@ namespace Tests {
             Assert.True(callBackTriggered);
         }
 
-        [UnityTest, Order(1)]
+        [UnityTest, Order(2)]
         public IEnumerator TestCommandToolSelectAndMove()
         {
             attackee.onLowerHP.AddListener(callback);
@@ -147,7 +153,7 @@ namespace Tests {
             Assert.True(inRange.Length == 3);
         }
 
-        [UnityTest, Order(1)]
+        [UnityTest, Order(3)]
         public IEnumerator TestCommandToolClearOnDisable()
         {
             attackee.onLowerHP.AddListener(callback);
@@ -178,6 +184,5 @@ namespace Tests {
             Attack[] inRange = GameUtils.findGameObjectsInRange(destination, 1f).GetComponents<Attack>();
             Assert.True(inRange.Length == 3);
         }
-
     }
 }

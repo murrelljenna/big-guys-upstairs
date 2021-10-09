@@ -14,7 +14,10 @@ public class BuildingMenuController : MonoBehaviour
 
     void OnDisable()
     {
-        buildingMenu.SetActive(false);
+        if (buildingMenu != null)
+        {
+            buildingMenu.SetActive(false);
+        }
     }
 
     void OnEnable()

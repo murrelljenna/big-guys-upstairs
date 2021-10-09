@@ -13,6 +13,8 @@ namespace game.assets.interaction
     {
         [Tooltip("Camera Used By Command Tool")]
         public Camera camera;
+        [Tooltip("Turn on/off ui for testing")]
+        public bool useUi = true;
 
         private const float QUICK_SELECT_RANGE = 5f;
         private Vector3 VIEWPORT_POINT_TO_RAY = new Vector3(0.5F, 0.5F, 0);
@@ -30,7 +32,10 @@ namespace game.assets.interaction
 
         private void OnEnable()
         {
-            uiController = GameObject.Find(MagicWords.GameObjectNames.CommandMenu).GetComponent<CommandUIController>();
+            if (useUi == true)
+            {
+                uiController = GameObject.Find(MagicWords.GameObjectNames.CommandMenu).GetComponent<CommandUIController>();
+            }
         }
 
         private void Start()
@@ -60,13 +65,19 @@ namespace game.assets.interaction
                     if (attackAggregation.contains(attacker))
                     {
                         attackAggregation.remove(attacker);
-                        uiController.removeCard(attacker.GetComponent<Health>());
+                        if (useUi)
+                        {
+                            uiController.removeCard(attacker.GetComponent<Health>());
+                        }
                     }
                     else
                     {
                         attacker.select();
                         attackAggregation.add(attacker);
-                        uiController.addCard(attacker.GetComponent<Health>());
+                        if (useUi)
+                        {
+                            uiController.addCard(attacker.GetComponent<Health>());
+                        }
                     }
                 }
             }
@@ -97,7 +108,10 @@ namespace game.assets.interaction
                 if (unit != null && unit.IsMine() && !attackAggregation.contains(unit))
                 {
                     attackAggregation.add(unit);
-                    uiController.addCard(unit.GetComponent<Health>()); //TODO: Rethink this a bit, I'm doing unsafe things for convenience
+                    if (useUi)
+                    {
+                        uiController.addCard(unit.GetComponent<Health>()); //TODO: Rethink this a bit, I'm doing unsafe things for convenience
+                    }
                 }
             }
         }
@@ -125,7 +139,10 @@ namespace game.assets.interaction
 
         private void clearSelection() {
             attackAggregation.clear();
-            uiController.clearCards();
+            if (useUi)
+            {
+                uiController.clearCards();
+            }
         }
     }
 }

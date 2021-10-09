@@ -149,13 +149,39 @@ namespace Tests
             Assert.True(attackeeTookDamage);
         }
 
-        [UnityTest, Order(5)]
+        [UnityTest, Order(7)]
         public IEnumerator testUnitAutoAttacksInRange()
         {
             attackee.onLowerHP.AddListener(onTookDamageCallback);
             putAttackerInRangeOfAttackee(movingAttacker);
             yield return new WaitForSeconds(3);
             Assert.True(attackeeTookDamage);
+        }
+
+        [UnityTest, Order(8)]
+        public IEnumerator testStopsWhenAttackeeHPIsZero()
+        {
+            attackee.onLowerHP.AddListener(onTookDamageCallback);
+            putAttackerInRangeOfAttackee(movingAttacker);
+            yield return new WaitForSeconds(3);
+            Assert.True(attackeeTookDamage);
+            attackee.HP = 0;
+            attackeeTookDamage = false;
+            yield return new WaitForSeconds(1);
+            Assert.False(attackeeTookDamage);
+        }
+        
+        [UnityTest, Order(9)]
+        public IEnumerator testStopsWhenAttackeeNoLongerExists()
+        {
+            attackee.onLowerHP.AddListener(onTookDamageCallback);
+            putAttackerInRangeOfAttackee(movingAttacker);
+            yield return new WaitForSeconds(3);
+            Assert.True(attackeeTookDamage);
+            Object.Destroy(attackee.gameObject);
+            attackeeTookDamage = false;
+            yield return new WaitForSeconds(1);
+            Assert.False(attackeeTookDamage);
         }
     }
 }

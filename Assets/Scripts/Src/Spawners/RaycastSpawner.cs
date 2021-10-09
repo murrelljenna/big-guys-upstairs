@@ -21,6 +21,9 @@ namespace game.assets.spawners
 
         public Camera cam;
 
+        public GameObject ghost;
+        private GameObject ghostInstance;
+
         public override void Start()
         {
             if (cam == null)
@@ -33,9 +36,39 @@ namespace game.assets.spawners
             base.Start();
         }
 
+        public void Update()
+        {
+            if (showGhost && ghostInstance != null)
+            {
+                Vector3? point = raycastFromCamera(cam);
+
+                if (point.HasValue)
+                {
+                    Vector3 position = point.Value;
+                    position.y += 0.5f;
+                    ghostInstance.transform.position = position;
+                }
+            }
+        }
+
+        public void setGhost(GameObject ghost)
+        {
+            if (this.ghostInstance != null)
+            { // Destroy old ghost, if its there
+                DestroyImmediate(this.ghostInstance);
+            }
+
+            this.ghostInstance = ((GameObject)Instantiate(ghost));
+        }
+
         public override GameObject Spawn()
         {
             Vector3? raycastHit = raycastFromCamera(cam);
+
+            if (ghostInstance != null && ghostInstance.GetComponent<Ghost>() != null && ghostInstance.GetComponent<Ghost>().colliding)
+            {
+                return null;
+            }
 
             if (raycastHit != null)
             {
@@ -48,6 +81,11 @@ namespace game.assets.spawners
                 if (spawnedObject != null)
                 {
                     StartCoroutine(plop(spawnedObject, endSpawnLocation));
+                }
+
+                if (ghostInstance != null)
+                {
+                    Destroy(ghostInstance);
                 }
 
                 return spawnedObject;
@@ -81,6 +119,14 @@ namespace game.assets.spawners
             }
 
             return null;
+        }
+
+        private void OnDisable()
+        {
+            if (ghostInstance != null)
+            {
+                Destroy(ghostInstance);
+            }
         }
     }
 }

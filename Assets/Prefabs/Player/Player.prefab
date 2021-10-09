@@ -47,21 +47,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71445cd84a35ba24b82b69eecc55d556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3289195153907509699, guid: 13d3dd0094aab5c4589a19a52dab62ea, type: 3}
+  prefab: {fileID: 9081007910819821753, guid: d5035ede5af4272438f88a342bdb045f, type: 3}
   price:
-    wood: 75
-    food: 0
+    wood: 50
+    food: 50
     gold: 0
     stone: 0
     iron: 0
     horse: 0
   networked: 0
+  spawnRadius: 1.2
   layer: 11
-  showGhost: 0
+  showGhost: 1
   onPlopped:
     m_PersistentCalls:
       m_Calls: []
   cam: {fileID: 5412320226246771053}
+  ghost: {fileID: 8935890525583436753, guid: 3459047300f0d3f4abbdee2bdc7bdc24, type: 3}
 --- !u!114 &5412320224816988114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,7 +77,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildableItems:
-  - prefab: {fileID: 9081007910819821753, guid: d5035ede5af4272438f88a342bdb045f,
+  - ghost: {fileID: 8935890525583436753, guid: 3459047300f0d3f4abbdee2bdc7bdc24, type: 3}
+    prefab: {fileID: 9081007910819821753, guid: d5035ede5af4272438f88a342bdb045f,
       type: 3}
     cost:
       wood: 50
@@ -84,7 +87,8 @@ MonoBehaviour:
       stone: 0
       iron: 0
       horse: 0
-  - prefab: {fileID: 3289195153907509699, guid: 13d3dd0094aab5c4589a19a52dab62ea,
+  - ghost: {fileID: 1436041475546037896, guid: f59036333da2e794eba044552a309e37, type: 3}
+    prefab: {fileID: 3289195153907509699, guid: 13d3dd0094aab5c4589a19a52dab62ea,
       type: 3}
     cost:
       wood: 75
@@ -93,7 +97,8 @@ MonoBehaviour:
       stone: 0
       iron: 0
       horse: 0
-  - prefab: {fileID: 1049958631624348892, guid: ec01fd2c0a2e4ce4a89a327bb517e3dc,
+  - ghost: {fileID: 1225075055902361536, guid: 138a112c40f82984e9f80b1796b8cd9c, type: 3}
+    prefab: {fileID: 1049958631624348892, guid: ec01fd2c0a2e4ce4a89a327bb517e3dc,
       type: 3}
     cost:
       wood: 75
@@ -577,6 +582,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 5412320226246771053}
+  useUi: 1
 --- !u!114 &5412320226245559791
 MonoBehaviour:
   m_ObjectHideFlags: 0

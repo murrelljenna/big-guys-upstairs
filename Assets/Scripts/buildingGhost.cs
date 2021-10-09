@@ -11,6 +11,7 @@ public class buildingGhost : MonoBehaviour
 
     void Start() {
         renderer = this.transform.Find("Model").gameObject.GetComponent<MeshRenderer>();
+        previousColor = renderer.material.color;
         if (this.transform.Find("Model2") != null) {
             this.transform.Find("Model2").gameObject.SetActive(false);
             this.transform.Find("Model3").gameObject.SetActive(false);

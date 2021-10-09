@@ -10,6 +10,9 @@ namespace game.assets.tools
     [System.Serializable]
     public struct PrefabCostMapping
     {
+        [Tooltip("Floats above the ground before you've placed the building")]
+        public GameObject ghost;
+        [Tooltip("Actual building to place")]
         public GameObject prefab;
         public ResourceSet cost;
     }
@@ -33,6 +36,7 @@ namespace game.assets.tools
             if (index < buildableItems.Length) {
                 spawner.prefab = buildableItems[index].prefab;
                 spawner.price = buildableItems[index].cost;
+                spawner.setGhost(buildableItems[index].ghost);
             }
         }
     }

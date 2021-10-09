@@ -52,7 +52,7 @@ namespace game.assets.ai
 
             if (canMove)
             {
-                InvokeRepeating("checkEnemiesInRange", attackRange, attackRange);
+                InvokeRepeating("checkEnemiesInRange", 2f, 2f);
             }
         }
 

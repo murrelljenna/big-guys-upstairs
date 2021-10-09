@@ -20,7 +20,7 @@ namespace game.assets.ai
         private void launchProjectileAt(Health attackee)
         {
             GameObject arrow = Instantiate(projectile, transform.position, Quaternion.LookRotation((attackee.gameObject.transform.position - transform.position).normalized));
-            arrow.transform.Rotate(-90, 0, 0); // Can't figure out how to get this fucking thing to face the right way.
+            //arrow.transform.Rotate(-90, 0, 0); // Can't figure out how to get this fucking thing to face the right way.
 
             
             arrow.GetComponent<Projectile>().setDmg(attackPower);

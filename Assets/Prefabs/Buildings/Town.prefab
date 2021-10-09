@@ -1007,6 +1007,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!208 &337729124881104421
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9081007910819821753}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.564961, y: 0.7181695, z: 0.5550765}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.06, y: 0.6, z: -0.05}
+  m_TimeToStationary: 0.5
 --- !u!114 &7047767959032133628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1027,22 +1043,6 @@ MonoBehaviour:
     stone: 0
     iron: 0
     horse: 0
---- !u!208 &337729124881104421
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9081007910819821753}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.564961, y: 0.7181695, z: 0.5550765}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0.06, y: 0.6, z: -0.05}
-  m_TimeToStationary: 0.5
 --- !u!114 &7587519854675207194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9029,6 +9029,11 @@ PrefabInstance:
         type: 3}
       propertyPath: eOnPressed.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4095936580188733067, guid: e01155afa7ed6364380770c2b17018ef,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5721689599274373814, guid: e01155afa7ed6364380770c2b17018ef,
         type: 3}

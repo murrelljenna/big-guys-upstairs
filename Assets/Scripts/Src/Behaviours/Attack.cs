@@ -199,6 +199,7 @@ namespace game.assets.ai
 
         public void cancelOrders()
         {
+            StopAllCoroutines();
             updateTargetLive = false;
             CancelInvoke("doDamageIfShould");
             // Cancel animation stuff - CancelInvoke("fireProjectile");

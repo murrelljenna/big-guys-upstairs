@@ -107,17 +107,19 @@ namespace game.assets.interaction
             RaycastHit hit;
             Ray ray = camera.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
 
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Terrain))
+            {
+                attackAggregation.unitsThatCanMove().goTo(hit.point);
+                return;
+            }
+
             if (Physics.Raycast(ray, out hit, Mathf.Infinity)) {
                 Health health = hit.collider.GetComponent<Health>();
                 if (health != null && health.IsEnemy())
                 {
                     attackAggregation.attack(health);
+                    return;
                 }
-            }
-
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Terrain))
-            {
-                attackAggregation.unitsThatCanMove().goTo(hit.point);
             }
         }
 

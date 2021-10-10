@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,6 +19,8 @@ namespace game.assets.ai {
         public UnityEvent onMaxUnits;
         public UnityEvent onNoUnits;
 
+        private Coroutine replenishment;
+
         public AIUnitGrouping(player.Player player, int maxUnits, int recruitRateInSeconds, Vector3 startingLocation) {
             onMaxUnits = new UnityEvent();
             onNoUnits = new UnityEvent();
@@ -26,8 +29,17 @@ namespace game.assets.ai {
             this.player = player;
             this.location = startingLocation;
             recruiter = new AIUnitRecruiter(player);
+            units.unitDead.AddListener(reportIfNoUnits);
 
-            LocalGameManager.Get().StartCoroutine(startReplenishment(recruitRateInSeconds, recruiter));
+            replenishment = LocalGameManager.Get().StartCoroutine(startReplenishment(recruitRateInSeconds, recruiter));
+        }
+
+        private void reportIfNoUnits(Attack attack)
+        {
+            if (units.Count() < 1)
+            {
+                onNoUnits.Invoke();
+            }
         }
 
         private Attack replenishUnit(Vector3 location)
@@ -71,6 +83,13 @@ namespace game.assets.ai {
 
                 location = groupLocation();
             }
+        }
+
+        public void Disband()
+        {
+            Debug.Log(replenishment);
+            Debug.Log("Disbanding");
+            LocalGameManager.Get().StopCoroutine(replenishment);
         }
     }
 }

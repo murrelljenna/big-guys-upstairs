@@ -8,11 +8,10 @@ using game.assets.spawners;
 
 public class BarbarianPlayer : Player
 {
-    private AIUnitGrouping units;
+    private List<AIUnitGrouping> squads = new List<AIUnitGrouping>();
     public BarbarianPlayer()
     {
         this.colour = PlayerColours.Black;
-        // Find Resource where we can spawn a thing
     }
 
     public void Awake()
@@ -24,12 +23,23 @@ public class BarbarianPlayer : Player
             if (spawners[i].BelongsTo(this))
             {
                 Vector3 location = spawners[i].transform.position;
-                units = new AIUnitGrouping(this, 15, 10, location);
-
+                AIUnitGrouping squad = new AIUnitGrouping(this, 15, 10, location);
+                squads.Add(squad);
                 BarbarianOwnership ownership = spawners[i].GetComponent<BarbarianOwnership>();
 
-                units.onMaxUnits.AddListener(ownership.fortify);
+                squad.onMaxUnits.AddListener(ownership.fortify);
+                registerDisbandListener(squad);
             }
         }
+    }
+
+    private void registerDisbandListener(AIUnitGrouping grouping) {
+        void disbandGrouping()
+        {
+            grouping.Disband();
+            squads.Remove(grouping);
+        }
+
+        grouping.onNoUnits.AddListener(disbandGrouping);
     }
 }

@@ -29,6 +29,7 @@ public class AttackAggregation : IAttack
     public AttackAggregation()
     {
         units = new List<Attack>();
+        unitDead = new UnityEvent<Attack>();
     }
 
     public void attack(Health attackee)
@@ -36,7 +37,7 @@ public class AttackAggregation : IAttack
         units.ForEach(unit => unit.attack(attackee));
     }
 
-    public void removeOnUnitDied(Health health) {
+    private void removeOnUnitDied(Health health) {
         Attack attack = health.GetComponent<Attack>();
         units.Remove(attack);
         unitDead.Invoke(attack);

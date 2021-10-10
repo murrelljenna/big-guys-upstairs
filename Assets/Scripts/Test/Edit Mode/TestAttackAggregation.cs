@@ -16,6 +16,10 @@ namespace Tests
         private Attack[] attacks;
         private Movement[] movements;
 
+        private bool callBackCalledCorrectly = false;
+
+
+
         [SetUp]
         public void SetUp()
         {
@@ -40,6 +44,7 @@ namespace Tests
             }
             attackAggregation = new AttackAggregation();
             GameObject gameObject = new GameObject("TestObject");
+            callBackCalledCorrectly = false;
         }
 
         [Test]
@@ -77,6 +82,28 @@ namespace Tests
             health.onZeroHP.Invoke(health);
 
             Assert.False(attackAggregation.contains(attack));
+
+        }
+
+        [Test]
+        public void TestCommunicatesDeadUnitsUpwards()
+        {
+            Attack attack = attacks[0];
+            Health health = attack.GetComponent<Health>();
+
+            attackAggregation = new AttackAggregation(new List<Attack>(attacks));
+            attackAggregation.unitDead.AddListener(callback);
+            health.onZeroHP.Invoke(health);
+
+            void callback(Attack deadUnit)
+            {
+                if (deadUnit == attack)
+                {
+                    callBackCalledCorrectly = true;
+                }
+            }
+
+            Assert.True(callBackCalledCorrectly);
 
         }
 

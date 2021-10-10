@@ -3,15 +3,17 @@ using game.assets.economy;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AttackAggregation : IAttack
 {
     public List<Attack> units;
+    public UnityEvent<Attack> unitDead;
 
     public AttackAggregation(List<Attack> units)
     {
         this.units = units;
-
+        unitDead = new UnityEvent<Attack>();
         this.units.ForEach(unit => registerDeathCallbackIfCanDie(unit));
     }
 
@@ -35,7 +37,9 @@ public class AttackAggregation : IAttack
     }
 
     public void removeOnUnitDied(Health health) {
-        units.Remove(health.GetComponent<Attack>());
+        Attack attack = health.GetComponent<Attack>();
+        units.Remove(attack);
+        unitDead.Invoke(attack);
     }
 
     public void add(Attack unit)

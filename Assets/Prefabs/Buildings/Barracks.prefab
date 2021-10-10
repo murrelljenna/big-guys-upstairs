@@ -767,7 +767,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 0.5, y: 0.5, z: 0.5}
   m_MoveThreshold: 0.1
-  m_Carve: 1
+  m_Carve: 0
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0.2, z: 0}
   m_TimeToStationary: 0.5
@@ -792,6 +792,7 @@ MonoBehaviour:
     iron: 0
     horse: 0
   networked: 0
+  spawnRadius: 1.2
 --- !u!1 &8633900634642045076
 GameObject:
   m_ObjectHideFlags: 0

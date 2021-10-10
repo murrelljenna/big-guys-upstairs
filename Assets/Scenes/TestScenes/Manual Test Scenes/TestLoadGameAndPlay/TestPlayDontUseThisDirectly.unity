@@ -454,7 +454,7 @@ PrefabInstance:
     - target: {fileID: 7614895434871937289, guid: 0997e1daa2033e34db40aaac3101cad5,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7614895434871937289, guid: 0997e1daa2033e34db40aaac3101cad5,
         type: 3}
@@ -603,7 +603,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1001 &1570188517
 PrefabInstance:
@@ -650,7 +650,7 @@ PrefabInstance:
     - target: {fileID: 7568869473337153920, guid: 6a2133df2c801d4459c9c49ad66ab228,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7568869473337153920, guid: 6a2133df2c801d4459c9c49ad66ab228,
         type: 3}
@@ -679,17 +679,23 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1836404441}
     m_Modifications:
     - target: {fileID: 7564596816390019337, guid: 622b12e8080210943a12cc32bc51bf89,
         type: 3}
       propertyPath: m_Name
       value: Barbarian Spawner
       objectReference: {fileID: 0}
+    - target: {fileID: 7564596816390019341, guid: 622b12e8080210943a12cc32bc51bf89,
+        type: 3}
+      propertyPath: fortifiedVariant
+      value: 
+      objectReference: {fileID: 7614895434871937284, guid: 0997e1daa2033e34db40aaac3101cad5,
+        type: 3}
     - target: {fileID: 7564596816390019342, guid: 622b12e8080210943a12cc32bc51bf89,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.9
+      value: 0.18787575
       objectReference: {fileID: 0}
     - target: {fileID: 7564596816390019342, guid: 622b12e8080210943a12cc32bc51bf89,
         type: 3}
@@ -699,22 +705,22 @@ PrefabInstance:
     - target: {fileID: 7564596816390019342, guid: 622b12e8080210943a12cc32bc51bf89,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 13.62
+      value: 0.07776165
       objectReference: {fileID: 0}
     - target: {fileID: 7564596816390019342, guid: 622b12e8080210943a12cc32bc51bf89,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7564596816390019342, guid: 622b12e8080210943a12cc32bc51bf89,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7564596816390019342, guid: 622b12e8080210943a12cc32bc51bf89,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7564596816390019342, guid: 622b12e8080210943a12cc32bc51bf89,
         type: 3}
@@ -724,7 +730,7 @@ PrefabInstance:
     - target: {fileID: 7564596816390019342, guid: 622b12e8080210943a12cc32bc51bf89,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7564596816390019342, guid: 622b12e8080210943a12cc32bc51bf89,
         type: 3}
@@ -812,3 +818,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a2133df2c801d4459c9c49ad66ab228, type: 3}
+--- !u!4 &1836404441 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7568869473337153920, guid: 6a2133df2c801d4459c9c49ad66ab228,
+    type: 3}
+  m_PrefabInstance: {fileID: 1836404440}
+  m_PrefabAsset: {fileID: 0}

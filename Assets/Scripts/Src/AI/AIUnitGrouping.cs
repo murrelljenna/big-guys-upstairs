@@ -16,9 +16,11 @@ namespace game.assets.ai {
         private Vector3 location;
 
         public UnityEvent onMaxUnits;
+        public UnityEvent onNoUnits;
 
         public AIUnitGrouping(player.Player player, int maxUnits, int recruitRateInSeconds, Vector3 startingLocation) {
             onMaxUnits = new UnityEvent();
+            onNoUnits = new UnityEvent();
             this.maxUnits = maxUnits;
             this.recruitRateInSeconds = recruitRateInSeconds;
             this.player = player;

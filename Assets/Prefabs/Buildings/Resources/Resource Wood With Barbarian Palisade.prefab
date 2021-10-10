@@ -73,6 +73,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2cfb341b8dd79499165e4ebdf2dd2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fortifiedVariant: {fileID: 0}
+  fortified: 0
 --- !u!208 &2917241198141163592
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -180,6 +182,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2cfb341b8dd79499165e4ebdf2dd2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fortifiedVariant: {fileID: 0}
+  fortified: 0
 --- !u!114 &6390616180892232290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,6 +411,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2cfb341b8dd79499165e4ebdf2dd2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fortifiedVariant: {fileID: 0}
+  fortified: 0
 --- !u!114 &7391669267110754404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -692,6 +698,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2cfb341b8dd79499165e4ebdf2dd2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fortifiedVariant: {fileID: 0}
+  fortified: 0
 --- !u!65 &299632989442395542
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -733,6 +741,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2cfb341b8dd79499165e4ebdf2dd2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fortifiedVariant: {fileID: 0}
+  fortified: 0
 --- !u!114 &6424092249177723904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -790,6 +800,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2cfb341b8dd79499165e4ebdf2dd2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fortifiedVariant: {fileID: 0}
+  fortified: 0
 --- !u!114 &780006825369050842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -929,6 +941,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2cfb341b8dd79499165e4ebdf2dd2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fortifiedVariant: {fileID: 0}
+  fortified: 0
 --- !u!114 &4254775693731940486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1123,7 +1137,7 @@ PrefabInstance:
     - target: {fileID: 7568869473337153933, guid: 6a2133df2c801d4459c9c49ad66ab228,
         type: 3}
       propertyPath: m_Name
-      value: Resource Wood With Palisade
+      value: Resource Wood With Barbarian Palisade
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a2133df2c801d4459c9c49ad66ab228, type: 3}
@@ -2587,6 +2601,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Barbarian Spawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 7564596816390019341, guid: 622b12e8080210943a12cc32bc51bf89,
+        type: 3}
+      propertyPath: fortified
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7564596816390019342, guid: 622b12e8080210943a12cc32bc51bf89,
         type: 3}

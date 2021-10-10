@@ -26,13 +26,10 @@ public class BarbarianPlayer : Player
                 Vector3 location = spawners[i].transform.position;
                 units = new AIUnitGrouping(this, 15, 10, location);
 
-                units.onMaxUnits.AddListener(fortify);
+                BarbarianOwnership ownership = spawners[i].GetComponent<BarbarianOwnership>();
+
+                units.onMaxUnits.AddListener(ownership.fortify);
             }
         }
-    }
-
-    private void fortify()
-    {
-
     }
 }

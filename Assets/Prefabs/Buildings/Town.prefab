@@ -1019,7 +1019,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 0.564961, y: 0.7181695, z: 0.5550765}
   m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0.06, y: 0.6, z: -0.05}
   m_TimeToStationary: 0.5
@@ -1064,6 +1064,7 @@ MonoBehaviour:
     iron: 0
     horse: 0
   networked: 0
+  spawnRadius: 1.2
 --- !u!1 &3194799479208685444
 GameObject:
   m_ObjectHideFlags: 0
@@ -8995,6 +8996,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 2.46
       objectReference: {fileID: 0}
+    - target: {fileID: 3097824633328628749, guid: e01155afa7ed6364380770c2b17018ef,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4095936580188733067, guid: e01155afa7ed6364380770c2b17018ef,
         type: 3}
       propertyPath: eOnPressed.m_PersistentCalls.m_Calls.Array.size
@@ -9034,6 +9040,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160758559434952943, guid: e01155afa7ed6364380770c2b17018ef,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5721689599274373814, guid: e01155afa7ed6364380770c2b17018ef,
         type: 3}

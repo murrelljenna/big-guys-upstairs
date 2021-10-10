@@ -5642,6 +5642,7 @@ GameObject:
   - component: {fileID: 4584360897601484519}
   - component: {fileID: 9210190332770586156}
   - component: {fileID: 2796874934670888133}
+  - component: {fileID: 1018513290252694774}
   m_Layer: 0
   m_Name: Building
   m_TagString: Untagged
@@ -5860,6 +5861,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8d7b7a84798bc2419f45f089e03b262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!208 &1018513290252694774
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6439999395031838839}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &363210224367859632
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5994,6 +6011,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb, type: 3}
+--- !u!1 &6054323758106097578 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5840929741215055898, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 363210224367859632}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1595816302066229726 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1382354115921909358, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
@@ -6012,9 +6035,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1310e65397a274d44a776b51d6937f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &6054323758106097578 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5840929741215055898, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
-    type: 3}
-  m_PrefabInstance: {fileID: 363210224367859632}
-  m_PrefabAsset: {fileID: 0}

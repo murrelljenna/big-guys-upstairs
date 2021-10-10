@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb2b21629e4ccad40bb6aff22ca0910b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 2443882290555249286, guid: 4d2d98d007ef8134aaa22745f24e751d, type: 3}
+  prefab: {fileID: 3985206896199720824, guid: 383be35a362ea6f418d38b39f8feb679, type: 3}
   price:
     wood: 0
     food: 0
@@ -54,6 +54,7 @@ MonoBehaviour:
     iron: 0
     horse: 0
   networked: 0
+  spawnRadius: 1.2
 --- !u!114 &7564596816390019340
 MonoBehaviour:
   m_ObjectHideFlags: 0

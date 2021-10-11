@@ -149,7 +149,9 @@
     <Compile Include="Assets\Scripts\Attackables\Town.cs" />
     <Compile Include="Assets\Standard Assets\Utility\ForcedReset.cs" />
     <Compile Include="Assets\Standard Assets\Utility\SmoothFollow.cs" />
+    <Compile Include="Assets\Scripts\Src\Building Placement\Ghost.cs" />
     <Compile Include="Assets\Scripts\switchWeapons.cs" />
+    <Compile Include="Assets\Models and Textures\TinyFire VFX\LightControl.cs" />
     <Compile Include="Assets\Standard Assets\Environment\Water\Water\Scripts\PlanarReflection.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\ScreenOverlay.cs" />
     <Compile Include="Assets\Standard Assets\Environment\Water\Water\Scripts\Displace.cs" />
@@ -161,6 +163,7 @@
     <Compile Include="Assets\Standard Assets\Environment\Water\Water\Scripts\MeshContainer.cs" />
     <Compile Include="Assets\Standard Assets\Utility\ObjectResetter.cs" />
     <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\AfterburnerPhysicsForce.cs" />
+    <Compile Include="Assets\Scripts\Src\Building Placement\Construction.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\DepthOfField.cs" />
     <Compile Include="Assets\Fantasy Skybox FREE\Demo\Scripts\GE_FantasySkyboxFREE_UIs.cs" />
     <Compile Include="Assets\Scripts\Test\InitializeGameOnStart.cs" />
@@ -222,6 +225,7 @@
     <Compile Include="Assets\Scripts\showMenu.cs" />
     <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\WaterHoseParticles.cs" />
     <Compile Include="Assets\Scripts\selection.cs" />
+    <Compile Include="Assets\Scripts\Src\Controllers\EffectsController.cs" />
     <Compile Include="Assets\Scripts\Src\Economy\ResourceSet.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\CameraMotionBlur.cs" />
     <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\SmokeParticles.cs" />
@@ -268,10 +272,7 @@
     <Compile Include="Assets\Scripts\IdleGrouping.cs" />
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\Standard Assets\Utility\AutoMobileShaderSwitch.cs" />
-    <Compile Include="Assets\Models and Textures\TinyFire VFX\LightControl.cs" />
-    <Compile Include="Assets\Scripts\Src\Building Placement\Construction.cs" />
-    <Compile Include="Assets\Scripts\Src\Building Placement\Ghost.cs" />
-    <Compile Include="Assets\Scripts\Src\Controllers\EffectsController.cs" />
+    <Compile Include="Assets\Scripts\Src\Behaviours\Guard.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />

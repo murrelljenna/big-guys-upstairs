@@ -79,7 +79,7 @@ public class TestGuard
         Assert.False(attackeeTookDamage);
     }
 
-    [UnityTest, Order(1)]
+    [UnityTest, Order(3)]
     public IEnumerator testGuardReturnsToPointWhenIntruderLeaves()
     {
         guard.guard(guardCenter, 5f);

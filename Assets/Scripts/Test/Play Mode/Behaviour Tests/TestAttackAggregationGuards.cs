@@ -1,14 +1,13 @@
-﻿using game.assets.ai;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
+using game.assets.ai;
 using UnityEngine.TestTools;
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
 using NUnit.Framework;
 using game.assets;
 
-public class TestGuard
+public class TestAttackAggregationGuards : MonoBehaviour
 {
     private const string sceneName = "TestGuard.unity";
     private Guard guard;
@@ -17,6 +16,7 @@ public class TestGuard
     private Vector3 pointInRadius;
     private Vector3 pointOutsideRadius;
     private Vector3 guardCenter;
+    private AttackAggregation agg = new AttackAggregation();
 
     public void putIntruderInRadius(Health intruder)
     {
@@ -31,6 +31,7 @@ public class TestGuard
     private bool attackeeTookDamage = false;
     public void onTookDamageCallback(float hp, float maxHp)
     {
+        Debug.Log(attackeeTookDamage);
         attackeeTookDamage = true;
     }
 
@@ -47,6 +48,8 @@ public class TestGuard
         guard = GameObject.Find("Guard").GetComponent<Guard>();
         intruder = GameObject.Find("Intruder").GetComponent<Health>();
 
+        agg.add(guard.GetComponent<Attack>());
+
         guard.SetAsMine();
         intruder.SetAsPlayer(LocalGameManager.Get().barbarianPlayer);
 
@@ -62,17 +65,19 @@ public class TestGuard
     [UnityTest, Order(1)]
     public IEnumerator testIntruderAttackedInsideRadius()
     {
-        guard.guard(guardCenter, 5f);
+        agg.guard(guardCenter, 5f);
         intruder.onLowerHP.AddListener(onTookDamageCallback);
         putIntruderInRadius(intruder);
-        yield return new WaitForSeconds(3);
+        Debug.Log(intruder.HP);
+        yield return new WaitForSeconds(10);
+        Debug.Log(intruder.HP);
         Assert.True(attackeeTookDamage);
     }
 
     [UnityTest, Order(2)]
     public IEnumerator testIntruderNotAttackedOutsideRadius()
     {
-        guard.guard(guardCenter, 2f);
+        agg.guard(guardCenter, 2f);
         intruder.onLowerHP.AddListener(onTookDamageCallback);
         putIntruderOutsideRadius(intruder);
         yield return new WaitForSeconds(3);
@@ -82,14 +87,13 @@ public class TestGuard
     [UnityTest, Order(3)]
     public IEnumerator testGuardReturnsToPointWhenIntruderLeaves()
     {
-        guard.guard(guardCenter, 5f);
+        agg.guard(guardCenter, 5f);
         intruder.onLowerHP.AddListener(onTookDamageCallback);
         putIntruderInRadius(intruder);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5);
         Assert.True(attackeeTookDamage);
         putIntruderOutsideRadius(intruder);
-        yield return new WaitForSeconds(3);
-        Debug.Log(Vector3.Distance(guard.transform.position, guardCenter));
-        Assert.True(Vector3.Distance(guard.transform.position, guardCenter) < 0.7f);
+        yield return new WaitForSeconds(5);
+        Assert.True(Vector3.Distance(guard.transform.position, guardCenter) < 0.2f);
     }
 }

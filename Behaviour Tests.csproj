@@ -62,11 +62,12 @@
     <Compile Include="Assets\Scripts\Test\Play Mode\Behaviour Tests\TestGameManager.cs" />
     <Compile Include="Assets\Scripts\Test\Play Mode\Behaviour Tests\TestBuildingObservation.cs" />
     <Compile Include="Assets\Scripts\Test\Play Mode\Behaviour Tests\TestAttack.cs" />
+    <Compile Include="Assets\Scripts\Test\Play Mode\Behaviour Tests\TestAttackAggregationGuards.cs" />
     <Compile Include="Assets\Scripts\Test\Play Mode\Behaviour Tests\TestCommandTool.cs" />
     <Compile Include="Assets\Scripts\Test\Play Mode\Behaviour Tests\TestRangedAttack.cs" />
+    <Compile Include="Assets\Scripts\Test\Play Mode\Behaviour Tests\TestGuard.cs" />
     <Compile Include="Assets\Scripts\Test\Play Mode\Behaviour Tests\TestUnitAggregation.cs" />
     <Compile Include="Assets\Scripts\Test\Play Mode\Behaviour Tests\TestMovement.cs" />
-    <Compile Include="Assets\Scripts\Test\Play Mode\Behaviour Tests\TestGuard.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Scripts\Test\Play Mode\Behaviour Tests\Play Mode.asmdef" />

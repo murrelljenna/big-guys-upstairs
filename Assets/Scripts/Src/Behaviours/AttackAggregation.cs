@@ -52,6 +52,12 @@ public class AttackAggregation : IAttack
         }
     }
 
+    public void guard(Vector3 point, float radius)
+    {
+        unitsThatCanGuard().ForEach(unit => unit.guard(point, radius));
+        unitsThatCanMove().goTo(point);
+    }
+
     public void remove(Attack unit)
     {
         units.Remove(unit);
@@ -89,6 +95,21 @@ public class AttackAggregation : IAttack
         });
 
         return unitsThatCanWork;
+    }
+
+    public List<Guard> unitsThatCanGuard()
+    {
+        List<Guard> unitsThatCanGuard = new List<Guard>();
+        units.ForEach(unit =>
+        {
+            Guard guard = unit.GetComponent<Guard>();
+            if (guard != null)
+            {
+                unitsThatCanGuard.Add(guard);
+            }
+        });
+
+        return unitsThatCanGuard;
     }
 
     public Vector3 location()

@@ -16,6 +16,7 @@ public class Guard : MonoBehaviour
     private int lastNoEnemies = 0;
 
     private Health intruder;
+    private Vector3 lastPosition;
 
     void Start()
     {
@@ -27,12 +28,6 @@ public class Guard : MonoBehaviour
     {
         pointToGuard = point;
         radiusToGuard = radius;
-        movement.goTo(point);
-        movement.reachedDestination.AddListener(startGuard);
-    }
-
-    private void startGuard()
-    {
         InvokeRepeating("guardInRange", 1f, 1f);
     }
 
@@ -47,14 +42,19 @@ public class Guard : MonoBehaviour
         lastNoEnemies = units.Length;
 
         Health candidateEnemy = firstWithReasonablePath(units);
+
         if (candidateEnemy != null)
         {
+            lastPosition = transform.position;
             attack.attack(candidateEnemy);
             intruder = candidateEnemy;
         }
         else
         {
-            movement.goTo(pointToGuard);
+            if (lastPosition != null)
+            {
+                movement.goTo(lastPosition);
+            }
         }
     }
 

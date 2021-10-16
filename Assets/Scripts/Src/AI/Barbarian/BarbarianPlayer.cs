@@ -27,7 +27,15 @@ public class BarbarianPlayer : Player
                 squads.Add(squad);
                 BarbarianOwnership ownership = spawners[i].GetComponent<BarbarianOwnership>();
 
-                squad.onMaxUnits.AddListener(ownership.fortify);
+                void guard() {
+                    squad.guardCurrentLocation();
+                }
+
+                if (!ownership.fortified)
+                {
+                    squad.onMaxUnits.AddListener(ownership.fortify);
+                }
+                squad.onMaxUnits.AddListener(guard);
                 registerDisbandListener(squad);
             }
         }

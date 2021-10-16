@@ -42,6 +42,11 @@ namespace game.assets.ai {
             }
         }
 
+        public void guardCurrentLocation()
+        {
+            units.guard(groupLocation(), 3f);
+        }
+
         private Attack replenishUnit(Vector3 location)
         {
             GameObject unit = recruiter.InvokeSpawn(location);

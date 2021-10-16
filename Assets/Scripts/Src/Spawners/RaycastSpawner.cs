@@ -64,6 +64,11 @@ namespace game.assets.spawners
 
         public override GameObject Spawn()
         {
+            if (prefab == null)
+            {
+                return null;
+            }
+
             Vector3? raycastHit = raycastFromCamera(cam);
 
             if (ghostInstance != null && ghostInstance.GetComponent<Ghost>() != null && ghostInstance.GetComponent<Ghost>().colliding)

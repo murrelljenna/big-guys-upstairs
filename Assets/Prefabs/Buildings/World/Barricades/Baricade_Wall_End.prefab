@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 6100964878270940604}
   - component: {fileID: 6105879698716571839}
   - component: {fileID: 8898661821651933673}
+  - component: {fileID: -8888639597723765193}
   m_Layer: 0
   m_Name: Baricade_Wall_End
   m_TagString: Untagged
@@ -212,5 +213,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de2cfb341b8dd79499165e4ebdf2dd2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fortifiedVariant: {fileID: 0}
+  fortified: 0
+--- !u!114 &-8888639597723765193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7502514472481909509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30ccc47a3d2b71d46bdc7f47fc6f5acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

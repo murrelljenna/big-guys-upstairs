@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 5789891671525954928}
   - component: {fileID: 6815881873956414783}
   - component: {fileID: 3863391170787725610}
+  - component: {fileID: 2527242969657350675}
   m_Layer: 0
   m_Name: Baricade_Wall
   m_TagString: Untagged
@@ -233,6 +234,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2cfb341b8dd79499165e4ebdf2dd2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fortifiedVariant: {fileID: 0}
+  fortified: 0
 --- !u!114 &3863391170787725610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,5 +246,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8d7b7a84798bc2419f45f089e03b262, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2527242969657350675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8173927250316445051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30ccc47a3d2b71d46bdc7f47fc6f5acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

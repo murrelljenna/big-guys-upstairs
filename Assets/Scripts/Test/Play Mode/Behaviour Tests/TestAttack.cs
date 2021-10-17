@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using game.assets.ai;
 using static game.assets.utilities.GameUtils;
 using game.assets;
+using game.assets.ai.units;
 
 namespace Tests
 {
@@ -156,6 +157,20 @@ namespace Tests
             putAttackerInRangeOfAttackee(movingAttacker);
             yield return new WaitForSeconds(3);
             Assert.True(attackeeTookDamage);
+        }
+
+        [UnityTest, Order(7)]
+        public IEnumerator testUnitDoesNotAttackWhenAttackeeIsIgnore()
+        {
+            DoNotAutoAttack whyDoINeedAFuckingVariableForThis = attackee
+                .gameObject
+                .AddComponent(typeof(DoNotAutoAttack))
+                as DoNotAutoAttack;
+            attackee.onLowerHP.AddListener(onTookDamageCallback);
+            putAttackerInRangeOfAttackee(movingAttacker);
+
+            yield return new WaitForSeconds(3);
+            Assert.False(attackeeTookDamage);
         }
 
         [UnityTest, Order(8)]

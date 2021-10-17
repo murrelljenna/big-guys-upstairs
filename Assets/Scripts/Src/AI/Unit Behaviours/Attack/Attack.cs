@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using game.assets.utilities;
+using game.assets.ai.units;
 
 namespace game.assets.ai
 {
@@ -74,7 +75,7 @@ namespace game.assets.ai
 
             Health candidateEnemy = firstWithReasonablePath(units);
 
-            if (candidateEnemy != null)
+            if (candidateEnemy != null && candidateEnemy.GetComponent<DoNotAutoAttack>() == null)
             {
                 attack(candidateEnemy);
             }

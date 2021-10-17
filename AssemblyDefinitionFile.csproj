@@ -57,7 +57,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Src\UI\Controllers\ResourceUIController.cs" />
     <Compile Include="Assets\Standard Assets\Editor\CrossPlatformInput\CrossPlatformInputInitialize.cs" />
-    <Compile Include="Assets\Scripts\Src\Behaviours\Guard.cs" />
+    <Compile Include="Assets\Scripts\Src\AI\Unit Behaviours\Guard\Guard.cs" />
     <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\ExtinguishableParticleSystem.cs" />
     <Compile Include="Assets\Scripts\PlayerStart.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\TiltShift.cs" />
@@ -70,7 +70,7 @@
     <Compile Include="Assets\Scripts\Attackables\Building.cs" />
     <Compile Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\Scripts\AICharacterControl.cs" />
     <Compile Include="Assets\Standard Assets\Characters\FirstPersonCharacter\Scripts\FirstPersonController.cs" />
-    <Compile Include="Assets\Scripts\Src\Behaviours\MovementAggregation.cs" />
+    <Compile Include="Assets\Scripts\Src\AI\Unit Behaviours\Movement\MovementAggregation.cs" />
     <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\ExplosionPhysicsForce.cs" />
     <Compile Include="Assets\Scripts\Src\Utilities\LocalPlayer.cs" />
     <Compile Include="Assets\Scripts\Attackables\WoodTile.cs" />
@@ -131,7 +131,7 @@
     <Compile Include="Assets\Standard Assets\Utility\PlatformSpecificContent.cs" />
     <Compile Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\Scripts\ThirdPersonCharacter.cs" />
     <Compile Include="Assets\Standard Assets\Editor\Water\Water4\GerstnerDisplaceEditor.cs" />
-    <Compile Include="Assets\Scripts\Src\Behaviours\Projectile.cs" />
+    <Compile Include="Assets\Scripts\Src\AI\Unit Behaviours\Attack\Projectile.cs" />
     <Compile Include="Assets\Standard Assets\Utility\ActivateTrigger.cs" />
     <Compile Include="Assets\Scripts\Src\UI\Controllers\CommandUIController.cs" />
     <Compile Include="Assets\Scripts\Utility\GameObjectSearcher.cs" />
@@ -215,7 +215,7 @@
     <Compile Include="Assets\Scripts\Launcher.cs" />
     <Compile Include="Assets\Standard Assets\Utility\SimpleActivatorMenu.cs" />
     <Compile Include="Assets\Scripts\commandUIController.cs" />
-    <Compile Include="Assets\Scripts\Src\Behaviours\AttackAggregation.cs" />
+    <Compile Include="Assets\Scripts\Src\AI\Unit Behaviours\Attack\AttackAggregation.cs" />
     <Compile Include="Assets\Standard Assets\Utility\LerpControlledBob.cs" />
     <Compile Include="Assets\Simple Health Bar\Editor\SimpleHealthBarWindow.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\ColorCorrectionRamp.cs" />
@@ -257,22 +257,23 @@
     <Compile Include="Assets\Scripts\ResourcePanel.cs" />
     <Compile Include="Assets\Scripts\Src\Player.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Quads.cs" />
-    <Compile Include="Assets\Scripts\Src\Behaviours\Attack.cs" />
+    <Compile Include="Assets\Scripts\Src\AI\Unit Behaviours\Attack\Attack.cs" />
     <Compile Include="Assets\Scripts\Attackables\FoodTile.cs" />
-    <Compile Include="Assets\Scripts\Src\Behaviours\Movement.cs" />
+    <Compile Include="Assets\Scripts\Src\AI\Unit Behaviours\Movement\Movement.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\EdgeDetection.cs" />
-    <Compile Include="Assets\Scripts\Src\Behaviours\RangedAttack.cs" />
+    <Compile Include="Assets\Scripts\Src\AI\Unit Behaviours\Attack\RangedAttack.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\ColorCorrectionLookup.cs" />
     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\PlatformSpecific\StandaloneInput.cs" />
     <Compile Include="Assets\Simple Health Bar\Editor\SimpleHealthBarEditor.cs" />
     <Compile Include="Assets\Standard Assets\Utility\FOVKick.cs" />
-    <Compile Include="Assets\Scripts\Src\Behaviours\Health.cs" />
+    <Compile Include="Assets\Scripts\Src\AI\Unit Behaviours\Health\Health.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Tonemapping.cs" />
     <Compile Include="Assets\Standard Assets\Editor\Water\Water4\WaterBaseEditor.cs" />
     <Compile Include="Assets\Scripts\Src\Economy\Resource.cs" />
     <Compile Include="Assets\Scripts\IdleGrouping.cs" />
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\Standard Assets\Utility\AutoMobileShaderSwitch.cs" />
+    <Compile Include="Assets\Scripts\Src\AI\Unit Behaviours\Health\DoNotAutoAttack.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />

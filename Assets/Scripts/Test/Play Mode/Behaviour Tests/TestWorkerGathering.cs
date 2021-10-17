@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 using static game.assets.utilities.GameUtils;
 using game.assets;
 using game.assets.utilities.resources;
+using game.assets.ai;
 
 namespace Tests
 {
@@ -78,6 +79,15 @@ namespace Tests
             worker.inventory = new ResourceSet(wood: 6);
             resource.addWorker(worker);
             yield return new WaitForSeconds(2);
+            Assert.False(worker.inventory.anyValOver(0));
+        }
+
+        [UnityTest, Order(3)]
+        public IEnumerator testWorkerStopsGatheringWhenOrderedAway()
+        {
+            resource.addWorker(worker);
+            worker.GetComponent<Movement>().goTo(new Vector3(0, 0, 0));
+            yield return new WaitForSeconds(3);
             Assert.False(worker.inventory.anyValOver(0));
         }
     }

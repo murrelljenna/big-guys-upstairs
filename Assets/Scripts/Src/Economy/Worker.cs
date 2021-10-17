@@ -40,6 +40,7 @@ namespace game.assets.economy {
 
         private void Start() {
             movement = GetComponent<Movement>();
+            movement.newMoveOrdered.AddListener(cancelOrders);
         }
 
         public void startCollectingResources(GameObject node, ResourceSet yield)  {
@@ -137,6 +138,12 @@ namespace game.assets.economy {
             {
                 CancelInvoke("build");
             }
+        }
+
+        public void cancelOrders()
+        {
+            CancelInvoke("build");
+            clearAssignment();
         }
     }
 }

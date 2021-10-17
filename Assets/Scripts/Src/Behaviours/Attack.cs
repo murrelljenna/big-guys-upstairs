@@ -52,6 +52,7 @@ namespace game.assets.ai
 
             if (canMove)
             {
+                movement.newMoveOrdered.AddListener(cancelOrders);
                 InvokeRepeating("checkEnemiesInRange", 2f, 2f);
             }
         }
@@ -202,7 +203,6 @@ namespace game.assets.ai
             StopAllCoroutines();
             updateTargetLive = false;
             CancelInvoke("doDamageIfShould");
-            // Cancel animation stuff - CancelInvoke("fireProjectile");
             if (canMove)
             {
                 movement.stop();

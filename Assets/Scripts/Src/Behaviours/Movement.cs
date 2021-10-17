@@ -25,7 +25,7 @@ namespace game.assets.ai
         [Tooltip("Invoked when halted")]
         public UnityEvent halted;
 
-        [Tooltip("Invoked when ordered to move to new position")]
+        [Tooltip("Invoked when ordered to move to new position, but before actual orders are set.")]
         public UnityEvent newMoveOrdered;
 
         void Start()
@@ -65,8 +65,8 @@ namespace game.assets.ai
 
         public void goTo(Vector3 destination)
         {
-            moveOrdered = true;
             newMoveOrdered.Invoke();
+            moveOrdered = true;
             navAgent.SetDestination(destination);
         }
         public void faceTowards(Vector3 target)

@@ -32,6 +32,7 @@ namespace game.assets.economy {
         private bool assigned = false;
 
         private const float COLLECT_RANGE = 0.3f;
+        private const float DEPOSIT_RANGE = 0.6f;
         private const float COLLECT_RATE = 2.5f;
         private const float BUILD_RATE = 2.5f;
         private const int BUILD_AMT = 2;
@@ -58,7 +59,7 @@ namespace game.assets.economy {
         }
 
         private IEnumerator collectResources(GameObject node, ResourceSet yield) {
-            movement.goTo(node.transform.position);
+            movement.goToSilently(node.transform.position);
             yield return new WaitUntil (() => gameObject.isInRangeOf(node, COLLECT_RANGE));
             movement.stop();
 
@@ -88,8 +89,10 @@ namespace game.assets.economy {
             Vector3 destination = resource.upstream.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position);
             Depositor depot = resource.upstream.GetComponent<Depositor>();        
 
-            movement.goTo(destination);
-            yield return new WaitUntil (() => gameObject.isInRangeOf(destination, COLLECT_RANGE));
+            movement.goToSilently(destination);
+
+            yield return new WaitUntil (() => gameObject.isInRangeOf(destination, DEPOSIT_RANGE));
+
             dropOffResource.Invoke();
             depot.deposit(inventory);
             inventory.setEmpty();
@@ -122,7 +125,7 @@ namespace game.assets.economy {
         public IEnumerator orderToBuild(Construction construction) {
             Vector3 destination = construction.GetComponent<Collider>().ClosestPointOnBounds(gameObject.transform.position);
             this.construction = construction;
-            movement.goTo(destination);
+            movement.goToSilently(destination);
             yield return new WaitUntil (() => gameObject.isInRangeOf(destination, COLLECT_RANGE));
             movement.stop();
             InvokeRepeating("build", 0f, BUILD_RATE);

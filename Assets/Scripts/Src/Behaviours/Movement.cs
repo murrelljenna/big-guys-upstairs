@@ -63,11 +63,16 @@ namespace game.assets.ai
             halt();
         }
 
+        public void goToSilently(Vector3 destination)
+        {
+            moveOrdered = true;
+            navAgent.SetDestination(destination);
+        }
+
         public void goTo(Vector3 destination)
         {
             newMoveOrdered.Invoke();
-            moveOrdered = true;
-            navAgent.SetDestination(destination);
+            goToSilently(destination);
         }
         public void faceTowards(Vector3 target)
         {

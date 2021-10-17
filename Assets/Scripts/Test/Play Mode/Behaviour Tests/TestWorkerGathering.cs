@@ -50,7 +50,6 @@ namespace Tests
                     new game.assets.player.Player(),
                     new game.assets.player.Player()
                 };
-            Debug.Log(town.IsMine());
 
             town.SetAsMine();
             worker.SetAsMine();

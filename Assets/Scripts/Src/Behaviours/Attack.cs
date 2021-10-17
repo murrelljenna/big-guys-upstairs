@@ -125,7 +125,7 @@ namespace game.assets.ai
                 this.attackee = attackee;
                 isAttacking = true;
 
-                movement.goTo(attackee.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
+                movement.goToSilently(attackee.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
                 yield return new WaitUntil (() => isInRange(attackee));
                 movement.stop();
 

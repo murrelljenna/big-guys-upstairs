@@ -41,6 +41,7 @@ namespace game.assets.ai
         
         private Movement movement;
         private bool canMove;
+        private bool inFight = false;
 
         private bool updateTargetLive = true;
 
@@ -116,6 +117,21 @@ namespace game.assets.ai
             }
         }
 
+        private void OnCollisionEnter(Collision collision)
+        {
+            Health collidingUnit = collision.gameObject.GetComponent<Health>();
+            if (
+                collidingUnit != null 
+                && collidingUnit.IsEnemyOf(this) 
+                && collidingUnit.HP > 0 && !inFight
+                && collidingUnit.GetComponent<DoNotAutoAttack>() == null
+                )
+            {
+                cancelOrders();
+                attack(collidingUnit);
+            }
+        }
+
         private IEnumerator moveUntilInRangeAndAttack(Health attackee)
         {
              if (attackee.HP > 0) {
@@ -148,6 +164,7 @@ namespace game.assets.ai
                 yield return new WaitUntil (() => isInRange(attackee));
 
                 attackee.onZeroHP.AddListener(cancelOrders);
+                inFight = true;
                 InvokeRepeating("doDamageIfShould", 0f, this.attackRate);
             }
         }
@@ -203,6 +220,7 @@ namespace game.assets.ai
         {
             StopAllCoroutines();
             updateTargetLive = false;
+            inFight = false;
             CancelInvoke("doDamageIfShould");
             if (canMove)
             {

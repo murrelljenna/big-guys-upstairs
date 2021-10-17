@@ -90,10 +90,35 @@ namespace game.assets.ai {
             }
         }
 
+        public void attackNearestEnemy()
+        {
+            Health nearestEnemyThingy = getNearestEnemy();
+            units.attack(nearestEnemyThingy);
+        }
+
+        private Health getNearestEnemy()
+        {
+            Health[] healths = GameObject.FindObjectsOfType<Health>();
+            Transform tMin = null;
+            float minDist = Mathf.Infinity;
+            Vector3 currentPos = groupLocation();
+            foreach (Health health in healths)
+            {
+                if (health.IsEnemyOf(player))
+                {
+                    float dist = Vector3.Distance(health.transform.position, currentPos);
+                    if (dist < minDist)
+                    {
+                        tMin = health.transform;
+                        minDist = dist;
+                    }
+                }
+            }
+            return tMin.GetComponent<Health>();
+        }
+
         public void Disband()
         {
-            Debug.Log(replenishment);
-            Debug.Log("Disbanding");
             LocalGameManager.Get().StopCoroutine(replenishment);
         }
     }

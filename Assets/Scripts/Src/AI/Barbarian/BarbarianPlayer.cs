@@ -23,7 +23,7 @@ public class BarbarianPlayer : Player
             if (spawners[i].BelongsTo(this))
             {
                 Vector3 location = spawners[i].transform.position;
-                AIUnitGrouping squad = new AIUnitGrouping(this, 15, 10, location);
+                AIUnitGrouping squad = new AIUnitGrouping(this, 10, 1, location);
                 squads.Add(squad);
                 BarbarianOwnership ownership = spawners[i].GetComponent<BarbarianOwnership>();
 
@@ -35,7 +35,18 @@ public class BarbarianPlayer : Player
                 {
                     squad.onMaxUnits.AddListener(ownership.fortify);
                 }
+
+
+                void spawnUnitGroupToAttackNearestEnemy()
+                {
+                    AIUnitGrouping attackSquad = new AIUnitGrouping(this, 10, 1, location);
+                    attackSquad.onMaxUnits.AddListener(attackSquad.attackNearestEnemy);
+                    attackSquad.onNoUnits.AddListener(spawnUnitGroupToAttackNearestEnemy);
+                    registerDisbandListener(attackSquad);
+                }
+
                 squad.onMaxUnits.AddListener(guard);
+                squad.onMaxUnits.AddListener(spawnUnitGroupToAttackNearestEnemy);
                 registerDisbandListener(squad);
             }
         }

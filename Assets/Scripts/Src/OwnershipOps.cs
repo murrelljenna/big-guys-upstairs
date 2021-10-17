@@ -53,6 +53,20 @@ public static class OwnershipOps
         return false;
     }
 
+    public static bool IsEnemyOf(this MonoBehaviour behaviour, Player player)
+    {
+        Ownership ownership = behaviour.GetComponent<Ownership>();
+        if (
+            (ownership != null && ownership.owned)
+            && (ownership.owner != player)
+            )
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 
     // Only useful for monobehaviours specifically belonging to local player.
     public static bool IsEnemy(this MonoBehaviour behaviour)

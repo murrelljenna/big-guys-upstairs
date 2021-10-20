@@ -16,7 +16,7 @@ namespace game.assets.economy {
 
         public List<Worker> workers = new List<Worker>();
 
-        public Depositor upstream;
+        private Depositor upstream;
 
         private GameObjectSearcher searcher;
 
@@ -52,8 +52,18 @@ namespace game.assets.economy {
             return searcher.actors[index];
         }
 
+        public Depositor getUpstream()
+        {
+            if (upstream == null) {
+                upstream = closestDepositor();
+            }
+
+            return upstream;
+        }
+
         private Depositor closestDepositor()
         {
+
             Depositor[] depositors = GameObject.FindObjectsOfType<Depositor>();
             Transform tMin = null;
             float minDist = Mathf.Infinity;

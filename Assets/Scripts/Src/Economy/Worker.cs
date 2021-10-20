@@ -86,8 +86,8 @@ namespace game.assets.economy {
 
         private IEnumerator returnToDeposit() {
 
-            Vector3 destination = resource.upstream.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position);
-            Depositor depot = resource.upstream.GetComponent<Depositor>();        
+            Vector3 destination = resource.getUpstream().GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position);
+            Depositor depot = resource.getUpstream().GetComponent<Depositor>();        
 
             movement.goToSilently(destination);
 

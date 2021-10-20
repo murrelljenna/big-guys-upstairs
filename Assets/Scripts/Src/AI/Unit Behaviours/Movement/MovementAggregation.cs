@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static game.assets.utilities.GameUtils;
 
 public class MovementAggregation : IMovement
 {
@@ -77,11 +78,5 @@ public class MovementAggregation : IMovement
                 yield return null;
             }
         }
-    }
-
-    private float getTerrainHeight(Vector3 point) {
-       RaycastHit hit;
-       Physics.Raycast(new Vector3(point.x, 300, point.z), Vector3.down, out hit, Mathf.Infinity, GameUtils.LayerMask.Terrain);
-       return hit.point.y;
     }
 }

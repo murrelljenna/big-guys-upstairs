@@ -143,6 +143,13 @@ namespace game.assets.utilities {
             return monos.ToArray();
         }
 
+        public static float getTerrainHeight(Vector3 point)
+        {
+            RaycastHit hit;
+            Physics.Raycast(new Vector3(point.x, 300, point.z), Vector3.down, out hit, Mathf.Infinity, GameUtils.LayerMask.Terrain);
+            return hit.point.y;
+        }
+
         public static class MagicNumbers
         {
             public static float PlayerSpawnRadius = 3f;

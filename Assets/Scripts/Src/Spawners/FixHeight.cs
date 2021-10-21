@@ -5,15 +5,10 @@ using static game.assets.utilities.GameUtils;
 
 public class FixHeight : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Vector3 currentPosition = transform.position;
+        float bestHeight = getTerrainHeight(currentPosition);
+        transform.position = new Vector3(currentPosition.x, bestHeight, currentPosition.z);
     }
 }

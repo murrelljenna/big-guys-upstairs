@@ -46,6 +46,7 @@ namespace game.assets.ai
         private bool updateTargetLive = true;
 
         private int lastNoEnemies = 0;
+        private int frameCount = 0;
 
         void Start()
         {
@@ -57,6 +58,18 @@ namespace game.assets.ai
                 movement.newMoveOrdered.AddListener(cancelOrders);
                 InvokeRepeating("checkEnemiesInRange", 2f, 2f);
             }
+        }
+
+        void Update()
+        {
+            if (updateTargetLive && frameCount % 10 == 0)
+            {
+                if (attackee != null && canMove)
+                {
+                    movement.goToSilently(attackee.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
+                }
+            }
+            frameCount++;
         }
 
         private void checkEnemiesInRange()

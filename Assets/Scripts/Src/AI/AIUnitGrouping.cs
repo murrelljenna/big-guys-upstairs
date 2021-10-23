@@ -92,8 +92,23 @@ namespace game.assets.ai {
 
         public void attackNearestEnemy()
         {
+            attackNearestEnemy(null);
+        }
+
+        public void attackNearestEnemy(Health ignore = null)
+        {
+            LocalGameManager.Get().StartCoroutine(attackNearestEnemyInOneSecond());
+        }
+
+        private IEnumerator attackNearestEnemyInOneSecond()
+        {
+            yield return new WaitForSecondsRealtime(1);
             Health nearestEnemyThingy = getNearestEnemy();
-            units.attack(nearestEnemyThingy);
+            if (nearestEnemyThingy != null)
+            {
+                units.attack(nearestEnemyThingy);
+                nearestEnemyThingy.onZeroHP.AddListener(attackNearestEnemy);
+            }
         }
 
         private Health getNearestEnemy()
@@ -114,7 +129,7 @@ namespace game.assets.ai {
                     }
                 }
             }
-            return tMin.GetComponent<Health>();
+            return tMin?.GetComponent<Health>();
         }
 
         public void Disband()

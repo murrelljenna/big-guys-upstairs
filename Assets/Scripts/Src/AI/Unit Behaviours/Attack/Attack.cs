@@ -159,7 +159,6 @@ namespace game.assets.ai
                 yield return new WaitUntil (() => isInRange(attackee));
                 movement.stop();
 
-                attackee.onZeroHP.AddListener(cancelOrders);
                 InvokeRepeating("doDamageIfShould", 0f, this.attackRate);
             }
 
@@ -176,7 +175,6 @@ namespace game.assets.ai
 
                 yield return new WaitUntil (() => isInRange(attackee));
 
-                attackee.onZeroHP.AddListener(cancelOrders);
                 inFight = true;
                 InvokeRepeating("doDamageIfShould", 0f, this.attackRate);
             }

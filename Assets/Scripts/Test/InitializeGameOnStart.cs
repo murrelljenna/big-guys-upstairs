@@ -7,7 +7,7 @@ public class InitializeGameOnStart : MonoBehaviour
 {
     [Tooltip("Player spawn location")]
     public Vector3 playerSpawn;
-    private const string scenePath = "Assets/Scenes/TestScenes/Manual Test Scenes/TestLoadGameAndPlay/TestPlayDontUseThisDirectly.unity";
+    public string scenePath = "Assets/Scenes/TestScenes/Manual Test Scenes/TestLoadGameAndPlay/TestPlayDontUseThisDirectly.unity";
 
     void Start()
     {

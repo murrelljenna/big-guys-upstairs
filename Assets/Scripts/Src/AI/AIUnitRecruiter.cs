@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using game.assets.spawners;
 using game.assets;
+using static game.assets.utilities.GameUtils;
 
 namespace game.assets.ai {
     public class AIUnitRecruiter
@@ -15,8 +16,9 @@ namespace game.assets.ai {
         }
 
         public GameObject InvokeSpawn(Vector3 position) {
-            Spawner spawner = closestSpawner(position);
-            return spawner.SpawnForPlayer(player);
+            Spawner[] spawners = nearbySpawners(closestSpawner(position));
+            Spawner randomSpawner = spawners[Random.Range(0, spawners.Length)];
+            return randomSpawner.SpawnForPlayer(player);
         }
 
         private Spawner closestSpawner(Vector3 position) {
@@ -36,6 +38,12 @@ namespace game.assets.ai {
                 }
             }
             return tMin.GetComponent<Spawner>();
+        }
+
+        private Spawner[] nearbySpawners(Spawner spawner)
+        {
+            GameObject[] gameObjects = findGameObjectsInRange(spawner.transform.position, 20f);
+            return gameObjects.GetComponents<Spawner>();
         }
     }
 }

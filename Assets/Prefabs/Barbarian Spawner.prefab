@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 7564596816390019343}
   - component: {fileID: 7564596816390019340}
   - component: {fileID: 7564596816390019341}
+  - component: {fileID: 1755504541631065717}
+  - component: {fileID: 6609391363351669231}
   m_Layer: 0
   m_Name: Barbarian Spawner
   m_TagString: Untagged
@@ -83,3 +85,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2cfb341b8dd79499165e4ebdf2dd2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fortifiedVariant: {fileID: 0}
+  fortified: 0
+--- !u!114 &1755504541631065717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7564596816390019337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb2b21629e4ccad40bb6aff22ca0910b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1768822230079314896, guid: 3521bb6cbe7e0734aa5c7e555758ef01, type: 3}
+  price:
+    wood: 0
+    food: 0
+    gold: 0
+    stone: 0
+    iron: 0
+    horse: 0
+  networked: 0
+  spawnRadius: 1.2
+--- !u!65 &6609391363351669231
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7564596816390019337}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

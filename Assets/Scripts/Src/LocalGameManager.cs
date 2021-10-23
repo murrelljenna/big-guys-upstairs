@@ -63,7 +63,7 @@ namespace game.assets
             for (int i = 0; i < players.Length; i++) {
                 PlayerColour colour = pickFirstAvailableColour();
                 players[i] = new player.Player();
-                players[i].colour = pickFirstAvailableColour();
+                players[i].colour = pickFirstAvailableColour(); 
             }
 
             return scene;
@@ -83,7 +83,7 @@ namespace game.assets
         private void instantiateLocalPlayerStart()
         {
             IInstantiator instantiator = InstantiatorFactory.getInstantiator();
-            GameObject localCityObject = instantiator.InstantiateAsMine(cityPrefab, spawnPoints[0], Quaternion.identity);
+            GameObject localCityObject = instantiator.InstantiateAsMine(cityPrefab, fixHeight(spawnPoints[0]), Quaternion.identity);
             localCityObject.name = MagicWords.GameObjectNames.StartingCity;
 
             Vector3 playerSpawn = randomPointOnUnitCircle(spawnPoints[0], MagicNumbers.PlayerSpawnRadius);

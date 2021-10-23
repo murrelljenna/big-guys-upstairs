@@ -69,10 +69,30 @@ namespace game.assets.utilities {
             return new Vector2(x, y);
         }
 
-        public static Vector2 randomPointOnUnitCircle(Vector3 offset, float radius)
+        public static Vector3 randomPointOnUnitCircle(Vector3 offset, float radius)
         {
             Vector2 randomInCircle = randomPointOnUnitCircle(radius);
-            return new Vector3(randomInCircle.x + offset.x, 0, randomInCircle.y + offset.z);
+            Vector3 intermediate = new Vector3(
+                randomInCircle.x + offset.x,
+                0,
+                randomInCircle.y + offset.z
+            );
+
+            float height = getTerrainHeight(intermediate);
+            return new Vector3(
+                intermediate.x,
+                height,
+                intermediate.z
+            );
+        }
+
+        public static Vector3 fixHeight(Vector3 point)
+        {
+            return new Vector3(
+                point.x,
+                getTerrainHeight(point),
+                point.z
+            );
         }
 
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 using game.assets.utilities.resources;
 using game.assets.player;
+using static game.assets.utilities.GameUtils;
 
 namespace game.assets.spawners
 {
@@ -32,24 +33,9 @@ namespace game.assets.spawners
             return spawnerController.Spawn(prefab, price, spawnLocation, Quaternion.identity);
         }
 
-        private Vector2 RandomPointOnUnitCircle(float radius)
-        {
-            float angle = Random.Range(0f, Mathf.PI * 2);
-            float x = Mathf.Sin(angle) * radius;
-            float y = Mathf.Cos(angle) * radius;
-
-            return new Vector2(x, y);
-        }
-
         private Vector3 getSpawnLocation(Vector3 spawnCenter)
         {
-            Vector2 randomInCircle = RandomPointOnUnitCircle(spawnRadius);
-
-            return new Vector3(
-                randomInCircle.x + spawnCenter.x,
-                spawnCenter.y,
-                randomInCircle.y + spawnCenter.z
-            );
+            return randomPointOnUnitCircle(transform.position, spawnRadius);
         }
 
         public GameObject SpawnForPlayer(player.Player player) {

@@ -186,6 +186,7 @@
     <Compile Include="Assets\Scripts\EscMenu.cs" />
     <Compile Include="Assets\Scripts\Test\TestUtils.cs" />
     <Compile Include="Assets\Scripts\hover.cs" />
+    <Compile Include="Assets\Scripts\Src\AI\Unit Behaviours\PopCount.cs" />
     <Compile Include="Assets\Scripts\launchMissile.cs" />
     <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\ExplosionFireAndDebris.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\ScreenSpaceAmbientOcclusion.cs" />
@@ -204,10 +205,12 @@
     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\CrossPlatformInputManager.cs" />
     <Compile Include="Assets\Standard Assets\Cameras\Scripts\HandHeldCam.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\ContrastEnhance.cs" />
+    <Compile Include="Assets\Scripts\Src\AI\Unit Behaviours\Idle.cs" />
     <Compile Include="Assets\Scripts\Src\AI\Unit Behaviours\Health\DoNotAutoAttack.cs" />
     <Compile Include="Assets\Scripts\SpawnManager.cs" />
     <Compile Include="Assets\Scripts\Src\Ownership.cs" />
     <Compile Include="Assets\Standard Assets\Utility\AlphaButtonClickMask.cs" />
+    <Compile Include="Assets\IncreaseMaxPopCount.cs" />
     <Compile Include="Assets\HealthBarController.cs" />
     <Compile Include="Assets\Scripts\Attackables\Wall.cs" />
     <Compile Include="Assets\Scripts\Attackables\Militia.cs" />
@@ -278,9 +281,8 @@
     <Compile Include="Assets\Scripts\IdleGrouping.cs" />
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\Standard Assets\Utility\AutoMobileShaderSwitch.cs" />
-    <Compile Include="Assets\Scripts\Src\AI\Unit Behaviours\Idle.cs" />
-    <Compile Include="Assets\Scripts\Src\AI\Unit Behaviours\PopCount.cs" />
-    <Compile Include="Assets\IncreaseMaxPopCount.cs" />
+    <Compile Include="Assets\Scripts\Src\Building Placement\PlaceWalls.cs" />
+    <Compile Include="Assets\Scripts\Src\Building Placement\WallCorner.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />

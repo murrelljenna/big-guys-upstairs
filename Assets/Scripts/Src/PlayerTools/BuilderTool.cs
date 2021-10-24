@@ -18,22 +18,33 @@ namespace game.assets.tools
     }
 
     [RequireComponent(typeof(RaycastSpawner))]
+    [RequireComponent(typeof(PlaceWalls))]
     public class BuilderTool : MonoBehaviour
     {
         [Tooltip("Set of prefabs and associated costs")]
         public PrefabCostMapping[] buildableItems;
-
+        private PlaceWalls placeWalls;
         private RaycastSpawner spawner;
 
         private void Start()
         {
             spawner = GetComponent<RaycastSpawner>();
+            placeWalls = GetComponent<PlaceWalls>();
         }
 
         public void setPrefab(int index)
         {
             index--;
-            if (index < buildableItems.Length) {
+            if (index == 5)
+            {
+                Debug.Log("Gonna place walls");
+                placeWalls.enabled = true;
+                spawner.enabled = false;
+            } else if (index < buildableItems.Length)
+            {
+                Debug.Log("Ok so we selected something else");
+                placeWalls.enabled = false;
+                spawner.enabled = true;
                 spawner.prefab = buildableItems[index].prefab;
                 spawner.price = buildableItems[index].cost;
                 spawner.setGhost(buildableItems[index].ghost);

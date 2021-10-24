@@ -64,6 +64,11 @@ namespace game.assets.spawners
 
         public override GameObject Spawn()
         {
+            if (!enabled)
+            {
+                return null;
+            }
+
             if (prefab == null)
             {
                 return null;

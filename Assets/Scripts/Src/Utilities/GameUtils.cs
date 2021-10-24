@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
+using game.assets.player;
 
 namespace game.assets.utilities {
     public static class GameUtils
@@ -123,6 +124,33 @@ namespace game.assets.utilities {
             }
 
             return monos.ToArray();
+        }
+
+        public static T GetNearestFriendly<T>(this GameObject gameObject) where T : MonoBehaviour
+        {
+            T[] monos = GameObject.FindObjectsOfType<T>();
+            if (monos.Length == 0)
+            {
+                return null;
+            }
+
+            Transform tMin = null;
+            float minDist = Mathf.Infinity;
+            Vector3 currentPos = gameObject.transform.position;
+            foreach (T mono in monos)
+            {
+                Ownership ownership = gameObject.GetComponent<Ownership>();
+                if (!mono.IsEnemyOf(ownership))
+                {
+                    float dist = Vector3.Distance(mono.transform.position, currentPos);
+                    if (dist < minDist)
+                    {
+                        tMin = mono.transform;
+                        minDist = dist;
+                    }
+                }
+            }
+            return tMin?.GetComponent<T>();
         }
 
         public static bool isInRangeOf(this GameObject gameObject, GameObject otherGameObject, float rng) {

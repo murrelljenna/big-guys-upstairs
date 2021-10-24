@@ -4,6 +4,7 @@ using game.assets.player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Health))]
@@ -11,6 +12,10 @@ public class Construction : MonoBehaviour
 {
     [Tooltip("Prefab created when construction finished")]
     public GameObject onceBuilt;
+
+    [Tooltip("Invoked when construction finished")]
+    public UnityEvent built;
+
     private Health health;
     void Start()
     {
@@ -33,6 +38,7 @@ public class Construction : MonoBehaviour
     private void finish() {
         IInstantiator instantiator = InstantiatorFactory.getInstantiator(false);
         instantiator.InstantiateAsPlayer(onceBuilt, transform.position, transform.rotation, GetComponent<Ownership>().owner);
+        built.Invoke();
         Destroy(this);
     }
 

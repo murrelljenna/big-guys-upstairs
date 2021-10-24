@@ -5,6 +5,7 @@ using game.assets.utilities.resources;
 using game.assets.ai;
 using game.assets.utilities;
 using UnityEngine.Events;
+using static game.assets.utilities.GameUtils;
 
 namespace game.assets.economy {
     [RequireComponent(typeof(Movement))]
@@ -42,6 +43,8 @@ namespace game.assets.economy {
         private void Start() {
             movement = GetComponent<Movement>();
             movement.newMoveOrdered.AddListener(cancelOrders);
+
+            InvokeRepeating("buildNearestBuilding", 2f, 2f);
         }
 
         public void startCollectingResources(GameObject node, ResourceSet yield)  {
@@ -147,6 +150,27 @@ namespace game.assets.economy {
         {
             CancelInvoke("build");
             clearAssignment();
+        }
+
+        private void buildNearestBuilding()
+        {
+            if (resource != null)
+            {
+                return;
+            }
+            GameObject[] nearby = findGameObjectsInRange(transform.position, 10f);
+            Construction[] thingsICanBuild = nearby.GetComponents<Construction>();
+            for (int i = 0; i < thingsICanBuild.Length; i++)
+            {
+                if (thingsICanBuild[i].IsEnemyOf(this))
+                {
+                    continue;
+                }
+
+                setBuildingTarget(thingsICanBuild[i]);
+            }
+
+            return;
         }
     }
 }

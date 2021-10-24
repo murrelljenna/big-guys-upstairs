@@ -56,8 +56,9 @@ namespace game.assets.ai
             if (canMove)
             {
                 movement.newMoveOrdered.AddListener(cancelOrders);
-                InvokeRepeating("checkEnemiesInRange", 2f, 2f);
             }
+
+            InvokeRepeating("checkEnemiesInRange", 2f, 2f);
         }
 
         void Update()
@@ -74,25 +75,51 @@ namespace game.assets.ai
 
         private void checkEnemiesInRange()
         {
+            if (gameObject.name.Contains("Barbarian"))
+            {
+                return;
+            }
             if (isAttacking || (canMove && movement.moveOrdered)) {
                 return;
             }
 
             Health[] units = GameUtils.findEnemyUnitsInRange(GetComponent<Collider>().bounds.center, responseRange);
-
             if (units.Length == lastNoEnemies)
             {
                 return;
             }
 
             lastNoEnemies = units.Length;
-
-            Health candidateEnemy = firstWithReasonablePath(units);
+            Health candidateEnemy;
+            if (canMove)
+            {
+                candidateEnemy = firstWithReasonablePath(units);
+            }
+            else
+            {
+                candidateEnemy = firstEnemy(units);
+            }
 
             if (candidateEnemy != null && candidateEnemy.GetComponent<DoNotAutoAttack>() == null)
             {
                 attack(candidateEnemy);
             }
+        }
+
+        private Health firstEnemy(Health[] units)
+        {
+            for (int i = 0; i < units.Length; i++)
+            {
+                if (units[i].IsEnemyOf(this) && units[i].HP > 0)
+                {
+                    if (isInRange(units[i]))
+                    {
+                        return units[i];
+                    }
+                }
+            }
+
+            return null;
         }
 
         private Health firstWithReasonablePath(Health[] units) {
@@ -101,7 +128,7 @@ namespace game.assets.ai
                 if (units[i].IsEnemyOf(this) && units[i].HP > 0)
                 {
                     float dist = movement.pathLength(units[i].GetComponent<Transform>().position);
-                    if (isInRange(units[i].GetComponent<Health>()) || dist < 3f)
+                    if (isInRange(units[i]) || dist < 3f)
                     {
                         return units[i];
                     }

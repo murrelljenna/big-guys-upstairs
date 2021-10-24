@@ -154,9 +154,9 @@ namespace game.assets.utilities {
             List<T> monos = new List<T>();
             for (int i = 0; i < gameObjects.Length; i++)
             {
-                T mono = gameObjects[i].GetComponent<T>();
+                T[] mono = gameObjects[i].GetComponents<T>();
                 if (mono != null) {
-                    monos.Add(mono);
+                    monos.AddRange(mono);
                 }
             }
 

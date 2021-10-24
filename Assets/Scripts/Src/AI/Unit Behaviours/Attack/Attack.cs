@@ -58,7 +58,7 @@ namespace game.assets.ai
                 movement.newMoveOrdered.AddListener(cancelOrders);
             }
 
-            InvokeRepeating("checkEnemiesInRange", 2f, 2f);
+            InvokeRepeating("checkEnemiesInRange", 1f, 1f);
         }
 
         void Update()

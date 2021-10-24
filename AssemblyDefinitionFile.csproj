@@ -126,6 +126,7 @@
     <Compile Include="Assets\Standard Assets\Utility\DragRigidbody.cs" />
     <Compile Include="Assets\Scripts\Attackables\Archery.cs" />
     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\Joystick.cs" />
+    <Compile Include="Assets\Scripts\Src\Spawners\FixHeight.cs" />
     <Compile Include="Assets\Scripts\Src\AI\AIUnitRecruiter.cs" />
     <Compile Include="Assets\Standard Assets\Utility\CameraRefocus.cs" />
     <Compile Include="Assets\Standard Assets\Utility\PlatformSpecificContent.cs" />
@@ -277,7 +278,8 @@
     <Compile Include="Assets\Scripts\IdleGrouping.cs" />
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\Standard Assets\Utility\AutoMobileShaderSwitch.cs" />
-    <Compile Include="Assets\Scripts\Src\Spawners\FixHeight.cs" />
+    <Compile Include="Assets\Scripts\Src\AI\Unit Behaviours\Idle.cs" />
+    <Compile Include="Assets\Scripts\Src\AI\Unit Behaviours\PopCount.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />

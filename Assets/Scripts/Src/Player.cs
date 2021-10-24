@@ -14,5 +14,10 @@ namespace game.assets.player
             popCount = 0;
             maxCount = 10;
         }
+
+        public bool maxPop()
+        {
+            return popCount >= maxCount;
+        }
     }
 }

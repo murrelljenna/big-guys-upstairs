@@ -29,6 +29,10 @@ namespace game.assets.spawners
 
         public virtual GameObject Spawn()
         {
+            if (LocalGameManager.Get().getLocalPlayer().maxPop())
+            {
+                return null;
+            }
             Vector3 spawnLocation = getSpawnLocation(this.transform.position);
             return spawnerController.Spawn(prefab, price, spawnLocation, Quaternion.identity);
         }

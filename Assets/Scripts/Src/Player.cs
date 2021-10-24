@@ -6,11 +6,13 @@ namespace game.assets.player
     {
         public PlayerColour colour { get; set; }
         public int popCount { get; set; }
+        public int maxCount { get; set; }
 
         public Player()
         {
             colour = PlayerColours.Blue;
             popCount = 0;
+            maxCount = 10;
         }
     }
 }

@@ -12,8 +12,14 @@ public class Destroy : MonoBehaviour
         if (leaveBehind != null)
         {
             game.assets.player.Player player = GetComponent<Ownership>().owner;
-            InstantiatorFactory.getInstantiator(false).InstantiateAsPlayer(leaveBehind, transform.position, transform.rotation, player);
+            GameObject go = InstantiatorFactory.getInstantiator(false).InstantiateAsPlayer(leaveBehind, transform.position, transform.rotation, player);
+            go.GetComponent<Destroy>().destroyAfterAMinute(); // Clean yoself up
         }
         Destroy(gameObject);
+    }
+
+    public void destroyAfterAMinute()
+    {
+        Invoke("destroy", 60f);
     }
 }

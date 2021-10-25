@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 6555545925287659805}
   - component: {fileID: 3139992101012473275}
   - component: {fileID: 8669026769560463289}
+  - component: {fileID: 4837799519301330891}
   m_Layer: 0
   m_Name: Worker Death
   m_TagString: Untagged
@@ -100,6 +101,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4837799519301330891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8698679660654105462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8d7b7a84798bc2419f45f089e03b262, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leaveBehind: {fileID: 0}
 --- !u!1001 &2201245787803729772
 PrefabInstance:
   m_ObjectHideFlags: 0

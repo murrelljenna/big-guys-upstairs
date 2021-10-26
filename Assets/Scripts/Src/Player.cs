@@ -2,6 +2,7 @@
 
 namespace game.assets.player
 {
+    [System.Serializable]
     public class Player
     {
         public PlayerColour colour { get; set; }

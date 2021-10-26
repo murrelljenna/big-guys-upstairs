@@ -22,4 +22,9 @@ public class Destroy : MonoBehaviour
     {
         Invoke("destroy", 60f);
     }
+
+    public void destroyAfterTenSeconds()
+    {
+        Invoke("destroy", 10f);
+    }
 }

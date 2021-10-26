@@ -8,88 +8,91 @@ using UnityEngine.SceneManagement;
 using NUnit.Framework;
 using game.assets;
 
-public class TestGuard
+namespace Tests
 {
-    private const string sceneName = "TestGuard.unity";
-    private Guard guard;
-    private Health intruder;
-
-    private Vector3 pointInRadius;
-    private Vector3 pointOutsideRadius;
-    private Vector3 guardCenter;
-
-    public void putIntruderInRadius(Health intruder)
+    public class TestGuard
     {
-        intruder.gameObject.transform.position = pointInRadius;
-    }
+        private const string sceneName = "TestGuard.unity";
+        private Guard guard;
+        private Health intruder;
 
-    public void putIntruderOutsideRadius(Health intruder)
-    {
-        intruder.gameObject.transform.position = pointOutsideRadius;
-    }
+        private Vector3 pointInRadius;
+        private Vector3 pointOutsideRadius;
+        private Vector3 guardCenter;
 
-    private bool attackeeTookDamage = false;
-    public void onTookDamageCallback(float hp, float maxHp)
-    {
-        attackeeTookDamage = true;
-    }
+        public void putIntruderInRadius(Health intruder)
+        {
+            intruder.gameObject.transform.position = pointInRadius;
+        }
 
-    [UnitySetUp]
-    public IEnumerator SetUp()
-    {
-        EditorSceneManager.LoadSceneInPlayMode(
-            Test.TestUtils.testSceneDirPath + sceneName,
-            new LoadSceneParameters(LoadSceneMode.Single)
-        );
+        public void putIntruderOutsideRadius(Health intruder)
+        {
+            intruder.gameObject.transform.position = pointOutsideRadius;
+        }
 
-        yield return null;
+        private bool attackeeTookDamage = false;
+        public void onTookDamageCallback(float hp, float maxHp)
+        {
+            attackeeTookDamage = true;
+        }
 
-        guard = GameObject.Find("Guard").GetComponent<Guard>();
-        intruder = GameObject.Find("Intruder").GetComponent<Health>();
+        [UnitySetUp]
+        public IEnumerator SetUp()
+        {
+            EditorSceneManager.LoadSceneInPlayMode(
+                Test.TestUtils.testSceneDirPath + sceneName,
+                new LoadSceneParameters(LoadSceneMode.Single)
+            );
 
-        guard.SetAsMine();
-        intruder.SetAsPlayer(LocalGameManager.Get().barbarianPlayer);
+            yield return null;
 
-        pointInRadius = GameObject.Find("InsideRadius").transform.position;
-        pointOutsideRadius = GameObject.Find("OutsideRadius").transform.position;
-        guardCenter = GameObject.Find("GuardCenter").transform.position;
+            guard = GameObject.Find("Guard").GetComponent<Guard>();
+            intruder = GameObject.Find("Intruder").GetComponent<Health>();
 
-        attackeeTookDamage = false;
+            guard.SetAsMine();
+            intruder.SetAsPlayer(LocalGameManager.Get().barbarianPlayer);
 
-        yield return new EnterPlayMode();
-    }
+            pointInRadius = GameObject.Find("InsideRadius").transform.position;
+            pointOutsideRadius = GameObject.Find("OutsideRadius").transform.position;
+            guardCenter = GameObject.Find("GuardCenter").transform.position;
 
-    [UnityTest, Order(1)]
-    public IEnumerator testIntruderAttackedInsideRadius()
-    {
-        guard.guard(guardCenter, 5f);
-        intruder.onLowerHP.AddListener(onTookDamageCallback);
-        putIntruderInRadius(intruder);
-        yield return new WaitForSeconds(3);
-        Assert.True(attackeeTookDamage);
-    }
+            attackeeTookDamage = false;
 
-    [UnityTest, Order(2)]
-    public IEnumerator testIntruderNotAttackedOutsideRadius()
-    {
-        guard.guard(guardCenter, 2f);
-        intruder.onLowerHP.AddListener(onTookDamageCallback);
-        putIntruderOutsideRadius(intruder);
-        yield return new WaitForSeconds(3);
-        Assert.False(attackeeTookDamage);
-    }
+            yield return new EnterPlayMode();
+        }
 
-    [UnityTest, Order(3)]
-    public IEnumerator testGuardReturnsToPointWhenIntruderLeaves()
-    {
-        guard.guard(guardCenter, 5f);
-        intruder.onLowerHP.AddListener(onTookDamageCallback);
-        putIntruderInRadius(intruder);
-        yield return new WaitForSeconds(3);
-        Assert.True(attackeeTookDamage);
-        putIntruderOutsideRadius(intruder);
-        yield return new WaitForSeconds(3);
-        Debug.Log(Vector3.Distance(guard.transform.position, guardCenter));
-        Assert.True(Vector3.Distance(guard.transform.position, guardCenter) < 0.7f);
+        [UnityTest, Order(1)]
+        public IEnumerator testIntruderAttackedInsideRadius()
+        {
+            guard.guard(guardCenter, 5f);
+            intruder.onLowerHP.AddListener(onTookDamageCallback);
+            putIntruderInRadius(intruder);
+            yield return new WaitForSeconds(3);
+            Assert.True(attackeeTookDamage);
+        }
+
+        [UnityTest, Order(2)]
+        public IEnumerator testIntruderNotAttackedOutsideRadius()
+        {
+            guard.guard(guardCenter, 2f);
+            intruder.onLowerHP.AddListener(onTookDamageCallback);
+            putIntruderOutsideRadius(intruder);
+            yield return new WaitForSeconds(3);
+            Assert.False(attackeeTookDamage);
+        }
+
+        [UnityTest, Order(3)]
+        public IEnumerator testGuardReturnsToPointWhenIntruderLeaves()
+        {
+            guard.guard(guardCenter, 5f);
+            intruder.onLowerHP.AddListener(onTookDamageCallback);
+            putIntruderInRadius(intruder);
+            yield return new WaitForSeconds(3);
+            Assert.True(attackeeTookDamage);
+            putIntruderOutsideRadius(intruder);
+            yield return new WaitForSeconds(3);
+            Debug.Log(Vector3.Distance(guard.transform.position, guardCenter));
+            Assert.True(Vector3.Distance(guard.transform.position, guardCenter) < 0.7f);
+        }
     }
 }

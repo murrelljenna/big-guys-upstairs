@@ -8,6 +8,7 @@ using game.assets.player;
 namespace game.assets.utilities {
     public static class GameUtils
     {
+        [System.Serializable]
         public struct PlayerColour
         {
             public string name;

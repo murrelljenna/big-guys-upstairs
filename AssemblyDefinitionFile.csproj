@@ -248,6 +248,7 @@
     <Compile Include="Assets\Scripts\Src\Network Adapters\NetworkHealthAdapter.cs" />
     <Compile Include="Assets\Standard Assets\Utility\TimedObjectDestructor.cs" />
     <Compile Include="Assets\Scripts\randomizeWeapon.cs" />
+    <Compile Include="Assets\JustDie.cs" />
     <Compile Include="Assets\Standard Assets\Environment\Water\Water\Scripts\GerstnerDisplace.cs" />
     <Compile Include="Assets\Scripts\Attackables\House.cs" />
     <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\Explosive.cs" />
@@ -283,7 +284,7 @@
     <Compile Include="Assets\Scripts\IdleGrouping.cs" />
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\Standard Assets\Utility\AutoMobileShaderSwitch.cs" />
-    <Compile Include="Assets\JustDie.cs" />
+    <Compile Include="Assets\Scripts\Src\Utilities\Timer.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />

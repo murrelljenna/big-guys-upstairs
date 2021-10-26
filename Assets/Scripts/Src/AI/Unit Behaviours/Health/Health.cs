@@ -33,6 +33,12 @@ namespace game.assets.ai
         [Tooltip("Invoked when HP raised")]
         public UnityEvent<float, float> onRaiseHP;
 
+        [Tooltip("Invoked when HP is less than half")]
+        public UnityEvent onUnderHalfHP;
+
+        [Tooltip("Invoked when HP is over half")]
+        public UnityEvent onOverHalfHP;
+
         public void lowerHP(int amt)
         {
             HP = HP - amt;
@@ -42,6 +48,11 @@ namespace game.assets.ai
             {
                 HP = 0;
                 onZeroHP.Invoke(this);
+            }
+
+            if (underHalf())
+            {
+                onUnderHalfHP.Invoke();
             }
         }
 
@@ -56,11 +67,26 @@ namespace game.assets.ai
                 HP = maxHP;
                 onMaxHP.Invoke();
             }
+
+            if (overHalf())
+            {
+                onOverHalfHP.Invoke();
+            }
         }
 
         public bool maxed()
         {
             return (HP >= maxHP);
+        }
+
+        public bool underHalf()
+        {
+            return (HP <= (maxHP / 2));
+        }
+
+        public bool overHalf()
+        {
+            return (HP > (maxHP / 2));
         }
 
         public bool zero()

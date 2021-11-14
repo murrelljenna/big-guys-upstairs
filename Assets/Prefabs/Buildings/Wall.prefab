@@ -26,6 +26,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30ccc47a3d2b71d46bdc7f47fc6f5acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5156482884667692093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6642099815703639380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d29025dac5448b44fa9078987a5a12ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cannotAfford:
+    m_PersistentCalls:
+      m_Calls: []
+  canAfford:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7025837748608330887}
+        m_TargetAssemblyTypeName: game.assets.UpgradeWallToGate, AssemblyDefinitionFile
+        m_MethodName: Upgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  price:
+    wood: 25
+    food: 0
+    gold: 0
+    stone: 0
+    iron: 0
+    horse: 0
 --- !u!114 &5458797969971084652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -796,16 +833,16 @@ PrefabInstance:
         type: 3}
       propertyPath: eOnPressed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 7025837748608330887}
+      objectReference: {fileID: 5156482884667692093}
     - target: {fileID: 4095936580188733067, guid: e01155afa7ed6364380770c2b17018ef,
         type: 3}
       propertyPath: eOnPressed.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: game.assets.UpgradeWallToGate, AssemblyDefinitionFile
+      value: game.assets.TransactionalMethod, AssemblyDefinitionFile
       objectReference: {fileID: 0}
     - target: {fileID: 4095936580188733067, guid: e01155afa7ed6364380770c2b17018ef,
         type: 3}
       propertyPath: eOnPressed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Upgrade
+      value: Try
       objectReference: {fileID: 0}
     - target: {fileID: 4095936580188733067, guid: e01155afa7ed6364380770c2b17018ef,
         type: 3}
@@ -909,27 +946,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e01155afa7ed6364380770c2b17018ef, type: 3}
---- !u!4 &6642099815703639385 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6439999395031838842, guid: e01155afa7ed6364380770c2b17018ef,
-    type: 3}
-  m_PrefabInstance: {fileID: 392380253775430947}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5412888657617345820 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5651017308104841279, guid: e01155afa7ed6364380770c2b17018ef,
-    type: 3}
-  m_PrefabInstance: {fileID: 392380253775430947}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2660494313220472032 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2421241944636815811, guid: e01155afa7ed6364380770c2b17018ef,
     type: 3}
   m_PrefabInstance: {fileID: 392380253775430947}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &6642099815703639385 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6439999395031838842, guid: e01155afa7ed6364380770c2b17018ef,
+    type: 3}
+  m_PrefabInstance: {fileID: 392380253775430947}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6642099815703639380 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6439999395031838839, guid: e01155afa7ed6364380770c2b17018ef,
+    type: 3}
+  m_PrefabInstance: {fileID: 392380253775430947}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5412888657617345820 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5651017308104841279, guid: e01155afa7ed6364380770c2b17018ef,
     type: 3}
   m_PrefabInstance: {fileID: 392380253775430947}
   m_PrefabAsset: {fileID: 0}

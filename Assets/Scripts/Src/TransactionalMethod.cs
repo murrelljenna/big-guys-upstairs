@@ -16,10 +16,13 @@ namespace game.assets
         public void Try()
         {
             transactor = LocalPlayer.getPlayerDepositor();
+            Debug.Log(price.wood);
+            Debug.Log(transactor.canAfford(price));
             if (transactor.canAfford(price))
             {
                 transactor.takeResources(price);
                 canAfford.Invoke();
+                Debug.Log("Taking shit");
             }
             else
             {

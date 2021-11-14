@@ -232,7 +232,7 @@ namespace game.assets.ai
         }
 
         private bool isInRange(Health thingToAttack) {
-            Vector3 closestPoint = thingToAttack.gameObject.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position);
+            Vector3 closestPoint = thingToAttack.gameObject.GetComponent<Collider>().ClosestPointOnBounds(gameObject.transform.position);
 
             float deltaX = this.gameObject.transform.position.x - closestPoint.x;
             float deltaZ = this.gameObject.transform.position.z - closestPoint.z;

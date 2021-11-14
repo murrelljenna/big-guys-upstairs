@@ -118,7 +118,7 @@ namespace game.assets
 
         public static LocalGameManager Get()
         {
-            return GameObject.Find(MagicWords.GameObjectNames.GameManager).GetComponent<LocalGameManager>();
+            return GameObject.Find(MagicWords.GameObjectNames.GameManager)?.GetComponent<LocalGameManager>();
         }
     }
 }

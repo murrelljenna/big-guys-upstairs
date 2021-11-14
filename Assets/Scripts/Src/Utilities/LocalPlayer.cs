@@ -8,17 +8,17 @@ namespace game.assets.player {
     {
         public static Player get()
         {
-            return GameObject.Find(GameObjectNames.GameManager).GetComponent<LocalGameManager>().getLocalPlayer();
+            return GameObject.Find(GameObjectNames.GameManager)?.GetComponent<LocalGameManager>()?.getLocalPlayer();
         }
 
         public static Camera getPlayerCamera()
         {
-            return GameObject.Find(GameObjectNames.FirstPersonCharacter).GetComponent<Camera>();
+            return GameObject.Find(GameObjectNames.FirstPersonCharacter)?.GetComponent<Camera>();
         }
 
         public static PlayerDepositor getPlayerDepositor()
         {
-            return GameObject.Find("ClientSingleton").GetComponent<PlayerDepositor>();
+            return GameObject.Find("ClientSingleton")?.GetComponent<PlayerDepositor>();
         }
     }
 }

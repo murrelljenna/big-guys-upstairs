@@ -28,19 +28,24 @@ namespace game.assets.interaction
 
         private void OnDisable()
         {
+            if (useUi == true && uiController != null)
+            {
+                uiController.gameObject.SetActive(false);
+            }
             clearSelection();
         }
 
         private void OnEnable()
         {
-            if (useUi == true)
+            if (useUi == true && uiController != null)
             {
-                uiController = GameObject.Find(MagicWords.GameObjectNames.CommandMenu).GetComponent<CommandUIController>();
+                uiController.gameObject.SetActive(true);
             }
         }
 
         private void Start()
         {
+            uiController = GameObject.Find(MagicWords.GameObjectNames.CommandMenu).GetComponent<CommandUIController>();
             if (camera == null)
             {
                 Debug.LogError("CommandTool Camera has not been assigned.");
@@ -184,7 +189,7 @@ namespace game.assets.interaction
 
         private void clearSelection() {
             attackAggregation.clear();
-            if (useUi)
+            if (useUi && uiController != null)
             {
                 uiController.clearCards();
             }

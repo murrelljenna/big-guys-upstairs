@@ -39,6 +39,7 @@ namespace game.assets.economy {
         private const int BUILD_AMT = 2;
 
         private bool collectingResources;
+        private bool currentlyBuilding = false;
 
         private void Start() {
             movement = GetComponent<Movement>();
@@ -123,6 +124,7 @@ namespace game.assets.economy {
 
         public void setBuildingTarget(Construction construction) {
             cancelOrders();
+            currentlyBuilding = true;
             StartCoroutine(orderToBuild(construction));
         }
 
@@ -149,13 +151,19 @@ namespace game.assets.economy {
 
         public void cancelOrders()
         {
-            CancelInvoke("build");
+            clearBuilding();
             clearAssignment();
+        }
+
+        private void clearBuilding()
+        {
+            CancelInvoke("build");
+            currentlyBuilding = false;
         }
 
         private void buildNearestBuilding()
         {
-            if (resource != null)
+            if (resource != null || currentlyBuilding)
             {
                 return;
             }

@@ -122,6 +122,7 @@ namespace game.assets.economy {
         }
 
         public void setBuildingTarget(Construction construction) {
+            cancelOrders();
             StartCoroutine(orderToBuild(construction));
         }
 

@@ -192,6 +192,10 @@ namespace game.assets.utilities {
             return monos.ToArray();
         }
 
+        public static bool isUnit(this GameObject gameObject) {
+            return (gameObject.GetComponent<Health>() != null && gameObject.GetComponent<Movement>() != null);
+        }
+
         public static float getTerrainHeight(Vector3 point)
         {
             RaycastHit hit;

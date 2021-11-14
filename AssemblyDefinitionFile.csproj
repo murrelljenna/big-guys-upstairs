@@ -216,6 +216,7 @@
     <Compile Include="Assets\HealthBarController.cs" />
     <Compile Include="Assets\Scripts\Attackables\Wall.cs" />
     <Compile Include="Assets\Scripts\Attackables\Militia.cs" />
+    <Compile Include="Assets\Scripts\Src\TransactionalMethod.cs" />
     <Compile Include="Assets\Scripts\ownership.cs" />
     <Compile Include="Assets\Standard Assets\Utility\DynamicShadowSettings.cs" />
     <Compile Include="Assets\Scripts\gateController.cs" />
@@ -223,6 +224,7 @@
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\NoiseAndGrain.cs" />
     <Compile Include="Assets\Scripts\Launcher.cs" />
     <Compile Include="Assets\Standard Assets\Utility\SimpleActivatorMenu.cs" />
+    <Compile Include="Assets\Scripts\Src\Building Placement\Upgrade.cs" />
     <Compile Include="Assets\Scripts\commandUIController.cs" />
     <Compile Include="Assets\Scripts\Src\AI\Unit Behaviours\Attack\AttackAggregation.cs" />
     <Compile Include="Assets\Standard Assets\Utility\LerpControlledBob.cs" />
@@ -247,8 +249,10 @@
     <Compile Include="Assets\Scripts\Attackables\ResourceTile.cs" />
     <Compile Include="Assets\Scripts\Src\Network Adapters\NetworkHealthAdapter.cs" />
     <Compile Include="Assets\Standard Assets\Utility\TimedObjectDestructor.cs" />
+    <Compile Include="Assets\Scripts\Src\Building Placement\GateController.cs" />
     <Compile Include="Assets\Scripts\randomizeWeapon.cs" />
     <Compile Include="Assets\JustDie.cs" />
+    <Compile Include="Assets\Scripts\Src\Building Placement\UpgradeWallToGate.cs" />
     <Compile Include="Assets\Standard Assets\Environment\Water\Water\Scripts\GerstnerDisplace.cs" />
     <Compile Include="Assets\Scripts\Attackables\House.cs" />
     <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\Explosive.cs" />
@@ -280,11 +284,12 @@
     <Compile Include="Assets\Scripts\Src\AI\Unit Behaviours\Health\Health.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Tonemapping.cs" />
     <Compile Include="Assets\Standard Assets\Editor\Water\Water4\WaterBaseEditor.cs" />
+    <Compile Include="Assets\Scripts\Src\Utilities\Timer.cs" />
     <Compile Include="Assets\Scripts\Src\Economy\Resource.cs" />
     <Compile Include="Assets\Scripts\IdleGrouping.cs" />
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\Standard Assets\Utility\AutoMobileShaderSwitch.cs" />
-    <Compile Include="Assets\Scripts\Src\Utilities\Timer.cs" />
+    <Compile Include="Assets\Scripts\Src\Utilities\SetOwnershipToPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />

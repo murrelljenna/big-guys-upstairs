@@ -21,6 +21,18 @@ public static class OwnershipOps
         return false;
     }
 
+    public static bool IsFriendOf(this MonoBehaviour behaviour, MonoBehaviour otherBehaviour)
+    {
+        Player player = behaviour.GetComponent<Ownership>().owner;
+        return otherBehaviour.BelongsTo(player);
+    }
+
+    public static bool IsFriendOf(this GameObject gameObject, GameObject otherGameObject)
+    {
+        Player player = gameObject.GetComponent<Ownership>().owner;
+        return otherGameObject.BelongsTo(player);
+    }
+
     public static bool BelongsTo(this MonoBehaviour behaviour, Player player)
     {
         return behaviour.gameObject.BelongsTo(player);
@@ -39,11 +51,16 @@ public static class OwnershipOps
 
     public static bool IsEnemyOf(this MonoBehaviour behaviour, MonoBehaviour otherBehaviour)
     {
-        Ownership ownership = behaviour.GetComponent<Ownership>();
-        Ownership otherOwnership = otherBehaviour.GetComponent<Ownership>();
+        return behaviour.gameObject.IsEnemyOf(otherBehaviour.gameObject);
+    }
+
+    public static bool IsEnemyOf(this GameObject gameObject, GameObject otherGameObject)
+    {
+        Ownership ownership = gameObject.GetComponent<Ownership>();
+        Ownership otherOwnership = otherGameObject.GetComponent<Ownership>();
         if (
             (ownership != null && ownership.owned) &&
-            (otherBehaviour != null && otherOwnership.owned)
+            (otherOwnership != null && otherOwnership.owned)
             && (ownership.owner != otherOwnership.owner)
             )
         {

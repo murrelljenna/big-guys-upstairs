@@ -38,6 +38,7 @@ namespace Tests
             health.onRaiseHP = new UnityEvent<float, float>();
             health.onMaxHP = new UnityEvent();
             health.onUnderHalfHP = new UnityEvent();
+            health.onOverHalfHP = new UnityEvent();
 
             health.HP = 5;
             health.maxHP = 20;

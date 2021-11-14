@@ -39,6 +39,11 @@ namespace game.assets.ai
         [Tooltip("Invoked when HP is over half")]
         public UnityEvent onOverHalfHP;
 
+        void Start()
+        {
+            onRaiseHP.Invoke(HP, maxHP);
+        }
+
         public void lowerHP(int amt)
         {
             HP = HP - amt;

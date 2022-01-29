@@ -55,6 +55,7 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Test\Edit Mode\TestTransactionalMethod.cs" />
     <Compile Include="Assets\Scripts\Test\Edit Mode\TestOwnershipOps.cs" />
     <Compile Include="Assets\Scripts\Test\Edit Mode\TestSpawnerController.cs" />
     <Compile Include="Assets\Scripts\Test\Edit Mode\TestHealth.cs" />
@@ -65,7 +66,6 @@
     <Compile Include="Assets\Scripts\Test\Edit Mode\TestResourceSet.cs" />
     <Compile Include="Assets\Scripts\Test\Edit Mode\TestOwnership.cs" />
     <Compile Include="Assets\Scripts\Test\Edit Mode\TestAudioController.cs" />
-    <Compile Include="Assets\Scripts\Test\Edit Mode\TestTransactionalMethod.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Scripts\Test\Edit Mode\Edit Mode.asmdef" />

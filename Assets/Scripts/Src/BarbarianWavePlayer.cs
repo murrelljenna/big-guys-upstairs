@@ -5,6 +5,7 @@ using game.assets.player;
 using game.assets.ai;
 using static game.assets.utilities.GameUtils;
 using game.assets.spawners;
+using game.assets;
 
 public class BarbarianWavePlayer : BarbarianPlayer
 {
@@ -12,8 +13,20 @@ public class BarbarianWavePlayer : BarbarianPlayer
     {
         this.colour = PlayerColours.Black;
     }
+    IEnumerator waitToAttack(float delayTime, Spawner spawnPoint)
+    {
+        //Wait for the specified delay time before continuing.
+        yield return new WaitForSeconds(delayTime);
 
-    override public void Awake()
+        spawnUnitGroupToAttackNearestEnemy(spawnPoint.transform.position);
+        //Do the action after the delay time has finished.
+    }
+
+    void attackIn30Seconds(Spawner spawnPoint) {
+        LocalGameManager.Get().StartCoroutine(waitToAttack(30f, spawnPoint));
+    }
+
+    void AttackIn30SecondsFromRandomSpawnPoint()
     {
         Spawner[] spawners = GameObject.FindObjectsOfType<Spawner>();
 
@@ -22,8 +35,13 @@ public class BarbarianWavePlayer : BarbarianPlayer
 
         if (spawnPoint.GetComponent<BarbarianOwnership>())
         {
-            spawnUnitGroupToAttackNearestEnemy(spawnPoint.transform.position);
+            attackIn30Seconds(spawnPoint);
         }
+    }
+
+    override public void Awake()
+    {
+        AttackIn30SecondsFromRandomSpawnPoint();
     }
 
     private void spawnUnitGroupToAttackNearestEnemy(Vector3 location)
@@ -41,5 +59,6 @@ public class BarbarianWavePlayer : BarbarianPlayer
         }
 
         grouping.onNoUnits.AddListener(disbandGrouping);
+        grouping.onNoUnits.AddListener(AttackIn30SecondsFromRandomSpawnPoint);
     }
 }

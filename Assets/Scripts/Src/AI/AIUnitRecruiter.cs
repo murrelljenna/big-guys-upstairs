@@ -11,8 +11,12 @@ namespace game.assets.ai {
         player.Player player;
 
         public AIUnitRecruiter(player.Player player) {
+            Debug.Log(player);
+            if (player == null)
+            {
+                Debug.LogError("Fucking idiot, you're passing in a null player.");
+            }
             this.player = player;
-
         }
 
         public GameObject InvokeSpawn(Vector3 position) {
@@ -27,8 +31,10 @@ namespace game.assets.ai {
             float minDist = Mathf.Infinity;
             foreach (Spawner spawner in spawners)
             {
+                Debug.Log(spawner);
                 if (spawner.BelongsTo(player))
                 {
+                    Debug.Log("FUUUUUUUUUCCCCKKKKKKKKK");
                     float dist = Vector3.Distance(spawner.transform.position, position);
                     if (dist < minDist)
                     {
@@ -37,6 +43,7 @@ namespace game.assets.ai {
                     }
                 }
             }
+            Debug.Log(tMin);
             return tMin.GetComponent<Spawner>();
         }
 

@@ -14,7 +14,7 @@ public class BarbarianPlayer : Player
         this.colour = PlayerColours.Black;
     }
 
-    public void Awake()
+    virtual public void Awake()
     {
         Spawner[] spawners = GameObject.FindObjectsOfType<Spawner>();
 

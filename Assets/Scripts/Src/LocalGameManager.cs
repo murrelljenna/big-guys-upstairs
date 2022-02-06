@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 using game.assets.player;
 using System;
 
+public enum GameMode
+{
+    Wave
+}
+
 namespace game.assets
 {
     public class LocalGameManager : MonoBehaviour
@@ -41,6 +46,8 @@ namespace game.assets
         [Tooltip("Prefab used for ClientSingleton")]
         public GameObject clientSingleton;
 
+        public GameMode gameMode;
+
         private Vector3[] spawnPoints;
 
         public BarbarianPlayer barbarianPlayer = new BarbarianPlayer();
@@ -56,6 +63,10 @@ namespace game.assets
 
         public Scene Initialize(string mapName, Vector3[] spawnPoints)
         {
+            if (gameMode == GameMode.Wave)
+            {
+                barbarianPlayer = new BarbarianWavePlayer();
+            }
             this.spawnPoints = spawnPoints;
             SceneManager.sceneLoaded += onSceneLoaded;
             Scene scene = SceneManager.LoadScene(mapName, new LoadSceneParameters(LoadSceneMode.Single));
@@ -77,6 +88,7 @@ namespace game.assets
             {
                 // Spawn some ai shit or something
             }
+
             barbarianPlayer.Awake();
         }
 

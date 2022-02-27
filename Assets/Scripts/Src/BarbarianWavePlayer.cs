@@ -7,6 +7,12 @@ using static game.assets.utilities.GameUtils;
 using game.assets.spawners;
 using game.assets;
 
+public static class BarbarianWaveSettings
+{
+    public static float WAVE_TIME_BASE = 30f;
+    public static int BARBARIAN_WAVE_COUNT_BASE = 10;
+}
+
 public class BarbarianWavePlayer : BarbarianPlayer
 {
     public BarbarianWavePlayer()

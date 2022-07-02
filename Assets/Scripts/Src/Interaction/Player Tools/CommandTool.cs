@@ -104,9 +104,19 @@ namespace game.assets.interaction
                 Attack attacker = hit.collider.gameObject.GetComponent<Attack>();
                 if (attacker != null && attacker.IsMine())
                 {
-                    selectUnitsInRadius(hit.transform.position);
+                    if (isActiveWorker(attacker))
+                        selectWorkersInRadius(hit.transform.position);
+                    else
+                        selectUnitsInRadius(hit.transform.position);
                 }
             }           
+        }
+
+        private bool isActiveWorker(Attack unit) {
+            if (unit == null) return false;
+            Worker maybeWorker = unit.GetComponent<Worker>();
+            if (maybeWorker == null) return false;
+            return maybeWorker.isCollectingResources() || maybeWorker.isCurrentlyBuilding();
         }
 
         private void selectUnitsInRadius(Vector3 point)
@@ -116,7 +126,27 @@ namespace game.assets.interaction
             {
                 Attack unit = hitColliders[i].GetComponent<Attack>();
 
-                if (unit != null && unit.IsMine() && !attackAggregation.contains(unit))
+                if (unit != null && unit.IsMine() && !attackAggregation.contains(unit) && !isActiveWorker(unit))
+                {
+                    attackAggregation.add(unit);
+                    if (useUi)
+                    {
+                        uiController.addCard(unit.GetComponent<Health>()); //TODO: Rethink this a bit, I'm doing unsafe things for convenience
+                    }
+                }
+            }
+        }
+
+        private void selectWorkersInRadius(Vector3 point)
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(point, QUICK_SELECT_RANGE);
+            for (int i = 0; i < hitColliders.Length; i++)
+            {
+                Attack unit = hitColliders[i].GetComponent<Attack>();
+
+                bool isWorking = isActiveWorker(unit);
+
+                if (unit != null && unit.IsMine() && !attackAggregation.contains(unit) && isWorking)
                 {
                     attackAggregation.add(unit);
                     if (useUi)

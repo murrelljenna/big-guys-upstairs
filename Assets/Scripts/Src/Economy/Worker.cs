@@ -38,7 +38,7 @@ namespace game.assets.economy {
         private const float BUILD_RATE = 2.5f;
         private const int BUILD_AMT = 2;
 
-        private bool collectingResources;
+        private bool collectingResources = false;
         private bool currentlyBuilding = false;
 
         private void Start() {
@@ -47,6 +47,9 @@ namespace game.assets.economy {
 
             InvokeRepeating("buildNearestBuilding", 2f, 2f);
         }
+
+        public bool isCollectingResources() { return collectingResources; }
+        public bool isCurrentlyBuilding() { return currentlyBuilding; }
 
         public void startCollectingResources(GameObject node, ResourceSet yield)  {
             collectingResources = true;

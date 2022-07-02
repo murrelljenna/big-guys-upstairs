@@ -11,7 +11,7 @@ public static class BarbarianWaveSettings
 {
     public static float WAVE_TIME_BASE = 30f;
     public static int BARBARIAN_WAVE_COUNT_BASE = 10;
-}
+} 
 
 public class BarbarianWavePlayer : BarbarianPlayer
 {

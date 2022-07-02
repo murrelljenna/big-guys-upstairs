@@ -20,7 +20,6 @@ public class JustDie : MonoBehaviour
         // but NOTHING that will just give me ALL CLIPS.
         // So fucking stupid.
         string name = animationNames[Random.Range(0, animationNames.Length)];
-        Debug.Log(name);
         anim.Play(name); // Fuck you
     }
 }

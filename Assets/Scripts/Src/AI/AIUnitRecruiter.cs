@@ -31,10 +31,8 @@ namespace game.assets.ai {
             float minDist = Mathf.Infinity;
             foreach (Spawner spawner in spawners)
             {
-                Debug.Log(spawner);
                 if (spawner.BelongsTo(player))
                 {
-                    Debug.Log("FUUUUUUUUUCCCCKKKKKKKKK");
                     float dist = Vector3.Distance(spawner.transform.position, position);
                     if (dist < minDist)
                     {
@@ -43,7 +41,6 @@ namespace game.assets.ai {
                     }
                 }
             }
-            Debug.Log(tMin);
             return tMin.GetComponent<Spawner>();
         }
 

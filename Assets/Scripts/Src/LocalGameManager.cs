@@ -112,7 +112,6 @@ namespace game.assets
 
         public player.Player getLocalPlayer()
         {
-            print(players.Length);
             return players[0];
         }
 

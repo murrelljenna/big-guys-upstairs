@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using game.assets.utilities.resources;
 using game.assets.utilities;
+using UnityEngine.Events;
 
 namespace game.assets.economy {
     [RequireComponent(typeof(GameObjectSearcher))]
@@ -20,6 +21,8 @@ namespace game.assets.economy {
 
         private GameObjectSearcher searcher;
 
+        public UnityEvent<int> workerCountChanged = new UnityEvent<int>();
+
         private void Start()
         {
             searcher = GetComponent<GameObjectSearcher>();
@@ -34,7 +37,7 @@ namespace game.assets.economy {
                 workers.Add(worker);
                 worker.assignResourceTile(this);
                 worker.startCollectingResources(getNode(), yield);
-                //updateWorkerUI();
+                workerCountChanged.Invoke(workers.Count);
                 return true;
             }
             return false;
@@ -43,7 +46,6 @@ namespace game.assets.economy {
         public void removeWorker(Worker worker)
         {
             workers.Remove(worker);
-            // updateWorkerUI();
         }
 
         public virtual GameObject getNode()

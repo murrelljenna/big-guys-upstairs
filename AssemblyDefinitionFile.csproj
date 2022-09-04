@@ -185,8 +185,8 @@
     <Compile Include="Assets\Scripts\Src\AI\Unit Behaviours\Health\DoNotAutoAttack.cs" />
     <Compile Include="Assets\Scripts\Src\Ownership.cs" />
     <Compile Include="Assets\Standard Assets\Utility\AlphaButtonClickMask.cs" />
-    <Compile Include="Assets\IncreaseMaxPopCount.cs" />
-    <Compile Include="Assets\HealthBarController.cs" />
+    <Compile Include="Assets\Scripts\Src\AI\Unit Behaviours\IncreaseMaxPopCount.cs" />
+    <Compile Include="Assets\Scripts\Src\UI\Controllers\HealthBarController.cs" />
     <Compile Include="Assets\Scripts\Src\TransactionalMethod.cs" />
     <Compile Include="Assets\Standard Assets\Utility\DynamicShadowSettings.cs" />
     <Compile Include="Assets\Scripts\Src\Animation\MovementAnimator.cs" />
@@ -213,7 +213,7 @@
     <Compile Include="Assets\Standard Assets\Characters\RollerBall\Scripts\Ball.cs" />
     <Compile Include="Assets\Standard Assets\Utility\TimedObjectDestructor.cs" />
     <Compile Include="Assets\Scripts\Src\Building Placement\GateController.cs" />
-    <Compile Include="Assets\JustDie.cs" />
+    <Compile Include="Assets\Scripts\Src\JustDie.cs" />
     <Compile Include="Assets\Scripts\Src\Building Placement\UpgradeWallToGate.cs" />
     <Compile Include="Assets\Standard Assets\Environment\Water\Water\Scripts\GerstnerDisplace.cs" />
     <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\Explosive.cs" />
@@ -328,7 +328,6 @@
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\GrayscaleEffect.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ChromaticAberrationShader.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseAndGrainDX11.shader" />
-     <None Include="Assets\Notes\scene_requirements.txt" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\SeparableWeightedBlurDof34.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Readme.txt" />
      <None Include="Assets\Standard Assets\Characters\RollerBall\RollerBallGuidelines.txt" />

@@ -1,11 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-using Photon.Pun;
-using Photon.Realtime;
 using game.assets.ai;
-using game.assets.player;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Collider))]

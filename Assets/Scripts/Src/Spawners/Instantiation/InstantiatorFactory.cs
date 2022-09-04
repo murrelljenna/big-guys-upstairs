@@ -9,7 +9,7 @@ namespace game.assets
         public static IInstantiator getInstantiator(bool networked = false) {
             if (networked)
             {
-                return new NetworkedInstantiator();
+                return null;
             }
             else
             {

@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-using Photon.Pun;
+﻿using UnityEngine;
 using game.assets.player;
 
 namespace game.assets.ui

@@ -11,15 +11,6 @@ namespace Tests
     public class TestInstantiatorFactory
     {
         [Test]
-        public void TestInstantiatorFactoryNetworked()
-        {
-            bool networked = true;
-            IInstantiator instantiator = InstantiatorFactory.getInstantiator(networked);
-
-            Assert.AreEqual(typeof(NetworkedInstantiator), instantiator.GetType());
-        }
-
-        [Test]
         public void TestInstantiatorFactoryLocal()
         {
             bool networked = false;

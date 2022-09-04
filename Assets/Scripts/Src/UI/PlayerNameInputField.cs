@@ -3,9 +3,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-using Photon.Pun;
-using Photon.Realtime;
-
 [RequireComponent(typeof(InputField))]
 public class PlayerNameInputField : MonoBehaviour
 {
@@ -21,9 +18,6 @@ public class PlayerNameInputField : MonoBehaviour
                 _inputField.text = defaultName;
             }
         }
-
-
-        PhotonNetwork.NickName = defaultName;
     }
 
     public void SetPlayerName(string value) {
@@ -33,7 +27,6 @@ public class PlayerNameInputField : MonoBehaviour
             Debug.LogError("Player Name is null or empty");
             return;
         }
-        PhotonNetwork.NickName = value;
 
         PlayerPrefs.SetString(playerNamePrefKey,value);
     }

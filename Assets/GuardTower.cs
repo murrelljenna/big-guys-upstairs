@@ -57,6 +57,7 @@ public class GuardTower : Unit
 
 				attackee = thingToAttack;
 				attackee.attackers.Add(this);
+                attackeeId = attackee.id;
 				isAttacking = true;
 
 				yield return new WaitUntil (() => isInRange(thingToAttack));
@@ -66,13 +67,13 @@ public class GuardTower : Unit
 		}
     }
 
-    [PunRPC]
-    public override void callAttack(int idOfThingToAttack, PhotonMessageInfo info) {
-    	if (canAttack) {
-	    	StartCoroutine(moveAndAttack(idOfThingToAttack));
-
-	    	lastNoEnemies=-1;
-	    }
+    public override void callAttack(int idOfThingToAttack) {
+        if (this.photonView.IsMine) {
+        	if (canAttack) {
+                StartCoroutine(moveAndAttack(idOfThingToAttack));
+    	    	lastNoEnemies=-1;
+    	    }
+        }
     }
 
     public override void cancelOrders() {
@@ -85,6 +86,7 @@ public class GuardTower : Unit
 
         isAttacking = false;
         attackee = null;
+        attackeeId = 0;
     }
 
     public override void attack() {

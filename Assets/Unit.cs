@@ -22,6 +22,7 @@ public class Unit : Attackable
     public bool updateTargetLive = false;
 
 	public Attackable attackee = null;
+    public int attackeeId = 0;
 
 	protected int lastNoEnemies = 0;
     protected float responseRange;
@@ -29,7 +30,10 @@ public class Unit : Attackable
     
 
     public override void OnEnable() {
-    	InvokeRepeating("checkEnemiesInRange", 0.5f, 0.5f);
+        if (this.photonView.IsMine) {
+    	   InvokeRepeating("checkEnemiesInRange", 0.5f, 0.5f);
+        }
+
         PhotonNetwork.AddCallbackTarget(this);
         base.OnEnable();
     }
@@ -49,7 +53,7 @@ public class Unit : Attackable
         // If unit is currently attacking another unit (attackable that can move), update that target's position every frame.
 
         if (updateTargetLive == true && attackee != null && this.gameObject.GetComponent<NavMeshAgent>() != null) {
-            this.gameObject.GetComponent<NavMeshAgent>().destination = attackee.gameObject.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position);
+            this.photonView.RPC("setDestination", RpcTarget.All, attackee.gameObject.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
         }
 
         base.Update();
@@ -81,7 +85,7 @@ public class Unit : Attackable
         AudioSource source = sources[UnityEngine.Random.Range(0, sources.Length)];
         AudioSource.PlayClipAtPoint(source.clip, this.transform.position);
 
-        photonView.RPC("setDestination", RpcTarget.All, destination);
+        photonView.RPC("setDestination", RpcTarget.AllBuffered, destination);
     }
 
     [PunRPC]
@@ -89,10 +93,11 @@ public class Unit : Attackable
         this.gameObject.GetComponent<NavMeshAgent>().destination = (destination);
     }
 
-    [PunRPC]
-    public virtual void callAttack(int idOfThingToAttack, PhotonMessageInfo info) {
+    public virtual void callAttack(int idOfThingToAttack) {
         if (canAttack) {
-        	StartCoroutine(moveAndAttack(idOfThingToAttack));
+            if (photonView.IsMine) {
+        	   StartCoroutine(moveAndAttack(idOfThingToAttack));
+            }
 
             AudioSource[] sources = this.gameObject.transform.Find("AttackingSounds").GetComponents<AudioSource>();
             sources[UnityEngine.Random.Range(0, sources.Length)].Play((ulong)UnityEngine.Random.Range(0l, 2l));
@@ -107,6 +112,7 @@ public class Unit : Attackable
     		Attackable thingToAttack = thingToAttackObj.GetComponent<Attackable>();
     	 	if (thingToAttack.hp > 0) {
                 attackee = thingToAttack;
+                attackeeId = idOfThingToAttack;
 
                 if (thingToAttackObj.tag == "unit") {
                     updateTargetLive = true;
@@ -115,35 +121,51 @@ public class Unit : Attackable
                 attackee.attackers.Add(this);
                 isAttacking = true;
 
-				GetComponent<NavMeshAgent>().SetDestination(attackee.gameObject.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
+				this.photonView.RPC("setDestination", RpcTarget.All, attackee.gameObject.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
 				yield return new WaitUntil (() => isInRange(thingToAttack));
                 this.inFight = true;
 				this.gameObject.GetComponent<NavMeshAgent>().isStopped = true;
-
+                print("TRYING TO ATTACK 1 ");
 				InvokeRepeating("attack", attackRate, attackRate);
 			}
 		}
     }
 
     public virtual void attack() {
-        if (animator != null) {
-            animator.SetTrigger("attack");
-        }
-
     	if (attackee != null && attackee.hp > 0) {
-            this.faceTarget(attackee.transform);
-    		attackee.takeDamage(atk);
+            photonView.RPC("attackRPC", RpcTarget.All, attackeeId);
     	} else {
     		cancelOrders();
     	}
     }
 
+    [PunRPC]
+    public void attackRPC(int idOfThingToAttack) {
+        GameObject thingToAttackObj = GameObject.Find(idOfThingToAttack.ToString());
+        Attackable thingToAttack = thingToAttackObj.GetComponent<Attackable>();
+        if (animator != null) {
+            animator.SetTrigger("attack");
+        }
+
+        this.inFight = true;
+
+        NavMeshAgent navAgent = this.gameObject.GetComponent<NavMeshAgent>();
+        if (navAgent != null) {
+            this.gameObject.GetComponent<NavMeshAgent>().isStopped = true;
+        }
+
+        this.faceTarget(thingToAttack.transform);
+        thingToAttack.takeDamage(this.atk);
+    }
+
     public virtual void cancelOrders() {
+        Debug.Log("Cancelling orders locally");
         photonView.RPC("cancelOrdersRPC", RpcTarget.All);
     }
 
     [PunRPC]
     public virtual void cancelOrdersRPC() {
+        Debug.Log("Cancelling orders through RPC now");
     	if (attackee != null) {
     		attackee.attackers.Remove(this); // Remove this attacker from that units attackers
     	}
@@ -152,6 +174,7 @@ public class Unit : Attackable
     	CancelInvoke("attack");
     	this.gameObject.GetComponent<NavMeshAgent>().isStopped = true;
     	this.gameObject.GetComponent<NavMeshAgent>().isStopped = false;
+        this.attackeeId = 0;
         isAttacking = false;
         inFight = false;
         attackee = null;
@@ -195,7 +218,7 @@ public class Unit : Attackable
 				}
 
                 if (closestAttackee != null) {
-                    photonView.RPC("callAttack", RpcTarget.All, closestAttackee.id);
+                    callAttack(closestAttackee.id);
                 }
 
 				lastNoEnemies = hitColliders.Length;
@@ -214,7 +237,7 @@ public class Unit : Attackable
                             hitColliders[i].GetComponent<ownership>().owned == true && 
                             hitColliders[i].GetComponent<ownership>().owner != this.gameObject.GetComponent<ownership>().owner) { 
 
-                            photonView.RPC("callAttack", RpcTarget.All, hitColliders[i].gameObject.GetComponent<Attackable>().id);
+                            callAttack(hitColliders[i].gameObject.GetComponent<Attackable>().id);
                             break;
                         } 
                     }
@@ -226,10 +249,12 @@ public class Unit : Attackable
     }
 
     void OnCollisionEnter(Collision collision) {
-        Unit collidingUnit = collision.gameObject.GetComponent<Unit>();
-        if (collidingUnit != null && collidingUnit.gameObject.GetComponent<ownership>().owner != this.gameObject.GetComponent<ownership>().owner && !this.inFight) {
-            cancelOrders();
-            photonView.RPC("callAttack", RpcTarget.All, collidingUnit.id);
+        if (this.photonView.IsMine) {
+            Unit collidingUnit = collision.gameObject.GetComponent<Unit>();
+            if (collidingUnit != null && collidingUnit.gameObject.GetComponent<ownership>().owner != this.gameObject.GetComponent<ownership>().owner && !this.inFight) {
+                cancelOrders();
+                callAttack(collidingUnit.id);
+            }
         }
     }
 

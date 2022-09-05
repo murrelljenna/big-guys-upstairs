@@ -227,7 +227,7 @@ public class selection : MonoBehaviour
 			if (unit != null) {
 				unit.gameObject.GetComponent<Unit>().cancelOrders();
 				photonView = unit.gameObject.GetComponent<PhotonView>();
-				photonView.RPC("callAttack", RpcTarget.All, id);
+				unit.gameObject.GetComponent<Unit>().callAttack(id);
 			}
 
 			if (i % 10 == 0) {

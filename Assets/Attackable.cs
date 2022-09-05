@@ -135,11 +135,9 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
  
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
-            stream.SendNext(hp);
         }
         else
         {
-            hp = (int)stream.ReceiveNext();
         }
     }
 

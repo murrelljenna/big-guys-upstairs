@@ -10,8 +10,6 @@ namespace game.assets.utilities {
             float closestDistance = float.MaxValue;
 
             foreach (var obj in objs) {
-                Debug.Log(obj);
-                Debug.Log(obj.GetComponent<ownership>().owner);
                 if (obj.GetComponent<ownership>().owner == player.playerID) {
                     float distance = Vector3.Distance(obj.transform.position, point);
 

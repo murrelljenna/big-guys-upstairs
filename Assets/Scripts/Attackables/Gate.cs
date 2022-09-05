@@ -15,8 +15,7 @@ public class Gate : Building, IPunObservable
     public AudioClip[] plopSounds;
     void Start() {
     	prefabName = "Gate";
-        
-        this.hp = 250;
+
         this.woodCost = 30;
         this.foodCost = 0;
 

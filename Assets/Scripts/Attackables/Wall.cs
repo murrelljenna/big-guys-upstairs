@@ -15,7 +15,6 @@ public class Wall : Building, IPunObservable
         	prefabName = "Wall";
         }
         
-        this.hp = 200;
         this.woodCost = 3;
         this.foodCost = 0;
 

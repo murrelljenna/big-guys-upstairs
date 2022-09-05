@@ -143,6 +143,7 @@ MonoBehaviour:
   dead: 0
   attackers: []
   photonView: {fileID: 6878699215683291197}
+  info: {fileID: 0}
   movable: 0
   atk: 0
   rng: 0
@@ -298,6 +299,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 812bf93dcd959bd43bd0e96ba661a0b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &879672257274393899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3000921672516901046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b06445a122a07eb468f3c3b19d8249eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4506192094978446799
@@ -3649,13 +3662,19 @@ PrefabInstance:
     - target: {fileID: 5840929741215055898, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
         type: 3}
       propertyPath: m_Name
-      value: Canvas
+      value: Healthbar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb, type: 3}
 --- !u!224 &7747694688619220674 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1382354115921909358, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 8694846674700818604}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3000921672516901046 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5840929741215055898, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
     type: 3}
   m_PrefabInstance: {fileID: 8694846674700818604}
   m_PrefabAsset: {fileID: 0}

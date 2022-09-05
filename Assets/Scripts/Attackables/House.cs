@@ -12,7 +12,6 @@ public class House : Building, IPunObservable
     void Start() {
         prefabName = "House";
 
-        this.hp = 150;
         this.woodCost = 20;
         this.foodCost = 0;
 

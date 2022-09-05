@@ -373,14 +373,13 @@ public class Unit : Attackable, IPunObservable
         return (distance < this.rng);
     }
 
-    protected bool isInRange(Vector3 closestPoint) {
+    protected bool isInRange(Vector3 closestPoint, float rng) {
         float deltaX = this.gameObject.transform.position.x - closestPoint.x;
         float deltaZ = this.gameObject.transform.position.z - closestPoint.z; 
         float distance = Mathf.Sqrt(deltaX * deltaX + deltaZ * deltaZ);
-
-        print(distance);
-        print(this.rng);
-        return (distance < this.rng);
+        Debug.Log(distance);
+        Debug.Log(rng);
+        return (distance < rng);
     }
 
     protected bool isInRange(GameObject thing) {

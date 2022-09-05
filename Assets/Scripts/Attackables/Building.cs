@@ -30,7 +30,6 @@ public class Building : Attackable
         base.Start();
 
         info = this.gameObject.transform.Find("Info").gameObject;
-        info.SetActive(false);
     } 
 
     public void setToConstruction() {
@@ -53,6 +52,34 @@ public class Building : Attackable
     }
 
     public virtual void build() {
+        photonView.RPC("buildRPC", RpcTarget.AllBuffered);
+    }
+
+    
+    public void build(int amt) {
+        photonView.RPC("buildRPC", RpcTarget.AllBuffered, amt);
+    }
+
+    [PunRPC]
+    public void buildRPC(int amt)
+    {
+        this.hp += amt;
+        healthBar.UpdateBar(this.hp, this.maxHP);
+
+        if (this.hp > maxHP / 2 && this.hp < maxHP)
+        {
+            buildModels[0].SetActive(false);
+            buildModels[1].SetActive(true);
+        }
+        else if (this.hp >= maxHP)
+        {
+            build();
+        }
+    }
+
+    [PunRPC]
+    public void buildRPC()
+    {
         buildModels[0].SetActive(false);
         buildModels[1].SetActive(false);
         this.transform.Find("Model").gameObject.SetActive(true);
@@ -61,25 +88,7 @@ public class Building : Attackable
         healthBar.UpdateBar(this.hp, this.maxHP);
     }
 
-    public void build(int amt) {
-        this.hp += amt;
-        healthBar.UpdateBar(this.hp, this.maxHP);
-
-        if (this.hp > maxHP / 2 && this.hp < maxHP) {
-            buildModels[0].SetActive(false);
-            buildModels[1].SetActive(true);
-        } else if (this.hp >= maxHP) {
-            build();
-        }
-    }
-
     public override void Update() {
-        if (playerCamera != null && info.active == true) {
-            info.transform.LookAt(playerCamera.transform);   
-        } else {
-            playerCamera = getLocalCamera();
-        }
-
         base.Update();
     }
 

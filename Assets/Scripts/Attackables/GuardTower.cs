@@ -50,13 +50,6 @@ public class GuardTower : Unit
         if (updateTargetLive == true && attackee != null && !isInRange(attackee)) {
             cancelOrders();
         }
-
-        if (playerCamera != null && info.active == true) {
-            info.transform.LookAt(playerCamera.transform);   
-        } else {
-            playerCamera = getLocalCamera();
-        }
-
         base.Update();
     }
 

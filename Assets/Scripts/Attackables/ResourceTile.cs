@@ -53,12 +53,6 @@ public class ResourceTile : Attackable {
     }
 
     public override void Update() {
-        if (playerCamera != null && info != null) {
-            info.transform.LookAt(playerCamera.transform);   
-        } else {
-            playerCamera = getLocalCamera();
-        }
-
         base.Update();
     }
 

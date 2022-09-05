@@ -106,6 +106,7 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
                     if (wallet.canAfford(wood, food)) { // If can afford and no town radius overlapping
                         if (!currentBuilding.GetComponent<buildingGhost>().colliding) {
                             if (currentBuilding.name == "town") {
+                                /* Unecessary with new construction updates.
                                 if (!unitInRange(hit.point, 10f, wallet.playerID)) {
                                     StopAllCoroutines();
                                     tooltips.flashFriendUnitsNearby();
@@ -118,7 +119,7 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
                                     tooltips.flashEnemyUnitsNearby();
                                     StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
                                     return;
-                                }
+                                }*/
 
                                 if (!townInRange(hit.point, 20f)) {
                                     StartCoroutine(plopBuilding(currentBuilding.gameObject, hit.point));
@@ -336,6 +337,7 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
 
         placedBuilding.transform.Find("Dust").gameObject.GetComponent<ParticleSystem>().Emit(30);
         placedBuilding.GetComponent<Building>().setToConstruction();
+        Debug.Log("Set to construction!");
         
         AudioSource.PlayClipAtPoint(plopSounds[Random.Range(0, plopSounds.Length - 1)], destination);
 
@@ -361,6 +363,8 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
                 AudioSource.PlayClipAtPoint(plopSounds[Random.Range(0, plopSounds.Length - 1)], destination);
             }
             yield return null;
+
+            placedBuilding.GetComponent<Building>().setToConstruction();
         }
 
         currentBuilding.gameObject.GetComponent<buildingGhost>().setColliding(false);

@@ -177,6 +177,18 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Iron        '
+--- !u!114 &7180269641786901233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954292423065305934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b06445a122a07eb468f3c3b19d8249eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2066188143329370779
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,6 +203,7 @@ GameObject:
   - component: {fileID: 5621471842865127501}
   - component: {fileID: 8392584949342653060}
   - component: {fileID: 1935001750808335159}
+  - component: {fileID: 3163103198998917459}
   m_Layer: 9
   m_Name: Info
   m_TagString: Untagged
@@ -325,6 +338,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3163103198998917459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2066188143329370779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b06445a122a07eb468f3c3b19d8249eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3066296967852837195
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,7 +926,7 @@ GameObject:
   - component: {fileID: 1885544191119704337}
   m_Layer: 9
   m_Name: Resource_Iron
-  m_TagString: wood
+  m_TagString: iron
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1042,6 +1067,7 @@ MonoBehaviour:
   dead: 0
   attackers: []
   photonView: {fileID: 0}
+  info: {fileID: 0}
   maxWorkers: 3
   workers: []
   upstream: {fileID: 0}
@@ -2029,7 +2055,7 @@ PrefabInstance:
     - target: {fileID: 5840929741215055898, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
         type: 3}
       propertyPath: m_Name
-      value: Canvas
+      value: Healthbar
       objectReference: {fileID: 0}
     - target: {fileID: 5840929741215055898, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
         type: 3}
@@ -2041,6 +2067,12 @@ PrefabInstance:
 --- !u!224 &6430919830810645818 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1382354115921909358, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 5336814202951091028}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1954292423065305934 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5840929741215055898, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
     type: 3}
   m_PrefabInstance: {fileID: 5336814202951091028}
   m_PrefabAsset: {fileID: 0}

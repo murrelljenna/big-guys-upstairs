@@ -203,8 +203,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7164194008194338212}
   - component: {fileID: 7691183723160701073}
-  - component: {fileID: 2849198778318830977}
   - component: {fileID: 7843648425088660068}
+  - component: {fileID: 8692988782203656421}
   m_Layer: 0
   m_Name: Builder
   m_TagString: Untagged
@@ -246,23 +246,6 @@ MonoBehaviour:
   - {fileID: 1963669893896263448, guid: 93ed51f697cc6924d9a5f5a78d87caa8, type: 3}
   - {fileID: 7861718661335921003, guid: 71dd393d943a5c54b89dc79ef458ad71, type: 3}
   - {fileID: 1512481915684819932, guid: 21a0efc32d34ba346aeb7a9bec366749, type: 3}
---- !u!114 &2849198778318830977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3692406723241471229}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36b759ebc7141d3489f85a9e89c4f429, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 2616988825828829805}
-  plopSounds:
-  - {fileID: 8300000, guid: 10312ed20b99dc64bb65fe8648be4ed2, type: 3}
-  - {fileID: 8300000, guid: 5a266552aba3be449a9bb943ae879ac3, type: 3}
-  - {fileID: 8300000, guid: eb75773c6ed998b4f840adb9e50090c1, type: 3}
 --- !u!120 &7843648425088660068
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -361,6 +344,23 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &8692988782203656421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3692406723241471229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01ddd17908607f941a16aacfd55125b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 2616988825828829805}
+  plopSounds:
+  - {fileID: 8300000, guid: 10312ed20b99dc64bb65fe8648be4ed2, type: 3}
+  - {fileID: 8300000, guid: 5a266552aba3be449a9bb943ae879ac3, type: 3}
+  - {fileID: 8300000, guid: eb75773c6ed998b4f840adb9e50090c1, type: 3}
 --- !u!1 &4360678630565995340
 GameObject:
   m_ObjectHideFlags: 0
@@ -1384,6 +1384,66 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11410294, guid: 861b75cfe59c43d45bdc2d2a2b73b221, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GreatArcStudios.PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 11416080, guid: 861b75cfe59c43d45bdc2d2a2b73b221, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GreatArcStudios.PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 11419672, guid: 861b75cfe59c43d45bdc2d2a2b73b221, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GreatArcStudios.PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 11425486, guid: 861b75cfe59c43d45bdc2d2a2b73b221, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GreatArcStudios.PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 11438128, guid: 861b75cfe59c43d45bdc2d2a2b73b221, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GreatArcStudios.PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 11447390, guid: 861b75cfe59c43d45bdc2d2a2b73b221, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GreatArcStudios.PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450388, guid: 861b75cfe59c43d45bdc2d2a2b73b221, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GreatArcStudios.PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 11455004, guid: 861b75cfe59c43d45bdc2d2a2b73b221, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GreatArcStudios.PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 11458548, guid: 861b75cfe59c43d45bdc2d2a2b73b221, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GreatArcStudios.PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 11465752, guid: 861b75cfe59c43d45bdc2d2a2b73b221, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GreatArcStudios.PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466826, guid: 861b75cfe59c43d45bdc2d2a2b73b221, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GreatArcStudios.PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 11472566, guid: 861b75cfe59c43d45bdc2d2a2b73b221, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GreatArcStudios.PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 11475590, guid: 861b75cfe59c43d45bdc2d2a2b73b221, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GreatArcStudios.PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 11481642, guid: 861b75cfe59c43d45bdc2d2a2b73b221, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GreatArcStudios.PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 11483330, guid: 861b75cfe59c43d45bdc2d2a2b73b221, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GreatArcStudios.PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 11492012, guid: 861b75cfe59c43d45bdc2d2a2b73b221, type: 3}
       propertyPath: m_Value
       value: 0
@@ -1431,6 +1491,14 @@ PrefabInstance:
     - target: {fileID: 11492038, guid: 861b75cfe59c43d45bdc2d2a2b73b221, type: 3}
       propertyPath: quitPanel
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11495082, guid: 861b75cfe59c43d45bdc2d2a2b73b221, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GreatArcStudios.PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 11498602, guid: 861b75cfe59c43d45bdc2d2a2b73b221, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GreatArcStudios.PauseManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 22401514, guid: 861b75cfe59c43d45bdc2d2a2b73b221, type: 3}
       propertyPath: m_AnchorMin.x

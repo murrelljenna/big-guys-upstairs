@@ -710,15 +710,16 @@ MonoBehaviour:
   prefabName: 
   woodCost: 0
   foodCost: 0
-  maxHP: 0
+  maxHP: 250
   lastHP: 0
   color: 
-  hp: 0
+  hp: 250
   id: 0
   dead: 0
   attackers: []
   photonView: {fileID: 0}
-  built: 0
+  info: {fileID: 0}
+  underConstruction: 1
   plopSounds:
   - {fileID: 8300000, guid: 10312ed20b99dc64bb65fe8648be4ed2, type: 3}
   - {fileID: 8300000, guid: 5a266552aba3be449a9bb943ae879ac3, type: 3}
@@ -737,6 +738,7 @@ GameObject:
   - component: {fileID: 7842766538080459710}
   - component: {fileID: 4778298004640778011}
   - component: {fileID: 1020640590267894825}
+  - component: {fileID: 8220365638304826776}
   m_Layer: 5
   m_Name: Info
   m_TagString: Untagged
@@ -863,6 +865,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8220365638304826776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3194650577932915955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b06445a122a07eb468f3c3b19d8249eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3196267479221142551
 GameObject:
   m_ObjectHideFlags: 0
@@ -31458,6 +31472,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -42}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4836903310721945138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8144715309526247248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b06445a122a07eb468f3c3b19d8249eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8528249355220557929
 GameObject:
   m_ObjectHideFlags: 0
@@ -31784,7 +31810,7 @@ PrefabInstance:
     - target: {fileID: 5840929741215055898, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
         type: 3}
       propertyPath: m_Name
-      value: Canvas
+      value: Healthbar
       objectReference: {fileID: 0}
     - target: {fileID: 5840929741215055898, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
         type: 3}
@@ -31793,6 +31819,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb, type: 3}
+--- !u!1 &8144715309526247248 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5840929741215055898, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 2308360670923204426}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &3686172596892545316 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1382354115921909358, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,

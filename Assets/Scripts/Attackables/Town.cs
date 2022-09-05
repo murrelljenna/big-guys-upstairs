@@ -29,7 +29,6 @@ public class Town : Building, IPunObservable
         buildingMaxText = this.transform.Find("Info").Find("buildingMax").Find("buildingMaxText").GetComponent<Text>();
         setBuildingCounts();
 
-        this.hp = 600;
         this.woodCost = 50;
         this.foodCost = 50;
         this.canBeRecycled = false;

@@ -12,11 +12,10 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     public Animator animator;
     [SerializeField]
     protected ownership owner;
-    protected GameObject info;
+ 
     public bool canAttack = true;
 
     public string prefabName;
-    protected Camera playerCamera;
 
     public ResourceSet cost = new ResourceSet();
 
@@ -37,6 +36,7 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     public List<Unit> attackers;
     public PhotonView photonView;
     protected Rigidbody rigidBody;
+    public GameObject info;
 
     protected TooltipController tooltips;
     //protected bool underAttack;
@@ -86,10 +86,11 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
         this.id = this.photonView.ViewID;
         this.gameObject.name = id.ToString();
 
-        Transform canvasTransform = this.gameObject.transform.Find("Canvas");
+        Transform canvasTransform = this.gameObject.transform.Find("Healthbar");
 
         if (canvasTransform != null) {
-            canvas = this.gameObject.transform.Find("Canvas").gameObject;
+            Debug.Log(this.prefabName);
+            canvas = canvasTransform.gameObject;
             healthBar = canvas.transform.Find("Simple Bar").transform.Find("Status Fill 01").GetComponent<SimpleHealthBar>();
             canvas.SetActive(false);
         }
@@ -103,11 +104,7 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     // Update is called once per frame
     public virtual void Update()
     {
-        if (playerCamera != null) {
-            canvas.transform.LookAt(transform.position + playerCamera.transform.rotation * Vector3.forward, playerCamera.transform.rotation * Vector3.up);   
-        } else {
-            playerCamera = getLocalCamera();
-        }
+
 
         if (this.hp != this.maxHP && this.hp > 0) {
             canvas.SetActive(true);
@@ -158,16 +155,6 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
 
     private void doubleSpeed() { // Parameterless for invoke
         modifySpeed(2);
-    }
-
-    public Camera getLocalCamera() {
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        for (int i = 0; i < players.Length; i++) {
-            if (players[i].GetComponent<PhotonView>().IsMine) {
-                return players[i].transform.Find("FPSController").transform.Find("FirstPersonCharacter").GetComponent<Camera>();
-            }
-        }
-        return null;
     }
 
     /* Run every frame that the entity is being looked at */

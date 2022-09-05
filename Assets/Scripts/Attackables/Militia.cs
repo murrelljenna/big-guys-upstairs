@@ -85,7 +85,7 @@ public class Militia : Unit
         Depositor depot = resourceTile.upstream.GetComponent<Depositor>();        
 
         setDestination(destination);
-        yield return new WaitUntil (() => isInRange(destination));
+        yield return new WaitUntil (() => isInRange(destination, this.collectRange));
         depot.deposit(inventory);
         inventory.setEmpty();
         collectingResources = false;
@@ -141,7 +141,7 @@ public class Militia : Unit
         Vector3 destination = building.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position);
         this.building = building;
         move(destination);
-        yield return new WaitUntil (() => isInRange(destination));
+        yield return new WaitUntil (() => isInRange(destination, this.collectRange));
         InvokeRepeating("build", 0f, buildRate);
     }
 

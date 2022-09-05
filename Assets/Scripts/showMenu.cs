@@ -8,8 +8,8 @@ using UnityEngine.Events;
 
 public class showMenu : MonoBehaviourPun
 {
-	public GameObject BuildingMenu;
-	public GameObject[] options;
+    public GameObject BuildingMenu;
+    public GameObject[] options;
 
     private GameObject up1;
     private GameObject down1;
@@ -44,25 +44,25 @@ public class showMenu : MonoBehaviourPun
             return;
         }
 
-		if (Input.GetKeyDown("1")) {
-			GetComponent<buildingPlacement>().setBuilding(options[0]);
-		}
-        if (Input.GetKeyDown("2")) {
+        if (Input.GetKeyDown("z")) {
+            GetComponent<buildingPlacement>().setBuilding(options[0]);
+        }
+        if (Input.GetKeyDown("x")) {
             GetComponent<buildingPlacement>().setBuilding(options[1]);
         }
 
-        if (Input.GetKeyDown("3")) {
+        if (Input.GetKeyDown("c")) {
             GetComponent<buildingPlacement>().setBuilding(options[2]);
         }
 
-        if (Input.GetKeyDown("4")) {
+        if (Input.GetKeyDown("v")) {
             GetComponent<buildingPlacement>().setBuilding(options[3]);
         }
 
-        if (Input.GetKeyDown("5")) {
+        if (Input.GetKeyDown("b")) {
             GetComponent<buildingPlacement>().setBuilding(options[4]);
         }
-        if (Input.GetKeyDown("6")) {
+        if (Input.GetKeyDown("n")) {
             GetComponent<buildingPlacement>().setBuilding(options[5]);
         }
     }

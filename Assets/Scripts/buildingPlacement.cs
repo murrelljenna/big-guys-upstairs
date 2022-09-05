@@ -8,10 +8,10 @@ using Photon.Realtime;
 public class buildingPlacement : MonoBehaviourPunCallbacks
 {
     private LineRenderer lineRen;
-	game.assets.Player wallet;
-	public Camera cam;
-	private Transform currentBuilding;
-	private int layerMask;
+    game.assets.Player wallet;
+    public Camera cam;
+    private Transform currentBuilding;
+    private int layerMask;
 
     private bool firstPointSnapped = false;
     private bool lastPointSnapped = false;
@@ -27,7 +27,7 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
     
     void Start()
     {
-    	wallet = this.transform.parent.parent.parent.parent.GetComponent<game.assets.Player>();
+        wallet = this.transform.parent.parent.parent.parent.GetComponent<game.assets.Player>();
         currentBuilding = null;
         tooltips = GameObject.Find("Tooltips").GetComponent<TooltipController>();
         layerMask = 1 << 11;
@@ -37,10 +37,10 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
     }
 
     void OnDisable() {
-    	if (currentBuilding != null) {
-			Destroy(currentBuilding.gameObject);
-			currentBuilding = null;
-		}
+        if (currentBuilding != null) {
+            Destroy(currentBuilding.gameObject);
+            currentBuilding = null;
+        }
 
         firstPointPlaced = false;
         lastPointSnapped = false;
@@ -54,9 +54,9 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
         if (currentBuilding != null) {
             RaycastHit hit;
 
-			Ray ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+            Ray ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
 
-	    	if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)) {
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)) {
                 currentBuilding.gameObject.SetActive(true);
                 if (currentBuilding.name == "wall") {
                     if (Input.GetMouseButtonDown(1)) {
@@ -98,12 +98,12 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
                     currentBuilding.position = new Vector3(hit.point.x, hit.point.y+0.5f, hit.point.z);           
                 }
 
-	    		if (Input.GetMouseButtonDown(0)) {
+                if (Input.GetMouseButtonDown(0)) {
 
                     int wood = currentBuilding.GetComponent<Attackable>().woodCost;
                     int food = currentBuilding.GetComponent<Attackable>().foodCost;
 
-	    			if (wallet.canAfford(wood, food)) { // If can afford and no town radius overlapping
+                    if (wallet.canAfford(wood, food)) { // If can afford and no town radius overlapping
                         if (!currentBuilding.GetComponent<buildingGhost>().colliding) {
                             if (currentBuilding.name == "town") {
                                 if (!unitInRange(hit.point, 10f, wallet.playerID)) {
@@ -190,23 +190,23 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
                         } else {
                             tooltips.flashBuildingBlocked();
                         }
-	    			} else { // If cannot afford.
+                    } else { // If cannot afford.
                         StopAllCoroutines();
                         tooltips.flashLackResources();
                         StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
-	    			}
-	    		}
-	    	}
+                    }
+                }
+            }
         }
     }
 
     public void setBuilding(GameObject building) {
-    	if (currentBuilding != null) {
-    		Destroy(currentBuilding.gameObject);
-    		currentBuilding = null;
-    	}
-    	
-    	currentBuilding = ((GameObject)Instantiate(building)).transform;
+        if (currentBuilding != null) {
+            Destroy(currentBuilding.gameObject);
+            currentBuilding = null;
+        }
+        
+        currentBuilding = ((GameObject)Instantiate(building)).transform;
         currentBuilding.transform.Find("Model").gameObject.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Buildings_" + wallet.colorName) as Texture));
         currentBuilding.GetComponent<Attackable>().canAttack = false;
         currentBuilding.gameObject.name = currentBuilding.tag;
@@ -335,6 +335,7 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
         }
 
         placedBuilding.transform.Find("Dust").gameObject.GetComponent<ParticleSystem>().Emit(30);
+        placedBuilding.GetComponent<Building>().setToConstruction();
         
         AudioSource.PlayClipAtPoint(plopSounds[Random.Range(0, plopSounds.Length - 1)], destination);
 
@@ -342,14 +343,10 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
     }
 
     private IEnumerator placeWalls(float noWalls, bool firstPointSnapped, bool lastPointSnapped) {
-        print(firstPointSnapped);
-        print(lastPointSnapped);
         for (int i = 0; i <= (int)noWalls; i++) {
             Vector3 destination = Vector3.Lerp(firstPoint, lastPoint, (float)i * (1f/noWalls));
             GameObject placedBuilding = null;
             if ((i == 0 && !firstPointSnapped) || (i == (int)noWalls && !lastPointSnapped)) {
-                print("CREATING TOWER");
-                print(i);
                 placedBuilding = PhotonNetwork.Instantiate("Wall_Corner", destination, Quaternion.LookRotation(lastPoint - destination), 0);
                 placedBuilding.GetComponent<Wall>().prefabName = "Wall_Corner";
             } else {

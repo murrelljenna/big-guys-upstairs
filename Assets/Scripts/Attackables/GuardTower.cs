@@ -5,9 +5,17 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
+using UnityEngine.UI;
+using UnityEngine.Events;
+
 public class GuardTower : Unit
 {
     public GameObject missile;
+
+    protected int upgradeLevel = 1;
+    protected int maxUpgrade = 3;
+    private GameObject info;
+    private int upgradeCostStone = 20;
 
     void Start()
     {
@@ -21,6 +29,12 @@ public class GuardTower : Unit
         this.hp = 125;
         this.lastHP = this.hp;
         this.rng = 4f;
+
+        info = transform.Find("Info").gameObject;
+
+        info.transform.Find("2_Pressed").gameObject.SetActive(false);
+        info.transform.Find("upgrade_cost").GetComponent<Text>().text = upgradeCostStone.ToString();
+        info.SetActive(false);
 
         base.Start();
     }
@@ -37,12 +51,32 @@ public class GuardTower : Unit
             cancelOrders();
         }
 
+        if (playerCamera != null && info.active == true) {
+            info.transform.LookAt(playerCamera.transform);   
+        } else {
+            playerCamera = getLocalCamera();
+        }
+
         base.Update();
     }
 
     public override void onCapture() {
     	string colorName = GetComponent<ownership>().getPlayer().colorName;
         this.transform.Find("Model").gameObject.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Buildings_" + colorName) as Texture));
+
+        Transform model2 = this.transform.Find("Model2");
+
+        if (model2 != null) {
+            model2.gameObject.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Buildings_" + colorName) as Texture));
+            model2.gameObject.SetActive(false);
+        }
+
+        Transform model3 = this.transform.Find("Model3");
+
+        if (model3 != null) {
+            model3.gameObject.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Buildings_" + colorName) as Texture));
+            model3.gameObject.SetActive(false);
+        }
     }
 
     public override IEnumerator moveAndAttack(int idOfThingToAttack) {
@@ -150,6 +184,52 @@ public class GuardTower : Unit
                 lastNoEnemies = hitColliders.Length;
             }
         }  
+    }
+
+    public override void interactionOptions(game.assets.Player player) {
+        GameObject towerViewed = this.transform.Find("Info").gameObject;
+        towerViewed.SetActive(true);
+
+        if (!midAnimation) {
+            towerViewed.transform.Find("2_Pressed").gameObject.SetActive(false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.U)) {
+            up2 = towerViewed.transform.Find("2_Normal").gameObject;
+            down2 = towerViewed.transform.Find("2_Pressed").gameObject;
+
+            up2.SetActive(false);
+            down2.SetActive(true);
+            midAnimation = true;
+            Invoke("releaseButton2", 0.2f);
+
+            if (player.canAfford(0, 0, 0, 0, 0) && this.upgradeLevel < this.maxUpgrade){
+                photonView.RPC("upgrade", RpcTarget.AllBuffered);
+            } else {
+                tooltips.flashLackResources();
+            }
+        } 
+
+        base.interactionOptions(player);
+    }
+
+
+    [PunRPC]
+    public void upgrade() {
+        game.assets.Player player = owner.getPlayer();
+        this.transform.Find("Model").gameObject.SetActive(false);
+        this.transform.Find("Model2").gameObject.SetActive(false);
+        this.transform.Find("Model3").gameObject.SetActive(false);
+
+        Transform model = this.transform.Find("Model" + (upgradeLevel + 1).ToString());
+        if (model != null) {
+            model.gameObject.SetActive(true);
+        }
+        maxHP+=(maxHP/2);
+        hp=maxHP;
+        atk++;
+
+        upgradeLevel++;
     }
 
     public override void checkEnemiesInRange(float range) {

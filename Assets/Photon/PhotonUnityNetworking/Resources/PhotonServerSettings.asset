@@ -24,44 +24,30 @@ MonoBehaviour:
     Protocol: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  PunLogging: 2
+  PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
   - ClickRpc
   - DestroyRpc
-  - DestroySpaceship
-  - Fire
-  - RespawnSpaceship
-  - moveAndAttack
-  - moveAndAttack
-  - callAttack
-  - callAttack
-  - captureRPC
-  - setColour
-  - deCaptureRPC
-  - cancelOrdersRPC
-  - cancelOrdersRPC
-  - cancelOrdersRPC
-  - UpdateBar
-  - setDestination
-  - setName
-  - playDestructionEffect
-  - upCityCount
-  - clearPoint
-  - takePoint
-  - spawnPlayer
-  - updatePosition
   - attackRPC
-  - stopMovement
-  - stopMovementOnRange
-  - cancelAndSetDestination
-  - lockGate
-  - unlockGate
-  - shootArrow
-  - takeDamageRPC
+  - captureRPC
+  - clearPoint
+  - deCaptureRPC
   - fireProjectileRPC
-  - syncPosition
+  - lockGate
+  - playDestructionEffect
+  - playDestructionEffect
+  - setColour
+  - setName
+  - setPosition
+  - takeDamageRPC
+  - takePoint
+  - unlockGate
+  - upCityCount
+  - upgrade
+  - upgrade
+  - upgrade
   DisableAutoOpenWizard: 1
   ShowSettings: 0

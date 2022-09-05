@@ -5,17 +5,54 @@ using UnityEngine.UI;
 
 using Photon.Pun;
 using Photon.Realtime;
+using game.assets.utilities; 
+using game.assets.utilities.resources; 
 
-public class ResourceTile : Attackable
-{	
+public class ResourceTile : Attackable {    
+    
     GameObject banner;
-	ownership ownerInfo;
-	int yield = 4;
-	public string resType;
-    // Start is called before the first frame update
+    ownership ownerInfo;
+    public ResourceSet resourceSetYield;
 
-    public override void Update()
-    {
+    private GameObjectSearcher searcher;
+
+    protected int maxUpgrade = 3;
+
+    protected int upgradeCostStone = 0;
+    protected int upgradeCostGold = 0;
+    protected int upgradeCostWood = 0;
+    protected int upgradeCostFood = 0;
+    protected int upgradeCostIron = 0;
+
+    public int maxWorkers = 3;
+    public List<Militia> workers = new List<Militia>();
+
+    public Depositor upstream;
+
+    List<GameObject> nodes = new List<GameObject>();
+
+    public bool addWorker(Militia militia) {
+        if (workers.Count < maxWorkers) {
+            militia.clearAssignment();
+            workers.Add(militia);
+            militia.assignResourceTile(this);
+            militia.startCollectingResources(getNode(), resourceSetYield);
+            updateWorkerUI();
+            return true;
+        }
+        return false;
+    }
+
+    private void updateWorkerUI() {
+        this.info.transform.Find("workerMax").Find("workerMaxText").GetComponent<Text>().text = this.workers.Count.ToString() + "/" + this.maxWorkers.ToString();
+    }
+
+    public void removeWorker(Militia militia) {
+        workers.Remove(militia);
+        updateWorkerUI();
+    }
+
+    public override void Update() {
         if (playerCamera != null && info != null) {
             info.transform.LookAt(playerCamera.transform);   
         } else {
@@ -27,9 +64,10 @@ public class ResourceTile : Attackable
 
     protected override void Start()
     {
+        //updateWorkerUI();
+        searcher = this.GetComponent<GameObjectSearcher>();
         this.woodCost = 15;
         this.foodCost = 15;
-        this.hp = 75;
         ownerInfo = this.gameObject.GetComponent<ownership>();
         ownerInfo.owned = false;
         this.id = this.gameObject.GetComponent<PhotonView>().ViewID;
@@ -50,8 +88,6 @@ public class ResourceTile : Attackable
         base.Start();
     }
 
-    // Update is called once per frame
-
     public override void onCapture() {
         this.transform.Find("Info").Find("1_Normal").Find("Text").GetComponent<Text>().text = '\u2714'.ToString();
         this.transform.Find("Info").Find("1_Pressed").Find("Text").GetComponent<Text>().text = '\u2714'.ToString();
@@ -67,10 +103,13 @@ public class ResourceTile : Attackable
         yield return new WaitUntil(() => {
             return (GameObject.Find(ownerInfo.owner.ToString()) != null);
         });
-        GameObject.Find(ownerInfo.owner.ToString()).GetComponent<game.assets.Player>().addResource(resType, yield);
+
+        game.assets.Player player = GameObject.Find(ownerInfo.owner.ToString()).GetComponent<game.assets.Player>();
+
         banner.SetActive(true);
-        print("TT_Banner_" + owner.getPlayer().colorName);
         banner.transform.Find("TT_Flag_A").gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Banner_" + owner.getPlayer().colorName) as Texture));
+
+        this.upstream = ObjFinder.findClosestCity(transform.position, player).GetComponent<Depositor>();
     }
 
     public override void destroyObject() {
@@ -88,8 +127,6 @@ public class ResourceTile : Attackable
         this.transform.Find("Info").Find("1_Pressed").Find("Text").GetComponent<Text>().text = "E";
         this.transform.Find("Info").Find("Text").GetComponent<Text>().text = "Capture";
 
-   		ownerInfo.getPlayer().loseResource(resType, yield);
-        
         ownerInfo.owned = false;
         ownerInfo.owner = 0;
         this.hp = this.maxHP;
@@ -110,4 +147,15 @@ public class ResourceTile : Attackable
         AudioSource source = sources[UnityEngine.Random.Range(0, sources.Length)];
         AudioSource.PlayClipAtPoint(source.clip, this.transform.position);
     }
+    public virtual GameObject getNode() {
+        int index = UnityEngine.Random.Range(0, searcher.actors.Count);
+        return searcher.actors[index];
+        
+    }
+/*
+
+    private void getClosestCity() {
+
+    }
+*/
 }

@@ -10,4 +10,20 @@
             <Vector3 x="90" y="1" z="10"/>
         </spawns>
     </map>
+    <map name="Canyon">
+        <sceneName>2Players</sceneName>
+        <players>2</players>
+        <spawns>
+            <Vector3 x="40" y="0" z="28"/>
+            <Vector3 x="-40" y="0" z="28"/>
+        </spawns>
+    </map>
+    <map name="Lab">
+        <sceneName>TestingLab</sceneName>
+        <players>1</players>
+        <spawns>
+            <Vector3 x="12" y="0" z="12"/>
+        </spawns>
+    </map>
+
 </maps>	

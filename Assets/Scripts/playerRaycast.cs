@@ -12,10 +12,12 @@ public class playerRaycast : MonoBehaviour
     GameObject resourceViewed = null;
     GameObject buildingViewed = null;
 	Camera cam;
+    int uiMask = 1 << 5;
     int resourceMask = 1 << 9;
     int allBuildings = (1 << 10) | (1 << 14);
     int townMask = 1 << 10;
     int buildingMask = 1 << 14;
+    int idleGroupingMask = 1 << 20;
     game.assets.Player player;
 
     GameObject up1;
@@ -126,6 +128,11 @@ public class playerRaycast : MonoBehaviour
         }   else if (cityViewed != null) {
             cityViewed.SetActive(false);
             cityViewed = null;
+        }
+
+        ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, idleGroupingMask)) {
+            print("Hi");
         }
     }
 

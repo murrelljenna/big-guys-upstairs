@@ -60,6 +60,8 @@ LineRenderer:
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -275,6 +277,8 @@ LineRenderer:
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1013,7 +1017,7 @@ GameObject:
   - component: {fileID: 8926577472993209685}
   - component: {fileID: 8926577472993209684}
   - component: {fileID: 2733375338046279163}
-  - component: {fileID: 1696074667747811115}
+  - component: {fileID: 1122371452204771696}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1055,9 +1059,8 @@ MonoBehaviour:
   wood: 0
   food: 0
   gold: 0
-  woodIt: 0
-  foodIt: 0
-  goldIt: 0
+  stone: 0
+  iron: 0
   playerName: 
   playerID: 0
   playerColor: {r: 0, g: 0, b: 0, a: 0}
@@ -1078,6 +1081,8 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1102,7 +1107,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &1696074667747811115
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1122371452204771696
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

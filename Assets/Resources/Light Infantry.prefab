@@ -1870,6 +1870,8 @@ LineRenderer:
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2002,6 +2004,11 @@ MonoBehaviour:
   selectable: 0
   attackee: {fileID: 0}
   attackeeId: 0
+  idleGroupingPrefab: {fileID: 8169299319520662071, guid: 8a59dcd2f651e5a4ba96702f3d15cc7a,
+    type: 3}
+  idle: 0
+  idleGroupingActive: 0
+  idleGrouping: {fileID: 0}
 --- !u!54 &5309995014210661335
 Rigidbody:
   m_ObjectHideFlags: 0

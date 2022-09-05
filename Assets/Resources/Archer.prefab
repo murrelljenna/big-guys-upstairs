@@ -2693,6 +2693,11 @@ MonoBehaviour:
   selectable: 0
   attackee: {fileID: 0}
   attackeeId: 0
+  idleGroupingPrefab: {fileID: 8169299319520662071, guid: 8a59dcd2f651e5a4ba96702f3d15cc7a,
+    type: 3}
+  idle: 0
+  idleGroupingActive: 0
+  idleGrouping: {fileID: 0}
   missile: {fileID: 387449836410400776, guid: c1facc8a63d8b434eb99ac743b4d4ee6, type: 3}
 --- !u!114 &2220707604813764108
 MonoBehaviour:
@@ -2744,6 +2749,8 @@ LineRenderer:
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

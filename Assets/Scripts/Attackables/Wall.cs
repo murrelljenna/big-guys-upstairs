@@ -76,6 +76,44 @@ public class Wall : Building, IPunObservable
                     tooltips.flashLackResources();
                 }
             }
+
+            if (Input.GetKeyDown(KeyCode.U)) {
+                if (owner.getPlayer().canAfford(25)) {
+                    List<GameObject> neighbours = new List<GameObject>();
+
+
+
+                    up1 = info.transform.Find("Gate Selector").Find("1_Normal").gameObject;
+                    down1 = info.transform.Find("Gate Selector").Find("1_Pressed").gameObject;
+
+
+
+                    Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.GetComponent<Collider>().bounds.center, 0.2f, (1 << 14));
+                    for (int i = 0; i < hitColliders.Length; i++) {
+                        Attackable neighbour = hitColliders[i].gameObject.GetComponent<Attackable>();
+
+                        if (neighbour.prefabName == "Wall") {
+                            neighbours.Add(neighbour.gameObject);
+                        } else {
+                            tooltips.flashBuildingBlocked();
+                            return;
+                        }
+                    }
+                    
+                    // Nothing in way, create gate
+
+                    neighbours.ForEach(neighbour => {
+                        PhotonNetwork.Destroy(neighbour);
+                    });
+
+                    owner.getPlayer().makeTransaction(25);
+
+                    GameObject gate = PhotonNetwork.Instantiate("Gate", this.transform.position, this.transform.rotation, 0);
+                    gate.GetComponent<ownership>().capture(player);
+                } else {
+                    tooltips.flashLackResources();
+                }
+            }
         }
 
         base.interactionOptions(player);

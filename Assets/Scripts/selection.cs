@@ -24,9 +24,11 @@ public class selection : MonoBehaviour
     /* Terrain masks */
 
     private int terrainMask = 1 << 11;
+    private int resourceMask = 1 << 9;
     private int attackableMask = (1 << 9) | (1 << 10) | (1 << 12) | (1 << 14) | (1 << 16) | (1 << 18);
     private int allMask;
     private int unitMask = 1 << 12;
+    private int idleGroupingMask = 1 << 20;
 
     private LineRenderer lineRen;
     private List<Vector3> grid;
@@ -38,6 +40,8 @@ public class selection : MonoBehaviour
 
     private GameObject CommandMenu;
     private commandUIController controller;
+
+    private GameObject viewedInfo;
     // Start is called before the first frame update
     void Start()
     {
@@ -71,13 +75,32 @@ public class selection : MonoBehaviour
 
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, unitMask)) {
+            // If looking at a tower.
+
+            GuardTower tower = hit.collider.gameObject.GetComponent<GuardTower>();
+            if (tower != null) {
+                viewedInfo = tower.gameObject.transform.Find("Info").gameObject;
+                viewedInfo.SetActive(true);
+
+                tower.interactionOptions(player);
+            } else {
+                if (viewedInfo != null) {
+                    viewedInfo.SetActive(false);
+                }
+            }
+
             if (Input.GetMouseButtonDown(0)) {
                 firstPointPlaced = false;
                 if (hit.collider.gameObject.GetComponent<ownership>().owner == player.playerID) {
                     float lastClick = Time.time - lastClickTime;
+                    Militia militia = hit.collider.gameObject.GetComponent<Militia>();
 
                     if (lastClick <= DOUBLE_CLICK_TIME) {
-                        selectUnitsInRadius(hit.point);
+                        if (militia != null && militia.assigned) {
+                            selectFellowWorkers(militia);
+                        } else {
+                            selectUnitsInRadius(hit.point);
+                        }
                     } else {
                         if (selected.Count > 0 && selected.Exists(unit => unit.GetInstanceID() == hit.collider.gameObject.GetInstanceID())) {
                             deselectUnit(hit.collider.gameObject);
@@ -87,6 +110,23 @@ public class selection : MonoBehaviour
                     }
 
                     lastClickTime = Time.time;
+                }
+            }
+        } else {
+            if (viewedInfo != null) {
+                viewedInfo.SetActive(false);
+            }
+        }
+
+        // When looking and an idleGrouping notification
+        ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, idleGroupingMask) && Input.GetKeyDown(KeyCode.E)) {
+            IdleGrouping idleGrouping = hit.collider.gameObject.GetComponent<IdleGrouping>();
+            List<Unit> idleUnits = idleGrouping.getGrouping();
+            idleGrouping.clickButton();
+            for (int i = 0; i < idleUnits.Count; i++) {
+                if (idleUnits[i].isSelected == false) {
+                    selectUnit(idleUnits[i].gameObject);
                 }
             }
         }
@@ -104,7 +144,13 @@ public class selection : MonoBehaviour
                     StartCoroutine(sendAttackOrders(hit.collider.gameObject.GetComponent<Attackable>().id));
                 } else if (terrainMask == (terrainMask | (1 << hit.collider.gameObject.layer))) {
                     StartCoroutine(placeUnits(destination, new Queue<GameObject>(selected)));
-                }    
+                } else if (resourceMask == (resourceMask | (1 << hit.collider.gameObject.layer))) {
+                    if (hit.collider.gameObject.GetComponent<ownership>().owner == this.player.playerID) {
+                        StartCoroutine(assignUnits(hit.collider.gameObject.GetComponent<ResourceTile>(), selected));
+                    }
+                } else if (hit.collider.gameObject.GetComponent<Building>() != null && hit.collider.gameObject.GetComponent<ownership>().owner == this.player.playerID && hit.collider.gameObject.GetComponent<Building>()) {
+                    StartCoroutine(assignUnitsToBuild(hit.collider.gameObject.GetComponent<Building>(), selected));
+                }
             }
         }
 
@@ -156,6 +202,52 @@ public class selection : MonoBehaviour
             firstPointPlaced = false;
         }
     }
+
+    private IEnumerator assignUnitsToBuild(Building building, List<GameObject> units) {
+        List<GameObject> assignedUnits = new List<GameObject>(units);
+
+        foreach (GameObject unit in assignedUnits) {
+            
+            Militia worker = unit.GetComponent<Militia>();
+
+            if (worker != null) {
+                int runCount = 0;
+
+                //bool added = resourceTile.addWorker(worker); // True if worker was successfully added (there was an available slot) false otherwise.
+                worker.setBuildingTarget(building);
+                deselectUnit(unit);
+
+                runCount++;
+                if (runCount % 2 == 0) {
+                    yield return null;
+                }
+            }
+        }
+    }
+
+    private IEnumerator assignUnits(ResourceTile resourceTile, List<GameObject> units) {
+        List<GameObject> assignedUnits = new List<GameObject>(units);
+
+        foreach (GameObject unit in assignedUnits) {
+            
+            Militia worker = unit.GetComponent<Militia>();
+
+            if (worker != null) {
+                int runCount = 0;
+
+                bool added = resourceTile.addWorker(worker); // True if worker was successfully added (there was an available slot) false otherwise.
+                if (added) {
+                    deselectUnit(unit);
+                }
+
+                runCount++;
+                if (runCount % 2 == 0) {
+                    yield return null;
+                }
+            }
+        }
+    }
+
 
     private IEnumerator placeUnits(Vector3 center, Queue<GameObject> units, float unitSize = 0.2f, float gapSize = 0.2f) {
         Queue<Vector3> points = new Queue<Vector3>();
@@ -248,6 +340,14 @@ public class selection : MonoBehaviour
         selected.Clear();
     }
 
+    private void selectFellowWorkers(Militia militia) {
+        foreach (Militia worker in militia.getFellowWorkers()) {
+            if (!selected.Contains(worker.gameObject)) {
+                selectUnit(worker.gameObject);
+            }
+        }
+    }
+
     private void selectUnitsInRadius(Vector3 point) {
         Collider[] hitColliders = Physics.OverlapSphere(point, QUICK_SELECT_RANGE, unitMask);
         for (int i = 0; i < hitColliders.Length; i++) {
@@ -255,8 +355,11 @@ public class selection : MonoBehaviour
                 hitColliders[i].GetComponent<ownership>().owned == true && 
                 hitColliders[i].GetComponent<ownership>().owner == player.playerID &&
                 hitColliders[i].GetComponent<Unit>().isSelected == false) { 
-
-                selectUnit(hitColliders[i].gameObject);
+                Militia militia = hitColliders[i].GetComponent<Militia>();
+                if (militia != null && militia.assigned) {
+                } else {
+                    selectUnit(hitColliders[i].gameObject);
+                }
             }
         }
     }

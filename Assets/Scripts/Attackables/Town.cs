@@ -34,6 +34,15 @@ public class Town : Building, IPunObservable
         this.foodCost = 50;
         this.canBeRecycled = false;
 
+        this.upgradeCostStone = 25;
+        this.upgradeCostGold = 0;
+        this.upgradeCostWood = 25;
+        this.upgradeCostFood = 0;
+        this.upgradeCostIron = 0;
+
+        this.transform.Find("Info").Find("Upgrade").Find("Upgrade_Stone_Cost").GetComponent<Text>().text = upgradeCostStone.ToString();
+        this.transform.Find("Info").Find("Upgrade").Find("Upgrade_Wood_Cost").GetComponent<Text>().text = upgradeCostStone.ToString();
+
         if (!this.photonView.IsMine) {
             this.GetComponent<buildingGhost>().active = false;
         }
@@ -45,8 +54,7 @@ public class Town : Building, IPunObservable
 
     public override void onCapture() {
         game.assets.Player player = owner.getPlayer();
-        player.addResource("gold", yield);
-        this.gameObject.GetComponent<LineRenderer>().SetColors(GetComponent<ownership>().playerColor, GetComponent<ownership>().playerColor);
+        this.gameObject.GetComponent<LineRenderer>().SetColors(owner.playerColor, owner.playerColor);
         this.gameObject.GetComponent<ownership>().getPlayer().upCityCount(1);
 
         base.onCapture();
@@ -112,7 +120,6 @@ public class Town : Building, IPunObservable
     public override void destroyObject() {
         if (this.photonView.IsMine) {
             game.assets.Player player = owner.getPlayer();
-            player.loseResource("gold", yield);
 
             Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.GetComponent<Renderer>().bounds.center, 10f, resourceMask);
 
@@ -130,6 +137,8 @@ public class Town : Building, IPunObservable
         base.destroyObject();
     }
 
+    // Called every frame the player is looking at this gameobject.
+
     public override void interactionOptions(game.assets.Player player) {
         GameObject cityViewed = this.transform.Find("Info").gameObject;
         cityViewed.SetActive(true);
@@ -138,39 +147,79 @@ public class Town : Building, IPunObservable
             cityViewed.transform.Find("1_Pressed").gameObject.SetActive(false);
         }
 
-        if (Input.GetKeyDown(KeyCode.E)) {
-            if (!player.maxedUnits()) {
-                int wood = 0; // Please replace with real values soon.
-                int food = 5;
+        if (!underConstruction) {
+            if (Input.GetKeyDown(KeyCode.E)) {
+                if (!player.maxedUnits()) {
+                    int wood = 0; // Please replace with real values soon.
+                    int food = 5;
 
-                up1 = cityViewed.transform.Find("1_Normal").gameObject;
-                down1 = cityViewed.transform.Find("1_Pressed").gameObject;
+                    up1 = cityViewed.transform.Find("1_Normal").gameObject;
+                    down1 = cityViewed.transform.Find("1_Pressed").gameObject;
 
-                up1.SetActive(false);
-                down1.SetActive(true);
+                    up1.SetActive(false);
+                    down1.SetActive(true);
+                    midAnimation = true;
+                    Invoke("releaseButton1", 0.2f);
+
+                    if (player.canAfford(wood, food)) {
+                        player.makeTransaction(wood, food);
+
+                        /* Instantiate new militia outside city */
+
+                        Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
+                        Vector3 spawnLocation = new Vector3(randomInCircle.x+this.transform.position.x, this.transform.position.y, randomInCircle.y+this.transform.position.z);
+
+                        GameObject militia = PhotonNetwork.Instantiate("Militia", spawnLocation, Quaternion.identity, 0);
+
+                        militia.GetComponent<ownership>().capture(player);
+                    } else {
+                        tooltips.flashLackResources();
+                    }
+                } else {
+                    
+                }
+            } 
+
+            if (Input.GetKeyDown(KeyCode.U)) {
+                up2 = cityViewed.transform.Find("Upgrade").Find("2_Normal").gameObject;
+                down2 = cityViewed.transform.Find("Upgrade").Find("2_Pressed").gameObject;
+
+                up2.SetActive(false);
+                down2.SetActive(true);
                 midAnimation = true;
-                Invoke("releaseButton1", 0.2f);
+                Invoke("releaseButton2", 0.2f);
 
-                if (player.canAfford(wood, food)) {
-                    player.makeTransaction(wood, food);
-
-                    /* Instantiate new militia outside city */
-
-                    Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
-                    Vector3 spawnLocation = new Vector3(randomInCircle.x+this.transform.position.x, this.transform.position.y, randomInCircle.y+this.transform.position.z);
-
-                    GameObject militia = PhotonNetwork.Instantiate("Militia", spawnLocation, Quaternion.identity, 0);
-
-                    militia.GetComponent<ownership>().capture(player);
+                if (player.canAfford(upgradeCostWood, upgradeCostFood, upgradeCostGold, upgradeCostStone, upgradeCostIron) && this.upgradeLevel < this.maxUpgrade){
+                    player.makeTransaction(upgradeCostWood, upgradeCostFood, upgradeCostGold, upgradeCostStone, upgradeCostIron);
+                    photonView.RPC("upgrade", RpcTarget.AllBuffered);
                 } else {
                     tooltips.flashLackResources();
                 }
-            } else {
-                
             }
-        } 
+        }
 
         base.interactionOptions(player);
+    }
+
+    [PunRPC]
+    public override void upgrade() {
+        game.assets.Player player = owner.getPlayer();
+        this.transform.Find("Model").gameObject.SetActive(false);
+        this.transform.Find("Model2").gameObject.SetActive(false);
+        this.transform.Find("Model3").gameObject.SetActive(false);
+
+        Transform model = this.transform.Find("Model" + (upgradeLevel + 1).ToString());
+        if (model != null) {
+            model.gameObject.SetActive(true);
+        }
+        maxBuildings+=3;
+        maxHP+=(maxHP/2);
+        hp=maxHP;
+
+        buildingMaxText.text = maxBuildings.ToString();
+
+        this.yield++;
+        base.upgrade();
     }
 
     public override void Awake() {

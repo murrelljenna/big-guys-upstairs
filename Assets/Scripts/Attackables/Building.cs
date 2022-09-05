@@ -5,17 +5,73 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
+using game.assets.utilities.resources;
+
 public class Building : Attackable
 {
     protected bool canBeRecycled = true;
+    protected int upgradeLevel = 1;
+    protected int maxUpgrade = 3;
+
+    protected ResourceSet upgradeCost = new ResourceSet();
+
+    protected int upgradeCostStone = 0;
+    protected int upgradeCostGold = 0;
+    protected int upgradeCostWood = 0;
+    protected int upgradeCostFood = 0;
+    protected int upgradeCostIron = 0;
+
+    public bool underConstruction = true;
+
+    GameObject[] buildModels = new GameObject[2];
 
     protected override void Start()
     {
+        base.Start();
+
         info = this.gameObject.transform.Find("Info").gameObject;
         info.SetActive(false);
-
-        base.Start(); 
     } 
+
+    public void setToConstruction() {
+        getBuildingModels();
+        this.hp = maxHP / 10;
+
+        underConstruction = true;
+        buildModels[0].SetActive(true);
+        buildModels[1].SetActive(false);
+        this.transform.Find("Model").gameObject.SetActive(false);
+        healthBar.UpdateBar(this.hp, this.maxHP);
+    }
+
+    private void getBuildingModels() {
+        buildModels[0] = this.transform.Find("buildModel1").gameObject;
+        buildModels[1] = this.transform.Find("buildModel2").gameObject;
+
+        buildModels[0].SetActive(true);
+        buildModels[1].SetActive(false);
+    }
+
+    public virtual void build() {
+        buildModels[0].SetActive(false);
+        buildModels[1].SetActive(false);
+        this.transform.Find("Model").gameObject.SetActive(true);
+        underConstruction = false;
+        this.hp = this.maxHP;
+        healthBar.UpdateBar(this.hp, this.maxHP);
+    }
+
+    public void build(int amt) {
+        this.hp += amt;
+        healthBar.UpdateBar(this.hp, this.maxHP);
+
+        if (this.hp > maxHP / 2 && this.hp < maxHP) {
+            buildModels[0].SetActive(false);
+            buildModels[1].SetActive(true);
+        } else if (this.hp >= maxHP) {
+            build();
+        }
+    }
 
     public override void Update() {
         if (playerCamera != null && info.active == true) {
@@ -46,6 +102,20 @@ public class Building : Attackable
         string colorName = GetComponent<ownership>().getPlayer().colorName;
         this.transform.Find("Model").gameObject.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Buildings_" + colorName) as Texture));
 
+        Transform model2 = this.transform.Find("Model2");
+
+        if (model2 != null) {
+            model2.gameObject.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Buildings_" + colorName) as Texture));
+            model2.gameObject.SetActive(false);
+        }
+
+        Transform model3 = this.transform.Find("Model3");
+
+        if (model3 != null) {
+            model3.gameObject.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Buildings_" + colorName) as Texture));
+            model3.gameObject.SetActive(false);
+        }
+
         base.onCapture();
     }
 
@@ -74,6 +144,11 @@ public class Building : Attackable
 
     public override void interactionOptions(game.assets.Player player) {
         if (canBeRecycled && Input.GetKeyDown(KeyCode.X)) {
+            up3.SetActive(false);
+            down3.SetActive(true);
+            midAnimation = true;
+            Invoke("releaseButton3", 0.2f);
+
             owner.getPlayer().giveResources("wood", this.woodCost/2);
             owner.getPlayer().giveResources("food", this.foodCost/2);
             base.destroyObject();
@@ -89,6 +164,12 @@ public class Building : Attackable
         }
 
         return null;
+    }
+
+    public virtual void upgrade() {
+        healthBar.UpdateBar(this.hp, this.maxHP);
+        this.transform.Find("UpgradeSounds").GetComponent<AudioSource>().Play(0);
+        upgradeLevel++;
     }
     
     [PunRPC]

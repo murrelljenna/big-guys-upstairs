@@ -31,11 +31,15 @@ public class House : Building, IPunObservable
         base.Start();
     }
 
-    public override void onCapture() {
+    public virtual void build() {
+        base.build();
+
         if (photonView.IsMine) {
             owner.getPlayer().addUnitMax(housingBump);
         }
-        
+    }
+
+    public override void onCapture() {     
         base.onCapture();
     }
 

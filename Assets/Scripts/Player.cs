@@ -10,6 +10,7 @@ using Photon.Realtime;
 using UnityEngine.UI;
 
 using UnityStandardAssets.Characters.FirstPerson;
+using game.assets.utilities.resources;
 
 namespace game.assets {
     public class Player : MonoBehaviourPunCallbacks, IPunObservable
@@ -17,13 +18,13 @@ namespace game.assets {
         public bool hasLost = false;
         public bool hasWon = false;
 
-    	public int wood;
-    	public int food;
-        public int gold;
+        public ResourceSet resources = new ResourceSet(100, 100); // This is the literal resources of the player
 
-    	public int woodIt;
-    	public int foodIt;
-        public int goldIt;
+        public int wood;
+        public int food;
+        public int gold;
+        public int stone;
+        public int iron;
 
         private int maxUnits = 10;
         private int noUnits;
@@ -58,9 +59,8 @@ namespace game.assets {
 
             wood = 150;
             food = 400;
-
-            woodIt = 2;
-            foodIt = 2; 
+            stone = 0;
+            iron = 0;
         }
 
         void Awake() {
@@ -77,18 +77,6 @@ namespace game.assets {
             this.gameObject.name = playerID.ToString();
 
             /* Find player timer in UI for resource collection */
-
-            timer = GameObject.Find("TimerBar").GetComponent<SimpleHealthBar>();
-
-            timer.UpdateBar(0, 10);
-
-            /* Setup player resource iteration */
-
-            InvokeRepeating("iterateResources", 10f, 10f);
-
-            if (this.GetComponent<PhotonView>().IsMine) {
-                InvokeRepeating("iterateClock", 1f, 1f);
-            }
 
             /* Set ownership controls */
 
@@ -122,6 +110,11 @@ namespace game.assets {
                 noUnits+=count;
                 GameObject.Find("Pop_Count").GetComponent<Text>().text = noUnits.ToString();
             }
+        }
+
+        public void deposit(ResourceSet yield) {
+            this.resources = this.resources + yield;
+            
         }
 
         public void addUnitMax(int count = 1) {
@@ -163,82 +156,60 @@ namespace game.assets {
             }
         }
 
-
-        private void iterateResources() {
-        	wood += woodIt;
-            food += foodIt;
-            gold += goldIt;
-        }
-
-        public void addResource(string resType, int yield = 4) {
-    		switch (resType) {
-    			case "wood":
-    				woodIt += yield;
-    			break;
-    			case "food":
-    				foodIt += yield;
-    			break;
-                case "gold":
-                    goldIt += yield;
-                break;
-    		}
-        }
-
         public void giveResources(string resType, int yield = 4) {
             switch (resType) {
                 case "wood":
-                    wood += yield;
+                    this.resources.wood += yield;
                 break;
                 case "food":
-                    food += yield;
+                    this.resources.food += yield;
                 break;
                 case "gold":
-                    gold += yield;
+                    this.resources.gold += yield;
+                break;
+                case "stone":
+                    this.resources.stone += yield;
+                break;
+                case "iron":
+                    this.resources.iron += yield;
                 break;
             }
         }
 
-        public void loseResource(string resType, int yield = 4) {
-            switch (resType) {
-                case "wood":
-                    woodIt -= yield;
-                break;
-                case "food":
-                    foodIt -= yield;
-                break;
-                case "gold":
-                    goldIt -= yield;
-                break;
-            }
-        }
-
-        public bool canAfford(int wood = 0, int food = 0, int gold = 0) {
-            if (this.wood >= wood && this.food >= food && this.gold >= gold) {
+        public bool canAfford(int wood = 0, int food = 0, int gold = 0, int stone = 0, int iron = 0) {
+            if (this.resources.wood >= wood && this.resources.food >= food && this.resources.gold >= gold && this.resources.stone >= stone && this.resources.iron >= iron) {
                 return true;
             }
 
             GameObject resources = GameObject.Find("Resources");
 
-            if (this.wood < wood) {
+            if (this.resources.wood < wood) {
                 StartCoroutine(flashRed(resources.transform.Find("Wood").transform.Find("Resource_Icon").gameObject, 0.2f));
             }
 
-            if (this.food < food) {
+            if (this.resources.food < food) {
                 StartCoroutine(flashRed(resources.transform.Find("Food").transform.Find("Resource_Icon").gameObject, 0.2f));
             }
 
-            if (this.gold < gold) {
+            if (this.resources.gold < gold) {
                 StartCoroutine(flashRed(resources.transform.Find("Gold").transform.Find("Resource_Icon").gameObject, 0.2f));
             }
-
+            if (this.resources.stone < stone) {
+                StartCoroutine(flashRed(resources.transform.Find("Stone").transform.Find("Resource_Icon").gameObject, 0.2f));
+            }
+            if (this.resources.iron < iron) {
+                StartCoroutine(flashRed(resources.transform.Find("Iron").transform.Find("Resource_Icon").gameObject, 0.2f));
+            }
             return false;
         }
 
-        public void makeTransaction(int wood = 0, int food = 0, int gold = 0) {
-            if (this.wood >= wood && this.food >= food && this.gold >= gold) {
-                this.wood -= wood;
-                this.food -= food;
-                this.gold -= gold;
+        public void makeTransaction(int wood = 0, int food = 0, int gold = 0, int stone = 0, int iron = 0) {
+            if (canAfford(wood, food, gold, stone, iron)) {
+                this.resources.wood -= wood;
+                this.resources.food -= food;
+                this.resources.gold -= gold;
+                this.resources.stone -= stone;
+                this.resources.iron -= iron;
             }
         }
 
@@ -260,23 +231,10 @@ namespace game.assets {
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
             if (stream.IsWriting) {
-                stream.SendNext(wood);
-                stream.SendNext(food);
             }
             else
             {
-                wood = (int)stream.ReceiveNext();
-                food = (int)stream.ReceiveNext();
             }
-        }
-
-        private void iterateClock() {
-            if (counter == countMax - 1f) {
-                counter = 0f;
-            } else {
-                counter++;
-            }
-            timer.UpdateBar(counter, countMax);
         }
 
         private IEnumerator flashRed(GameObject building, float offset) {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections;
 
 using UnityEngine;
@@ -13,6 +14,12 @@ public class GameManager : MonoBehaviourPunCallbacks
 {
 	[Tooltip("The prefab to use for representing the player")]
 	public GameObject playerPrefab;
+	GameObject localPlayer;
+
+	[SerializeField]
+	List<Color> colours = new List<Color>() { Color.black, Color.blue, Color.cyan, Color.gray, Color.green, Color.magenta, Color.red, Color.white, Color.yellow };
+	[SerializeField]
+	List<int> possibleColours;
 
     // Start is called before the first frame update
     public override void OnLeftRoom() {
@@ -33,10 +40,25 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 		    	for (int i = 0; i < resourceSpawners.Length; i++) {
 		    		resourceSpawners[i].GetComponent<SpawnTile>().spawnResource();
-				}		    
+				}
+
+				possibleColours = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+
+	    		int index = UnityEngine.Random.Range(0, possibleColours.Count);
+
+				ExitGames.Client.Photon.Hashtable playerSettings = new ExitGames.Client.Photon.Hashtable();
+		    	playerSettings.Add("color", possibleColours[index].ToString());
+		    	possibleColours.RemoveAt(index);
+		    	Debug.Log(index);
+
+		    	PhotonNetwork.SetPlayerCustomProperties(playerSettings);
 		    }
+		    Debug.Log("HERES THE FUCKING NUMBER");
+Debug.Log(PhotonNetwork.LocalPlayer.CustomProperties["color"]);
 		    // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-		    GameObject player = PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(15f,0f,15f), Quaternion.identity, 0);
+		    localPlayer = PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(15f,0f,15f), Quaternion.identity, 0);
+		    localPlayer.GetComponent<game.assets.Player>().playerColor = colours[Convert.ToInt32(PhotonNetwork.LocalPlayer.CustomProperties["color"])];
+	    	localPlayer.transform.Find("FPSController").transform.Find("Capsule").GetComponent<MeshRenderer>().material.color = colours[Convert.ToInt32(PhotonNetwork.LocalPlayer.CustomProperties["color"])];
 		}
     }
 
@@ -44,6 +66,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LeaveRoom();
     }
+
+
 
     void LoadArena() {
     	if (!PhotonNetwork.IsMasterClient) {
@@ -53,9 +77,32 @@ public class GameManager : MonoBehaviourPunCallbacks
     	PhotonNetwork.LoadLevel("Flat");
 	}
 
+	public override void OnPlayerPropertiesUpdate (Player target, ExitGames.Client.Photon.Hashtable changedProps) {
+		Debug.Log("Executing shit");
+		if (localPlayer != null) {
+			Debug.Log("YES!");
+
+			localPlayer.GetComponent<PhotonView>().RPC("setColour", RpcTarget.All, Convert.ToInt32(PhotonNetwork.LocalPlayer.CustomProperties["color"]));
+			/*
+	    	localPlayer.GetComponent<game.assets.Player>().playerColor = colours[Convert.ToInt32(PhotonNetwork.LocalPlayer.CustomProperties["color"])];
+	    	localPlayer.transform.Find("FPSController").transform.Find("Capsule").GetComponent<MeshRenderer>().material.color = colours[Convert.ToInt32(PhotonNetwork.LocalPlayer.CustomProperties["color"])];
+			*/
+		}
+	}
+
 	public override void OnPlayerEnteredRoom(Player other) {
     	Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName);
+
 	    if (PhotonNetwork.IsMasterClient) {
+	    	int index = UnityEngine.Random.Range(0, possibleColours.Count);
+
+	    	ExitGames.Client.Photon.Hashtable playerSettings = new ExitGames.Client.Photon.Hashtable();
+	    	playerSettings.Add("color", possibleColours[index].ToString());
+	    	possibleColours.RemoveAt(index);
+	    	Debug.Log(index);
+
+	    	other.SetCustomProperties(playerSettings);
+
 	        Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
 	    }
 	}

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1687055646547660124}
   - component: {fileID: 8630200486793135834}
   - component: {fileID: 262345417613824846}
+  - component: {fileID: 5043743974001820813}
   m_Layer: 9
   m_Name: Resource_Food
   m_TagString: food
@@ -50,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owned: 0
   owner: 0
+  playerColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!65 &8244450829761281977
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -119,6 +121,43 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: -19.38041, y: 1.315877, z: -1.839556}
   m_TimeToStationary: 0.5
+--- !u!23 &5043743974001820813
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4756639827264938578}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &4756639828712298610
 GameObject:
   m_ObjectHideFlags: 0

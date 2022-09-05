@@ -22,6 +22,10 @@ public class Unit : Attackable
     void OnEnable() {
     	photonView = PhotonView.Get(this);
     	InvokeRepeating("checkEnemiesInRange", 2.0f, 2.0f);
+    	Debug.Log("ARF");
+    	//
+    	Debug.Log(GetComponent<ownership>().playerColor);
+    	Debug.Log(gameObject.transform.Find("Capsule"));
     }
 
     // Update is called once per frame
@@ -32,6 +36,10 @@ public class Unit : Attackable
         }
 
         base.Update();
+    }
+
+    public override void onCapture() {
+    	this.gameObject.transform.Find("Capsule").GetComponent<MeshRenderer>().material.color = GetComponent<ownership>().playerColor;
     }
 
     public void move(Vector3 destination) {
@@ -96,18 +104,18 @@ public class Unit : Attackable
     }
 
     void checkEnemiesInRange() {
-    	if (!isAttacking && this.gameObject.GetComponent<NavMeshAgent>().isStopped) {
+    	if (!isAttacking) {
 		    Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.GetComponent<Collider>().bounds.center, 2f);
 
 		    if (hitColliders.Length != lastNoEnemies) {
 				for (int i = 0; i < hitColliders.Length; i++) {
 					if (hitColliders[i] != null) {
-						Debug.Log("There be enemies amidst");
+
 						Debug.Log(hitColliders[i].tag);
 						if (hitColliders[i].GetComponent<ownership>() != null &&
 							hitColliders[i].GetComponent<ownership>().owned == true && 
 							hitColliders[i].GetComponent<ownership>().owner != this.gameObject.GetComponent<ownership>().owner) { 
-							Debug.Log("Attack!");
+
 							photonView.RPC("callAttack", RpcTarget.All, hitColliders[i].gameObject.GetComponent<Attackable>().id);
 							break;
 						} 

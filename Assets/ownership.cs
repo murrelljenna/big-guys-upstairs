@@ -10,6 +10,8 @@ public class ownership : MonoBehaviourPunCallbacks, IPunObservable
 	public bool owned = false;
     [SerializeField]
     public int owner;
+    public Color playerColor;
+    
     // Start is called before the first frame upda
     void Start()
     {
@@ -23,6 +25,7 @@ public class ownership : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     public void capture(game.assets.Player player) {
+        this.playerColor = player.playerColor;
         PhotonView photonView = this.gameObject.GetComponent<PhotonView>();
         photonView.RPC("captureRPC", RpcTarget.All, player.playerID);
     }
@@ -42,7 +45,14 @@ public class ownership : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     [PunRPC] public void captureRPC(int playerID, PhotonMessageInfo info) {
-        owned = true;
-        this.owner = playerID;
+        GameObject player = GameObject.Find(playerID.ToString());
+        if (player != null) {
+            this.playerColor = player.GetComponent<game.assets.Player>().playerColor;
+            this.gameObject.GetComponent<Attackable>().onCapture();
+            Debug.Log("CAPTURE");
+            this.gameObject.GetComponent<Renderer>().material.color = player.GetComponent<game.assets.Player>().playerColor;
+            owned = true;
+            this.owner = playerID;
+        }
     }
 }

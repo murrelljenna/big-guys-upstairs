@@ -11,7 +11,7 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
 	public int id;
 	public List<Unit> attackers;
 	public PhotonView photonView;
-
+	List<Color> colours = new List<Color>() { Color.black, Color.blue, Color.cyan, Color.gray, Color.green, Color.magenta, Color.red, Color.white, Color.yellow };
 
     // Start is called before the first frame update
     void Start()
@@ -29,9 +29,13 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     public virtual void Update()
     {
         if (hp <= 0) {
-        	Debug.Log("Object about to be destroyed");
             destroyObject();
         }
+    }
+
+
+    public virtual void onCapture() {
+
     }
 
     public void takeDamage(int damage) {

@@ -6,7 +6,7 @@ using Photon.Pun;
 using UnityStandardAssets.Characters.FirstPerson;
 
 namespace game.assets {
-    public class Player : MonoBehaviourPun
+    public class Player : MonoBehaviourPun, IPunObservable
     {
     	public int wood;
     	public int food;
@@ -17,6 +17,8 @@ namespace game.assets {
         public int playerID;
 
         public Color playerColor;
+
+        List<Color> colours = new List<Color>() { Color.black, Color.blue, Color.cyan, Color.gray, Color.green, Color.magenta, Color.red, Color.white, Color.yellow };
 
         // Start is called before the first frame update
         void Start()
@@ -98,6 +100,24 @@ namespace game.assets {
             if (this.wood >= wood && this.food >= food) {
                 this.wood -= wood;
                 this.food -= food;
+            }
+        }
+
+        [PunRPC]
+        public void setColour(int colourIndex) {
+            playerColor = colours[colourIndex];
+            this.gameObject.transform.Find("FPSController").transform.Find("Capsule").GetComponent<Renderer>().material.color = playerColor;
+        }
+
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+            if (stream.IsWriting) {
+                stream.SendNext(wood);
+                stream.SendNext(food);
+            }
+            else
+            {
+                wood = (int)stream.ReceiveNext();
+                food = (int)stream.ReceiveNext();
             }
         }
     }

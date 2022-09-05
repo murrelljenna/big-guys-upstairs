@@ -75,6 +75,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owned: 0
   owner: 0
+  playerColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &6878699215683291197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,7 +269,7 @@ GameObject:
   m_Component:
   - component: {fileID: 530132536991763333}
   - component: {fileID: 530132536991763448}
-  - component: {fileID: 530132536991763335}
+  - component: {fileID: 7933566830478773421}
   m_Layer: 12
   m_Name: Capsule
   m_TagString: Untagged
@@ -298,7 +299,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 530132536991763332}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &530132536991763335
+--- !u!23 &7933566830478773421
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -315,7 +316,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

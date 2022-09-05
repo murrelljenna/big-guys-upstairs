@@ -31,31 +31,18 @@ public class House : Building, IPunObservable
         base.Start();
     }
 
-    public override void Update() {
-        if (playerCamera != null && info.active == true) {
-            info.transform.LookAt(playerCamera.transform);   
-        } else {
-            playerCamera = getLocalCamera();
-        }
-
-        base.Update();
-    }
-
     public override void onCapture() {
         if (photonView.IsMine) {
             owner.getPlayer().addUnitMax(housingBump);
         }
-
-        string colorName = GetComponent<ownership>().getPlayer().colorName;
-        this.transform.Find("Model").gameObject.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Buildings_" + colorName) as Texture));
+        
+        base.onCapture();
     }
 
     public override void destroyObject() {
         if (photonView.IsMine) {
             owner.getPlayer().addUnitMax(-housingBump);
         }
-
-        photonView.RPC("playDestructionEffect", RpcTarget.All);
 
         base.destroyObject();
     }
@@ -70,19 +57,6 @@ public class House : Building, IPunObservable
     // Start is called before the first frame update
     public override void Awake() {
         base.Awake();
-    }
-
-    [PunRPC]
-    private void playDestructionEffect() {
-        AudioSource[] sources = this.transform.Find("DestroySounds").GetComponents<AudioSource>();
-        AudioSource source = sources[UnityEngine.Random.Range(0, sources.Length)];
-        AudioSource.PlayClipAtPoint(source.clip, this.transform.position);
-
-        GameObject explosion = Instantiate(Resources.Load("FX_Building_Destroyed_mid") as GameObject);
-        explosion.transform.position = this.transform.position;
-        ParticleSystem effect = explosion.GetComponent<ParticleSystem>();
-        effect.Play();
-        Destroy(effect.gameObject, effect.duration);
     }
 
     public override void interactionOptions(game.assets.Player player) {

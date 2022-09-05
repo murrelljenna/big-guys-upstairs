@@ -25,7 +25,7 @@ public class ResourceTile : Attackable
         base.Update();
     }
 
-    public override void Start()
+    protected override void Start()
     {
         this.woodCost = 15;
         this.foodCost = 15;

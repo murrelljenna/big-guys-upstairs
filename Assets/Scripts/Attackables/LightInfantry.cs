@@ -32,13 +32,4 @@ public class LightInfantry : Unit
 
         base.onSelect();
     }
-
-    public override void move(Vector3 destination) {
-        StartCoroutine(delayMovement(destination));
-    }
-
-    private IEnumerator delayMovement(Vector3 destination) {
-        yield return new WaitForSeconds(Random.Range(0.05f, 0.4f));
-        base.move(destination);
-    }
 }

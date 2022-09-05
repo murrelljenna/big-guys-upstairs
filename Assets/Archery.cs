@@ -5,13 +5,13 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class Barracks : Building, IPunObservable
+public class Archery : Building, IPunObservable
 {
     void Start() {
-        prefabName = "Barracks";
+        prefabName = "Archery";
 
-        this.hp = 500;
-        this.woodCost = 75;
+        this.hp = 400;
+        this.woodCost = 60;
         this.foodCost = 0;
 
         if (!this.photonView.IsMine) {
@@ -29,18 +29,16 @@ public class Barracks : Building, IPunObservable
         info.SetActive(true);
 
         if (!midAnimation) {
-            info.transform.Find("Light Infantry Selector").Find("1_Pressed").gameObject.SetActive(false);
+            info.transform.Find("Archer Selector").Find("1_Pressed").gameObject.SetActive(false);
         }
 
         if (Input.GetKeyDown(KeyCode.E)) {
-            int wood = 2; // Please replace with real values soon.
-            int food = 10;
+            int wood = 5; // Please replace with real values soon.
+            int food = 7;
 
-            up1 = info.transform.Find("Light Infantry Selector").Find("1_Normal").gameObject;
-            down1 = info.transform.Find("Light Infantry Selector").Find("1_Pressed").gameObject;
+            up1 = info.transform.Find("Archer Selector").Find("1_Normal").gameObject;
+            down1 = info.transform.Find("Archer Selector").Find("1_Pressed").gameObject;
 
-            up1.SetActive(false);
-            down1.SetActive(true);
             midAnimation = true;
             Invoke("releaseButton1", 0.2f);
 
@@ -53,17 +51,20 @@ public class Barracks : Building, IPunObservable
                     Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
                     Vector3 spawnLocation = new Vector3(randomInCircle.x+info.transform.position.x, this.transform.position.y, randomInCircle.y+info.transform.position.z);
 
-                    GameObject militia = PhotonNetwork.Instantiate("Light Infantry", spawnLocation, Quaternion.identity, 0);
+                    GameObject militia = PhotonNetwork.Instantiate("Archer", spawnLocation, Quaternion.identity, 0);
 
                     militia.GetComponent<ownership>().capture(player);
                 } else {
                     tooltips.flashLackResources();
                 }
             } else {
-                Debug.Log("PLEASE MAKE TOOLTIP FOR MAX UNITS");
+                
             }
+
+            up1.SetActive(false);
+            down1.SetActive(true);
         }
-        
+
         base.interactionOptions(player);
     }
 }

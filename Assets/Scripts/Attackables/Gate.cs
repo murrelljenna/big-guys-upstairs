@@ -12,6 +12,7 @@ public class Gate : Building, IPunObservable
 {
     private gateController controller;
 
+    public AudioClip[] plopSounds;
     void Start() {
     	prefabName = "Gate";
         
@@ -29,17 +30,11 @@ public class Gate : Building, IPunObservable
 
         controller = this.transform.Find("Entrance").GetComponent<gateController>();
 
+        /* Play effects and audio */
+        this.transform.Find("Dust").GetComponent<ParticleSystem>().Emit(30);
+        AudioSource.PlayClipAtPoint(plopSounds[Random.Range(0, plopSounds.Length - 1)], this.transform.position);
+
         base.Start();
-    }
-
-    public override void Update() {
-        if (playerCamera != null && info.active == true) {
-            info.transform.LookAt(playerCamera.transform);   
-        } else {
-            playerCamera = getLocalCamera();
-        }
-
-        base.Update();
     }
 
     public override void onCapture() {
@@ -47,22 +42,6 @@ public class Gate : Building, IPunObservable
         this.transform.Find("Model").Find("Wall_A_gate").gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Buildings_" + colorName) as Texture));
     }
 
-    public override void destroyObject() {
-        if (this.photonView.IsMine) {
-            photonView.RPC("playDestructionEffect", RpcTarget.All);
-        }
-
-        base.destroyObject();
-    }
-
-    public override void takeDamage(int damage) {
-        AudioSource[] sources = this.transform.Find("DamageSounds").GetComponents<AudioSource>();
-        sources[UnityEngine.Random.Range(0, sources.Length)].Play((ulong)UnityEngine.Random.Range(0l, 2l));
-
-        base.takeDamage(damage);
-    }
-
-    // Start is called before the first frame update
     public override void Awake() {
         base.Awake();
     }
@@ -85,26 +64,22 @@ public class Gate : Building, IPunObservable
             Invoke("releaseButton1", 0.2f);
             
             if (controller.locked) {
-                controller.unlockGate();
+                photonView.RPC("unlockGate", RpcTarget.AllBuffered);
             } else {
-                controller.lockGate();
+                photonView.RPC("lockGate", RpcTarget.AllBuffered);
             }
         }
 
         base.interactionOptions(player);
     }
 
-    [PunRPC]
-    private void playDestructionEffect() {
-        AudioSource[] sources = this.transform.Find("DestroySounds").GetComponents<AudioSource>();
-        AudioSource source = sources[UnityEngine.Random.Range(0, sources.Length)];
-        AudioSource.PlayClipAtPoint(source.clip, this.transform.position);
-
-        GameObject explosion = Instantiate(Resources.Load("FX_Building_Destroyed_mid") as GameObject);
-        explosion.transform.position = this.transform.position;
-        ParticleSystem effect = explosion.GetComponent<ParticleSystem>();
-        effect.Play();
-        Destroy(effect.gameObject, effect.duration);
+    [PunRPC] 
+    private void lockGate() {
+        controller.lockGate();
     }
 
+    [PunRPC]
+    private void unlockGate() {
+        controller.unlockGate();
+    }
 }

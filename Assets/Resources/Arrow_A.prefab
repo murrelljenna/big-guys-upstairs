@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 387449836410500778}
   - component: {fileID: 387449836410500781}
   - component: {fileID: 7714521260083523307}
+  - component: {fileID: 3366601080897753273}
   m_Layer: 0
   m_Name: Arrow_A
   m_TagString: Untagged
@@ -96,7 +97,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &387449836410500781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,3 +125,17 @@ MonoBehaviour:
   owned: 0
   owner: 0
   playerColor: {r: 0, g: 0, b: 0, a: 0}
+--- !u!136 &3366601080897753273
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387449836410400776}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.09154534
+  m_Height: 0.9775492
+  m_Direction: 1
+  m_Center: {x: -0.0011544673, y: -0.013235049, z: -0.005768255}

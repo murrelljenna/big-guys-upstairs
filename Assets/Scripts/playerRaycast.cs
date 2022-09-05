@@ -36,6 +36,10 @@ public class playerRaycast : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (buildingViewed != null) {
+            buildingViewed.SetActive(false);
+        }
+
         RaycastHit hit;
 
         /* Interaction with resource tiles */    	
@@ -100,9 +104,8 @@ public class playerRaycast : MonoBehaviour
 
                 buildingViewed = hit.collider.gameObject.transform.Find("Info").gameObject;
             }
-        }   else if (buildingViewed != null) {
+        } else if (buildingViewed != null) {
             buildingViewed.SetActive(false);
-            buildingViewed = null;
         }
 
         /* Interaction with towns */ 

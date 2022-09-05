@@ -18,9 +18,9 @@ public class Unit : Attackable
 	public bool selectable = false;
     protected int attackableMask = (1 << 9) | (1 << 10) | (1 << 12) | (1 << 14) | (1 << 16) | (1 << 18);
     protected float attackRate = 1f;
-    public int frameCount;
 
-    public bool updateTargetLive = false;
+    protected bool updateTargetLive = false;
+    private bool moveOrdered = false;
 
 	public Attackable attackee = null;
     public int attackeeId = 0;
@@ -28,12 +28,14 @@ public class Unit : Attackable
 	protected int lastNoEnemies = 0;
     protected float responseRange;
 
-    
+    private int frameCount;
+    private NavMeshAgent navAgent;
 
     public override void OnEnable() {
         if (this.photonView.IsMine) {
             InvokeRepeating("checkEnemiesInRange", 0.5f, 0.5f);
         }
+        navAgent = this.gameObject.GetComponent<NavMeshAgent>();
 
         PhotonNetwork.AddCallbackTarget(this);
         base.OnEnable();
@@ -55,12 +57,22 @@ public class Unit : Attackable
             animator.SetFloat("speed", this.GetComponent<UnityEngine.AI.NavMeshAgent>().velocity.magnitude);
         }
 
-        // If unit is currently attacking another unit (attackable that can move), update that target's position every frame.
-        if (updateTargetLive && frameCount % 10 == 0) {
-            if (attackee != null && this.gameObject.GetComponent<NavMeshAgent>() != null && this.photonView.IsMine) {
-                this.photonView.RPC("setDestination", RpcTarget.All, attackee.gameObject.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
+        if (photonView.IsMine) {
+            // If unit is currently attacking another unit (attackable that can move), update that target's position every frame.
+            if (updateTargetLive && frameCount % 10 == 0) {
+                if (attackee != null && this.gameObject.GetComponent<NavMeshAgent>() != null && this.photonView.IsMine) {
+                    this.photonView.RPC("setDestination", RpcTarget.All, attackee.gameObject.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
+                }
+            }
+
+            // If unit has been ordered to move, wait until it reaches its destination before stopping
+            if (moveOrdered && navAgent.remainingDistance <= navAgent.stoppingDistance) {
+                if (!navAgent.hasPath || Mathf.Abs (navAgent.velocity.sqrMagnitude) < float.Epsilon) {
+                    moveOrdered = false;
+                }
             }
         }
+
         frameCount++;
         base.Update();
     }
@@ -84,7 +96,6 @@ public class Unit : Attackable
             animator.SetFloat("speed", 0f);
         }
 
-        NavMeshAgent navAgent = this.gameObject.GetComponent<NavMeshAgent>();
         if (navAgent != null) {
             this.gameObject.GetComponent<NavMeshAgent>().isStopped = true;
         }
@@ -107,6 +118,7 @@ public class Unit : Attackable
 
     public virtual void move(Vector3 destination) {
         cancelOrders();
+        moveOrdered = true;
         AudioSource[] sources = this.transform.Find("SelectionSounds").GetComponents<AudioSource>();
         AudioSource source = sources[UnityEngine.Random.Range(0, sources.Length)];
         AudioSource.PlayClipAtPoint(source.clip, this.transform.position);
@@ -126,22 +138,29 @@ public class Unit : Attackable
     }
 
     public virtual void callAttack(int idOfThingToAttack) {
-        if (canAttack) {
-            if (photonView.IsMine) {
-        	   StartCoroutine(moveAndAttack(idOfThingToAttack));
-            }
-
-            AudioSource[] sources = this.gameObject.transform.Find("AttackingSounds").GetComponents<AudioSource>();
-            sources[UnityEngine.Random.Range(0, sources.Length)].Play((ulong)UnityEngine.Random.Range(0l, 2l));
-
-        	lastNoEnemies=-1;
+        if (!canAttack) {
+            return;
         }
+
+        if (photonView.IsMine) {
+    	   StartCoroutine(moveAndAttack(idOfThingToAttack));
+        }
+
+        AudioSource[] sources = this.gameObject.transform.Find("AttackingSounds").GetComponents<AudioSource>();
+        sources[UnityEngine.Random.Range(0, sources.Length)].Play((ulong)UnityEngine.Random.Range(0l, 2l));
+
+    	lastNoEnemies=-1;
     }
 
     public virtual IEnumerator moveAndAttack(int idOfThingToAttack) {
     	GameObject thingToAttackObj = GameObject.Find(idOfThingToAttack.ToString());
     	if (thingToAttackObj != null) {
     		Attackable thingToAttack = thingToAttackObj.GetComponent<Attackable>();
+
+            if (thingToAttackObj.layer == LayerMask.NameToLayer("town") || thingToAttackObj.layer == LayerMask.NameToLayer("building")) {
+                moveOrdered = true;
+            }
+
     	 	if (thingToAttack.hp > 0) {
                 attackee = thingToAttack;
                 attackeeId = idOfThingToAttack;
@@ -224,97 +243,83 @@ public class Unit : Attackable
     }
 
     protected bool isInRange(Attackable thingToAttack) {
-    	if (thingToAttack != null) {
-            Vector3 closestPoint = thingToAttack.gameObject.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position);
+        if (thingToAttack == null) {
+            return false;
+        }
 
-            float deltaX = this.gameObject.transform.position.x - closestPoint.x;
-            float deltaZ = this.gameObject.transform.position.z - closestPoint.z; 
-            float distance = Mathf.Sqrt(deltaX * deltaX + deltaZ * deltaZ);
+        Vector3 closestPoint = thingToAttack.gameObject.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position);
 
-            return (distance < this.rng);
-    	}
+        float deltaX = this.gameObject.transform.position.x - closestPoint.x;
+        float deltaZ = this.gameObject.transform.position.z - closestPoint.z; 
+        float distance = Mathf.Sqrt(deltaX * deltaX + deltaZ * deltaZ);
 
-        return false;
+        return (distance < this.rng);
     }
 
     public virtual void checkEnemiesInRange() {
-    	if (!isAttacking && canAttack) {
-		    Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.GetComponent<Collider>().bounds.center, responseRange, attackableMask);
-            Attackable closestAttackee = null;
-            Vector3 playerPos = this.GetComponent<Collider>().bounds.center;
+    	if (isAttacking || !canAttack || moveOrdered) {
+            return;
+        }
 
-		    if (hitColliders.Length != lastNoEnemies) {
-				for (int i = 0; i < hitColliders.Length; i++) {
-					if (hitColliders[i] != null) {
-						if (hitColliders[i].GetComponent<ownership>() != null &&
-							hitColliders[i].GetComponent<ownership>().owned == true && 
-							hitColliders[i].GetComponent<ownership>().owner != this.gameObject.GetComponent<ownership>().owner &&
-                            hitColliders[i].GetComponent<Attackable>().hp > 0) { 
+	    Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.GetComponent<Collider>().bounds.center, responseRange, attackableMask);
+        Attackable closestAttackee = null;
+        Vector3 playerPos = this.GetComponent<Collider>().bounds.center;
 
-                            UnityEngine.AI.NavMeshAgent agent = this.GetComponent<UnityEngine.AI.NavMeshAgent>();
-                            NavMeshPath path = new NavMeshPath();
-                            bool isReachable = agent.CalculatePath(hitColliders[i].transform.position, path);
-                            float dist = 0f;
-                            for (int j = 0; j < path.corners.Length - 1; j++) {
-                                dist += Vector3.Distance(path.corners[j], path.corners[j + 1]);
-                            }
+	    if (hitColliders.Length != lastNoEnemies) {
+			for (int i = 0; i < hitColliders.Length; i++) {
+				if (hitColliders[i].GetComponent<ownership>() != null &&
+					hitColliders[i].GetComponent<ownership>().owned == true && 
+					hitColliders[i].GetComponent<ownership>().owner != this.gameObject.GetComponent<ownership>().owner &&
+                    hitColliders[i].GetComponent<Attackable>().hp > 0) { 
 
-                            if (this.isInRange(hitColliders[i].GetComponent<Attackable>()) || dist < 3f ) {
-                                /*
-                                if (closestAttackee == null) {
-                                    print("NULL ATTACK");
-                                    closestAttackee = hitColliders[i].GetComponent<Attackable>();
-                                } else if (Vector3.Distance(hitColliders[i].bounds.center, playerPos) < Vector3.Distance(closestAttackee.GetComponent<Collider>().bounds.center, playerPos)) {
-                                    print("THE OTHER");
-                                    closestAttackee = hitColliders[i].GetComponent<Attackable>();
-                                }
-                                */
-                                closestAttackee = hitColliders[i].GetComponent<Attackable>();
-    							break;
-                            }
-						} 
-					}
-				}
+                    UnityEngine.AI.NavMeshAgent agent = this.GetComponent<UnityEngine.AI.NavMeshAgent>();
+                    NavMeshPath path = new NavMeshPath();
+                    bool isReachable = agent.CalculatePath(hitColliders[i].transform.position, path);
+                    float dist = 0f;
+                    for (int j = 0; j < path.corners.Length - 1; j++) {
+                        dist += Vector3.Distance(path.corners[j], path.corners[j + 1]);
+                    }
 
-                if (closestAttackee != null) {
-                    callAttack(closestAttackee.id);
-                }
-
-				lastNoEnemies = hitColliders.Length;
+                    if (hitColliders[i].gameObject.tag != "wall" && (this.isInRange(hitColliders[i].GetComponent<Attackable>()) || dist < 3f)) {
+                        callAttack(hitColliders[i].GetComponent<Attackable>().id);
+						break;
+                    }
+				} 
 			}
-    	}  
+			lastNoEnemies = hitColliders.Length;
+		}
     }
 
     public virtual void checkEnemiesInRange(float range) {
-        if (!isAttacking) {
-            Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.GetComponent<Collider>().bounds.center, range);
+        if (!isAttacking  || !canAttack) {
+            return;
+        }
 
-            if (hitColliders.Length != lastNoEnemies) {
-                for (int i = 0; i < hitColliders.Length; i++) {
-                    if (hitColliders[i] != null) {
-                        if (hitColliders[i].GetComponent<ownership>() != null &&
-                            hitColliders[i].GetComponent<ownership>().owned == true && 
-                            hitColliders[i].GetComponent<ownership>().owner != this.gameObject.GetComponent<ownership>().owner &&
-                            hitColliders[i].GetComponent<Attackable>().hp > 0) { 
+        Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.GetComponent<Collider>().bounds.center, range);
 
-                            UnityEngine.AI.NavMeshAgent agent = this.GetComponent<UnityEngine.AI.NavMeshAgent>();
-                            NavMeshPath path = new NavMeshPath();
-                            bool isReachable = agent.CalculatePath(hitColliders[i].transform.position, path);
-                            float dist = 0f;
-                            for (int j = 0; j < path.corners.Length - 1; j++) {
-                                dist += Vector3.Distance(path.corners[j], path.corners[j + 1]);
-                            }
+        if (hitColliders.Length != lastNoEnemies) {
+            for (int i = 0; i < hitColliders.Length; i++) {
+                if (hitColliders[i].GetComponent<ownership>() != null &&
+                    hitColliders[i].GetComponent<ownership>().owned == true && 
+                    hitColliders[i].GetComponent<ownership>().owner != this.gameObject.GetComponent<ownership>().owner &&
+                    hitColliders[i].GetComponent<Attackable>().hp > 0) { 
 
-                            if (this.isInRange(hitColliders[i].GetComponent<Attackable>()) || dist < 10f ) {
-                                callAttack(hitColliders[i].gameObject.GetComponent<Attackable>().id);
-                                break;
-                            }
-                        } 
+                    UnityEngine.AI.NavMeshAgent agent = this.GetComponent<UnityEngine.AI.NavMeshAgent>();
+                    NavMeshPath path = new NavMeshPath();
+                    bool isReachable = agent.CalculatePath(hitColliders[i].transform.position, path);
+                    float dist = 0f;
+                    for (int j = 0; j < path.corners.Length - 1; j++) {
+                        dist += Vector3.Distance(path.corners[j], path.corners[j + 1]);
                     }
-                }
 
-                lastNoEnemies = hitColliders.Length;
+                    if (this.isInRange(hitColliders[i].GetComponent<Attackable>()) || dist < 10f ) {
+                        callAttack(hitColliders[i].gameObject.GetComponent<Attackable>().id);
+                        break;
+                    }
+                } 
             }
+
+            lastNoEnemies = hitColliders.Length;
         }  
     }
 

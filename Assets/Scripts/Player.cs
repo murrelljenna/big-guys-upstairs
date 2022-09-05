@@ -114,8 +114,6 @@ namespace game.assets {
 
                 winNotice = GameObject.Find("WinNotice");
                 winNotice.SetActive(false);
-            } else {
-                playerCamera = getLocalCamera();
             }
         }
 
@@ -152,8 +150,12 @@ namespace game.assets {
         // Update is called once per frame
         void Update()
         {
-            if (nameTag != null && playerCamera != null) {
-                nameTag.transform.parent.LookAt(playerCamera.transform);
+            if (!this.photonView.IsMine) {
+                if (nameTag != null && playerCamera != null) {
+                    nameTag.transform.parent.LookAt(playerCamera.transform);
+                } else {
+                    playerCamera = getLocalCamera();
+                }
             }
         }
 
@@ -229,7 +231,7 @@ namespace game.assets {
         }
 
         public void makeTransaction(int wood = 0, int food = 0, int gold = 0) {
-            if (this.wood >= wood && this.food >= food) {
+            if (this.wood >= wood && this.food >= food && this.gold >= gold) {
                 this.wood -= wood;
                 this.food -= food;
                 this.gold -= gold;

@@ -58,8 +58,12 @@ public class showMenu : MonoBehaviourPun
         if (Input.GetKeyDown("4")) {
             GetComponent<buildingPlacement>().setBuilding(options[3]);
         }
+
         if (Input.GetKeyDown("5")) {
             GetComponent<buildingPlacement>().setBuilding(options[4]);
+        }
+        if (Input.GetKeyDown("6")) {
+            GetComponent<buildingPlacement>().setBuilding(options[5]);
         }
     }
 }

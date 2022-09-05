@@ -41,6 +41,11 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
 			Destroy(currentBuilding.gameObject);
 			currentBuilding = null;
 		}
+
+        firstPointPlaced = false;
+        lastPointSnapped = false;
+        firstPointSnapped = false;
+        lineRen.positionCount = 0;
     }
 
     // Update is called once per frame
@@ -121,7 +126,7 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
                                         if (wallet.canAfford(wood * (int)noWalls, food * (int)noWalls)) {
                                             RaycastHit info;
                                             if ((!Physics.Linecast(firstPoint, lastPoint, out info, mapLayer) || info.collider.gameObject.name == "wall" || info.collider.gameObject.GetComponent<Attackable>().prefabName == "Wall_Corner")) {
-                                                if (firstPoint.y == lastPoint.y) {
+                                                if (System.Math.Abs(firstPoint.y) - System.Math.Abs(lastPoint.y) < 0.5f && System.Math.Abs(firstPoint.y) - System.Math.Abs(lastPoint.y) > -0.5f) {
                                                     wallet.makeTransaction(wood * (int)noWalls, food * (int)noWalls);
                                                     StartCoroutine(placeWalls(noWalls, firstPointSnapped, lastPointSnapped));
 
@@ -129,7 +134,7 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
                                                     lastPointSnapped = false;
                                                     firstPointSnapped = false;
                                                 } else {
-                                                    Debug.Log("PLEASE ADD NOTIFICATION HERE - UNEVEN WALL PLACEMENT ATTEMPT");
+                                                    tooltips.flashBuildingBlocked();
                                                 }
                                             } else {
                                                 StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));

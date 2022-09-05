@@ -32,8 +32,6 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     public bool dead = false;
 	public List<Unit> attackers;
 	public PhotonView photonView;
-    List<Color> colours = new List<Color>() { Color.black, Color.blue, Color.white, Color.green, Color.magenta, Color.red, Color.yellow };
-    List<string> colourStrings = new List<string>() { "black", "blue", "white", "green", "pink", "red", "yellow" };
 
     protected TooltipController tooltips;
     //protected bool underAttack;
@@ -45,8 +43,7 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     protected GameObject up2;
     protected GameObject down2;
 
-    // Start is called before the first frame update
-    public virtual void Start()
+    protected virtual void Start()
     {
     	if (this.gameObject.tag == "buildingGhost") {
     		this.enabled = false;

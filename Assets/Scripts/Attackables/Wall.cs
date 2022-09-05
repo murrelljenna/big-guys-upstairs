@@ -5,9 +5,12 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class Wall : Building, IPunObservable
+public class Wall : Building, IPunObservable 
 {
-    void Start() {
+    public static bool infoViewed = false;
+
+    protected override void Start() {
+
     	if (prefabName != "Wall_Corner") {
         	prefabName = "Wall";
         }
@@ -16,85 +19,65 @@ public class Wall : Building, IPunObservable
         this.woodCost = 3;
         this.foodCost = 0;
 
-        Transform infoTransform = this.gameObject.transform.Find("Info");
-        if (infoTransform != null) {
-            if (infoTransform.gameObject != null) {
-                info = infoTransform.gameObject;
-                info.SetActive(false);
-            }
-        }
-
         if (!this.photonView.IsMine) {
             this.GetComponent<buildingGhost>().active = false;
         }
-
         base.Start();
     }
 
-    public override void Update() {
-        if (playerCamera != null && info.active == true) {
-            info.transform.LookAt(playerCamera.transform);   
-        } else {
-            playerCamera = getLocalCamera();
-        }
-
-        base.Update();
-    }
-
-    public override void onCapture() {
-        string colorName = GetComponent<ownership>().getPlayer().colorName;
-        this.transform.Find("Model").gameObject.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Buildings_" + colorName) as Texture));
-    }
-
-    public override void destroyObject() {
-        if (this.photonView.IsMine) {
-            photonView.RPC("playDestructionEffect", RpcTarget.All);
-        }
-
-        base.destroyObject();
-    }
-
-    public override void takeDamage(int damage) {
-        AudioSource[] sources = this.transform.Find("DamageSounds").GetComponents<AudioSource>();
-        sources[UnityEngine.Random.Range(0, sources.Length)].Play((ulong)UnityEngine.Random.Range(0l, 2l));
-
-        base.takeDamage(damage);
-    }
-
-    // Start is called before the first frame update
     public override void Awake() {
         base.Awake();
     }
 
     public override void interactionOptions(game.assets.Player player) {
-        if (Input.GetKeyDown(KeyCode.U)) {
-            PhotonNetwork.Destroy(this.gameObject);
+        if (prefabName != "Wall_Corner") { // Static var - only one wall info should  appear at a time.
+            infoViewed = true;
 
-            Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.GetComponent<Collider>().bounds.center, 0.2f, (1 << 14));
-            for (int i = 0; i < hitColliders.Length; i++) {
-                if (hitColliders[i].gameObject.tag == "wall") {
-                    PhotonNetwork.Destroy(hitColliders[i].gameObject);
-                }
+            info.SetActive(true);
+
+            if (!midAnimation) {
+                info.transform.Find("Gate Selector").Find("1_Pressed").gameObject.SetActive(false);
             }
 
-            GameObject gate = PhotonNetwork.Instantiate("Gate", this.transform.position, this.transform.rotation, 0);
-            gate.GetComponent<ownership>().capture(player);
+            if (Input.GetKeyDown(KeyCode.E)) {
+                if (owner.getPlayer().canAfford(25)) {
+                    List<GameObject> neighbours = new List<GameObject>();
+
+
+
+                    up1 = info.transform.Find("Gate Selector").Find("1_Normal").gameObject;
+                    down1 = info.transform.Find("Gate Selector").Find("1_Pressed").gameObject;
+
+
+
+                    Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.GetComponent<Collider>().bounds.center, 0.2f, (1 << 14));
+                    for (int i = 0; i < hitColliders.Length; i++) {
+                        Attackable neighbour = hitColliders[i].gameObject.GetComponent<Attackable>();
+
+                        if (neighbour.prefabName == "Wall") {
+                            neighbours.Add(neighbour.gameObject);
+                        } else {
+                            tooltips.flashBuildingBlocked();
+                            return;
+                        }
+                    }
+                    
+                    // Nothing in way, create gate
+
+                    neighbours.ForEach(neighbour => {
+                        PhotonNetwork.Destroy(neighbour);
+                    });
+
+                    owner.getPlayer().makeTransaction(25);
+
+                    GameObject gate = PhotonNetwork.Instantiate("Gate", this.transform.position, this.transform.rotation, 0);
+                    gate.GetComponent<ownership>().capture(player);
+                } else {
+                    tooltips.flashLackResources();
+                }
+            }
         }
 
         base.interactionOptions(player);
     }
-
-    [PunRPC]
-    private void playDestructionEffect() {
-        AudioSource[] sources = this.transform.Find("DestroySounds").GetComponents<AudioSource>();
-        AudioSource source = sources[UnityEngine.Random.Range(0, sources.Length)];
-        AudioSource.PlayClipAtPoint(source.clip, this.transform.position);
-
-        GameObject explosion = Instantiate(Resources.Load("FX_Building_Destroyed_mid") as GameObject);
-        explosion.transform.position = this.transform.position;
-        ParticleSystem effect = explosion.GetComponent<ParticleSystem>();
-        effect.Play();
-        Destroy(effect.gameObject, effect.duration);
-    }
-
 }

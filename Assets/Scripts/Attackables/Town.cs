@@ -12,24 +12,16 @@ public class Town : Building, IPunObservable
 
     private bool underAttack = false;
 
-    int resourceMask = 1 << 9;
-    int unitMask = 1 << 12;
+    private int resourceMask = 1 << 9;
+    private int unitMask = 1 << 12;
 
-    void Start() {
+    protected override void Start() {
         prefabName = "Town";
 
         this.hp = 600;
         this.woodCost = 50;
         this.foodCost = 50;
         this.canBeRecycled = false;
-
-        Transform infoTransform = this.gameObject.transform.Find("Info");
-        if (infoTransform != null) {
-            if (infoTransform.gameObject != null) {
-                info = infoTransform.gameObject;
-                info.SetActive(false);
-            }
-        }
 
         if (!this.photonView.IsMine) {
             this.GetComponent<buildingGhost>().active = false;
@@ -40,48 +32,40 @@ public class Town : Building, IPunObservable
         base.Start();
     }
 
-    public override void Update() {
-        if (playerCamera != null && info.active == true) {
-            info.transform.LookAt(playerCamera.transform);   
-        } else {
-            playerCamera = getLocalCamera();
-        }
-
-        base.Update();
-    }
-
     public override void onCapture() {
         game.assets.Player player = owner.getPlayer();
         player.addResource("gold", yield);
-        string colorName = GetComponent<ownership>().getPlayer().colorName;
-        this.transform.Find("Model").gameObject.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Buildings_" + colorName) as Texture));
         this.gameObject.GetComponent<LineRenderer>().SetColors(GetComponent<ownership>().playerColor, GetComponent<ownership>().playerColor);
         this.gameObject.GetComponent<ownership>().getPlayer().upCityCount(1);
+
+        base.onCapture();
     }
 
     private void checkEnemiesInRadius() {
-        if (canAttack) {
-            Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.GetComponent<Renderer>().bounds.center, 10f, unitMask);
-            int attackers = 0;
+        if (!canAttack) {
+            return;
+        }
 
-            if (hitColliders.Length != lastNoEnemies) {
-                for (int i = 0; i < hitColliders.Length; i++) {
-                    if (hitColliders[i] != null && hitColliders[i].tag != "buildingGhost" && hitColliders[i].GetComponent<ownership>().owner != this.gameObject.GetComponent<ownership>().owner) {
-                        if (underAttack == false) {
-                            // Being attacked first time - play noise without being annoying.
-                            this.gameObject.GetComponent<AudioSource>().Play(0);
-                        }
+        Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.GetComponent<Renderer>().bounds.center, 10f, unitMask);
+        int attackers = 0;
 
-                        attackers+=1;
-                        underAttack = true;
-                        callForHelp();
-                        break;
+        if (hitColliders.Length != lastNoEnemies) {
+            for (int i = 0; i < hitColliders.Length; i++) {
+                if (hitColliders[i] != null && hitColliders[i].tag != "buildingGhost" && hitColliders[i].GetComponent<ownership>().owner != this.gameObject.GetComponent<ownership>().owner) {
+                    if (underAttack == false) {
+                        // Being attacked first time - play noise without being annoying.
+                        this.gameObject.GetComponent<AudioSource>().Play(0);
                     }
-                }
 
-                if (attackers < 1) {
-                    underAttack = false;
+                    attackers+=1;
+                    underAttack = true;
+                    callForHelp();
+                    break;
                 }
+            }
+
+            if (attackers < 1) {
+                underAttack = false;
             }
         }
     }
@@ -112,8 +96,6 @@ public class Town : Building, IPunObservable
             }
 
             this.gameObject.GetComponent<ownership>().getPlayer().loseCity();
-
-            photonView.RPC("playDestructionEffect", RpcTarget.All);
         }
 
         base.destroyObject();
@@ -162,28 +144,7 @@ public class Town : Building, IPunObservable
         base.interactionOptions(player);
     }
 
-    public override void takeDamage(int damage) {
-        AudioSource[] sources = this.transform.Find("DamageSounds").GetComponents<AudioSource>();
-        sources[UnityEngine.Random.Range(0, sources.Length)].Play((ulong)UnityEngine.Random.Range(0l, 2l));
-
-        base.takeDamage(damage);
-    }
-
-    // Start is called before the first frame update
     public override void Awake() {
         base.Awake();
-    }
-
-    [PunRPC]
-    private void playDestructionEffect() {
-        AudioSource[] sources = this.transform.Find("DestroySounds").GetComponents<AudioSource>();
-        AudioSource source = sources[UnityEngine.Random.Range(0, sources.Length)];
-        AudioSource.PlayClipAtPoint(source.clip, this.transform.position);
-
-        GameObject explosion = Instantiate(Resources.Load("FX_Building_Destroyed_mid") as GameObject);
-        explosion.transform.position = this.transform.position;
-        ParticleSystem effect = explosion.GetComponent<ParticleSystem>();
-        effect.Play();
-        Destroy(effect.gameObject, effect.duration);
     }
 }

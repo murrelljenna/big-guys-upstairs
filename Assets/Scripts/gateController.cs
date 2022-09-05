@@ -14,8 +14,10 @@ public class gateController : MonoBehaviour
 	private Animator animator;
 	private NavMeshObstacle obstacle;
 	public bool locked;
+	private AudioSource[] sources = new AudioSource[2];
 
 	private void Start() {
+		sources = this.GetComponents<AudioSource>();
 		animator = this.transform.parent.Find("Model").GetComponent<Animator>();
 		obstacle = this.transform.parent.gameObject.GetComponent<NavMeshObstacle>();
 		obstacle.enabled = false;
@@ -26,6 +28,7 @@ public class gateController : MonoBehaviour
 			noOfUnitsNearby--;
 
 			if (!locked && noOfUnitsNearby == 0) {
+		        AudioSource.PlayClipAtPoint(sources[1].clip, this.transform.position);
 				animator.SetTrigger("close");
 			}
 		} else if (other.gameObject.tag == "unit" && this.transform.parent.gameObject.GetComponent<ownership>().owner != other.gameObject.gameObject.GetComponent<ownership>().owner) {
@@ -46,13 +49,14 @@ public class gateController : MonoBehaviour
 			noOfUnitsNearby++;
 
 			if (!locked && noOfUnitsNearby == 1) {
+				AudioSource.PlayClipAtPoint(sources[0].clip, this.transform.position);
 				animator.SetTrigger("open");
 			}
 		} else if (other.gameObject.tag == "unit" && this.transform.parent.gameObject.GetComponent<ownership>().owner != other.gameObject.gameObject.GetComponent<ownership>().owner) {
 			noOfEnemiesNearby++;
 		}
 
-		if (!locked) {
+		if (!locked && animator != null) {
 			if (noOfUnitsNearby == 0 && noOfEnemiesNearby > 0) {
 				obstacle.enabled = true;
 			} else {

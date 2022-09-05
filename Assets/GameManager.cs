@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 	List<Color> colours = new List<Color>() { Color.black, Color.blue, Color.white, Color.green, Color.magenta, Color.red, Color.yellow };
 	List<string> colourStrings = new List<string>() { "black", "blue", "white", "green", "pink", "red", "yellow" };
 
-	bool[] spawnsAvail = new bool[4];
 	bool[] coloursAvail = new bool[7];
 
 	[SerializeField]
@@ -50,7 +49,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 		    if (PhotonNetwork.IsMasterClient) {
 		    	ExitGames.Client.Photon.Hashtable roomProperties = new ExitGames.Client.Photon.Hashtable();
-		    	roomProperties.Add("spawnsAvail", spawnsAvail);
 		    	roomProperties.Add("coloursAvail", coloursAvail);
 		    	PhotonNetwork.CurrentRoom.SetCustomProperties(roomProperties);
 

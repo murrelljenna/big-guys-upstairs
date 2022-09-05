@@ -11,7 +11,7 @@ public class ResourceTile : Attackable
 	int yield = 4;
 	public string resType;
     // Start is called before the first frame update
-    public virtual void Start()
+    public override void Start()
     {
         this.woodCost = 20;
         this.hp = 75;

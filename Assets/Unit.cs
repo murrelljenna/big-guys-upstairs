@@ -9,8 +9,6 @@ using Photon.Realtime;
 
 public class Unit : Attackable
 {
-    private Camera playerCamera;
-
 	public int atk; // Damage inflicted per second
 	public float rng = 0.02f; // x/z Range of attack
 	public bool isAttacking = false;
@@ -18,9 +16,6 @@ public class Unit : Attackable
 	public bool selectable = false;
 
     public bool updateTargetLive = false;
-
-    private GameObject canvas;
-    private SimpleHealthBar healthBar;
 
 	PhotonView photonView;
 	Attackable attackee = null;
@@ -31,10 +26,7 @@ public class Unit : Attackable
     	photonView = PhotonView.Get(this);
     	InvokeRepeating("checkEnemiesInRange", 2.0f, 2.0f);
 
-        canvas = this.gameObject.transform.Find("Canvas").gameObject;
-        healthBar = canvas.transform.Find("Simple Bar").transform.Find("Status Fill 01").GetComponent<SimpleHealthBar>();
-
-        playerCamera = GameObject.Find("FirstPersonCharacter").GetComponent<Camera>(); 
+        base.OnEnable();
     }
 
     // Update is called once per frame
@@ -42,12 +34,6 @@ public class Unit : Attackable
     {
         if (!isAttacking || attackee == null || attackee.hp <= 0) {
         	cancelOrders();
-        }
-
-        canvas.transform.LookAt(transform.position + playerCamera.transform.rotation * Vector3.forward, playerCamera.transform.rotation * Vector3.up);   
-
-        if (this.hp != this.lastHP) {
-            healthBar.UpdateBar(this.hp, this.maxHP);
         }
 
         // If unit is currently attacking another unit (attackable that can move), update that target's position every frame.

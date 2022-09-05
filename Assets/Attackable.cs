@@ -7,11 +7,16 @@ using Photon.Realtime;
 
 public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
 {
+	private Camera playerCamera;
+
 	public int woodCost = 0;
 	public int foodCost = 0;
 
 	public int maxHP;
 	public int lastHP;
+
+	private GameObject canvas;
+    private SimpleHealthBar healthBar;
 
 	public int hp;
 	public int id;
@@ -22,7 +27,18 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     // Start is called before the first frame update
     public virtual void Start()
     {
+    	if (this.gameObject.tag == "buildingGhost") {
+    		this.enabled = false;
+    	}
     	this.maxHP = hp;
+    }
+
+    public virtual void OnEnable() {
+    	Debug.Log(this.gameObject.name);
+    	canvas = this.gameObject.transform.Find("Canvas").gameObject;
+        healthBar = canvas.transform.Find("Simple Bar").transform.Find("Status Fill 01").GetComponent<SimpleHealthBar>();
+
+      	canvas.SetActive(false);
     }
 
     public virtual void Awake() {
@@ -34,6 +50,20 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     // Update is called once per frame
     public virtual void Update()
     {
+    	if (playerCamera != null) {
+        	canvas.transform.LookAt(transform.position + playerCamera.transform.rotation * Vector3.forward, playerCamera.transform.rotation * Vector3.up);   
+    	} else {
+    		playerCamera = GameObject.Find("FirstPersonCharacter").GetComponent<Camera>(); 
+    	}
+
+    	if (this.hp != this.maxHP) {
+    		canvas.SetActive(true);
+    	}
+
+        if (this.hp != this.lastHP) {
+            healthBar.UpdateBar(this.hp, this.maxHP);
+        }
+
         if (hp <= 0) {
             destroyObject();
         }

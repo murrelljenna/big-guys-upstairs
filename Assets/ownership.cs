@@ -52,7 +52,6 @@ public class ownership : MonoBehaviourPunCallbacks, IPunObservable
         GameObject player = GameObject.Find(playerID.ToString());
         if (player != null) {
             this.playerColor = player.GetComponent<game.assets.Player>().playerColor;
-            Debug.Log("CAPTURE");
             this.gameObject.GetComponent<Renderer>().material.color = player.GetComponent<game.assets.Player>().playerColor;
             owned = true;
             this.owner = playerID;

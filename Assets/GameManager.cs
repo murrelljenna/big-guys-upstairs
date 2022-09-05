@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 				}
 
 				for (int i = 0; i < colours.Count; i++) {
+					Debug.Log(i);
 					possibleColours.Add(i);
 				}
 

@@ -43,3 +43,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fc208df8d4750041be15b9a4bbccdb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 8926577472993209686, guid: 2ba8d32fd1be0ed4ebf89e42cc509fa4,
+    type: 3}
+  cityPrefab: {fileID: 5207743826955958044, guid: d89b9a2bd7c0841419b1fad65827c5c9,
+    type: 3}
+  colours:
+  - {r: 0, g: 0, b: 0, a: 1}
+  - {r: 0, g: 0, b: 1, a: 1}
+  - {r: 0, g: 1, b: 1, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
+  - {r: 1, g: 0, b: 1, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  possibleColours: 

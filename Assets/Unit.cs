@@ -89,16 +89,16 @@ public class Unit : Attackable
     		Attackable thingToAttack = thingToAttackObj.GetComponent<Attackable>();
     	 	if (thingToAttack.hp > 0) {
                 attackee = thingToAttack;
+                Debug.Log(attackee);
                 if (thingToAttackObj.tag == "unit") {
                     updateTargetLive = true;
                 }
 
-                attackee = thingToAttack;
                 attackee.attackers.Add(this);
                 isAttacking = true;
 
-				move(attackee.gameObject.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
-
+				GetComponent<NavMeshAgent>().SetDestination(attackee.gameObject.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
+                Debug.Log(attackee);
 				yield return new WaitUntil (() => isInRange(thingToAttack));
 				this.gameObject.GetComponent<NavMeshAgent>().isStopped = true;
 
@@ -108,9 +108,12 @@ public class Unit : Attackable
     }
 
     public virtual void attack() {
+        if (animator != null) {
+            animator.SetTrigger("attack");
+        }
+
     	if (attackee != null && attackee.hp > 0) {
             this.faceTarget(attackee.transform);
-            animator.SetTrigger("attack");
     		attackee.takeDamage(atk);
     	} else {
     		cancelOrders();
@@ -142,6 +145,8 @@ public class Unit : Attackable
             float deltaX = this.gameObject.transform.position.x - closestPoint.x;
             float deltaZ = this.gameObject.transform.position.z - closestPoint.z; 
             float distance = Mathf.Sqrt(deltaX * deltaX + deltaZ * deltaZ);
+            Debug.Log(distance);
+            Debug.Log(distance < this.rng);
 
             return (distance < this.rng);
     	}
@@ -204,9 +209,11 @@ public class Unit : Attackable
     }
 
     private void faceTarget(Transform target) {
-        Vector3 direction = (target.position - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
-        this.transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * this.GetComponent<UnityEngine.AI.NavMeshAgent>().angularSpeed);
+        if (this.GetComponent<UnityEngine.AI.NavMeshAgent>() != null) {
+            Vector3 direction = (target.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            this.transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * this.GetComponent<UnityEngine.AI.NavMeshAgent>().angularSpeed);
+        }
     }
 
     public void onSelect() {

@@ -54,9 +54,11 @@ public class ownership : MonoBehaviourPunCallbacks, IPunObservable
 
     private IEnumerator waitForPlayerColour(GameObject player) {
         yield return new WaitUntil(() => {
+            Debug.Log(playerColor);
             return (getPlayer().hasColor != false);
         });
             this.playerColor = player.GetComponent<game.assets.Player>().playerColor;
+
             this.gameObject.GetComponent<Renderer>().material.color = player.GetComponent<game.assets.Player>().playerColor;
 
             this.gameObject.GetComponent<Attackable>().onCapture(); // Callback function that is overriden by various classes to respond to capture.

@@ -130,35 +130,21 @@ public class selection : MonoBehaviour
 						}
 					});
 				} else if (terrainMask == (terrainMask | (1 << hit.collider.gameObject.layer))) {
+					int i = 0;
+					List<Vector3> grid = createGrid(hit.point, selected.Count, 0.2f, 0.2f);
 					selected.ForEach(unit => {
 						if (unit != null) {
 							unit.gameObject.GetComponent<Unit>().cancelOrders();
 
-							destination = new Vector3(
-								UnityEngine.Random.Range(
-									hit.point.x - (0.1f * selected.Count/2), 
-									hit.point.x + (0.1f * selected.Count/2)
-								), 
-								0, 
-								UnityEngine.Random.Range(
-									hit.point.z - (0.1f * selected.Count/2), 
-									hit.point.z + (0.1f * selected.Count/2)
-								)
-							);
+							destination = grid[i];
+							Debug.Log(destination);
 
 							if (unit.gameObject.GetComponent<NavMeshAgent>() != null) {
 								unit.gameObject.GetComponent<Unit>().move(destination);
 							}
 
-							/* Alternate between offsetting x and y so that all units aren't trying to navigate to same location */
-
-							if (alt = true) {
-								destination.x += 0.2f;
-							} else {
-								destination.z += 0.2f;
-							}
+							i++;
 					    }
-						alt = !alt;
 					});
 				}	
 			}
@@ -182,6 +168,37 @@ public class selection : MonoBehaviour
 			unit.GetComponent<Collider>().gameObject.GetComponent<LineRenderer>().enabled = false;
 		}
     }
+
+														// 0.3
+    public List<Vector3> createGrid(Vector3 center, float noOfUnits, float unitSize, float gapSize) {
+    	float offset = unitSize + gapSize;
+    			    	//GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+		    	//cube.transform.position = new Vector3(center.x, 0, center.z);
+    	float x; // Set beginning point of grid traversal.
+    	float z = center.z - (noOfUnits * (unitSize + gapSize)) / 8;
+
+    	List<Vector3> grid = new List<Vector3>();
+
+    	for (int i = 0; i < Mathf.RoundToInt(Mathf.Ceil(Mathf.Sqrt(noOfUnits))); i++) {
+    		x = center.x - (noOfUnits/8 * (unitSize + gapSize));
+
+    		for (int j = 0; j < Mathf.RoundToInt(Mathf.Ceil(Mathf.Sqrt(noOfUnits))); j++) {
+    			float y = getTerrainHeight(new Vector3(x, 0, z));
+    			grid.Add(new Vector3(x, y, z));
+
+    			x += offset;
+    		}
+    		z += offset;
+    	}
+
+    	return grid;
+    }
+
+   	float getTerrainHeight(Vector3 point) {
+   		RaycastHit hit;
+   		Physics.Raycast(new Vector3(point.x, 300, point.z), Vector3.down, out hit, Mathf.Infinity, terrainMask);
+   		return hit.point.y;
+   	}
 
     void clearSelection() {
     	selected.ForEach(unit => {

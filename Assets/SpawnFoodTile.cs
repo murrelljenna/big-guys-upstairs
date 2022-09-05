@@ -11,5 +11,6 @@ public class SpawnFoodTile : SpawnTile
     	if (PhotonNetwork.IsMasterClient) {
         	PhotonNetwork.InstantiateSceneObject("Resource_Food", this.transform.position, Quaternion.identity, 0);
         }
+        Destroy(this.gameObject);
     }
 }

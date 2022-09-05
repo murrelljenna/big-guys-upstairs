@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,14 +16,12 @@ public class Militia : Unit
         this.atk = 1;
         this.hp = 5;
         this.lastHP = this.hp;
-        this.rng = 0.12f;
+        this.rng = 0.3f;
 
         base.Start();
     }
 
     void Update() {
-        animator.SetFloat("speed", this.GetComponent<UnityEngine.AI.NavMeshAgent>().velocity.magnitude);
-
         base.Update();
     }
 }

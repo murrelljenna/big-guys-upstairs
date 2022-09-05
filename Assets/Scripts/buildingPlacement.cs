@@ -120,7 +120,7 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
                                         int mapLayer = ~(1 <<11);
                                         if (wallet.canAfford(wood * (int)noWalls, food * (int)noWalls)) {
                                             RaycastHit info;
-                                            if (!Physics.Linecast(firstPoint, lastPoint, out info, mapLayer) || info.collider.gameObject.name == "wall" || info.collider.gameObject.GetComponent<Attackable>().prefabName == "Wall_Corner") {
+                                            if (firstPoint.y == lastPoint.y && !Physics.Linecast(firstPoint, lastPoint, out info, mapLayer) || info.collider.gameObject.name == "wall" || info.collider.gameObject.GetComponent<Attackable>().prefabName == "Wall_Corner") {
                                                 wallet.makeTransaction(wood * (int)noWalls, food * (int)noWalls);
                                                 StartCoroutine(placeWalls(noWalls, firstPointSnapped, lastPointSnapped));
 

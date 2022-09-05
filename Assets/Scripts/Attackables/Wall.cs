@@ -13,7 +13,7 @@ public class Wall : Building, IPunObservable
         }
         
         this.hp = 200;
-        this.woodCost = 2;
+        this.woodCost = 3;
         this.foodCost = 0;
 
         Transform infoTransform = this.gameObject.transform.Find("Info");

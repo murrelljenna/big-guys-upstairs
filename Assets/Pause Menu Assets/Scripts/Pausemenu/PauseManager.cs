@@ -54,9 +54,9 @@ namespace GreatArcStudios
         /// </summary>
         public Animator vidPanelAnimator;
         /// <summary>
-        /// Quit Panel animator  
+        /// Quit Panel
         /// </summary>
-        public Animator quitPanelAnimator;
+        public GameObject quitPanel;
         /// <summary>
         /// Pause menu text 
         /// </summary>
@@ -372,7 +372,6 @@ namespace GreatArcStudios
         /// </summary>
         public void Resume()
         {
-            print("FUCK YOU");
             this.mainCam.gameObject.SetActive(false);
             this.playerCam.gameObject.SetActive(true);
             firstPersonController.mouseLookEnabled = true;
@@ -400,16 +399,7 @@ namespace GreatArcStudios
                  return;
              } */
         }
-        /// <summary>
-        /// All the methods relating to qutting should be called here.
-        /// </summary>
-        public void quitOptions()
-        {
-            vidPanel.SetActive(false);
-            audioPanel.SetActive(false);
-            quitPanelAnimator.enabled = true;
 
-        }
         /// <summary>
         /// Method to quit the game. Call methods such as auto saving before qutting here.
         /// </summary>

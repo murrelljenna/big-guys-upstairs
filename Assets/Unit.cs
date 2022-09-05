@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -77,9 +77,17 @@ public class Unit : Attackable
     }
 
     bool isInRange(Attackable thingToAttack) {
-    	return (this.gameObject.transform.position.x - thingToAttack.gameObject.transform.position.x < (rng)
-			&& this.gameObject.transform.position.x - thingToAttack.gameObject.transform.position.x > (rng * -1f)
-			|| this.gameObject.transform.position.z - thingToAttack.gameObject.transform.position.z > (rng * -1f)
-			&& this.gameObject.transform.position.z - thingToAttack.gameObject.transform.position.z < (rng));
+    	if (this.gameObject != null) {
+	    	return (this.gameObject.transform.position.x - thingToAttack.gameObject.transform.position.x < (rng)
+				&& this.gameObject.transform.position.x - thingToAttack.gameObject.transform.position.x > (rng * -1f)
+				|| this.gameObject.transform.position.z - thingToAttack.gameObject.transform.position.z > (rng * -1f)
+				&& this.gameObject.transform.position.z - thingToAttack.gameObject.transform.position.z < (rng));
+    	} else {
+    		return false;
+    	}
+    }
+
+    void exitBuilding() {
+    	
     }
 }

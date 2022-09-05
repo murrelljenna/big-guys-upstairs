@@ -10,6 +10,8 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
 	public int hp;
 	public int id;
 	public List<Unit> attackers;
+	public PhotonView photonView;
+
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +20,8 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     public virtual void Awake() {
-        this.id = this.gameObject.GetComponent<PhotonView>().ViewID;
+    	this.photonView = this.gameObject.GetComponent<PhotonView>();
+        this.id = this.photonView.ViewID;
         this.gameObject.name = id.ToString();
     }
 
@@ -35,7 +38,9 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     public virtual void destroyObject() {
-        PhotonNetwork.Destroy(this.gameObject);
+    	if (this.photonView.IsMine) {
+        	PhotonNetwork.Destroy(this.gameObject);
+        }
     }
  
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

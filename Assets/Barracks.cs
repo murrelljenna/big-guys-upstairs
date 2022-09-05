@@ -96,19 +96,23 @@ public class Barracks : Building, IPunObservable
             midAnimation = true;
             Invoke("releaseButton1", 0.2f);
 
-            if (player.canAfford(wood, food)) {
-                player.makeTransaction(wood, food);
+            if (!player.maxedUnits()) {
+                if (player.canAfford(wood, food)) {
+                    player.makeTransaction(wood, food);
 
-                /* Instantiate new militia outside city */
+                    /* Instantiate new militia outside city */
 
-                Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
-                Vector3 spawnLocation = new Vector3(randomInCircle.x+buildingViewed.transform.position.x, 0, randomInCircle.y+buildingViewed.transform.position.z);
+                    Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
+                    Vector3 spawnLocation = new Vector3(randomInCircle.x+buildingViewed.transform.position.x, 0, randomInCircle.y+buildingViewed.transform.position.z);
 
-                GameObject militia = PhotonNetwork.Instantiate("Light Infantry", spawnLocation, Quaternion.identity, 0);
+                    GameObject militia = PhotonNetwork.Instantiate("Light Infantry", spawnLocation, Quaternion.identity, 0);
 
-                militia.GetComponent<ownership>().capture(player);
+                    militia.GetComponent<ownership>().capture(player);
+                } else {
+                    tooltips.flashLackResources();
+                }
             } else {
-                tooltips.flashLackResources();
+
             }
         } else if (Input.GetKeyDown(KeyCode.R)) {
             int wood = 5; // Please replace with real values soon.
@@ -120,19 +124,23 @@ public class Barracks : Building, IPunObservable
             midAnimation = true;
             Invoke("releaseButton2", 0.2f);
 
-            if (player.canAfford(wood, food)) {
-                player.makeTransaction(wood, food);
+            if (!player.maxedUnits()) {
+                if (player.canAfford(wood, food)) {
+                    player.makeTransaction(wood, food);
 
-                /* Instantiate new militia outside city */
+                    /* Instantiate new militia outside city */
 
-                Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
-                Vector3 spawnLocation = new Vector3(randomInCircle.x+buildingViewed.transform.position.x, 0, randomInCircle.y+buildingViewed.transform.position.z);
+                    Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
+                    Vector3 spawnLocation = new Vector3(randomInCircle.x+buildingViewed.transform.position.x, 0, randomInCircle.y+buildingViewed.transform.position.z);
 
-                GameObject militia = PhotonNetwork.Instantiate("Archer", spawnLocation, Quaternion.identity, 0);
+                    GameObject militia = PhotonNetwork.Instantiate("Archer", spawnLocation, Quaternion.identity, 0);
 
-                militia.GetComponent<ownership>().capture(player);
+                    militia.GetComponent<ownership>().capture(player);
+                } else {
+                    tooltips.flashLackResources();
+                }
             } else {
-                tooltips.flashLackResources();
+                
             }
 
             up2.SetActive(false);

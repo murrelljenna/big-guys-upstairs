@@ -23,30 +23,6 @@ public class showMenu : MonoBehaviourPun
     void Awake()
     {
         BuildingMenu = GameObject.Find("BuildingMenu");
-        up1 = GameObject.Find("1_Normal");
-        down1 = GameObject.Find("1_Pressed");
-        up2 = GameObject.Find("2_Normal");
-        down2 = GameObject.Find("2_Pressed");
-        up3 = GameObject.Find("3_Normal");
-        down3 = GameObject.Find("3_Pressed");
-        up4 = GameObject.Find("4_Normal");
-        down4 = GameObject.Find("4_Pressed");
-
-        if (down1 != null) {
-            down1.SetActive(false);
-        }
-
-        if (down2 != null) {
-            down2.SetActive(false);
-        }
-
-        if (down3 != null) {
-            down3.SetActive(false);
-        }
-
-        if (down3 != null) {
-            down4.SetActive(false);
-        }
     }
 
     void OnDisable()
@@ -69,54 +45,21 @@ public class showMenu : MonoBehaviourPun
         }
 
 		if (Input.GetKeyDown("1")) {
-            up1.SetActive(false);
-            down1.SetActive(true);
-            Invoke("releaseButton1", 0.2f);
-
-			GetComponent<buildingPlacement>().setBuilding(options[0]); // Town
+			GetComponent<buildingPlacement>().setBuilding(options[0]);
 		}
         if (Input.GetKeyDown("2")) {
-            up2.SetActive(false);
-            down2.SetActive(true);
-            Invoke("releaseButton2", 0.2f);
-
-            GetComponent<buildingPlacement>().setBuilding(options[1]); // Guard tower
+            GetComponent<buildingPlacement>().setBuilding(options[1]);
         }
 
         if (Input.GetKeyDown("3")) {
-            up3.SetActive(false);
-            down3.SetActive(true);
-            Invoke("releaseButton3", 0.2f);
-
-            GetComponent<buildingPlacement>().setBuilding(options[2]); // Barracks
+            GetComponent<buildingPlacement>().setBuilding(options[2]);
         }
 
         if (Input.GetKeyDown("4")) {
-            up4.SetActive(false);
-            down4.SetActive(true);
-            Invoke("releaseButton4", 0.2f);
-
-            GetComponent<buildingPlacement>().setBuilding(options[3]); // Wall
+            GetComponent<buildingPlacement>().setBuilding(options[3]);
         }
-    }
-
-    void releaseButton1() {
-        up1.SetActive(true);
-        down1.SetActive(false);
-    }
-
-    void releaseButton2() {
-        up2.SetActive(true);
-        down2.SetActive(false);
-    }
-
-    void releaseButton3() {
-        up3.SetActive(true);
-        down3.SetActive(false);
-    }
-
-    void releaseButton4() {
-        up4.SetActive(true);
-        down4.SetActive(false);
+        if (Input.GetKeyDown("5")) {
+            GetComponent<buildingPlacement>().setBuilding(options[4]);
+        }
     }
 }

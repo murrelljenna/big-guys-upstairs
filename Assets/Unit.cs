@@ -31,7 +31,7 @@ public class Unit : Attackable
 
     public override void OnEnable() {
         if (this.photonView.IsMine) {
-    	   InvokeRepeating("checkEnemiesInRange", 0.5f, 0.5f);
+            InvokeRepeating("checkEnemiesInRange", 0.5f, 0.5f);
         }
 
         PhotonNetwork.AddCallbackTarget(this);
@@ -63,6 +63,8 @@ public class Unit : Attackable
         Renderer[] renderers = GetComponentsInChildren<Renderer>();
         string colorName = GetComponent<ownership>().getPlayer().colorName;
 
+        this.owner.getPlayer().addUnit();
+
         for (int i = 0; i < renderers.Length; i++) {
             renderers[i].material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Units_" + colorName) as Texture));
         }
@@ -71,6 +73,10 @@ public class Unit : Attackable
     public override void destroyObject() {
         int playerID = this.gameObject.GetComponent<ownership>().owner;
         GameObject player = GameObject.Find(playerID.ToString());
+
+        if (this.photonView.IsMine) {
+            this.owner.getPlayer().addUnit(-1);
+        }
 
         AudioSource[] sources = this.gameObject.transform.Find("DestroySounds").GetComponents<AudioSource>();
         sources[UnityEngine.Random.Range(0, sources.Length)].Play((ulong)UnityEngine.Random.Range(0l, 2l));

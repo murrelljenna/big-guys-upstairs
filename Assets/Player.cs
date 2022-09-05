@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.UI;
 
 using UnityStandardAssets.Characters.FirstPerson;
 
@@ -23,6 +24,9 @@ namespace game.assets {
     	public int woodIt;
     	public int foodIt;
         public int goldIt;
+
+        private int maxUnits = 10;
+        private int noUnits;
 
         public string playerName;
         public int playerID;
@@ -52,10 +56,10 @@ namespace game.assets {
             cityCount = 0;
 
             wood = 150;
-            food = 75;
+            food = 150;
 
             woodIt = 2;
-            foodIt = 2;
+            foodIt = 2; 
         }
 
         void Awake() {
@@ -111,6 +115,20 @@ namespace game.assets {
             } else {
                 playerCamera = getLocalCamera();
             }
+        }
+
+        public void addUnit(int count = 1) {
+            noUnits+=count;
+            GameObject.Find("Pop_Count").GetComponent<Text>().text = noUnits.ToString();
+        }
+
+        public void addUnitMax(int count = 1) {
+            maxUnits+=count;
+            GameObject.Find("Pop_Max").GetComponent<Text>().text = maxUnits.ToString();
+        }
+
+        public bool maxedUnits() {
+            return (noUnits >= maxUnits);
         }
 
         public override void OnPlayerPropertiesUpdate (Photon.Realtime.Player target, ExitGames.Client.Photon.Hashtable changedProps) {

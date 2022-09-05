@@ -19,8 +19,8 @@ public class Town : Building, IPunObservable
         prefabName = "Town";
 
         this.hp = 600;
-        this.woodCost = 75;
-        this.foodCost = 25;
+        this.woodCost = 50;
+        this.foodCost = 50;
 
         Transform infoTransform = this.gameObject.transform.Find("Info");
         if (infoTransform != null) {

@@ -1755,6 +1755,7 @@ GameObject:
   - component: {fileID: 1377065418929474924}
   - component: {fileID: 837582598961436166}
   - component: {fileID: 7628340949226554760}
+  - component: {fileID: 5309995014210661335}
   m_Layer: 12
   m_Name: Light Infantry
   m_TagString: unit
@@ -1999,9 +2000,27 @@ MonoBehaviour:
   inFight: 0
   isSelected: 0
   selectable: 0
+  dead: 0
+  frameCount: 0
   updateTargetLive: 0
   attackee: {fileID: 0}
   attackeeId: 0
+--- !u!54 &5309995014210661335
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5832551701869188082}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &7575969026476623865
 GameObject:
   m_ObjectHideFlags: 0

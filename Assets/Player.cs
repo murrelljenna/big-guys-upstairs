@@ -25,7 +25,7 @@ namespace game.assets {
     	public int foodIt;
         public int goldIt;
 
-        private int maxUnits = 10;
+        private int maxUnits = 100;
         private int noUnits;
 
         public string playerName;
@@ -55,8 +55,8 @@ namespace game.assets {
         {
             cityCount = 0;
 
-            wood = 150;
-            food = 150;
+            wood = 250;
+            food = 450;
 
             woodIt = 2;
             foodIt = 2; 

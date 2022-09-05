@@ -7,22 +7,22 @@ public class UnitRadius : MonoBehaviour
     [Range(0,50)]
     public int segments = 50;
     [Range(0,10)]
-    public float xradius;
+    public float xradius = 0.2f;
     [Range(0,10)]
-    public float yradius;
+    public float yradius = 0.2f;
     LineRenderer line;
 
-    void Start ()
-    {
-        line = gameObject.GetComponent<LineRenderer>();
+    void OnEnable() {
+        //xradius = (float)this.gameObject.GetComponent<Unit>().rng;
+        //yradius = (float)this.gameObject.GetComponent<Unit>().rng;
+
+        line = this.gameObject.GetComponent<LineRenderer>();
 
         line.SetVertexCount (segments + 1);
         line.useWorldSpace = false;
-    }
 
-    void OnEnable() {
-        xradius = this.gameObject.GetComponent<Unit>().rng;
-        yradius = this.gameObject.GetComponent<Unit>().rng;
+        line.enabled = false;
+
         CreatePoints ();
     }
 

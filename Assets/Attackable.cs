@@ -29,6 +29,7 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     public virtual void Update()
     {
         if (hp <= 0) {
+        	Debug.Log("Object about to be destroyed");
             destroyObject();
         }
     }
@@ -38,6 +39,7 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     public virtual void destroyObject() {
+    	CancelInvoke();
     	if (this.photonView.IsMine) {
         	PhotonNetwork.Destroy(this.gameObject);
         }

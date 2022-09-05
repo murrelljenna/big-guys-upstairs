@@ -53,6 +53,7 @@ GameObject:
   - component: {fileID: 1180411657386335202}
   - component: {fileID: 6153870657924316092}
   - component: {fileID: 5661745931424938030}
+  - component: {fileID: 6134892723507570035}
   m_Layer: 9
   m_Name: Resource_Wood
   m_TagString: wood
@@ -68,7 +69,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4035809825335574730}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -23.649076, y: 3.4469268, z: 17.05019}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
   m_Children:
   - {fileID: 4035809824873554775}
@@ -142,6 +143,22 @@ MonoBehaviour:
   attackers: []
   photonView: {fileID: 0}
   resType: 
+--- !u!208 &6134892723507570035
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4035809825335574730}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 25.527575, y: 11.55765, z: 17.6444}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.4970551, y: 5.775317, z: 2.853072}
+  m_TimeToStationary: 0.5
 --- !u!1001 &4035809824106225770
 PrefabInstance:
   m_ObjectHideFlags: 0

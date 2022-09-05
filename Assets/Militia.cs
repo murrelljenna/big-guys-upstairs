@@ -11,10 +11,4 @@ public class Militia : Unit
         this.hp = 5;
         this.rng = 0.02f;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

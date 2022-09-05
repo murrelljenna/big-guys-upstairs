@@ -25,7 +25,7 @@ namespace game.assets {
     	public int foodIt;
         public int goldIt;
 
-        private int maxUnits = 100;
+        private int maxUnits = 10;
         private int noUnits;
 
         public string playerName;
@@ -47,7 +47,8 @@ namespace game.assets {
         private GameObject loseNotice = null;
         private GameObject winNotice = null;
 
-        List<Color> colours = new List<Color>() { Color.blue, Color.red, Color.green, Color.yellow, Color.magenta, Color.white, Color.black, };
+        List<string> htmlStrings = new List<string>() {"#95B2FF", "#FF89B8", "#89FFA0", "#FCFF89", "#FF80EB", "#FFFFFF", "#9F9F9F"};
+        List<Color> colors = new List<Color>() { Color.blue, Color.red, Color.green, Color.yellow, Color.magenta, Color.white, Color.black, };
         List<string> colourStrings = new List<string>() { "blue", "red", "green", "yellow", "pink", "white", "black" };
 
         // Start is called before the first frame update
@@ -55,8 +56,8 @@ namespace game.assets {
         {
             cityCount = 0;
 
-            wood = 250;
-            food = 450;
+            wood = 150;
+            food = 100;
 
             woodIt = 2;
             foodIt = 2; 
@@ -67,6 +68,7 @@ namespace game.assets {
                 playerName = PhotonNetwork.LocalPlayer.NickName;
             } else {
                 transform.Find("FPSController").Find("FirstPersonCharacter").Find("Tools").gameObject.SetActive(false);
+                this.transform.Find("Pause Menu").gameObject.SetActive(false);
             }
 
             /* photonView.ViewId is player object's game ID and identifies resources and building ownership */
@@ -222,9 +224,12 @@ namespace game.assets {
 
         [PunRPC]
         public void setColour(int colourIndex) {
-            playerColor = colours[colourIndex];
+            string cloudColorHtml = htmlStrings[colourIndex];
+            Color cloudColor;
+            ColorUtility.TryParseHtmlString(cloudColorHtml, out cloudColor);
+            playerColor = colors[colourIndex];
             colorName = colourStrings[colourIndex];
-            this.gameObject.transform.Find("FPSController").transform.Find("Capsule").GetComponent<Renderer>().material.color = playerColor;
+            this.gameObject.transform.Find("FPSController").transform.Find("Capsule").GetComponent<Renderer>().material.color = cloudColor;
             this.hasColor = true;
         }
 

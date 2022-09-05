@@ -152,6 +152,31 @@ public class GuardTower : Unit
         }  
     }
 
+    public override void checkEnemiesInRange(float range) {
+        if (!isAttacking) {
+            Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.GetComponent<Collider>().bounds.center, range);
+
+            if (hitColliders.Length != lastNoEnemies) {
+                for (int i = 0; i < hitColliders.Length; i++) {
+                    if (hitColliders[i] != null) {
+                        if (hitColliders[i].GetComponent<ownership>() != null &&
+                            hitColliders[i].GetComponent<ownership>().owned == true && 
+                            hitColliders[i].GetComponent<ownership>().owner != this.gameObject.GetComponent<ownership>().owner &&
+                            hitColliders[i].GetComponent<Attackable>().hp > 0) { 
+
+                            if (this.isInRange(hitColliders[i].GetComponent<Attackable>())) {
+                                callAttack(hitColliders[i].gameObject.GetComponent<Attackable>().id);
+                                break;
+                            }
+                        } 
+                    }
+                }
+
+                lastNoEnemies = hitColliders.Length;
+            }
+        }  
+    }
+
     [PunRPC]
     private void playDestructionEffect() {
         AudioSource[] sources = this.transform.Find("DestroySounds").GetComponents<AudioSource>();

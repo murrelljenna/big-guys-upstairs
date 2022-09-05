@@ -124,9 +124,9 @@ public class selection : MonoBehaviour
 
 			Vector3[] lineRenPositions = new Vector3[5];
 			lineRenPositions[0] = firstPoint;
-			lineRenPositions[1] = new Vector3(firstPoint.x, 0, lastPoint.z);
-			lineRenPositions[2] = lastPoint;
-			lineRenPositions[3] = new Vector3(lastPoint.x, 0, firstPoint.z);
+			lineRenPositions[1] = new Vector3(firstPoint.x, firstPoint.y, lastPoint.z);
+			lineRenPositions[2] = new Vector3(lastPoint.x, firstPoint.y, lastPoint.z);
+			lineRenPositions[3] = new Vector3(lastPoint.x, firstPoint.y, firstPoint.z);
 			lineRenPositions[4] = firstPoint;
 
 			lineRen.SetPositions(lineRenPositions);
@@ -163,7 +163,6 @@ public class selection : MonoBehaviour
     		new Vector3(-branchSize, 0, -branchSize),
     		new Vector3(-branchSize, 0, 0),
     		new Vector3(-branchSize, 0, branchSize)
-
     	};
 
     	int runCount = 0;
@@ -179,7 +178,6 @@ public class selection : MonoBehaviour
 		    for (int i = 0; i < positionMods.Length; i++) {
 		    	Vector3 modifiedPosition = destination + positionMods[i];
 		    	float height = getTerrainHeight(modifiedPosition);
-		    	print(taken.Contains(modifiedPosition));
 		    	if (!taken.Contains(modifiedPosition) && System.Math.Abs(height) - System.Math.Abs(center.y) < 1 && System.Math.Abs(height) - System.Math.Abs(center.y) > -1) {
 		    		points.Enqueue(modifiedPosition);
 		    		taken.Enqueue(modifiedPosition);
@@ -187,7 +185,7 @@ public class selection : MonoBehaviour
 		    }
 
 		    runCount++;
-			if (runCount % 10 == 0) {
+			if (runCount % 2 == 0) {
 				yield return null;
 			}
 		}

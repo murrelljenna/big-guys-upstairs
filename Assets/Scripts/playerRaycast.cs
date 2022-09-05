@@ -13,6 +13,7 @@ public class playerRaycast : MonoBehaviour
     GameObject buildingViewed = null;
 	Camera cam;
     int resourceMask = 1 << 9;
+    int allBuildings = (1 << 10) | (1 << 14);
     int townMask = 1 << 10;
     int buildingMask = 1 << 14;
     game.assets.Player player;
@@ -48,11 +49,11 @@ public class playerRaycast : MonoBehaviour
                 if (t.gameObject.name == "Info") {
                     resourceViewed = t.gameObject;
                     resourceViewed.SetActive(true);
+                    
+                    if (!midAnimation && resourceViewed.transform.Find("1_Pressed") != null) {
+                        resourceViewed.transform.Find("1_Pressed").gameObject.SetActive(false);
+                    }
                 }
-            }
-
-            if (!midAnimation) {
-                resourceViewed.transform.Find("1_Pressed").gameObject.SetActive(false);
             }
 
             if (Input.GetKeyDown(KeyCode.E) && hit.collider.GetComponent<ownership>().owned == false) {
@@ -104,9 +105,15 @@ public class playerRaycast : MonoBehaviour
             buildingViewed = null;
         }
 
-        /* Interactions with barracks */
+        /* Towns and buildings can be recycled */
+/*
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, allBuildings)) {
+            if (hit.collider.gameObject.tag != "buildingGhost" && hit.collider.GetComponent<ownership>().owner == player.playerID) {
 
-                /* Interaction with towns */ 
+            }
+        }
+*/
+        /* Interaction with towns */ 
 
         ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, townMask)) {

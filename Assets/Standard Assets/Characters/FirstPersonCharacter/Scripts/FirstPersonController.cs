@@ -18,7 +18,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private float m_JumpSpeed;
         [SerializeField] private float m_StickToGroundForce;
         [SerializeField] private float m_GravityMultiplier;
-        [SerializeField] private MouseLook m_MouseLook;
+        [SerializeField] public MouseLook m_MouseLook;
         [SerializeField] private bool m_UseFovKick;
         [SerializeField] private FOVKick m_FovKick = new FOVKick();
         [SerializeField] private bool m_UseHeadBob;
@@ -29,6 +29,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
 
+        public bool mouseLookEnabled = true;
         private Camera m_Camera;
         private bool m_Jump;
         private float m_YRotation;
@@ -242,12 +243,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
         }
 
-
-        private void RotateView()
-        {
-            m_MouseLook.LookRotation (transform, m_Camera.transform);
-        }
-
+         private void RotateView ()
+         {
+            if (this.mouseLookEnabled) {
+                m_MouseLook.LookRotation (transform, m_Camera.transform);
+            }
+         }
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
         {

@@ -35,9 +35,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 	GameObject spawnManagerObj;
 
     // Start is called before the first frame update
-    public override void OnLeftRoom() {
-    	spawnManager.cleanupSpawns();
-        SceneManager.LoadScene(0);
+    public override void OnConnectedToMaster() {
+        PhotonNetwork.LoadLevel("Launcher");
     }
 
     void Start() {
@@ -83,9 +82,12 @@ public class GameManager : MonoBehaviourPunCallbacks
 	    }
 	}
 
+	void OnConnectionFail(DisconnectCause cause) {
+		print("FAILED");
+	}
+
     public void LeaveRoom()
     {
-    	print(spawnManager != null);
     	spawnManager.cleanupSpawns();
         PhotonNetwork.LeaveRoom();
     }

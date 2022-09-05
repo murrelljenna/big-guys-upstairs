@@ -21,9 +21,28 @@ public class Town : Attackable, IPunObservable
         this.woodCost = 75;
         this.foodCost = 25;
 
+        Transform infoTransform = this.gameObject.transform.Find("Info");
+        if (infoTransform != null) {
+            if (infoTransform.gameObject != null) {
+                info = infoTransform.gameObject;
+                info.SetActive(false);
+            }
+        }
+
         InvokeRepeating("checkEnemiesInRadius", 2f, 2f);
 
         base.Start();
+    }
+
+    public override void Update()
+    {
+        if (playerCamera != null && info.active == true) {
+            info.transform.LookAt(playerCamera.transform);   
+        } else {
+            playerCamera = GameObject.Find("FirstPersonCharacter").GetComponent<Camera>(); 
+        }
+
+        base.Update();
     }
 
     private void checkEnemiesInRadius() {

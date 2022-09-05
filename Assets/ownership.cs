@@ -27,11 +27,11 @@ public class ownership : MonoBehaviourPunCallbacks, IPunObservable
     public void capture(game.assets.Player player) {
         this.playerColor = player.playerColor;
         PhotonView photonView = this.gameObject.GetComponent<PhotonView>();
-        photonView.RPC("captureRPC", RpcTarget.All, player.playerID);
+        photonView.RPC("captureRPC", RpcTarget.AllBuffered, player.playerID);
     }
 
     public void deCapture() {
-        this.gameObject.GetComponent<PhotonView>().RPC("deCaptureRPC", RpcTarget.All);
+        this.gameObject.GetComponent<PhotonView>().RPC("deCaptureRPC", RpcTarget.AllBuffered);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
@@ -48,15 +48,24 @@ public class ownership : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
+    private IEnumerator waitForPlayerColour(GameObject player) {
+        yield return new WaitUntil(() => {
+            Debug.Log(GameObject.Find(this.owner.ToString()).name);
+            return (GameObject.Find(this.owner.ToString()).GetComponent<game.assets.Player>().hasColor != false);
+        });
+            this.playerColor = player.GetComponent<game.assets.Player>().playerColor;
+            this.gameObject.GetComponent<Renderer>().material.color = player.GetComponent<game.assets.Player>().playerColor;
+
+            this.gameObject.GetComponent<Attackable>().onCapture(); // Callback function that is overriden by various classes to respond to capture.
+    }
+
     [PunRPC] public void captureRPC(int playerID, PhotonMessageInfo info) {
         GameObject player = GameObject.Find(playerID.ToString());
         if (player != null) {
-            this.playerColor = player.GetComponent<game.assets.Player>().playerColor;
-            this.gameObject.GetComponent<Renderer>().material.color = player.GetComponent<game.assets.Player>().playerColor;
             owned = true;
             this.owner = playerID;
 
-            this.gameObject.GetComponent<Attackable>().onCapture(); // Callback function that is overriden by various classes to respond to capture.
+            StartCoroutine(waitForPlayerColour(player));
         }
     }
 

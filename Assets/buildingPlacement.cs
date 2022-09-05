@@ -59,6 +59,10 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
                                 GameObject placedBuilding = PhotonNetwork.Instantiate(currentBuilding.GetComponent<Attackable>().prefabName, hit.point, Quaternion.identity, 0);
                                 placedBuilding.GetComponent<ownership>().capture(wallet);
                                 Destroy(currentBuilding.gameObject);
+
+                                if (placedBuilding.GetComponent<LineRenderer>() != null) {
+                                    placedBuilding.GetComponent<LineRenderer>().enabled = false;
+                                }
                             }
                         }
 	    			} else {

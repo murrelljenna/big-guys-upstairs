@@ -7,10 +7,11 @@ using Photon.Realtime;
 
 public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
 {
+	protected GameObject info;
 	public bool canAttack = true;
 
 	public string prefabName;
-	private Camera playerCamera;
+	protected Camera playerCamera;
 
 	public int woodCost = 0;
 	public int foodCost = 0;
@@ -46,10 +47,13 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
         this.id = this.photonView.ViewID;
         this.gameObject.name = id.ToString();
 
-        canvas = this.gameObject.transform.Find("Canvas").gameObject;
-        healthBar = canvas.transform.Find("Simple Bar").transform.Find("Status Fill 01").GetComponent<SimpleHealthBar>();
+        Transform canvasTransform = this.gameObject.transform.Find("Canvas");
 
-      	canvas.SetActive(false);
+        if (canvasTransform != null) {
+        	canvas = this.gameObject.transform.Find("Canvas").gameObject;
+        	healthBar = canvas.transform.Find("Simple Bar").transform.Find("Status Fill 01").GetComponent<SimpleHealthBar>();
+        	canvas.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -84,6 +88,9 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
 
     public virtual void takeDamage(int damage) {
     	this.hp -= damage;
+
+        modifySpeed(0.5f); // Half speed while receiving damage
+        Invoke("doubleSpeed", 1f);
     }
 
     public virtual void destroyObject() {
@@ -101,5 +108,17 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
         {
             hp = (int)stream.ReceiveNext();
         }
+    }
+
+    private void modifySpeed(float modifier) {
+    	UnityEngine.AI.NavMeshAgent navMeshAgent = this.GetComponent<UnityEngine.AI.NavMeshAgent>();
+
+    	if (navMeshAgent != null) {
+    		navMeshAgent.speed = navMeshAgent.speed * modifier;
+    	}
+    }
+
+    private void doubleSpeed() { // Parameterless for invoke
+        modifySpeed(2);
     }
 }

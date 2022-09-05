@@ -24,7 +24,7 @@ public class Unit : Attackable
     protected float responseRange;
 
     void OnEnable() {
-    	InvokeRepeating("checkEnemiesInRange", 2.0f, 2.0f);
+    	InvokeRepeating("checkEnemiesInRange", 0.5f, 0.5f);
 
         base.OnEnable();
     }
@@ -32,10 +32,6 @@ public class Unit : Attackable
     // Update is called once per frame
     public override void Update()
     {
-        if (!isAttacking || attackee == null || attackee.hp <= 0) {
-        	cancelOrders();
-        }
-
         // If unit is currently attacking another unit (attackable that can move), update that target's position every frame.
 
         if (updateTargetLive == true && attackee != null && this.gameObject.GetComponent<NavMeshAgent>() != null) {
@@ -58,10 +54,16 @@ public class Unit : Attackable
 
 		player.transform.Find("FPSController").transform.Find("FirstPersonCharacter").transform.Find("Tools").transform.Find("Command").GetComponent<selection>().deselectUnit(this.gameObject);
         base.destroyObject();
-    }
+    } 
 
     public void move(Vector3 destination) {
-    	this.gameObject.GetComponent<NavMeshAgent>().destination = (destination);
+        cancelOrders();
+        photonView.RPC("setDestination", RpcTarget.All, destination);
+    }
+
+    [PunRPC]
+    protected virtual void setDestination(Vector3 destination) {
+        this.gameObject.GetComponent<NavMeshAgent>().destination = (destination);
     }
 
     [PunRPC]
@@ -90,15 +92,9 @@ public class Unit : Attackable
                 attackee.attackers.Add(this);
                 isAttacking = true;
 
-
 				bool arf = this.gameObject.GetComponent<NavMeshAgent>().SetDestination(attackee.gameObject.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
-                Debug.Log(gameObject.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
-                Debug.Log("RESULT OF FUNCTION: " + arf);
-
-
 
 				yield return new WaitUntil (() => isInRange(thingToAttack));
-                Debug.Log("GOING");
 				this.gameObject.GetComponent<NavMeshAgent>().isStopped = true;
 
 				InvokeRepeating("attack", 1f, 1f);
@@ -107,7 +103,7 @@ public class Unit : Attackable
     }
 
     public virtual void attack() {
-    	if (attackee.hp > 0) {
+    	if (attackee != null && attackee.hp > 0) {
     		attackee.takeDamage(atk);
     	} else {
     		cancelOrders();
@@ -115,7 +111,11 @@ public class Unit : Attackable
     }
 
     public virtual void cancelOrders() {
-                    Debug.Log("CANCELED");
+        photonView.RPC("cancelOrdersRPC", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public virtual void cancelOrdersRPC() {
     	if (attackee != null) {
     		attackee.attackers.Remove(this); // Remove this attacker from that units attackers
     	}
@@ -135,9 +135,7 @@ public class Unit : Attackable
             float deltaX = this.gameObject.transform.position.x - closestPoint.x;
             float deltaZ = this.gameObject.transform.position.z - closestPoint.z; 
             float distance = Mathf.Sqrt(deltaX * deltaX + deltaZ * deltaZ);
-            //Debug.Log("RNG " + rng);
-            //Debug.Log("Distance: " + distance);
-            //Debug.Log(distance < this.rng);
+
             return (distance < this.rng);
     	}
 
@@ -145,25 +143,31 @@ public class Unit : Attackable
     }
 
     public void checkEnemiesInRange() {
-    	if (!isAttacking) {
+    	if (!isAttacking && canAttack) {
 		    Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.GetComponent<Collider>().bounds.center, responseRange);
+            Attackable closestAttackee = null;
+            Vector3 playerPos = this.GetComponent<Collider>().bounds.center;
 
 		    if (hitColliders.Length != lastNoEnemies) {
 				for (int i = 0; i < hitColliders.Length; i++) {
 					if (hitColliders[i] != null) {
-
-						Debug.Log(hitColliders[i].tag);
 						if (hitColliders[i].GetComponent<ownership>() != null &&
 							hitColliders[i].GetComponent<ownership>().owned == true && 
 							hitColliders[i].GetComponent<ownership>().owner != this.gameObject.GetComponent<ownership>().owner) { 
 
-                            if (canAttack) {
-							    photonView.RPC("callAttack", RpcTarget.All, hitColliders[i].gameObject.GetComponent<Attackable>().id);
+                            if (closestAttackee == null) {
+                                closestAttackee = hitColliders[i].GetComponent<Attackable>();
+                            } else if (Vector3.Distance(hitColliders[i].bounds.center, playerPos) < Vector3.Distance(closestAttackee.GetComponent<Collider>().bounds.center, playerPos)) {
+                                closestAttackee = hitColliders[i].GetComponent<Attackable>();
                             }
 							break;
 						} 
 					}
 				}
+
+                if (closestAttackee != null) {
+                    photonView.RPC("callAttack", RpcTarget.All, closestAttackee.id);
+                }
 
 				lastNoEnemies = hitColliders.Length;
 			}
@@ -177,8 +181,6 @@ public class Unit : Attackable
             if (hitColliders.Length != lastNoEnemies) {
                 for (int i = 0; i < hitColliders.Length; i++) {
                     if (hitColliders[i] != null) {
-
-                        Debug.Log(hitColliders[i].tag);
                         if (hitColliders[i].GetComponent<ownership>() != null &&
                             hitColliders[i].GetComponent<ownership>().owned == true && 
                             hitColliders[i].GetComponent<ownership>().owner != this.gameObject.GetComponent<ownership>().owner) { 

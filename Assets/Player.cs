@@ -14,9 +14,21 @@ namespace game.assets {
     	public int woodIt;
     	public int foodIt;
 
+        public string playerName;
         public int playerID;
 
         public Color playerColor;
+
+        protected Camera playerCamera = null;
+
+        private float counter = 0f;
+        private float countMax = 10f;
+        private SimpleHealthBar timer;
+
+        public bool hasColor = false;
+
+
+        private GameObject nameTag = null;
 
         List<Color> colours = new List<Color>() { Color.black, Color.blue, Color.cyan, Color.green, Color.magenta, Color.red, Color.yellow };
 
@@ -31,15 +43,28 @@ namespace game.assets {
         }
 
         void Awake() {
+            if (this.photonView.IsMine) {
+                playerName = PhotonNetwork.LocalPlayer.NickName;
+            }
 
             /* photonView.ViewId is player object's game ID and identifies resources and building ownership */
 
             playerID = this.transform.Find("FPSController").gameObject.GetComponent<PhotonView>().ViewID;
             this.gameObject.name = playerID.ToString();
 
+            /* Find player timer in UI for resource collection */
+
+            timer = GameObject.Find("TimerBar").GetComponent<SimpleHealthBar>();
+
+            timer.UpdateBar(0, 10);
+
             /* Setup player resource iteration */
 
             InvokeRepeating("iterateResources", 10f, 10f);
+
+            if (this.GetComponent<PhotonView>().IsMine) {
+                InvokeRepeating("iterateClock", 1f, 1f);
+            }
 
             /* Set ownership controls */
 
@@ -52,12 +77,24 @@ namespace game.assets {
                 /* If this is THE player, find the GUI and pass reference of this script to UI */
                 GameObject.Find("Resources").GetComponent<ResourcePanel>().assignPlayer(this.GetComponent<game.assets.Player>());
             }
+
+            nameTag = this.transform.Find("FPSController").transform.Find("Name").transform.Find("PlayerName").gameObject;
+
+            if (this.photonView.IsMine) {
+                photonView.RPC("setName", RpcTarget.AllBuffered, playerName);
+                nameTag.SetActive(false);
+                nameTag = null;
+            } else {
+                playerCamera = GameObject.Find("FirstPersonCharacter").GetComponent<Camera>();
+            }
         }
 
         // Update is called once per frame
         void Update()
         {
-
+            if (nameTag != null && playerCamera != null) {
+                nameTag.transform.parent.LookAt(playerCamera.transform);
+            }
         }
 
 
@@ -107,6 +144,12 @@ namespace game.assets {
         public void setColour(int colourIndex) {
             playerColor = colours[colourIndex];
             this.gameObject.transform.Find("FPSController").transform.Find("Capsule").GetComponent<Renderer>().material.color = playerColor;
+            this.hasColor = true;
+        }
+
+        [PunRPC]
+        private void setName(string name) {
+            this.nameTag.GetComponent<UnityEngine.UI.Text>().text = name;
         }
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
@@ -119,6 +162,15 @@ namespace game.assets {
                 wood = (int)stream.ReceiveNext();
                 food = (int)stream.ReceiveNext();
             }
+        }
+
+        private void iterateClock() {
+            if (counter == countMax - 1f) {
+                counter = 0f;
+            } else {
+                counter++;
+            }
+            timer.UpdateBar(counter, countMax);
         }
     }
 }

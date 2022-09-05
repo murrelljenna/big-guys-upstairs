@@ -110,24 +110,30 @@ public class selection : MonoBehaviour
 				Vector3 destination = hit.point;
 				bool alt = true; // Used to offset movement targets so not all units navigate to exact same positiln.
 
+				Debug.Log(hit.collider.gameObject.name);
+
 				if (attackableMask == (attackableMask | (1 << hit.collider.gameObject.layer)) 
 					&& hit.collider.gameObject.GetComponent<ownership>().owned == true 
 					&& hit.collider.gameObject.GetComponent<ownership>().owner != player.playerID) {
+
+					Debug.Log("OK WERE IN THE ATTACK THING");
 					
 					selected.ForEach(unit => {
-						unit.gameObject.GetComponent<Unit>().cancelOrders();
-						photonView = unit.gameObject.GetComponent<PhotonView>();
-						photonView.RPC("callAttack", RpcTarget.All, hit.collider.gameObject.GetComponent<Attackable>().id);
+						if (unit != null) {
+							unit.gameObject.GetComponent<Unit>().cancelOrders();
+							photonView = unit.gameObject.GetComponent<PhotonView>();
+							photonView.RPC("callAttack", RpcTarget.All, hit.collider.gameObject.GetComponent<Attackable>().id);
 
-						/* Alternate between offsetting x and y so that all units aren't trying to navigate to same location */
+							/* Alternate between offsetting x and y so that all units aren't trying to navigate to same location */
 
-						if (alt = true) {
-							destination.x += 0.2f;
-						} else {
-							destination.z += 0.2f;
+							if (alt = true) {
+								destination.x += 0.2f;
+							} else {
+								destination.z += 0.2f;
+							}
+
+							alt = !alt;
 						}
-
-						alt = !alt;
 					});
 				} else if (terrainMask == (terrainMask | (1 << hit.collider.gameObject.layer))) {
 					selected.ForEach(unit => {
@@ -136,13 +142,13 @@ public class selection : MonoBehaviour
 
 							destination = new Vector3(
 								UnityEngine.Random.Range(
-									hit.point.x - (0.1f * (selected.Count/2)), 
-									hit.point.x + (0.1f * (selected.Count/2))
+									hit.point.x - (0.1f * selected.Count/2), 
+									hit.point.x + (0.1f * selected.Count/2)
 								), 
 								0, 
 								UnityEngine.Random.Range(
-									hit.point.z - (0.1f * (selected.Count/2)), 
-									hit.point.z + (0.1f * (selected.Count/2))
+									hit.point.z - (0.1f * selected.Count/2), 
+									hit.point.z + (0.1f * selected.Count/2)
 								)
 							);
 
@@ -167,7 +173,10 @@ public class selection : MonoBehaviour
 
     void selectUnit(GameObject unit) {
 		selected.Add(unit.GetComponent<Collider>().gameObject);
-		unit.GetComponent<Collider>().gameObject.GetComponent<LineRenderer>().enabled = true;
+
+		if (unit.GetComponent<LineRenderer>() != null) {
+			unit.GetComponent<LineRenderer>().enabled = true;
+		}
     }
 
     public void deselectUnit(GameObject unit) {
@@ -181,6 +190,11 @@ public class selection : MonoBehaviour
     }
 
     void clearSelection() {
-    	selected.ForEach(unit => unit.GetComponent<Collider>().gameObject.GetComponent<LineRenderer>().enabled = false);
+    	selected.ForEach(unit => {
+    		if (unit != null && unit.GetComponent<LineRenderer>() != null) {
+    			unit.GetComponent<LineRenderer>().enabled = false;
+    		}
+    	});
+    	selected.Clear();
     }
 }

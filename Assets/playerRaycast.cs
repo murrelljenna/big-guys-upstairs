@@ -7,15 +7,23 @@ using Photon.Realtime;
 
 public class playerRaycast : MonoBehaviour
 {
+    bool midAnimation = false;
+    GameObject cityViewed = null;
+    GameObject resourceViewed = null;
 	Camera cam;
     int resourceMask = 1 << 9;
     int townMask = 1 << 10;
     game.assets.Player player;
-    
+
+    GameObject up1;
+    GameObject down1;
+
     void Start()
     {
         cam = GetComponent<Camera>();
         player = this.transform.parent.parent.gameObject.GetComponent<game.assets.Player>();
+
+
     }
 
     // Update is called once per frame
@@ -28,7 +36,27 @@ public class playerRaycast : MonoBehaviour
 	    if (Physics.Raycast(ray, out hit, Mathf.Infinity, resourceMask)) {
             ResourceTile tile = hit.collider.gameObject.GetComponent<ResourceTile>();
 
+            Transform[] trans = hit.collider.gameObject.GetComponentsInChildren<Transform>(true);
+            foreach (Transform t in trans) {
+                if (t.gameObject.name == "Info") {
+                    resourceViewed = t.gameObject;
+                    resourceViewed.SetActive(true);
+                }
+            }
+
+            if (!midAnimation) {
+                resourceViewed.transform.Find("1_Pressed").gameObject.SetActive(false);
+            }
+
             if (Input.GetKeyDown(KeyCode.E) && hit.collider.GetComponent<ownership>().owned == false && player.canAfford(tile.woodCost, tile.foodCost)) {
+                up1 = resourceViewed.transform.Find("1_Normal").gameObject;
+                down1 = resourceViewed.transform.Find("1_Pressed").gameObject;
+
+                up1.SetActive(false);
+                down1.SetActive(true);
+                midAnimation = true;
+                Invoke("releaseButton1", 0.2f);
+
             	Collider[] hitColliders = Physics.OverlapSphere(hit.collider.bounds.center, 10f);
             	for (int i = 0; i < hitColliders.Length; i++) {
             		if (hitColliders[i].tag == "town" && hitColliders[i].GetComponent<ownership>().owner == player.playerID) { // If there is a town in range that belongs to the player.
@@ -37,32 +65,56 @@ public class playerRaycast : MonoBehaviour
 						break;
             		} 
             	}    	      	
-            }
-	    }
+            } 
+	    } else if (resourceViewed != null) {
+            Debug.Log("SETTING FALSE");
+            resourceViewed.SetActive(false);
+            resourceViewed = null;
+        }
 
         
 
         /* Interaction with towns */ 
 
         ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, townMask)) { 
-            if (Input.GetKeyDown(KeyCode.E) && hit.collider.GetComponent<ownership>().owner == player.playerID) {
-                int wood = 1; // Please replace with real values soon.
-                int food = 5;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, townMask)) {
+            if (hit.collider.gameObject.tag != "buildingGhost" && hit.collider.GetComponent<ownership>().owner == player.playerID) {
+                cityViewed = hit.collider.gameObject.transform.Find("Info").gameObject;
+                cityViewed.SetActive(true);
 
-                if (player.canAfford(wood, food)) {
-                    player.makeTransaction(wood, food);
+                if (!midAnimation) {
+                    cityViewed.transform.Find("1_Pressed").gameObject.SetActive(false);
+                }
 
-                    /* Instantiate new militia outside city */
+                if (Input.GetKeyDown(KeyCode.E)) {
+                    int wood = 1; // Please replace with real values soon.
+                    int food = 5;
 
-                    Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
-                    Vector3 spawnLocation = new Vector3(randomInCircle.x+hit.transform.position.x, 0, randomInCircle.y+hit.transform.position.z);
+                    up1 = cityViewed.transform.Find("1_Normal").gameObject;
+                    down1 = cityViewed.transform.Find("1_Pressed").gameObject;
 
-                    GameObject militia = PhotonNetwork.Instantiate("Militia", spawnLocation, Quaternion.identity, 0);
+                    up1.SetActive(false);
+                    down1.SetActive(true);
+                    midAnimation = true;
+                    Invoke("releaseButton1", 0.2f);
 
-                    militia.GetComponent<ownership>().capture(player);
+                    if (player.canAfford(wood, food)) {
+                        player.makeTransaction(wood, food);
+
+                        /* Instantiate new militia outside city */
+
+                        Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
+                        Vector3 spawnLocation = new Vector3(randomInCircle.x+hit.transform.position.x, 0, randomInCircle.y+hit.transform.position.z);
+
+                        GameObject militia = PhotonNetwork.Instantiate("Militia", spawnLocation, Quaternion.identity, 0);
+
+                        militia.GetComponent<ownership>().capture(player);
+                    }
                 }
             }
+        }   else if (cityViewed != null) {
+            cityViewed.SetActive(false);
+            cityViewed = null;
         }
     }
 
@@ -96,5 +148,11 @@ public class playerRaycast : MonoBehaviour
         }
 
         return false;
+    }
+
+    void releaseButton1() {
+        up1.SetActive(true);
+        down1.SetActive(false);
+        midAnimation = false;
     }
 }

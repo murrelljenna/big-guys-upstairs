@@ -15,7 +15,7 @@ public class Militia : Unit
         this.atk = 1;
         this.hp = 5;
         this.lastHP = this.hp;
-        this.rng = 0.02f;
+        this.rng = 0.12f;
 
         base.Start();
     }

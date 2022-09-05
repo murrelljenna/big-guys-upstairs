@@ -73,8 +73,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
     }
 
-
-
     void LoadArena() {
     	if (!PhotonNetwork.IsMasterClient) {
 	        Debug.LogError("PhotonNetwork : Trying to Load a level but we are not the master Client");

@@ -31,6 +31,11 @@ public class Archery : Building, IPunObservable
             info.transform.Find("Archer Selector").Find("1_Pressed").gameObject.SetActive(false);
         }
 
+        if (this.underConstruction)
+        {
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.E)) {
             int wood = 5; // Please replace with real values soon.
             int food = 7;
@@ -40,12 +45,12 @@ public class Archery : Building, IPunObservable
 
             midAnimation = true;
             Invoke("releaseButton1", 0.2f);
-
+/*
             if (!player.maxedUnits()) {
                 if (player.canAfford(wood, food)) {
                     player.makeTransaction(wood, food);
 
-                    /* Instantiate new militia outside city */
+                    /* Instantiate new militia outside city
 
                     Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
                     Vector3 spawnLocation = new Vector3(randomInCircle.x+info.transform.position.x, this.transform.position.y, randomInCircle.y+info.transform.position.z);
@@ -59,7 +64,7 @@ public class Archery : Building, IPunObservable
             } else {
                 
             }
-
+*/
             if (Input.GetKeyDown(KeyCode.U)) {
                 up2 = info.transform.Find("Upgrade").Find("2_Normal").gameObject;
                 down2 = info.transform.Find("2_Pressed").gameObject;
@@ -68,13 +73,14 @@ public class Archery : Building, IPunObservable
                 down2.SetActive(true);
                 midAnimation = true;
                 Invoke("releaseButton2", 0.2f);
-
+/*
                 if (player.canAfford(upgradeCostWood, upgradeCostFood, upgradeCostGold, upgradeCostStone, upgradeCostIron) && this.upgradeLevel < this.maxUpgrade){
-                    player.makeTransaction(upgradeCostWood, upgradeCostFood, upgradeCostGold, upgradeCostStone, upgradeCostIron);
+                    //player.makeTransaction(upgradeCostWood, upgradeCostFood, upgradeCostGold, upgradeCostStone, upgradeCostIron);
                     photonView.RPC("upgrade", RpcTarget.AllBuffered);
                 } else {
                     tooltips.flashLackResources();
                 }
+*/
             } else {
                 tooltips.flashLackResources();
             }

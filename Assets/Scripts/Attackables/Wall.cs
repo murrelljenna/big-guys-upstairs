@@ -39,6 +39,7 @@ public class Wall : Building, IPunObservable
             }
 
             if (Input.GetKeyDown(KeyCode.E)) {
+                /*
                 if (owner.getPlayer().canAfford(25)) {
                     List<GameObject> neighbours = new List<GameObject>();
 
@@ -67,16 +68,18 @@ public class Wall : Building, IPunObservable
                         PhotonNetwork.Destroy(neighbour);
                     });
 
-                    owner.getPlayer().makeTransaction(25);
+//                    owner.getPlayer().makeTransaction(25);
 
                     GameObject gate = PhotonNetwork.Instantiate("Gate", this.transform.position, this.transform.rotation, 0);
                     gate.GetComponent<ownership>().capture(player);
                 } else {
                     tooltips.flashLackResources();
                 }
+                */
             }
 
             if (Input.GetKeyDown(KeyCode.U)) {
+                /*
                 if (owner.getPlayer().canAfford(25)) {
                     List<GameObject> neighbours = new List<GameObject>();
 
@@ -105,13 +108,14 @@ public class Wall : Building, IPunObservable
                         PhotonNetwork.Destroy(neighbour);
                     });
 
-                    owner.getPlayer().makeTransaction(25);
+//                    owner.getPlayer().makeTransaction(25);
 
                     GameObject gate = PhotonNetwork.Instantiate("Gate", this.transform.position, this.transform.rotation, 0);
                     gate.GetComponent<ownership>().capture(player);
                 } else {
                     tooltips.flashLackResources();
                 }
+                */
             }
         }
 

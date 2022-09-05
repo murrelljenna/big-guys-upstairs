@@ -30,7 +30,7 @@ public class House : Building, IPunObservable
         base.Start();
     }
 
-    public virtual void build() {
+    public override void build() {
         base.build();
 
         if (photonView.IsMine) {

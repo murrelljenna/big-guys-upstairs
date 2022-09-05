@@ -22,5 +22,22 @@ namespace game.assets.utilities {
 
             return closestEnemy; 
         }
+
+        public static GameObject findNearbyConstruction(Vector3 point, ownership owner)
+        {
+            int allBuildings = (1 << 10) | (1 << 14);
+
+            Collider[] hitColliders = Physics.OverlapSphere(point, 10f, allBuildings);
+
+            for (int i = 0; i < hitColliders.Length; i++)
+            {
+                if (hitColliders[i] != null && hitColliders[i].tag != "buildingGhost" && hitColliders[i].GetComponent<Building>().underConstruction && hitColliders[i].GetComponent<ownership>().owner == owner.owner)
+                {
+                    return hitColliders[i].gameObject;
+                }
+            }
+
+            return null;
+        }
     }
 }

@@ -30,9 +30,18 @@ public class Building : Attackable
         base.Start();
 
         info = this.gameObject.transform.Find("Info").gameObject;
+        info.SetActive(false);
     } 
 
+
+
     public void setToConstruction() {
+        photonView.RPC("setToConstructionRPC", RpcTarget.AllBuffered);
+    }
+
+    [PunRPC]
+    public void setToConstructionRPC()
+    {
         getBuildingModels();
         this.hp = maxHP / 10;
 
@@ -83,7 +92,7 @@ public class Building : Attackable
         buildModels[0].SetActive(false);
         buildModels[1].SetActive(false);
         this.transform.Find("Model").gameObject.SetActive(true);
-        underConstruction = false;
+        this.underConstruction = false;
         this.hp = this.maxHP;
         healthBar.UpdateBar(this.hp, this.maxHP);
     }
@@ -99,13 +108,6 @@ public class Building : Attackable
         base.takeDamage(damage);
     }
 
-    protected static Vector2 RandomPointOnUnitCircle(float radius) {
-        float angle = Random.Range (0f, Mathf.PI * 2);
-        float x = Mathf.Sin (angle) * radius;
-        float y = Mathf.Cos (angle) * radius;
-
-        return new Vector2(x, y);
-    }
 
     public override void onCapture() {
         string colorName = GetComponent<ownership>().getPlayer().colorName;
@@ -149,6 +151,15 @@ public class Building : Attackable
         }
 
         base.destroyObject();
+    }
+
+    protected Vector2 RandomPointOnUnitCircle(float radius)
+    {
+        float angle = Random.Range(0f, Mathf.PI * 2);
+        float x = Mathf.Sin(angle) * radius;
+        float y = Mathf.Cos(angle) * radius;
+
+        return new Vector2(x, y);
     }
 
     public override void interactionOptions(game.assets.Player player) {

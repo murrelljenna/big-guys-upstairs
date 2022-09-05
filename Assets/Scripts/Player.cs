@@ -37,9 +37,6 @@ namespace game.assets {
 
         protected Camera playerCamera = null;
 
-        private float counter = 0f;
-        private float countMax = 10f;
-        private SimpleHealthBar timer;
         public int cityCount;
 
         public bool hasColor = false;
@@ -176,7 +173,12 @@ namespace game.assets {
             }
         }
 
-        public bool canAfford(int wood = 0, int food = 0, int gold = 0, int stone = 0, int iron = 0) {
+        public bool canAfford(ResourceSet resourceSet) {
+            int wood = resourceSet.wood;
+            int food = resourceSet.food;
+            int gold = resourceSet.gold;
+
+
             if (this.resources.wood >= wood && this.resources.food >= food && this.resources.gold >= gold && this.resources.stone >= stone && this.resources.iron >= iron) {
                 return true;
             }
@@ -203,13 +205,13 @@ namespace game.assets {
             return false;
         }
 
-        public void makeTransaction(int wood = 0, int food = 0, int gold = 0, int stone = 0, int iron = 0) {
-            if (canAfford(wood, food, gold, stone, iron)) {
-                this.resources.wood -= wood;
-                this.resources.food -= food;
-                this.resources.gold -= gold;
-                this.resources.stone -= stone;
-                this.resources.iron -= iron;
+        public void makeTransaction(ResourceSet resourceSet) {
+            if (canAfford(resourceSet)) {
+                this.resources.wood -= resourceSet.wood;
+                this.resources.food -= resourceSet.food;
+                this.resources.gold -= resourceSet.gold;
+                this.resources.stone -= resourceSet.stone;
+                this.resources.iron -= resourceSet.iron;
             }
         }
 

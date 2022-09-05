@@ -102,8 +102,7 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
 
                     int wood = currentBuilding.GetComponent<Attackable>().woodCost;
                     int food = currentBuilding.GetComponent<Attackable>().foodCost;
-
-                    if (wallet.canAfford(wood, food)) { // If can afford and no town radius overlapping
+                    if (wallet.canAfford(new game.assets.utilities.resources.ResourceSet(wood, food))) { // If can afford and no town radius overlapping
                         if (!currentBuilding.GetComponent<buildingGhost>().colliding) {
                             if (currentBuilding.name == "town") {
                                 /* Unecessary with new construction updates.
@@ -138,6 +137,7 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
 
                                         float noWalls = pointDistance/wallUnitLength;
                                         int mapLayer = ~(1 <<11);
+                                        /*
                                         if (wallet.canAfford(wood * (int)noWalls, food * (int)noWalls)) {
                                             RaycastHit info;
                                             if ((!Physics.Linecast(firstPoint, lastPoint, out info, mapLayer) || info.collider.gameObject.name == "wall" || info.collider.gameObject.GetComponent<Attackable>().prefabName == "Wall_Corner")) {
@@ -161,6 +161,7 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
                                             tooltips.flashLackResources();
                                             StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
                                         }
+                                        */
                                     } else {
                                         firstPoint = hit.point;
                                         firstPointPlaced = true;
@@ -326,7 +327,7 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
         int wood = building.GetComponent<Attackable>().woodCost;
         int food = building.GetComponent<Attackable>().foodCost;
 
-        wallet.makeTransaction(wood, food);
+        //wallet.makeTransaction(wood, food);
         GameObject placedBuilding = PhotonNetwork.Instantiate(building.GetComponent<Attackable>().prefabName, destination, Quaternion.identity, 0);
         placedBuilding.GetComponent<ownership>().capture(wallet);
         placedBuilding.GetComponent<buildingGhost>().active = false; // Disabling script makes collider callbacks error.

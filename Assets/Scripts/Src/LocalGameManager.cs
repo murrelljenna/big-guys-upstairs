@@ -1,0 +1,110 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using static game.assets.utilities.GameUtils;
+using UnityEngine.SceneManagement;
+using game.assets.player;
+using System;
+
+namespace game.assets
+{
+    public class LocalGameManager : MonoBehaviour
+    {
+        private struct ColourAvailability
+        {
+            public PlayerColour colour;
+            public bool available;
+
+            public ColourAvailability(PlayerColour colour, bool available = false)
+            {
+                this.colour = colour;
+                this.available = true;
+            }
+        }
+
+        private ColourAvailability[] availableColours = new ColourAvailability[]{
+            new ColourAvailability(PlayerColours.Blue),
+            new ColourAvailability(PlayerColours.Red),
+            new ColourAvailability(PlayerColours.Green),
+            new ColourAvailability(PlayerColours.Pink),
+            new ColourAvailability(PlayerColours.White),
+            new ColourAvailability(PlayerColours.Yellow),
+            new ColourAvailability(PlayerColours.Black)
+        };
+
+        [Tooltip("Prefab used for player")]
+        public GameObject playerPrefab;
+
+        [Tooltip("Prefab used for city")]
+        public GameObject cityPrefab;
+
+        [Tooltip("Prefab used for ClientSingleton")]
+        public GameObject clientSingleton;
+
+        private Vector3[] spawnPoints;
+
+        // Initialize always with an empty player - this makes testing easier, as the ownership will work.
+
+        public player.Player[] players = new player.Player[1] { new player.Player() };
+
+        // Start is called before the first frame update
+        void Start()
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+
+        public void Initialize(string mapName, Vector3[] spawnPoints)
+        {
+            this.spawnPoints = spawnPoints;
+            SceneManager.sceneLoaded += onSceneLoaded;
+            SceneManager.LoadScene(mapName);
+            players = new player.Player[spawnPoints.Length];
+        }
+
+        private void onSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            instantiateLocalPlayerStart();
+            instantiateClientSingleton();
+            for (int i = 0; i < spawnPoints.Length; i++)
+            {
+                // Spawn some ai shit or something
+            }
+        }
+
+        private void instantiateLocalPlayerStart()
+        {
+            IInstantiator instantiator = InstantiatorFactory.getInstantiator();
+            GameObject localCityObject = instantiator.Instantiate(cityPrefab, spawnPoints[0], Quaternion.identity);
+            localCityObject.name = MagicWords.GameObjectNames.StartingCity;
+
+            Vector3 playerSpawn = randomPointOnUnitCircle(spawnPoints[0], MagicNumbers.PlayerSpawnRadius);
+            GameObject localPlayerObject = instantiator.Instantiate(playerPrefab, playerSpawn, Quaternion.identity);
+            localPlayerObject.name = MagicWords.GameObjectNames.Player;
+        }
+
+        private void instantiateClientSingleton()
+        {
+            IInstantiator instantiator = InstantiatorFactory.getInstantiator();
+            GameObject clientSingletonObj = instantiator.Instantiate(clientSingleton, spawnPoints[0], Quaternion.identity);
+            clientSingletonObj.name = MagicWords.GameObjectNames.ClientSingleton;
+        }
+
+        public player.Player getLocalPlayer()
+        {
+            return players[0];
+        }
+
+        private PlayerColour pickFirstAvailableColour()
+        {
+            for (int i = 0; i < availableColours.Length; i++)
+            {
+                if (availableColours[i].available)
+                {
+                    return availableColours[i].colour;
+                }
+            }
+
+            throw new ArgumentException("No available colours found", nameof(availableColours));
+        }
+    }
+}

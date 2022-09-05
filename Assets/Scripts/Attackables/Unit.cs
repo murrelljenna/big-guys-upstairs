@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.AI;
@@ -125,7 +124,9 @@ public class Unit : Attackable, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (navAgent != null) {
+            print("Ok so navAgent is not null");
             if (stream.IsWriting) {
+                print("Ok so we're writing stuff");
                 // We own this player: send the others our data
                 stream.SendNext(gameObject.transform.position);
                 stream.SendNext(gameObject.transform.rotation);
@@ -134,7 +135,7 @@ public class Unit : Attackable, IPunObservable
             else
             {
 
-                // Network player, receive data
+                
                 networkPosition = (Vector3) stream.ReceiveNext();
                 networkRotation = (Quaternion) stream.ReceiveNext();
                 velocity = (Vector3) stream.ReceiveNext();
@@ -377,8 +378,6 @@ public class Unit : Attackable, IPunObservable
         float deltaX = this.gameObject.transform.position.x - closestPoint.x;
         float deltaZ = this.gameObject.transform.position.z - closestPoint.z; 
         float distance = Mathf.Sqrt(deltaX * deltaX + deltaZ * deltaZ);
-        Debug.Log(distance);
-        Debug.Log(rng);
         return (distance < rng);
     }
 

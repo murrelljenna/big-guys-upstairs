@@ -56,10 +56,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 				}
 
 		    	spawnManager = PhotonNetwork.InstantiateSceneObject(this.spawnManagerPrefab.name, new Vector3(0, 0, 0), Quaternion.identity, 0).GetComponent<SpawnManager>();
-		    	GameObject[] resourceSpawners = GameObject.FindGameObjectsWithTag("resourceSpawner");
-		    	for (int i = 0; i < resourceSpawners.Length; i++) {
-		    		resourceSpawners[i].GetComponent<SpawnTile>().spawnResource();
-				}
 		    } else {
 		    	StartCoroutine(getSpawnManager());
 		    }

@@ -25,7 +25,6 @@ public class Militia : Unit
 
     private bool collectingResources;
 
-    public UnitState unitState;
     private Building building;
 
     private int buildPer = 20;
@@ -91,7 +90,8 @@ public class Militia : Unit
         collectingResources = false;
     }
 
-    public void assignResourceTile(ResourceTile resourceTile) {        this.assigned = true;
+    public void assignResourceTile(ResourceTile resourceTile) {        
+        this.assigned = true;
         this.resourceTile = resourceTile;
     }
 
@@ -112,6 +112,7 @@ public class Militia : Unit
     }
 
     public override void move(Vector3 destination) {
+        CancelInvoke("build");
         if (assigned) {
             clearAssignment();
         }
@@ -120,7 +121,7 @@ public class Militia : Unit
 
     public void clearAssignment() {
         CancelInvoke("getResource");
-        CancelInvoke("build");
+        
         if (resourceTile != null) {
             this.resourceTile.removeWorker(this);
         }
@@ -153,6 +154,14 @@ public class Militia : Unit
             }
         } else {
             CancelInvoke("build");
+
+            GameObject building = game.assets.utilities.ObjFinder.findNearbyConstruction(this.transform.position, this.owner);
+            if (building != null)
+            {
+                print(building.name);
+                print(building.GetComponent<Building>().underConstruction);
+                setBuildingTarget(building.GetComponent<Building>());
+            }
         }
     }
 }

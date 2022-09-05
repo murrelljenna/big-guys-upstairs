@@ -196,11 +196,13 @@ public class GuardTower : Unit
             midAnimation = true;
             Invoke("releaseButton2", 0.2f);
 
+            /*
             if (player.canAfford(0, 0, 0, 0, 0) && this.upgradeLevel < this.maxUpgrade){
                 photonView.RPC("upgrade", RpcTarget.AllBuffered);
             } else {
                 tooltips.flashLackResources();
             }
+            */
         } 
 
         base.interactionOptions(player);

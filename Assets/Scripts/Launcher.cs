@@ -2,6 +2,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Text;
+using game.assets;
 
 public class Launcher : MonoBehaviourPunCallbacks
 {
@@ -10,6 +11,8 @@ public class Launcher : MonoBehaviourPunCallbacks
 
 	[SerializeField]
 	private GameObject progressLabel;
+
+    public GameObject localGameManagerPrefab;
 
     private MapReader.Map map;
 
@@ -86,5 +89,18 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void exitGame() {
         Application.Quit();
+    }
+
+    public void launchLocalGame()
+    {
+        map = GetComponent<MapReader>().randomMap();
+
+        string[] spawns = new string[20];
+        for (int i = 0; i < map.spawns.locations.Count; i++)
+        {
+            spawns[i] = map.spawns.locations[i].toCSV();
+        }
+
+        LocalGameManager gameManager = Instantiate(localGameManagerPrefab).GetComponent<LocalGameManager>();
     }
 }

@@ -159,11 +159,11 @@ public class Town : Building, IPunObservable
                     down1.SetActive(true);
                     midAnimation = true;
                     Invoke("releaseButton1", 0.2f);
-
+/*
                     if (player.canAfford(wood, food)) {
                         player.makeTransaction(wood, food);
 
-                        /* Instantiate new militia outside city */
+                        /* Instantiate new militia outside city
 
                         Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
                         Vector3 spawnLocation = new Vector3(randomInCircle.x+this.transform.position.x, this.transform.position.y, randomInCircle.y+this.transform.position.z);
@@ -174,6 +174,7 @@ public class Town : Building, IPunObservable
                     } else {
                         tooltips.flashLackResources();
                     }
+                */
                 } else {
                     
                 }
@@ -187,13 +188,14 @@ public class Town : Building, IPunObservable
                 down2.SetActive(true);
                 midAnimation = true;
                 Invoke("releaseButton2", 0.2f);
-
+/*
                 if (player.canAfford(upgradeCostWood, upgradeCostFood, upgradeCostGold, upgradeCostStone, upgradeCostIron) && this.upgradeLevel < this.maxUpgrade){
                     player.makeTransaction(upgradeCostWood, upgradeCostFood, upgradeCostGold, upgradeCostStone, upgradeCostIron);
                     photonView.RPC("upgrade", RpcTarget.AllBuffered);
                 } else {
                     tooltips.flashLackResources();
                 }
+*/
             }
         }
 

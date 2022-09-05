@@ -89,7 +89,6 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
         Transform canvasTransform = this.gameObject.transform.Find("Healthbar");
 
         if (canvasTransform != null) {
-            Debug.Log(this.prefabName);
             canvas = canvasTransform.gameObject;
             healthBar = canvas.transform.Find("Simple Bar").transform.Find("Status Fill 01").GetComponent<SimpleHealthBar>();
             canvas.SetActive(false);

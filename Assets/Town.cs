@@ -15,6 +15,7 @@ public class Town : Attackable, IPunObservable
     int unitMask = 1 << 12;
 
     void Start() {
+        prefabName = "Town";
 
         this.hp = 200;
         this.woodCost = 75;
@@ -31,7 +32,7 @@ public class Town : Attackable, IPunObservable
 
         if (hitColliders.Length != lastNoEnemies) {
             for (int i = 0; i < hitColliders.Length; i++) {
-                if (hitColliders[i] != null && hitColliders[i].GetComponent<ownership>().owner != this.gameObject.GetComponent<ownership>().owner) {
+                if (hitColliders[i] != null && hitColliders[i].tag != "buildingGhost" && hitColliders[i].GetComponent<ownership>().owner != this.gameObject.GetComponent<ownership>().owner) {
                     if (underAttack == false) {
                         // Being attacked first time - play noise without being annoying.
                         this.gameObject.GetComponent<AudioSource>().Play(0);
@@ -88,15 +89,5 @@ public class Town : Attackable, IPunObservable
     // Start is called before the first frame update
     public override void Awake() {
         base.Awake();
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        if (stream.IsWriting) {
-            stream.SendNext(this.hp);
-        }
-        else
-        {
-            this.hp = (int)stream.ReceiveNext();
-        }
     }
 }

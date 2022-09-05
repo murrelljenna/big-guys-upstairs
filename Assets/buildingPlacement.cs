@@ -41,18 +41,28 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
 	    		// Left-click to place building
 
 	    		if (Input.GetMouseButtonDown(0)) {
-                    int wood = currentBuilding.GetComponent<Town>().woodCost;
-                    int food = currentBuilding.GetComponent<Town>().foodCost;
 
-                    Debug.Log(townInRange(hit.point, 20f));
+                    int wood = currentBuilding.GetComponent<Attackable>().woodCost;
+                    int food = currentBuilding.GetComponent<Attackable>().foodCost;
 
-	    			if (wallet.canAfford(wood, food) && !townInRange(hit.point, 20f)) { // If can afford and no town radius overlapping
-	    				wallet.makeTransaction(wood, food);
-                        GameObject placedBuilding = PhotonNetwork.Instantiate("Town", hit.point, Quaternion.identity, 0);
-                        placedBuilding.GetComponent<ownership>().capture(wallet);
-                        Destroy(currentBuilding.gameObject);
+	    			if (wallet.canAfford(wood, food)) { // If can afford and no town radius overlapping
+                        if (currentBuilding.name == "town") {
+                            if (!townInRange(hit.point, 20f)) {
+        	    				wallet.makeTransaction(wood, food);
+                                GameObject placedBuilding = PhotonNetwork.Instantiate("Town", hit.point, Quaternion.identity, 0);
+                                placedBuilding.GetComponent<ownership>().capture(wallet);
+                                Destroy(currentBuilding.gameObject);
+                            }
+                        } else {
+                            if (townInRange(hit.point, 10f, wallet.playerID)) {
+                                wallet.makeTransaction(wood, food);
+                                GameObject placedBuilding = PhotonNetwork.Instantiate(currentBuilding.GetComponent<Attackable>().prefabName, hit.point, Quaternion.identity, 0);
+                                placedBuilding.GetComponent<ownership>().capture(wallet);
+                                Destroy(currentBuilding.gameObject);
+                            }
+                        }
 	    			} else {
-	    				Debug.Log("Not True");
+	    				Debug.Log("Put menu notification  that player cant afford");
 	    			}
 	    		}
 	    	}
@@ -66,6 +76,8 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
     	}
     	
     	currentBuilding = ((GameObject)Instantiate(building)).transform;
+        currentBuilding.GetComponent<Attackable>().canAttack = false;
+        currentBuilding.gameObject.name = currentBuilding.tag;
         currentBuilding.tag = "buildingGhost";
         currentBuilding.GetComponent<Renderer>().material.color = wallet.playerColor;
     }
@@ -86,7 +98,7 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
         Collider[] hitColliders = Physics.OverlapSphere(location, range);
         for (int i = 0; i < hitColliders.Length; i++) {
             Debug.Log(hitColliders[i].tag);
-            if (hitColliders[i].tag == "town" && hitColliders[i].GetComponent<ownership>().owner == ownerID) { // If there is a town in range that belongs to the player.
+            if (hitColliders[i].tag == "town" && hitColliders[i].gameObject.GetComponent<ownership>().owner == ownerID) { // If there is a town in range that belongs to the player.
                 return true;
             }
         }

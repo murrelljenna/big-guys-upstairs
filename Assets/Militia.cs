@@ -7,6 +7,8 @@ public class Militia : Unit
     // Start is called before the first frame update
     void Start()
     {
+    	this.movable = true;
+    	this.responseRange = 2f;
         this.woodCost = 1;
         this.foodCost = 5;
 

@@ -7,6 +7,9 @@ using Photon.Realtime;
 
 public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
 {
+	public bool canAttack = true;
+
+	public string prefabName;
 	private Camera playerCamera;
 
 	public int woodCost = 0;
@@ -34,17 +37,19 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     public virtual void OnEnable() {
-    	Debug.Log(this.gameObject.name);
-    	canvas = this.gameObject.transform.Find("Canvas").gameObject;
-        healthBar = canvas.transform.Find("Simple Bar").transform.Find("Status Fill 01").GetComponent<SimpleHealthBar>();
 
-      	canvas.SetActive(false);
     }
 
     public virtual void Awake() {
-    	this.photonView = this.gameObject.GetComponent<PhotonView>();
+    	photonView = PhotonView.Get(this);
+
         this.id = this.photonView.ViewID;
         this.gameObject.name = id.ToString();
+
+        canvas = this.gameObject.transform.Find("Canvas").gameObject;
+        healthBar = canvas.transform.Find("Simple Bar").transform.Find("Status Fill 01").GetComponent<SimpleHealthBar>();
+
+      	canvas.SetActive(false);
     }
 
     // Update is called once per frame

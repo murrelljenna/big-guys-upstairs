@@ -23,8 +23,8 @@ namespace game.assets {
         // Start is called before the first frame update
         void Start()
         {
-            wood = 200;
-            food = 100;
+            wood = 150;
+            food = 75;
 
             woodIt = 2;
             foodIt = 2;

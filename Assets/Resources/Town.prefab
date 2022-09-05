@@ -16934,6 +16934,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a072379b5a1d448a4e946f718de7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canAttack: 1
+  prefabName: 
   woodCost: 50
   foodCost: 50
   maxHP: 0
@@ -17063,8 +17065,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1.0847118}
-  m_Center: {x: 0, y: 0, z: 0.042355895}
+  m_Size: {x: 1.9362541, y: 1.0622857, z: 1.8305368}
+  m_Center: {x: 0.067022264, y: 0.03114283, z: 0.00070536137}
 --- !u!114 &6400909032196954706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17140,7 +17142,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 35
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.77860343
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -38752,7 +38754,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.85373294
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -38848,7 +38850,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.8383009
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -38944,7 +38946,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.8697086
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -39040,7 +39042,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.805142
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -39186,22 +39188,22 @@ PrefabInstance:
     - target: {fileID: 1382354115921909358, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.04
+      value: 0.018
       objectReference: {fileID: 0}
     - target: {fileID: 1382354115921909358, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.647
+      value: 0.717
       objectReference: {fileID: 0}
     - target: {fileID: 1382354115921909358, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0.2
+      value: 0.24
       objectReference: {fileID: 0}
     - target: {fileID: 1382354115921909358, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0.05
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1382354115921909358, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
         type: 3}
@@ -39236,12 +39238,32 @@ PrefabInstance:
     - target: {fileID: 1382354115921909358, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 3.4472654
+      value: 5.6448975
       objectReference: {fileID: 0}
     - target: {fileID: 1382354115921909358, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.1173936
+      value: 0.22690074
+      objectReference: {fileID: 0}
+    - target: {fileID: 5512006293917915097, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 5512006293917915097, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6739763
+      objectReference: {fileID: 0}
+    - target: {fileID: 5512006293917915097, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.11875
+      objectReference: {fileID: 0}
+    - target: {fileID: 5512006293917915097, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb, type: 3}

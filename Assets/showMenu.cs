@@ -30,10 +30,12 @@ public class showMenu : MonoBehaviourPun
             return;
         }
 
-    	if (Input.GetKeyDown("1")) {
-    		if (Input.GetKeyDown("1")) {
-    			GetComponent<buildingPlacement>().setBuilding(options[0]);
-    		}
-    	}
+		if (Input.GetKeyDown("1")) {
+			GetComponent<buildingPlacement>().setBuilding(options[0]); // Town
+		}
+        if (Input.GetKeyDown("2")) {
+            Debug.Log("setBuilding");
+            GetComponent<buildingPlacement>().setBuilding(options[1]); // Guard tower
+        }
     }
 }

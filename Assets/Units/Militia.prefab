@@ -126,9 +126,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 2
+  m_Height: 2.9972172
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1.0009348, z: 0}
 --- !u!114 &7660449444357449806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,14 +141,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba19fca8704836499dd9058b931a928, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabName: 
+  woodCost: 0
+  foodCost: 0
+  maxHP: 0
+  lastHP: 0
   hp: 0
   id: 0
   attackers: []
   photonView: {fileID: 0}
+  movable: 0
   atk: 0
   rng: 0
   isAttacking: 0
+  isSelected: 0
   selectable: 0
+  updateTargetLive: 0
+  attackee: {fileID: 0}
 --- !u!120 &4951245817397206874
 LineRenderer:
   m_ObjectHideFlags: 0

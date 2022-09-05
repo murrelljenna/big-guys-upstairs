@@ -145,6 +145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba19fca8704836499dd9058b931a928, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canAttack: 1
+  prefabName: 
   woodCost: 0
   foodCost: 0
   maxHP: 0
@@ -153,12 +155,14 @@ MonoBehaviour:
   id: 0
   attackers: []
   photonView: {fileID: 0}
+  movable: 0
   atk: 0
   rng: 0
   isAttacking: 0
   isSelected: 0
   selectable: 0
   updateTargetLive: 0
+  attackee: {fileID: 0}
 --- !u!120 &4951245817397206874
 LineRenderer:
   m_ObjectHideFlags: 0

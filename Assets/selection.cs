@@ -146,7 +146,9 @@ public class selection : MonoBehaviour
 								)
 							);
 
-							unit.gameObject.GetComponent<Unit>().move(destination);
+							if (unit.gameObject.GetComponent<NavMeshAgent>() != null) {
+								unit.gameObject.GetComponent<Unit>().move(destination);
+							}
 
 							/* Alternate between offsetting x and y so that all units aren't trying to navigate to same location */
 
@@ -173,7 +175,9 @@ public class selection : MonoBehaviour
 			selected.Remove(unit.GetComponent<Collider>().gameObject);
 		}
 
-		unit.GetComponent<Collider>().gameObject.GetComponent<LineRenderer>().enabled = false;
+		if (unit.GetComponent<Collider>().gameObject.GetComponent<LineRenderer>() != null) {
+			unit.GetComponent<Collider>().gameObject.GetComponent<LineRenderer>().enabled = false;
+		}
     }
 
     void clearSelection() {

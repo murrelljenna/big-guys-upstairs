@@ -22,7 +22,7 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
 	public int maxHP;
 	public int lastHP;
 
-	private GameObject canvas;
+	protected GameObject canvas;
     private SimpleHealthBar healthBar;
 
     public string color;
@@ -32,6 +32,7 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     public bool dead = false;
 	public List<Unit> attackers;
 	public PhotonView photonView;
+    protected Rigidbody rigidBody;
 
     protected TooltipController tooltips;
     //protected bool underAttack;
@@ -49,6 +50,8 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     		this.enabled = false;
     	}
     	this.maxHP = hp;
+
+        this.rigidBody = this.GetComponent<Rigidbody>();
 
         GameObject tooltipsGameObj = GameObject.Find("Tooltips");
         if (tooltipsGameObj != null) {
@@ -85,6 +88,11 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
         	healthBar = canvas.transform.Find("Simple Bar").transform.Find("Status Fill 01").GetComponent<SimpleHealthBar>();
         	canvas.SetActive(false);
         }
+    }
+
+    [PunRPC]
+    public void takeDamageRPC(int damage) {
+        takeDamage(damage);
     }
 
     // Update is called once per frame

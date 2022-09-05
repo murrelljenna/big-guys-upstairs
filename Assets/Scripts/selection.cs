@@ -161,7 +161,13 @@ public class selection : MonoBehaviour
         int runCount = 0;
 
         while (units.Count > 0) {
-            Unit unit = units.Dequeue().GetComponent<Unit>();
+            GameObject unitObj = units.Dequeue();
+
+            if (unitObj == null) {
+                continue;
+            }
+
+            Unit unit = unitObj.GetComponent<Unit>();
             Vector3 destination = points.Dequeue();
 
             if (unit != null && unit.gameObject.GetComponent<NavMeshAgent>() != null) {

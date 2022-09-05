@@ -29,11 +29,11 @@ public class Unit : Attackable
     protected float responseRange;
 
     private int frameCount;
-    private NavMeshAgent navAgent;
+    protected NavMeshAgent navAgent;
 
     public override void OnEnable() {
         if (this.photonView.IsMine) {
-            InvokeRepeating("checkEnemiesInRange", 0.5f, 0.5f);
+            InvokeRepeating("checkEnemiesInRange", 0.2f, 0.2f);
         }
         navAgent = this.gameObject.GetComponent<NavMeshAgent>();
 
@@ -50,6 +50,10 @@ public class Unit : Attackable
     public override void Update()
     {
         if (dead) {
+            rigidBody.velocity = Vector3.zero;
+            rigidBody.angularVelocity = Vector3.zero;
+            rigidBody.isKinematic = true;
+            canvas.SetActive(false);
             return;
         }
 
@@ -96,10 +100,6 @@ public class Unit : Attackable
             animator.SetFloat("speed", 0f);
         }
 
-        if (navAgent != null) {
-            this.gameObject.GetComponent<NavMeshAgent>().isStopped = true;
-        }
-
         this.GetComponent<Collider>().enabled = false;
         CancelInvoke();
 
@@ -114,6 +114,10 @@ public class Unit : Attackable
 
         AudioSource[] sources = this.gameObject.transform.Find("DestroySounds").GetComponents<AudioSource>();
         sources[UnityEngine.Random.Range(0, sources.Length)].Play((ulong)UnityEngine.Random.Range(0l, 2l));
+
+        if (navAgent != null) {
+            this.gameObject.GetComponent<NavMeshAgent>().isStopped = true;
+        }
     }
 
     public virtual void move(Vector3 destination) {
@@ -177,7 +181,7 @@ public class Unit : Attackable
                 photonView.RPC("stopMovement", RpcTarget.All);
 
                 this.inFight = true;
-				InvokeRepeating("attack", attackRate, attackRate);
+				InvokeRepeating("attack", 0f, attackRate);
 			}
 		}
     }
@@ -200,7 +204,6 @@ public class Unit : Attackable
 
         this.inFight = true;
 
-        NavMeshAgent navAgent = this.gameObject.GetComponent<NavMeshAgent>();
         if (navAgent != null) {
             this.gameObject.GetComponent<NavMeshAgent>().isStopped = true;
         }
@@ -228,6 +231,7 @@ public class Unit : Attackable
 
         updateTargetLive = false;
     	CancelInvoke("attack");
+        CancelInvoke("fireProjectile");
     	this.gameObject.GetComponent<NavMeshAgent>().isStopped = true;
     	this.gameObject.GetComponent<NavMeshAgent>().isStopped = false;
         this.attackeeId = 0;
@@ -333,7 +337,7 @@ public class Unit : Attackable
         }
     }
 
-    private void faceTarget(Transform target) {
+    protected void faceTarget(Transform target) {
         UnityEngine.AI.NavMeshAgent agent = this.GetComponent<UnityEngine.AI.NavMeshAgent>();
 
         if (agent != null) {

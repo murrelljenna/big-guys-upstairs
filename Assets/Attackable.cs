@@ -7,11 +7,14 @@ using Photon.Realtime;
 
 public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
 {
+	public int woodCost = 0;
+	public int foodCost = 0;
+
 	public int hp;
 	public int id;
 	public List<Unit> attackers;
 	public PhotonView photonView;
-	List<Color> colours = new List<Color>() { Color.black, Color.blue, Color.cyan, Color.gray, Color.green, Color.magenta, Color.red, Color.white, Color.yellow };
+	List<Color> colours = new List<Color>() { Color.black, Color.blue, Color.cyan, Color.gray, Color.green, Color.magenta, Color.red, Color.yellow };
 
     // Start is called before the first frame update
     void Start()
@@ -33,12 +36,15 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-
     public virtual void onCapture() {
 
     }
 
-    public void takeDamage(int damage) {
+    public virtual void onDeCapture() {
+
+    }
+
+    public virtual void takeDamage(int damage) {
     	this.hp -= damage;
     }
 

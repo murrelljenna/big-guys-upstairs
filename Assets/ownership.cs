@@ -30,6 +30,10 @@ public class ownership : MonoBehaviourPunCallbacks, IPunObservable
         photonView.RPC("captureRPC", RpcTarget.All, player.playerID);
     }
 
+    public void deCapture() {
+        this.gameObject.GetComponent<PhotonView>().RPC("deCaptureRPC", RpcTarget.All);
+    }
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             // We own this player: send the others our data
@@ -48,11 +52,21 @@ public class ownership : MonoBehaviourPunCallbacks, IPunObservable
         GameObject player = GameObject.Find(playerID.ToString());
         if (player != null) {
             this.playerColor = player.GetComponent<game.assets.Player>().playerColor;
-            this.gameObject.GetComponent<Attackable>().onCapture();
             Debug.Log("CAPTURE");
             this.gameObject.GetComponent<Renderer>().material.color = player.GetComponent<game.assets.Player>().playerColor;
             owned = true;
             this.owner = playerID;
+
+            this.gameObject.GetComponent<Attackable>().onCapture(); // Callback function that is overriden by various classes to respond to capture.
         }
+    }
+
+    [PunRPC] public void deCaptureRPC() {
+        Debug.Log("Inside ownership");
+        Debug.Log(owned);
+        this.gameObject.GetComponent<Attackable>().onDeCapture();
+        owned = false;
+        owner = 0;
+        playerColor = new Color (0, 0, 0, 0);
     }
 }

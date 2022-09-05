@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 	GameObject localPlayer;
 
 	[SerializeField]
-	List<Color> colours = new List<Color>() { Color.black, Color.blue, Color.cyan, Color.gray, Color.green, Color.magenta, Color.red, Color.white, Color.yellow };
+	List<Color> colours = new List<Color>() { Color.black, Color.blue, Color.cyan, Color.gray, Color.green, Color.magenta, Color.red, Color.yellow };
 	[SerializeField]
 	List<int> possibleColours;
 
@@ -49,7 +49,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 				ExitGames.Client.Photon.Hashtable playerSettings = new ExitGames.Client.Photon.Hashtable();
 		    	playerSettings.Add("color", possibleColours[index].ToString());
 		    	possibleColours.RemoveAt(index);
-		    	Debug.Log(index);
 
 		    	PhotonNetwork.SetPlayerCustomProperties(playerSettings);
 		    }
@@ -89,9 +88,21 @@ public class GameManager : MonoBehaviourPunCallbacks
 		}
 	}
 
-	//public override void IInRoomCallbacks.OnMasterClientSwitched(Player newMasterClient) {
-		// Put 
-	//}
+	public override void OnMasterClientSwitched(Player newMasterClient) {
+		// Transfer all resources
+
+
+		GameObject[] woodResources = GameObject.FindGameObjectsWithTag("wood");
+		GameObject[] foodResources = GameObject.FindGameObjectsWithTag("food");
+
+		for (int i = 0; i < woodResources.Length; i++) {
+			woodResources[i].GetComponent<PhotonView>().TransferOwnership(newMasterClient);
+		}
+
+		for (int i = 0; i < foodResources.Length; i++) {
+			foodResources[i].GetComponent<PhotonView>().TransferOwnership(newMasterClient);
+		}
+	}
 
 	public override void OnPlayerEnteredRoom(Player other) {
     	Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName);
@@ -102,8 +113,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 	    	ExitGames.Client.Photon.Hashtable playerSettings = new ExitGames.Client.Photon.Hashtable();
 	    	playerSettings.Add("color", possibleColours[index].ToString());
 	    	possibleColours.RemoveAt(index);
-	    	Debug.Log(index);
-
+	    	
 	    	other.SetCustomProperties(playerSettings);
 
 	        Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
@@ -111,6 +121,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 	}
 
 	void OnPhotonInstantiate(PhotonMessageInfo info) {
+    	localPlayer.GetComponent<PhotonView>().RPC("setColour", RpcTarget.All, Convert.ToInt32(PhotonNetwork.LocalPlayer.CustomProperties["color"]));
+
 	    if (PhotonNetwork.IsMasterClient) {
 	        Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
 	    }
@@ -118,6 +130,17 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 	public override void OnPlayerLeftRoom(Player other) {
 	    Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName); // seen when other disconnects
+
+	    GameObject[] woodResources = GameObject.FindGameObjectsWithTag("wood");
+		GameObject[] foodResources = GameObject.FindGameObjectsWithTag("food");
+
+		for (int i = 0; i < woodResources.Length; i++) {
+			woodResources[i].GetComponent<ownership>().deCapture();
+		}
+
+		for (int i = 0; i < foodResources.Length; i++) {
+			foodResources[i].GetComponent<ownership>().deCapture();
+		}
 
 	    if (PhotonNetwork.IsMasterClient)
 	    {

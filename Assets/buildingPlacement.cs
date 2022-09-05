@@ -37,6 +37,7 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
 
 	    	if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)) {
 	    		currentBuilding.position = hit.point;
+                currentBuilding.tag = "buildingGhost";
 
 	    		// Left-click to place building
 
@@ -44,10 +45,11 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
 	    			int wood = currentBuilding.GetComponent<Town>().woodCost;
 	    			int food = currentBuilding.GetComponent<Town>().foodCost;
 
-	    			if (wallet.canAfford(wood, food)) {
+                    Debug.Log(townInRange(hit.point, 20f));
+
+	    			if (wallet.canAfford(wood, food) && !townInRange(hit.point, 20f)) { // If can afford and no town radius overlapping
 	    				wallet.makeTransaction(wood, food);
                         GameObject placedBuilding = PhotonNetwork.Instantiate("Town", hit.point, Quaternion.identity, 0);
-                        //placedBuilding.GetComponent<LineRenderer>().enabled = false;
                         placedBuilding.GetComponent<ownership>().capture(wallet);
                         Destroy(currentBuilding.gameObject);
 	    			} else {
@@ -65,5 +67,29 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
     	}
     	
     	currentBuilding = ((GameObject)Instantiate(building)).transform;
+    }
+
+    private bool townInRange(Vector3 location, float range) {
+        
+        Collider[] hitColliders = Physics.OverlapSphere(location, range);
+        for (int i = 0; i < hitColliders.Length; i++) {
+            if (hitColliders[i].tag == "town") {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private bool townInRange(Vector3 location, float range, int ownerID) {
+        Collider[] hitColliders = Physics.OverlapSphere(location, range);
+        for (int i = 0; i < hitColliders.Length; i++) {
+            Debug.Log(hitColliders[i].tag);
+            if (hitColliders[i].tag == "town" && hitColliders[i].GetComponent<ownership>().owner == ownerID) { // If there is a town in range that belongs to the player.
+                return true;
+            }
+        }
+
+        return false;
     }
 }

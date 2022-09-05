@@ -136,13 +136,13 @@ public class selection : MonoBehaviour
 
 							destination = new Vector3(
 								UnityEngine.Random.Range(
-									hit.point.x - (0.1f * selected.Count), 
-									hit.point.x + (0.1f * selected.Count)
+									hit.point.x - (0.1f * (selected.Count/2)), 
+									hit.point.x + (0.1f * (selected.Count/2))
 								), 
 								0, 
 								UnityEngine.Random.Range(
-									hit.point.z - (0.1f * selected.Count), 
-									hit.point.z + (0.1f * selected.Count)
+									hit.point.z - (0.1f * (selected.Count/2)), 
+									hit.point.z + (0.1f * (selected.Count/2))
 								)
 							);
 

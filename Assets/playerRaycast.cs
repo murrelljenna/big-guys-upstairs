@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,30 +26,29 @@ public class playerRaycast : MonoBehaviour
 
 		Ray ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
 	    if (Physics.Raycast(ray, out hit, Mathf.Infinity, resourceMask)) {
-            
-            if (Input.GetKeyDown(KeyCode.E) && hit.collider.GetComponent<ownership>().owned == false) {
+            ResourceTile tile = hit.collider.gameObject.GetComponent<ResourceTile>();
+
+            if (Input.GetKeyDown(KeyCode.E) && hit.collider.GetComponent<ownership>().owned == false && player.canAfford(tile.woodCost, tile.foodCost)) {
             	Collider[] hitColliders = Physics.OverlapSphere(hit.collider.bounds.center, 10f);
             	for (int i = 0; i < hitColliders.Length; i++) {
             		Debug.Log(hitColliders[i].tag);
             		if (hitColliders[i].tag == "town" && hitColliders[i].GetComponent<ownership>().owner == player.playerID) { // If there is a town in range that belongs to the player.
-                        Debug.Log(this.transform.parent.parent.gameObject.name);
+                        player.makeTransaction(tile.woodCost, tile.foodCost);
 						hit.collider.GetComponent<ownership>().capture(player); 
-						
-						GameObject Player = this.transform.parent.parent.gameObject;
-    					Player.GetComponent<game.assets.Player>().addResource(hit.collider.tag);
 						break;
             		} 
-
             	}    	      	
             }
 	    }
+
+        
 
         /* Interaction with towns */ 
 
         ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, townMask)) { 
             if (Input.GetKeyDown(KeyCode.E) && hit.collider.GetComponent<ownership>().owner == player.playerID) {
-                int wood = 0; // Please replace with real values soon.
+                int wood = 1; // Please replace with real values soon.
                 int food = 5;
 
                 if (player.canAfford(wood, food)) {
@@ -75,5 +74,29 @@ public class playerRaycast : MonoBehaviour
         float y = Mathf.Cos (angle) * radius;
 
         return new Vector2(x, y);
+    }
+
+    private bool townInRange(Vector3 location, float range) {
+        
+        Collider[] hitColliders = Physics.OverlapSphere(location, range);
+        for (int i = 0; i < hitColliders.Length; i++) {
+            if (hitColliders[i].tag == "town") {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private bool townInRange(Vector3 location, float range, int ownerID) {
+        Collider[] hitColliders = Physics.OverlapSphere(location, range);
+        for (int i = 0; i < hitColliders.Length; i++) {
+            Debug.Log(hitColliders[i].tag);
+            if (hitColliders[i].tag == "town" && hitColliders[i].GetComponent<ownership>().owner == ownerID) { // If there is a town in range that belongs to the player.
+                return true;
+            }
+        }
+
+        return false;
     }
 }

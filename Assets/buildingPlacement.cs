@@ -62,7 +62,7 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
                             }
                         }
 	    			} else {
-	    				Debug.Log("Put menu notification  that player cant afford");
+	    				Debug.Log("Put menu notification that player cant afford");
 	    			}
 	    		}
 	    	}
@@ -97,7 +97,6 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
     private bool townInRange(Vector3 location, float range, int ownerID) {
         Collider[] hitColliders = Physics.OverlapSphere(location, range);
         for (int i = 0; i < hitColliders.Length; i++) {
-            Debug.Log(hitColliders[i].tag);
             if (hitColliders[i].tag == "town" && hitColliders[i].gameObject.GetComponent<ownership>().owner == ownerID) { // If there is a town in range that belongs to the player.
                 return true;
             }

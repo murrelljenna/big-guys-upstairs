@@ -31,7 +31,6 @@ public class playerRaycast : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E) && hit.collider.GetComponent<ownership>().owned == false && player.canAfford(tile.woodCost, tile.foodCost)) {
             	Collider[] hitColliders = Physics.OverlapSphere(hit.collider.bounds.center, 10f);
             	for (int i = 0; i < hitColliders.Length; i++) {
-            		Debug.Log(hitColliders[i].tag);
             		if (hitColliders[i].tag == "town" && hitColliders[i].GetComponent<ownership>().owner == player.playerID) { // If there is a town in range that belongs to the player.
                         player.makeTransaction(tile.woodCost, tile.foodCost);
 						hit.collider.GetComponent<ownership>().capture(player); 
@@ -91,7 +90,6 @@ public class playerRaycast : MonoBehaviour
     private bool townInRange(Vector3 location, float range, int ownerID) {
         Collider[] hitColliders = Physics.OverlapSphere(location, range);
         for (int i = 0; i < hitColliders.Length; i++) {
-            Debug.Log(hitColliders[i].tag);
             if (hitColliders[i].tag == "town" && hitColliders[i].GetComponent<ownership>().owner == ownerID) { // If there is a town in range that belongs to the player.
                 return true;
             }

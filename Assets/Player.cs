@@ -105,7 +105,6 @@ namespace game.assets {
 
         [PunRPC]
         public void setColour(int colourIndex) {
-            Debug.Log(colourIndex);
             playerColor = colours[colourIndex];
             this.gameObject.transform.Find("FPSController").transform.Find("Capsule").GetComponent<Renderer>().material.color = playerColor;
         }

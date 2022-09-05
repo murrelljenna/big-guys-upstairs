@@ -5,7 +5,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class ownership : MonoBehaviourPunCallbacks, IPunObservable
+public class ownership : MonoBehaviourPunCallbacks
 {
 	public bool owned = false;
     [SerializeField]
@@ -25,20 +25,6 @@ public class ownership : MonoBehaviourPunCallbacks, IPunObservable
 
     public void deCapture() {
         this.gameObject.GetComponent<PhotonView>().RPC("deCaptureRPC", RpcTarget.AllBuffered);
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        if (stream.IsWriting) {
-            // We own this player: send the others our data
-            stream.SendNext(owner);
-            stream.SendNext(owned);
-        }
-        else
-        {
-            // Network player, receive data
-            owner = (int)stream.ReceiveNext();
-            owned = (bool)stream.ReceiveNext();
-        }
     }
 
     public game.assets.Player getPlayer() {

@@ -822,7 +822,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8516720011466550738}
-  - {fileID: 6575906096487492377}
+  - {fileID: 6575906096487199886}
   - {fileID: 3737100363160621851}
   - {fileID: 2981650126406730582}
   - {fileID: 1098641302169997311}
@@ -862,7 +862,6 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 6994968554349682928}
   - {fileID: 6724740274714696669}
   viewIdField: 0
   InstantiationId: 0
@@ -8500,7 +8499,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43cc1a347ac43cd498e91db9fb766337, type: 3}
---- !u!4 &6575906096487492377 stripped
+--- !u!4 &6575906096487199886 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 496784, guid: 43cc1a347ac43cd498e91db9fb766337,
     type: 3}

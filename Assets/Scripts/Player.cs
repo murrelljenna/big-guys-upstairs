@@ -57,7 +57,7 @@ namespace game.assets {
             cityCount = 0;
 
             wood = 150;
-            food = 100;
+            food = 400;
 
             woodIt = 2;
             foodIt = 2; 
@@ -118,13 +118,17 @@ namespace game.assets {
         }
 
         public void addUnit(int count = 1) {
-            noUnits+=count;
-            GameObject.Find("Pop_Count").GetComponent<Text>().text = noUnits.ToString();
+            if (this.photonView.IsMine) {
+                noUnits+=count;
+                GameObject.Find("Pop_Count").GetComponent<Text>().text = noUnits.ToString();
+            }
         }
 
         public void addUnitMax(int count = 1) {
-            maxUnits+=count;
-            GameObject.Find("Pop_Max").GetComponent<Text>().text = maxUnits.ToString();
+            if (this.photonView.IsMine) {
+                maxUnits+=count;
+                GameObject.Find("Pop_Max").GetComponent<Text>().text = maxUnits.ToString();
+            }
         }
 
         public bool maxedUnits() {

@@ -65,7 +65,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 1
 --- !u!114 &5123192314128408069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,11 +96,10 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 7660449444357449806}
-  - {fileID: 5123192314128408069}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -143,7 +142,7 @@ MonoBehaviour:
   id: 0
   dead: 0
   attackers: []
-  photonView: {fileID: 0}
+  photonView: {fileID: 6878699215683291197}
   movable: 0
   atk: 0
   rng: 0

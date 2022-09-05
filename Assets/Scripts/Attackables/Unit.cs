@@ -7,7 +7,7 @@ using UnityEngine.AI;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class Unit : Attackable
+public class Unit : Attackable, IPunObservable
 {
     public bool movable;
 	public int atk; // Damage inflicted per second
@@ -28,10 +28,24 @@ public class Unit : Attackable
 	protected int lastNoEnemies = 0;
     protected float responseRange;
 
-    private int frameCount;
+    private int frameCount = 0;
+    private int serializeCount = 0;
     protected NavMeshAgent navAgent;
 
+    Vector3 receivedPosition;
+ 
+    private float lastSynchronizationTime = 0f;
+    private float syncDelay = 0f;
+    private float syncTime = 0f;
+
+    private Vector3 velocity;
+    private Vector3 networkPosition;
+    private Quaternion networkRotation;
+
     public override void OnEnable() {
+        PhotonNetwork.SendRate = 15;
+        PhotonNetwork.SerializationRate = 15;
+
         if (this.photonView.IsMine) {
             InvokeRepeating("checkEnemiesInRange", 0.2f, 0.2f);
         }
@@ -65,7 +79,7 @@ public class Unit : Attackable
             // If unit is currently attacking another unit (attackable that can move), update that target's position every frame.
             if (updateTargetLive && frameCount % 10 == 0) {
                 if (attackee != null && this.gameObject.GetComponent<NavMeshAgent>() != null && this.photonView.IsMine) {
-                    this.photonView.RPC("setDestination", RpcTarget.All, attackee.gameObject.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
+                    setDestination(attackee.gameObject.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
                 }
             }
 
@@ -75,10 +89,40 @@ public class Unit : Attackable
                     moveOrdered = false;
                 }
             }
+        } else {
+            animator.SetFloat("speed", velocity.magnitude);
         }
 
         frameCount++;
         base.Update();
+    }
+
+    public void FixedUpdate() {
+        if (!photonView.IsMine) {
+            this.transform.position = Vector3.MoveTowards(this.transform.position, networkPosition, Time.fixedDeltaTime * 2.0f);
+            this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.IsWriting)
+        {
+            // We own this player: send the others our data
+            stream.SendNext(gameObject.transform.position);
+            stream.SendNext(gameObject.transform.rotation);
+            stream.SendNext(this.GetComponent<UnityEngine.AI.NavMeshAgent>().velocity);
+        }
+        else
+        {
+
+            // Network player, receive data
+            networkPosition = (Vector3) stream.ReceiveNext();
+            networkRotation = (Quaternion) stream.ReceiveNext();
+            velocity = (Vector3) stream.ReceiveNext();
+
+            float lag = Mathf.Abs((float) (PhotonNetwork.Time - info.timestamp));
+            networkPosition += velocity * lag;
+        }
     }
 
     public override void onCapture() {
@@ -127,16 +171,25 @@ public class Unit : Attackable
         AudioSource source = sources[UnityEngine.Random.Range(0, sources.Length)];
         AudioSource.PlayClipAtPoint(source.clip, this.transform.position);
 
-        photonView.RPC("cancelAndSetDestination", RpcTarget.AllBuffered, destination);
+        cancelAndSetDestination(destination);
     }
 
+    /*
+    Local calculation of paths sometimes diverge, every 10 seconds or so, update
+    the other player's instances of your units with the position as it is in
+    your game.
+    */
+
     [PunRPC]
+    public virtual void syncPosition(Vector3 position) {
+        this.transform.position = position;
+    }
+
     protected virtual void cancelAndSetDestination(Vector3 destination) {
         cancelOrdersRPC();
         setDestination(destination);
     }
 
-    [PunRPC]
     protected virtual void setDestination(Vector3 destination) {
         this.gameObject.GetComponent<NavMeshAgent>().destination = (destination);
     }
@@ -176,7 +229,7 @@ public class Unit : Attackable
                 attackee.attackers.Add(this);
                 isAttacking = true;
 
-				this.photonView.RPC("setDestination", RpcTarget.All, attackee.gameObject.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
+				setDestination(attackee.gameObject.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
 				yield return new WaitUntil (() => isInRange(thingToAttack));
                 photonView.RPC("stopMovement", RpcTarget.All);
 

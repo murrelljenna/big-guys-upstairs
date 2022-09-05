@@ -62,11 +62,9 @@ public class ownership : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     [PunRPC] public void deCaptureRPC() {
-        Debug.Log("Inside ownership");
-        Debug.Log(owned);
         this.gameObject.GetComponent<Attackable>().onDeCapture();
         owned = false;
         owner = 0;
-        playerColor = new Color (0, 0, 0, 0);
+        playerColor = new Color (0, 255, 255, 255);
     }
 }

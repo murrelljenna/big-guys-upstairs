@@ -21,6 +21,8 @@ public class Town : Attackable, IPunObservable
         this.foodCost = 25;
 
         InvokeRepeating("checkEnemiesInRadius", 2f, 2f);
+
+        base.Start();
     }
 
     private void checkEnemiesInRadius() {
@@ -69,8 +71,6 @@ public class Town : Attackable, IPunObservable
             }
         }
 
-        Debug.Log("DESTRROYED");
-
         AudioSource[] sources = this.transform.Find("DestroySounds").GetComponents<AudioSource>();
         AudioSource source = sources[UnityEngine.Random.Range(0, sources.Length)];
         AudioSource.PlayClipAtPoint(source.clip, this.transform.position);
@@ -88,9 +88,6 @@ public class Town : Attackable, IPunObservable
     // Start is called before the first frame update
     public override void Awake() {
         base.Awake();
-        if (!this.gameObject.GetComponent<PhotonView>() != null && !this.gameObject.GetComponent<PhotonView>().IsMine) {
-            this.gameObject.GetComponent<LineRenderer>().enabled = false;
-        }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

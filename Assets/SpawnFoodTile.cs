@@ -8,6 +8,8 @@ using Photon.Realtime;
 public class SpawnFoodTile : SpawnTile
 {
     public override void spawnResource() {
-        PhotonNetwork.Instantiate("Resource_Food", this.transform.position, Quaternion.identity, 0);
+    	if (PhotonNetwork.IsMasterClient) {
+        	PhotonNetwork.InstantiateSceneObject("Resource_Food", this.transform.position, Quaternion.identity, 0);
+        }
     }
 }

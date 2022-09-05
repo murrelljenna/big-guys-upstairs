@@ -7,7 +7,9 @@ using Photon.Realtime;
 
 public class SpawnWoodTile : SpawnTile {
     public override void spawnResource() {
-        PhotonNetwork.Instantiate("Resource_Wood", this.transform.position, Quaternion.identity, 0);
+    	if (PhotonNetwork.IsMasterClient) {
+        	PhotonNetwork.InstantiateSceneObject("Resource_Wood", this.transform.position, Quaternion.identity, 0);
+        }
     }
 }
 

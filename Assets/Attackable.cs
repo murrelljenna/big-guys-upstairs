@@ -10,16 +10,19 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
 	public int woodCost = 0;
 	public int foodCost = 0;
 
+	public int maxHP;
+	public int lastHP;
+
 	public int hp;
 	public int id;
 	public List<Unit> attackers;
 	public PhotonView photonView;
-	List<Color> colours = new List<Color>() { Color.black, Color.blue, Color.cyan, Color.gray, Color.green, Color.magenta, Color.red, Color.yellow };
+	List<Color> colours = new List<Color>() { Color.black, Color.blue, Color.cyan, Color.green, Color.magenta, Color.red, Color.yellow };
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
-        
+    	this.maxHP = hp;
     }
 
     public virtual void Awake() {

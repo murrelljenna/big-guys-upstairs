@@ -37,13 +37,12 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
 
 	    	if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)) {
 	    		currentBuilding.position = hit.point;
-                currentBuilding.tag = "buildingGhost";
 
 	    		// Left-click to place building
 
 	    		if (Input.GetMouseButtonDown(0)) {
-	    			int wood = currentBuilding.GetComponent<Town>().woodCost;
-	    			int food = currentBuilding.GetComponent<Town>().foodCost;
+                    int wood = currentBuilding.GetComponent<Town>().woodCost;
+                    int food = currentBuilding.GetComponent<Town>().foodCost;
 
                     Debug.Log(townInRange(hit.point, 20f));
 
@@ -67,6 +66,8 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
     	}
     	
     	currentBuilding = ((GameObject)Instantiate(building)).transform;
+        currentBuilding.tag = "buildingGhost";
+        currentBuilding.GetComponent<Renderer>().material.color = wallet.playerColor;
     }
 
     private bool townInRange(Vector3 location, float range) {

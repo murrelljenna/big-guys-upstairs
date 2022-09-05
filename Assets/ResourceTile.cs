@@ -18,6 +18,8 @@ public class ResourceTile : Attackable
         ownerInfo = this.gameObject.GetComponent<ownership>();
         this.id = this.gameObject.GetComponent<PhotonView>().ViewID;
         this.gameObject.name = id.ToString();
+
+        base.Start();
     }
 
     // Update is called once per frame
@@ -33,15 +35,17 @@ public class ResourceTile : Attackable
     }
 
     public override void destroyObject() {
-        for (int i = attackers.Count - 1; i >= 0; i--) {
-            attackers[i].cancelOrders();
-        };
+        if (attackers.Count > 0) {
+            for (int i = attackers.Count - 1; i >= 0; i--) {
+                attackers[i].cancelOrders();
+            };
+        }
 
-        this.gameObject.transform.Find("RegularFlag").GetComponent<Renderer>().material.color = new Color(0, 255, 255, 255);
+        this.gameObject.transform.Find("RegularFlag").GetComponent<Renderer>().material.color = Color.white;
    		GameObject.Find(ownerInfo.owner.ToString()).GetComponent<game.assets.Player>().loseResource(resType, yield);
         
         ownerInfo.owned = false;
         ownerInfo.owner = 0;
-        this.hp = 25;
+        this.hp = this.maxHP;
     }
 }

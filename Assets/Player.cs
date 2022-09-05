@@ -18,7 +18,7 @@ namespace game.assets {
 
         public Color playerColor;
 
-        List<Color> colours = new List<Color>() { Color.black, Color.blue, Color.cyan, Color.gray, Color.green, Color.magenta, Color.red, Color.white, Color.yellow };
+        List<Color> colours = new List<Color>() { Color.black, Color.blue, Color.cyan, Color.green, Color.magenta, Color.red, Color.yellow };
 
         // Start is called before the first frame update
         void Start()
@@ -105,6 +105,7 @@ namespace game.assets {
 
         [PunRPC]
         public void setColour(int colourIndex) {
+            Debug.Log(colourIndex);
             playerColor = colours[colourIndex];
             this.gameObject.transform.Find("FPSController").transform.Find("Capsule").GetComponent<Renderer>().material.color = playerColor;
         }

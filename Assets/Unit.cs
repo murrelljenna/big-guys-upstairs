@@ -9,12 +9,18 @@ using Photon.Realtime;
 
 public class Unit : Attackable
 {
+    private Camera playerCamera;
+
 	public int atk; // Damage inflicted per second
 	public float rng = 0.02f; // x/z Range of attack
 	public bool isAttacking = false;
+    public bool isSelected = false;
 	public bool selectable = false;
 
     public bool updateTargetLive = false;
+
+    private GameObject canvas;
+    private SimpleHealthBar healthBar;
 
 	PhotonView photonView;
 	Attackable attackee = null;
@@ -24,10 +30,11 @@ public class Unit : Attackable
     void OnEnable() {
     	photonView = PhotonView.Get(this);
     	InvokeRepeating("checkEnemiesInRange", 2.0f, 2.0f);
-    	Debug.Log("ARF");
-    	//
-    	Debug.Log(GetComponent<ownership>().playerColor);
-    	Debug.Log(gameObject.transform.Find("Capsule"));
+
+        canvas = this.gameObject.transform.Find("Canvas").gameObject;
+        healthBar = canvas.transform.Find("Simple Bar").transform.Find("Status Fill 01").GetComponent<SimpleHealthBar>();
+
+        playerCamera = GameObject.Find("FirstPersonCharacter").GetComponent<Camera>(); 
     }
 
     // Update is called once per frame
@@ -37,8 +44,15 @@ public class Unit : Attackable
         	cancelOrders();
         }
 
+        canvas.transform.LookAt(transform.position + playerCamera.transform.rotation * Vector3.forward, playerCamera.transform.rotation * Vector3.up);   
+
+        if (this.hp != this.lastHP) {
+            healthBar.UpdateBar(this.hp, this.maxHP);
+        }
+
+        // If unit is currently attacking another unit (attackable that can move), update that target's position every frame.
+
         if (updateTargetLive == true && attackee != null) {
-            Debug.Log(attackee.gameObject.transform.position);
             this.gameObject.GetComponent<NavMeshAgent>().destination = attackee.gameObject.transform.position;
         }
 
@@ -175,6 +189,14 @@ public class Unit : Attackable
                 lastNoEnemies = hitColliders.Length;
             }
         }  
+    }
+
+    public void onSelect() {
+
+    }
+
+    public void onDeSelect() {
+        
     }
 
     void exitBuilding() {

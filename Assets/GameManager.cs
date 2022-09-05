@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 	GameObject localPlayer;
 
 	[SerializeField]
-	List<Color> colours = new List<Color>() { Color.black, Color.blue, Color.cyan, Color.gray, Color.green, Color.magenta, Color.red, Color.yellow };
+	List<Color> colours = new List<Color>() { Color.black, Color.blue, Color.cyan, Color.green, Color.magenta, Color.red, Color.yellow };
 	[SerializeField]
 	List<int> possibleColours;
 
@@ -42,20 +42,27 @@ public class GameManager : MonoBehaviourPunCallbacks
 		    		resourceSpawners[i].GetComponent<SpawnTile>().spawnResource();
 				}
 
-				possibleColours = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+				for (int i = 0; i < colours.Count; i++) {
+					possibleColours.Add(i);
+				}
 
 	    		int index = UnityEngine.Random.Range(0, possibleColours.Count);
 
-				ExitGames.Client.Photon.Hashtable playerSettings = new ExitGames.Client.Photon.Hashtable();
-		    	playerSettings.Add("color", possibleColours[index].ToString());
+				ExitGames.Client.Photon.Hashtable playerColour = new ExitGames.Client.Photon.Hashtable();
+		    	playerColour.Add("color", possibleColours[index].ToString());
 		    	possibleColours.RemoveAt(index);
 
-		    	PhotonNetwork.SetPlayerCustomProperties(playerSettings);
+		    	PhotonNetwork.SetPlayerCustomProperties(playerColour);
 		    }
 		    
 		    // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
 		    localPlayer = PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(35f,0f,35f), Quaternion.identity, 0);
 		    localPlayer.GetComponent<game.assets.Player>().playerColor = colours[Convert.ToInt32(PhotonNetwork.LocalPlayer.CustomProperties["color"])];
+
+		    ExitGames.Client.Photon.Hashtable playerSettings = new ExitGames.Client.Photon.Hashtable();
+		    playerSettings.Add("playerid", localPlayer.GetComponent<game.assets.Player>().playerID.ToString());
+		   	PhotonNetwork.SetPlayerCustomProperties(playerSettings);
+
 	    	localPlayer.transform.Find("FPSController").transform.Find("Capsule").GetComponent<MeshRenderer>().material.color = colours[Convert.ToInt32(PhotonNetwork.LocalPlayer.CustomProperties["color"])];
 		}
     }
@@ -76,9 +83,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 	}
 
 	public override void OnPlayerPropertiesUpdate (Player target, ExitGames.Client.Photon.Hashtable changedProps) {
-		Debug.Log("Executing shit");
 		if (localPlayer != null) {
-			Debug.Log("YES!");
+			Debug.Log(PhotonNetwork.LocalPlayer.CustomProperties["color"]);
 
 			localPlayer.GetComponent<PhotonView>().RPC("setColour", RpcTarget.All, Convert.ToInt32(PhotonNetwork.LocalPlayer.CustomProperties["color"]));
 			/*
@@ -90,18 +96,18 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 	public override void OnMasterClientSwitched(Player newMasterClient) {
 		// Transfer all resources
+		/*if (PhotonNetwork.IsMasterClient) {
+			GameObject[] woodResources = GameObject.FindGameObjectsWithTag("wood");
+			GameObject[] foodResources = GameObject.FindGameObjectsWithTag("food");
 
+			for (int i = 0; i < woodResources.Length; i++) {
+				woodResources[i].GetComponent<PhotonView>().TransferOwnership(newMasterClient);
+			}
 
-		GameObject[] woodResources = GameObject.FindGameObjectsWithTag("wood");
-		GameObject[] foodResources = GameObject.FindGameObjectsWithTag("food");
-
-		for (int i = 0; i < woodResources.Length; i++) {
-			woodResources[i].GetComponent<PhotonView>().TransferOwnership(newMasterClient);
-		}
-
-		for (int i = 0; i < foodResources.Length; i++) {
-			foodResources[i].GetComponent<PhotonView>().TransferOwnership(newMasterClient);
-		}
+			for (int i = 0; i < foodResources.Length; i++) {
+				foodResources[i].GetComponent<PhotonView>().TransferOwnership(newMasterClient);
+			}
+		}*/
 	}
 
 	public override void OnPlayerEnteredRoom(Player other) {
@@ -113,7 +119,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 	    	ExitGames.Client.Photon.Hashtable playerSettings = new ExitGames.Client.Photon.Hashtable();
 	    	playerSettings.Add("color", possibleColours[index].ToString());
 	    	possibleColours.RemoveAt(index);
-	    	
+
 	    	other.SetCustomProperties(playerSettings);
 
 	        Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
@@ -131,19 +137,26 @@ public class GameManager : MonoBehaviourPunCallbacks
 	public override void OnPlayerLeftRoom(Player other) {
 	    Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName); // seen when other disconnects
 
-	    GameObject[] woodResources = GameObject.FindGameObjectsWithTag("wood");
-		GameObject[] foodResources = GameObject.FindGameObjectsWithTag("food");
+	    if (PhotonNetwork.IsMasterClient) {
+	    	GameObject[] woodResources = GameObject.FindGameObjectsWithTag("wood");
+			GameObject[] foodResources = GameObject.FindGameObjectsWithTag("food");
 
-		for (int i = 0; i < woodResources.Length; i++) {
-			woodResources[i].GetComponent<ownership>().deCapture();
-		}
+			Debug.Log(foodResources.Length);
 
-		for (int i = 0; i < foodResources.Length; i++) {
-			foodResources[i].GetComponent<ownership>().deCapture();
-		}
+			for (int i = 0; i < woodResources.Length; i++) {
+				Debug.Log(i);
+				if (woodResources[i].GetComponent<ownership>().owner == Convert.ToInt32(other.CustomProperties["playerid"])) {
+					woodResources[i].GetComponent<ownership>().deCapture();
+				}
+			}
 
-	    if (PhotonNetwork.IsMasterClient)
-	    {
+			for (int i = 0; i < foodResources.Length; i++) {
+				Debug.Log(foodResources[i]);
+				if (foodResources[i].GetComponent<ownership>().owner == Convert.ToInt32(other.CustomProperties["playerid"])) {
+					foodResources[i].GetComponent<ownership>().deCapture();
+				}
+			}
+
 	        Debug.LogFormat("OnPlayerLeftRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
 	    }
 	}

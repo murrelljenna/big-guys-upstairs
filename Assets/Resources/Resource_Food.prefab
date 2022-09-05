@@ -103,6 +103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   woodCost: 0
   foodCost: 0
+  maxHP: 0
+  lastHP: 0
   hp: 0
   id: 0
   attackers: []
@@ -172,7 +174,7 @@ GameObject:
   - component: {fileID: 4756639828712298611}
   m_Layer: 9
   m_Name: Render
-  m_TagString: food
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

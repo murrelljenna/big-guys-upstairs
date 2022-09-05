@@ -16897,6 +16897,7 @@ GameObject:
   - component: {fileID: 3113207547553380994}
   - component: {fileID: 5364228202143422356}
   - component: {fileID: 8270601490316820644}
+  - component: {fileID: 36318704282181907}
   m_Layer: 10
   m_Name: Town
   m_TagString: town
@@ -16935,6 +16936,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   woodCost: 50
   foodCost: 50
+  maxHP: 0
+  lastHP: 0
   hp: 0
   id: 0
   attackers: []
@@ -17080,7 +17083,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: 36318704282181907}
   - {fileID: 3609312810182099188}
   - {fileID: 3210064042573744065}
   viewIdField: 0
@@ -17309,6 +17312,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &36318704282181907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5207743826955958044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
 --- !u!1 &5207743826958100336
 GameObject:
   m_ObjectHideFlags: 0

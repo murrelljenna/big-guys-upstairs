@@ -15,16 +15,12 @@ namespace Tests
     {
         PlayerDepositor playerDepositor;
         TransactionalMethod transactionalMethod;
-        private bool callbackCalled = false;
-        void callback()
-        {
-            callbackCalled = true;
-        }
 
         [SetUp]
         public void SetUp()
         {
-            callbackCalled = false;
+            ClearGameObjects();
+
 
             FakeClientSingleton();
 
@@ -33,37 +29,30 @@ namespace Tests
             GameObject goWithTransactionalMethod = new GameObject("Whatevs");
 
             transactionalMethod = goWithTransactionalMethod.AddComponent<TransactionalMethod>();
-            transactionalMethod.canAfford = new UnityEvent();
-            transactionalMethod.cannotAfford = new UnityEvent();
         }
 
-        [UnityTest]
-        public IEnumerator TestTransactionalMethodCanAfford()
+        [Test]
+        public void TestTransactionalMethodCanAfford()
         {
             ResourceSet resourceSet = new ResourceSet(25);
             transactionalMethod.price = resourceSet;
 
             playerDepositor.giveResources(new ResourceSet(26));
 
-            transactionalMethod.canAfford.AddListener(callback);
-            transactionalMethod.Try();
-            yield return null;
+            var result = transactionalMethod.Try();
 
-            Assert.True(callbackCalled);
+            Assert.True(result);
         }
 
-        [UnityTest]
-        public IEnumerator TestTransactionalMethodCantAfford()
+        [Test]
+        public void TestTransactionalMethodCantAfford()
         {
             ResourceSet resourceSet = new ResourceSet(25);
             transactionalMethod.price = resourceSet;
 
-            transactionalMethod.cannotAfford.AddListener(callback);
-            transactionalMethod.Try();
+            var result = transactionalMethod.Try();
 
-            yield return null;
-
-            Assert.False(callbackCalled);
+            Assert.False(result);
         }
     }
 }

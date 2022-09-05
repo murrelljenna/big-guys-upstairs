@@ -8,12 +8,12 @@ namespace game.assets
 
     public class TransactionalMethod : MonoBehaviour
     {
-        public UnityEvent cannotAfford;
-        public UnityEvent canAfford;
+        public UnityEvent cannotAfford = new UnityEvent();
+        public UnityEvent canAfford = new UnityEvent();
         public ResourceSet price;
         IPlayerTransaction transactor;
 
-        public void Try()
+        public bool Try()
         {
             transactor = LocalPlayer.getPlayerDepositor();
             Debug.Log(price.wood);
@@ -22,11 +22,12 @@ namespace game.assets
             {
                 transactor.takeResources(price);
                 canAfford.Invoke();
-                Debug.Log("Taking shit");
+                return true;
             }
             else
             {
                 cannotAfford.Invoke();
+                return false;
             }
         }
     }

@@ -5,6 +5,7 @@ using game.assets.ai;
 using NUnit.Framework;
 using game.assets.player;
 using game.assets.utilities;
+using static Test.TestUtils;
 
 namespace Tests
 {
@@ -18,6 +19,7 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
+            ClearGameObjects();
             GameObject gameManager = new GameObject(GameUtils.MagicWords.GameObjectNames.GameManager);
             localGameManager = gameManager.AddComponent(typeof(LocalGameManager)) as LocalGameManager;
             localGameManager.players = new game.assets.player.Player[2] { new game.assets.player.Player(), new game.assets.player.Player() };
@@ -55,6 +57,12 @@ namespace Tests
             Object.DestroyImmediate(gameObjectWithHealth.GetComponent<Ownership>());
             gameObjectWithHealth.SetAsPlayer(localGameManager.players[1]);
             Assert.True(gameObjectWithHealth.GetComponent<Ownership>().IsEnemy());
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            ClearGameObjects();
         }
     }
 }

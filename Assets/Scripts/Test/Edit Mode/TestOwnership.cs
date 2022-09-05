@@ -5,6 +5,7 @@ using NUnit.Framework;
 using UnityEngine;
 using game.assets.player;
 using game.assets.utilities;
+using static Test.TestUtils;
 
 namespace Tests
 {
@@ -23,6 +24,7 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
+            ClearGameObjects();
             GameObject gameManager = new GameObject(GameUtils.MagicWords.GameObjectNames.GameManager);
             localGameManager = gameManager.AddComponent(typeof(LocalGameManager)) as LocalGameManager;
             localGameManager.players = new game.assets.player.Player[1] { new game.assets.player.Player() };

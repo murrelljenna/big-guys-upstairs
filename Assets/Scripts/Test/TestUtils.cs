@@ -15,5 +15,13 @@ namespace Test
             cs.AddComponent<PlayerDepositor>();
             return cs;
         }
+
+        public static void ClearGameObjects()
+        {
+            foreach (GameObject obj in GameObject.FindObjectsOfType(typeof(GameObject)))
+            {
+                GameObject.DestroyImmediate(obj);
+            }
+        }
     }
 }

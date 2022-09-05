@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{D0B6D629-1188-FA42-8E9C-45028DE34AC8}</ProjectGuid>
+    <ProjectGuid>{B705DD1E-8193-8882-FAC7-5418AC917DA8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Behaviour Tests</AssemblyName>
@@ -607,27 +607,31 @@
     <Reference Include="System.Xml.Serialization">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.3f1\Editor\Data\NetStandard\compat\2.0.0\shims\netfx\System.Xml.Serialization.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.TestRunner">
-      <HintPath>Library\ScriptAssemblies\UnityEngine.TestRunner.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.TestRunner">
-      <HintPath>Library\ScriptAssemblies\UnityEditor.TestRunner.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.UI">
-      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="UnityEngine.TestRunner.csproj">
+      <Project>{DCDD411E-1103-33A4-C503-D22F001E817B}</Project>
+      <Name>UnityEngine.TestRunner</Name>
+    </ProjectReference>
+    <ProjectReference Include="UnityEditor.TestRunner.csproj">
+      <Project>{61612ECA-8CC4-E19E-869C-92A0D698D699}</Project>
+      <Name>UnityEditor.TestRunner</Name>
+    </ProjectReference>
     <ProjectReference Include="InteractionSystemAssembly.csproj">
-      <Project>{8CC67922-714D-7844-621A-259188D5CF7A}</Project>
+      <Project>{138A9661-2661-9562-B3D0-F114B092AA3D}</Project>
       <Name>InteractionSystemAssembly</Name>
     </ProjectReference>
     <ProjectReference Include="AssemblyDefinitionFile.csproj">
-      <Project>{F28C76D3-8706-8A62-EFD8-7E12686D08CE}</Project>
+      <Project>{430234BD-4D35-B411-8AEA-A1CCB629D226}</Project>
       <Name>AssemblyDefinitionFile</Name>
+    </ProjectReference>
+    <ProjectReference Include="UnityEditor.UI.csproj">
+      <Project>{BFA4118D-D662-B8FC-6DE8-29EC3DC3E800}</Project>
+      <Name>UnityEditor.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="UnityEngine.UI.csproj">
+      <Project>{9B545A0C-58D3-F7CA-DCC3-76148D5D80E8}</Project>
+      <Name>UnityEngine.UI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

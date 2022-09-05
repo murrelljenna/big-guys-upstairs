@@ -7,9 +7,9 @@ public class UnitRadius : MonoBehaviour
     [Range(0,50)]
     public int segments = 50;
     [Range(0,10)]
-    public float xradius = 10f;
+    public float xradius;
     [Range(0,10)]
-    public float yradius = 10f;
+    public float yradius;
     LineRenderer line;
 
     void Start ()
@@ -18,6 +18,11 @@ public class UnitRadius : MonoBehaviour
 
         line.SetVertexCount (segments + 1);
         line.useWorldSpace = false;
+    }
+
+    void OnEnable() {
+        xradius = this.gameObject.GetComponent<Unit>().rng;
+        yradius = this.gameObject.GetComponent<Unit>().rng;
         CreatePoints ();
     }
 

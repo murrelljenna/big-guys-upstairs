@@ -12,6 +12,8 @@ public class Unit : Attackable
 	public int atk; // Damage inflicted per second
 	public float rng; // x/z Range of attack
 	public bool isAttacking;
+	public bool selectable = false;
+
 	PhotonView photonView;
 	Attackable attackee = null;
 

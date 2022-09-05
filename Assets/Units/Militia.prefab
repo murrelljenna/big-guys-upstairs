@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 213061824016318938}
   - component: {fileID: 6782018684372980868}
   - component: {fileID: 7660449444357449806}
-  - component: {fileID: 8521802331209771241}
   - component: {fileID: 4951245817397206874}
+  - component: {fileID: 6644421931342251056}
   m_Layer: 12
   m_Name: Militia
   m_TagString: Untagged
@@ -146,21 +146,6 @@ MonoBehaviour:
   atk: 0
   rng: 0
   isAttacking: 0
---- !u!114 &8521802331209771241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 530132536708170180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ac85473e0b593e4aa5ecc82fa2c08e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  segments: 50
-  xradius: 10
-  yradius: 10
 --- !u!120 &4951245817397206874
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -209,7 +194,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.11818123
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -256,6 +241,21 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &6644421931342251056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530132536708170180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 486585f99cdf0544493bdc1fbc376626, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  segments: 50
+  xradius: 10
+  yradius: 10
 --- !u!1 &530132536991763332
 GameObject:
   m_ObjectHideFlags: 0

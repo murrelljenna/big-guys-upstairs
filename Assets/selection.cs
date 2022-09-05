@@ -91,6 +91,19 @@ public class selection : MonoBehaviour
 				} else if (terrainMask == (terrainMask | (1 << hit.collider.gameObject.layer))) {
 					selected.ForEach(unit => {
 						unit.gameObject.GetComponent<Unit>().cancelOrders();
+
+						destination = new Vector3(
+							UnityEngine.Random.Range(
+								hit.point.x - (0.1f * selected.Count), 
+								hit.point.x + (0.1f * selected.Count)
+							), 
+							0, 
+							UnityEngine.Random.Range(
+								hit.point.z - (0.1f * selected.Count), 
+								hit.point.z + (0.1f * selected.Count)
+							)
+						);
+
 						unit.gameObject.GetComponent<Unit>().move(destination);
 
 						/* Alternate between offsetting x and y so that all units aren't trying to navigate to same location */

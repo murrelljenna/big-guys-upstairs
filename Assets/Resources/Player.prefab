@@ -102,7 +102,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5307756866283450431}
   - component: {fileID: 1988103010512258300}
-  - component: {fileID: 4555684996080313781}
   m_Layer: 0
   m_Name: Command
   m_TagString: Untagged
@@ -137,19 +136,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 2616988825828829805}
-  selected: []
---- !u!114 &4555684996080313781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2228746851869032957}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9310ccda3392f154190a48534f610c76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   selected: []
 --- !u!114 &4520673654035477020
 MonoBehaviour:

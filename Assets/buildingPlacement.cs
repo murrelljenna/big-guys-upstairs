@@ -46,7 +46,7 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
 
 	    			if (wallet.canAfford(wood, food)) {
 	    				wallet.makeTransaction(wood, food);
-                        GameObject placedBuilding = PhotonNetwork.Instantiate(this.currentBuilding.gameObject.name, hit.point, Quaternion.identity, 0);
+                        GameObject placedBuilding = PhotonNetwork.Instantiate("Town", hit.point, Quaternion.identity, 0);
                         //placedBuilding.GetComponent<LineRenderer>().enabled = false;
                         placedBuilding.GetComponent<ownership>().capture(wallet);
                         Destroy(currentBuilding.gameObject);

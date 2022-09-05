@@ -55,14 +55,25 @@ public class playerRaycast : MonoBehaviour
                 if (player.canAfford(wood, food)) {
                     player.makeTransaction(wood, food);
 
-                    /* Instantiate new militia inside city */
+                    /* Instantiate new militia outside city */
 
-                    Vector3 randomInCircle = new Vector3(UnityEngine.Random.Range(hit.transform.position.x - 0.5f, hit.transform.position.x + 0.5f), 0, UnityEngine.Random.Range(hit.transform.position.z - 0.5f, hit.transform.position.z + 0.5f));
-                    GameObject militia = PhotonNetwork.Instantiate("Militia", randomInCircle, Quaternion.identity, 0);
+                    Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
+                    Vector3 spawnLocation = new Vector3(randomInCircle.x+hit.transform.position.x, 0, randomInCircle.y+hit.transform.position.z);
+
+                    GameObject militia = PhotonNetwork.Instantiate("Militia", spawnLocation, Quaternion.identity, 0);
 
                     militia.GetComponent<ownership>().capture(player);
                 }
             }
         }
+    }
+
+    private static Vector2 RandomPointOnUnitCircle(float radius)
+    {
+        float angle = Random.Range (0f, Mathf.PI * 2);
+        float x = Mathf.Sin (angle) * radius;
+        float y = Mathf.Cos (angle) * radius;
+
+        return new Vector2(x, y);
     }
 }

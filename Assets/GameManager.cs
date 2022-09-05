@@ -148,7 +148,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private IEnumerator getSpawnManager() {
     	GameObject sm = GameObject.Find("SpawnManager(Clone)");
-    	print(sm.name);
 		if (spawnManager == null) {
 			yield return null;		
 		} else {

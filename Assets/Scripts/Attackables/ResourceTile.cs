@@ -31,6 +31,7 @@ public class ResourceTile : Attackable
         this.foodCost = 15;
         this.hp = 75;
         ownerInfo = this.gameObject.GetComponent<ownership>();
+        ownerInfo.owned = false;
         this.id = this.gameObject.GetComponent<PhotonView>().ViewID;
         this.gameObject.name = id.ToString();
         this.banner = this.transform.Find("Banner").gameObject;

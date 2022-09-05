@@ -16,9 +16,8 @@ public class Unit : Attackable
     public bool inFight = false;
     public bool isSelected = false;
 	public bool selectable = false;
-    private int unitMask = 1 << 12;
+    protected int attackableMask = (1 << 9) | (1 << 10) | (1 << 12) | (1 << 14);
     protected float attackRate = 1f;
-    public bool dead;
     public int frameCount;
 
     public bool updateTargetLive = false;
@@ -78,12 +77,23 @@ public class Unit : Attackable
     }
 
     public override void destroyObject() {
-        animator.SetFloat("speed", 0f);
-        this.gameObject.GetComponent<NavMeshAgent>().isStopped = true;
+        this.dead = true;
+
+        if (animator != null) {
+            animator.SetTrigger("death");
+            animator.SetFloat("speed", 0f);
+        }
+
+        NavMeshAgent navAgent = this.gameObject.GetComponent<NavMeshAgent>();
+        if (navAgent != null) {
+            this.gameObject.GetComponent<NavMeshAgent>().isStopped = true;
+        }
+
         this.GetComponent<Collider>().enabled = false;
         CancelInvoke();
 
         if (this.photonView.IsMine) {
+            print("THISISMINE");
             int playerID = this.gameObject.GetComponent<ownership>().owner;
             GameObject player = GameObject.Find(playerID.ToString());
             this.owner.getPlayer().addUnit(-1);
@@ -94,9 +104,6 @@ public class Unit : Attackable
 
         AudioSource[] sources = this.gameObject.transform.Find("DestroySounds").GetComponents<AudioSource>();
         sources[UnityEngine.Random.Range(0, sources.Length)].Play((ulong)UnityEngine.Random.Range(0l, 2l));
-
-        this.dead = true;
-        animator.SetTrigger("death");
     }
 
     public virtual void move(Vector3 destination) {
@@ -161,7 +168,6 @@ public class Unit : Attackable
 
     [PunRPC]
     public void attackRPC(int idOfThingToAttack) {
-        this.gameObject.GetComponent<NavMeshAgent>().isStopped = true;
         GameObject thingToAttackObj = GameObject.Find(idOfThingToAttack.ToString());
         Attackable thingToAttack = thingToAttackObj.GetComponent<Attackable>();
         if (animator != null) {
@@ -180,8 +186,6 @@ public class Unit : Attackable
     }
 
     public override void takeDamage(int damage) {
-
-
         if (animator != null) {
             animator.SetTrigger("takeDamage");
         }
@@ -189,13 +193,11 @@ public class Unit : Attackable
     }
 
     public virtual void cancelOrders() {
-        Debug.Log("Cancelling orders locally");
         photonView.RPC("cancelOrdersRPC", RpcTarget.All);
     }
 
     [PunRPC]
     public virtual void cancelOrdersRPC() {
-        Debug.Log("Cancelling orders through RPC now");
     	if (attackee != null) {
     		attackee.attackers.Remove(this); // Remove this attacker from that units attackers
     	}
@@ -230,9 +232,9 @@ public class Unit : Attackable
         return false;
     }
 
-    public void checkEnemiesInRange() {
+    public virtual void checkEnemiesInRange() {
     	if (!isAttacking && canAttack) {
-		    Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.GetComponent<Collider>().bounds.center, responseRange, unitMask);
+		    Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.GetComponent<Collider>().bounds.center, responseRange, attackableMask);
             Attackable closestAttackee = null;
             Vector3 playerPos = this.GetComponent<Collider>().bounds.center;
 
@@ -244,12 +246,19 @@ public class Unit : Attackable
 							hitColliders[i].GetComponent<ownership>().owner != this.gameObject.GetComponent<ownership>().owner &&
                             hitColliders[i].GetComponent<Attackable>().hp > 0) { 
 
-                            if (closestAttackee == null) {
-                                closestAttackee = hitColliders[i].GetComponent<Attackable>();
-                            } else if (Vector3.Distance(hitColliders[i].bounds.center, playerPos) < Vector3.Distance(closestAttackee.GetComponent<Collider>().bounds.center, playerPos)) {
-                                closestAttackee = hitColliders[i].GetComponent<Attackable>();
+                            UnityEngine.AI.NavMeshAgent agent = this.GetComponent<UnityEngine.AI.NavMeshAgent>();
+                            NavMeshPath path = new NavMeshPath();
+                            bool isReachable = agent.CalculatePath(hitColliders[i].transform.position, path);
+                            if (this.isInRange(hitColliders[i].GetComponent<Attackable>()) || (isReachable && agent.remainingDistance < 3f )) {
+                                print(hitColliders[i].gameObject.name);
+                                print(agent.remainingDistance);
+                                if (closestAttackee == null) {
+                                    closestAttackee = hitColliders[i].GetComponent<Attackable>();
+                                } else if (Vector3.Distance(hitColliders[i].bounds.center, playerPos) < Vector3.Distance(closestAttackee.GetComponent<Collider>().bounds.center, playerPos)) {
+                                    closestAttackee = hitColliders[i].GetComponent<Attackable>();
+                                }
+    							break;
                             }
-							break;
 						} 
 					}
 				}
@@ -288,7 +297,8 @@ public class Unit : Attackable
 
     void OnCollisionEnter(Collision collision) {
         if (this.photonView.IsMine) {
-            Unit collidingUnit = collision.gameObject.GetComponent<Unit>();
+            print("IN COLLISION");
+            Attackable collidingUnit = collision.gameObject.GetComponent<Attackable>();
             if (collidingUnit != null && collidingUnit.gameObject.GetComponent<ownership>().owner != this.gameObject.GetComponent<ownership>().owner && collidingUnit.hp > 0 && !this.inFight) {
                 cancelOrders();
                 callAttack(collidingUnit.id);

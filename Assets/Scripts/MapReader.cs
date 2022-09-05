@@ -60,11 +60,11 @@ public class MapReader : MonoBehaviour {
 	}
 
 	public Maps read() {
-		return(Deserialize<Maps>(Path.Combine(Application.dataPath, "xml/maps.xml")));
+		return(Deserialize<Maps>(Path.Combine(Application.dataPath, "StreamingAssets/xml/maps.xml")));
 	}
 
 	public Map randomMap() {
-		Maps maps = Deserialize<Maps>(Path.Combine(Application.dataPath, "xml/maps.xml"));
+		Maps maps = Deserialize<Maps>(Path.Combine(Application.dataPath, "StreamingAssets/xml/maps.xml"));
 		int index = UnityEngine.Random.Range(0, maps.maps.Count);
 		return maps.maps[index];
 	}

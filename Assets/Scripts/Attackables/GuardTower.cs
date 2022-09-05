@@ -119,6 +119,39 @@ public class GuardTower : Unit
         base.destroyObject();
     }
     
+    public override void checkEnemiesInRange() {
+        if (!isAttacking && canAttack) {
+            Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.GetComponent<Collider>().bounds.center, responseRange, attackableMask);
+            Attackable closestAttackee = null;
+            Vector3 playerPos = this.GetComponent<Collider>().bounds.center;
+
+            if (hitColliders.Length != lastNoEnemies) {
+                for (int i = 0; i < hitColliders.Length; i++) {
+                    if (hitColliders[i] != null) {
+                        if (hitColliders[i].GetComponent<ownership>() != null &&
+                            hitColliders[i].GetComponent<ownership>().owned == true && 
+                            hitColliders[i].GetComponent<ownership>().owner != this.gameObject.GetComponent<ownership>().owner &&
+                            hitColliders[i].GetComponent<Attackable>().hp > 0) { 
+
+                            if (closestAttackee == null) {
+                                closestAttackee = hitColliders[i].GetComponent<Attackable>();
+                            } else if (Vector3.Distance(hitColliders[i].bounds.center, playerPos) < Vector3.Distance(closestAttackee.GetComponent<Collider>().bounds.center, playerPos)) {
+                                closestAttackee = hitColliders[i].GetComponent<Attackable>();
+                            }
+                            break;
+                        } 
+                    }
+                }
+
+                if (closestAttackee != null) {
+                    callAttack(closestAttackee.id);
+                }
+
+                lastNoEnemies = hitColliders.Length;
+            }
+        }  
+    }
+
     [PunRPC]
     private void playDestructionEffect() {
         AudioSource[] sources = this.transform.Find("DestroySounds").GetComponents<AudioSource>();

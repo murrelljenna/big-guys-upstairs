@@ -2487,6 +2487,7 @@ MonoBehaviour:
   color: 
   hp: 0
   id: 0
+  dead: 0
   attackers: []
   photonView: {fileID: 0}
   movable: 0
@@ -2496,7 +2497,6 @@ MonoBehaviour:
   inFight: 0
   isSelected: 0
   selectable: 0
-  dead: 0
   frameCount: 0
   updateTargetLive: 0
   attackee: {fileID: 0}

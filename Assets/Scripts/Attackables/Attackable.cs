@@ -29,6 +29,7 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField]
 	public int hp;
 	public int id;
+    public bool dead = false;
 	public List<Unit> attackers;
 	public PhotonView photonView;
     List<Color> colours = new List<Color>() { Color.black, Color.blue, Color.white, Color.green, Color.magenta, Color.red, Color.yellow };
@@ -102,14 +103,6 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     	} else {
             canvas.SetActive(false);
         }
-
-        if (this.hp != this.lastHP) {
-            healthBar.UpdateBar(this.hp, this.maxHP);
-        }
-
-        if (hp <= 0) {
-            destroyObject();
-        }
     }
 
     public virtual void onCapture() {}
@@ -118,6 +111,12 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
 
     public virtual void takeDamage(int damage) {
     	this.hp -= damage;
+
+        healthBar.UpdateBar(this.hp, this.maxHP);
+
+        if (hp <= 0 && !this.dead) {
+            destroyObject();
+        }
 
         modifySpeed(0.5f); // Half speed while receiving damage
         Invoke("doubleSpeed", 1f);

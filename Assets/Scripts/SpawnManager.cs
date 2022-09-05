@@ -10,7 +10,7 @@ using Photon.Realtime;
 
 using UnityStandardAssets.Characters.FirstPerson;
 
-public class SpawnManager : MonoBehaviourPunCallbacks
+public class SpawnManager : MonoBehaviourPunCallbacks, IPunObservable
 {
 	public GameObject playerPrefab;
 	public GameObject cityPrefab;
@@ -34,17 +34,25 @@ public class SpawnManager : MonoBehaviourPunCallbacks
 		return new Vector3(float.Parse(coords[0]), float.Parse(coords[1]), float.Parse(coords[2]));
 	}
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.IsWriting) {
+        }
+        else
+        {
+        }
+    }
+
 	void Start() {
+		string[] spawns = (string[])PhotonNetwork.CurrentRoom.CustomProperties["spawns"];
+		int noPlayers = (int)PhotonNetwork.CurrentRoom.CustomProperties["maxPlayers"];
+
+		for (int i = 0; i < noPlayers; i++) {
+			spawnPoints[i] = csvToVector(spawns[i]);
+		}
+
 		if (PhotonNetwork.IsMasterClient) {
 			for (int i = 0; i < colours.Count; i++) {
 				possibleColours.Add(i);
-			}
-
-			string[] spawns = (string[])PhotonNetwork.CurrentRoom.CustomProperties["spawns"];
-			int noPlayers = (int)PhotonNetwork.CurrentRoom.CustomProperties["maxPlayers"];
-
-			for (int i = 0; i < noPlayers; i++) {
-				spawnPoints[i] = csvToVector(spawns[i]);
 			}
 
     		int index = UnityEngine.Random.Range(0, possibleColours.Count);
@@ -126,8 +134,10 @@ public class SpawnManager : MonoBehaviourPunCallbacks
     public Vector3 getAvailableSpawn(int playerID) {
     	bool[] spawnsAvail = (bool[])PhotonNetwork.CurrentRoom.CustomProperties["spawnsAvail"];
 		for (int i =0; i < spawnPoints.Length; i++) {
+			print(spawnsAvail[1]);
 			if (!spawnsAvail[i]) {
 				spawnIndex = i;
+
 				takePoint(i);
 				return spawnPoints[i];
 			}

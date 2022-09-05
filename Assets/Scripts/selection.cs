@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEditor;
 
 public class selection : MonoBehaviour
 {
@@ -29,8 +30,8 @@ public class selection : MonoBehaviour
  	List<Vector3> grid;
 
  	private const float QUICK_SELECT_RANGE = 5f;
-
  	private const float DOUBLE_CLICK_TIME = 0.2f;
+
  	private float lastClickTime;
     // Start is called before the first frame update
     void Start()
@@ -81,6 +82,8 @@ public class selection : MonoBehaviour
 			}
 		}
 
+		// Order units to move to a position
+
 		if (Physics.Raycast(ray, out hit, Mathf.Infinity, allMask)) {
 			if (Input.GetMouseButtonDown(1)) {
 				destination = hit.point;
@@ -91,9 +94,7 @@ public class selection : MonoBehaviour
 
 					StartCoroutine(sendAttackOrders(hit.collider.gameObject.GetComponent<Attackable>().id));
 				} else if (terrainMask == (terrainMask | (1 << hit.collider.gameObject.layer))) {
-					int i = 0;
-					grid = createGrid(hit.point, selected.Count, 0.2f, 0.2f);
-					StartCoroutine(sendMoveOrders());
+					StartCoroutine(placeUnits(destination, new Queue<GameObject>(selected)));
 				}	
 			}
 		}
@@ -147,6 +148,74 @@ public class selection : MonoBehaviour
 		}
     }
 
+    private IEnumerator placeUnits(Vector3 center, Queue<GameObject> units, float unitSize = 0.2f, float gapSize = 0.2f) {
+    	Queue<Vector3> points = new Queue<Vector3>();
+    	Queue<Vector3> taken = new Queue<Vector3>();
+    	points.Enqueue(center);
+
+    	float branchSize = unitSize/2f + gapSize;
+    	Vector3[] positionMods = new Vector3[8] {
+    		new Vector3(0, 0, branchSize),
+    		new Vector3(branchSize, 0, branchSize),
+    		new Vector3(branchSize, 0, 0),
+    		new Vector3(branchSize, 0, -branchSize),
+    		new Vector3(0, 0, -branchSize),
+    		new Vector3(-branchSize, 0, -branchSize),
+    		new Vector3(-branchSize, 0, 0),
+    		new Vector3(-branchSize, 0, branchSize)
+
+    	};
+
+    	int runCount = 0;
+
+    	while (units.Count > 0) {
+		    Unit unit = units.Dequeue().GetComponent<Unit>();
+		    Vector3 destination = points.Dequeue();
+
+		    if (unit != null && unit.gameObject.GetComponent<NavMeshAgent>() != null) {
+				unit.gameObject.GetComponent<Unit>().move(destination);
+		    }
+
+		    for (int i = 0; i < positionMods.Length; i++) {
+		    	Vector3 modifiedPosition = destination + positionMods[i];
+		    	float height = getTerrainHeight(modifiedPosition);
+		    	print(taken.Contains(modifiedPosition));
+		    	if (!taken.Contains(modifiedPosition) && System.Math.Abs(height) - System.Math.Abs(center.y) < 1 && System.Math.Abs(height) - System.Math.Abs(center.y) > -1) {
+		    		points.Enqueue(modifiedPosition);
+		    		taken.Enqueue(modifiedPosition);
+		    	}
+		    }
+
+		    runCount++;
+			if (runCount % 10 == 0) {
+				yield return null;
+			}
+		}
+    }
+
+    public List<Vector3> createGrid(Vector3 center, float noOfUnits, float unitSize, float gapSize) {
+    	float offset = unitSize + gapSize;
+    			    	//GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+		    	//cube.transform.position = new Vector3(center.x, 0, center.z);
+    	float x; // Set beginning point of grid traversal.
+    	float z = center.z - ((Mathf.Sqrt(noOfUnits) * (unitSize + gapSize)) / 2);
+
+    	List<Vector3> grid = new List<Vector3>();
+
+    	for (int i = 0; i < Mathf.RoundToInt(Mathf.Ceil(Mathf.Sqrt(noOfUnits))); i++) {
+    		x = center.x - ((Mathf.Sqrt(noOfUnits) * (unitSize + gapSize)) / 2);
+
+    		for (int j = 0; j < Mathf.RoundToInt(Mathf.Ceil(Mathf.Sqrt(noOfUnits))); j++) {
+    			//float y = getTerrainHeight(new Vector3(x, 0, z));
+    			grid.Add(new Vector3(x, center.y, z));
+
+    			x += offset;
+    		}
+    		z += offset;
+    	}
+
+    	return grid;
+    }
     void selectUnit(GameObject unit) {
 		selected.Add(unit.GetComponent<Collider>().gameObject);
 
@@ -168,34 +237,12 @@ public class selection : MonoBehaviour
 
 		unit.GetComponent<Unit>().onDeSelect();
     }
-														// 0.3
-    public List<Vector3> createGrid(Vector3 center, float noOfUnits, float unitSize, float gapSize) {
-    	float offset = unitSize + gapSize;
-    			    	//GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-		    	//cube.transform.position = new Vector3(center.x, 0, center.z);
-    	float x; // Set beginning point of grid traversal.
-    	float z = center.z - ((Mathf.Sqrt(noOfUnits) * (unitSize + gapSize)) / 2);
-
-    	List<Vector3> grid = new List<Vector3>();
-
-    	for (int i = 0; i < Mathf.RoundToInt(Mathf.Ceil(Mathf.Sqrt(noOfUnits))); i++) {
-    		x = center.x - ((Mathf.Sqrt(noOfUnits) * (unitSize + gapSize)) / 2);
-
-    		for (int j = 0; j < Mathf.RoundToInt(Mathf.Ceil(Mathf.Sqrt(noOfUnits))); j++) {
-    			float y = getTerrainHeight(new Vector3(x, 0, z));
-    			grid.Add(new Vector3(x, y, z));
-
-    			x += offset;
-    		}
-    		z += offset;
-    	}
-
-    	return grid;
-    }
+														// 0.
 
    	private float getTerrainHeight(Vector3 point) {
    		RaycastHit hit;
    		Physics.Raycast(new Vector3(point.x, 300, point.z), Vector3.down, out hit, Mathf.Infinity, terrainMask);
+   		print(hit.point.y);
    		return hit.point.y;
    	}
 

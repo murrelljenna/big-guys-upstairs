@@ -105,7 +105,7 @@ public class Barracks : Building, IPunObservable
                     /* Instantiate new militia outside city */
 
                     Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
-                    Vector3 spawnLocation = new Vector3(randomInCircle.x+buildingViewed.transform.position.x, 0, randomInCircle.y+buildingViewed.transform.position.z);
+                    Vector3 spawnLocation = new Vector3(randomInCircle.x+buildingViewed.transform.position.x, this.transform.position.y, randomInCircle.y+buildingViewed.transform.position.z);
 
                     GameObject militia = PhotonNetwork.Instantiate("Light Infantry", spawnLocation, Quaternion.identity, 0);
 
@@ -133,7 +133,7 @@ public class Barracks : Building, IPunObservable
                     /* Instantiate new militia outside city */
 
                     Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
-                    Vector3 spawnLocation = new Vector3(randomInCircle.x+buildingViewed.transform.position.x, 0, randomInCircle.y+buildingViewed.transform.position.z);
+                    Vector3 spawnLocation = new Vector3(randomInCircle.x+buildingViewed.transform.position.x, this.transform.position.y, randomInCircle.y+buildingViewed.transform.position.z);
 
                     GameObject militia = PhotonNetwork.Instantiate("Archer", spawnLocation, Quaternion.identity, 0);
 

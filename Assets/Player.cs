@@ -31,6 +31,7 @@ namespace game.assets {
             /* photonView.ViewId is player object's game ID and identifies resources and building ownership */
 
             playerID = this.transform.Find("FPSController").gameObject.GetComponent<PhotonView>().ViewID;
+            this.gameObject.name = playerID.ToString();
 
             /* Setup player resource iteration */
 
@@ -70,6 +71,17 @@ namespace game.assets {
     				foodIt += yield;
     			break;
     		}
+        }
+
+        public void loseResource(string resType, int yield = 4) {
+            switch (resType) {
+                case "wood":
+                    woodIt -= yield;
+                break;
+                case "food":
+                    foodIt -= yield;
+                break;
+            }
         }
 
         public bool canAfford(int wood = 0, int food = 0) {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class radius : MonoBehaviour
+public class UnitRadius : MonoBehaviour
 {
     [Range(0,50)]
     public int segments = 50;

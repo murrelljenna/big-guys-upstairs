@@ -16089,6 +16089,7 @@ GameObject:
   - component: {fileID: 6400909032196954706}
   - component: {fileID: 8483522901271445352}
   - component: {fileID: 3609312810182099188}
+  - component: {fileID: 3113207547553380994}
   m_Layer: 10
   m_Name: Town
   m_TagString: town
@@ -16123,6 +16124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a072379b5a1d448a4e946f718de7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 0
   woodCost: 50
   foodCost: 50
 --- !u!114 &3794846390336233511
@@ -16267,6 +16269,8 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 8483522901271445352}
+  - {fileID: 3609312810182099188}
+  - {fileID: 3210064042573744065}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -16298,7 +16302,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owned: 0
-  owner: {fileID: 0}
+  owner: 0
+--- !u!208 &3113207547553380994
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5207743826955958044}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.542356}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0.0423559}
+  m_TimeToStationary: 0.5
 --- !u!1 &5207743826958100336
 GameObject:
   m_ObjectHideFlags: 0

@@ -27,6 +27,14 @@ public class GameManager : MonoBehaviourPunCallbacks
 		else
 		{
 		    Debug.LogFormat("We are Instantiating LocalPlayer from {0}", Application.loadedLevelName);
+
+		    if (PhotonNetwork.IsMasterClient) {
+		    	GameObject[] resourceSpawners = GameObject.FindGameObjectsWithTag("resourceSpawner");
+
+		    	for (int i = 0; i < resourceSpawners.Length; i++) {
+		    		resourceSpawners[i].GetComponent<SpawnTile>().spawnResource();
+				}		    
+		    }
 		    // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
 		    GameObject player = PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(15f,0f,15f), Quaternion.identity, 0);
 		}
@@ -64,8 +72,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 	    if (PhotonNetwork.IsMasterClient)
 	    {
 	        Debug.LogFormat("OnPlayerLeftRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
-
-	        //LoadArena();
 	    }
 	}
 }

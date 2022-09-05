@@ -1,24 +1,33 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 using Photon.Pun;
 using Photon.Realtime;
 
-public class Town : MonoBehaviour
+public class Town : Attackable, IPunObservable
 {
 	public int woodCost = 75;
 	public int foodCost = 25;
+
+    void Start() {
+        this.hp = 40;
+    }
     // Start is called before the first frame update
-    void Awake() {
+    public override void Awake() {
+        base.Awake();
         if (!this.gameObject.GetComponent<PhotonView>() != null && !this.gameObject.GetComponent<PhotonView>().IsMine) {
             this.gameObject.GetComponent<LineRenderer>().enabled = false;
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.IsWriting) {
+            stream.SendNext(this.hp);
+        }
+        else
+        {
+            this.hp = (int)stream.ReceiveNext();
+        }
     }
 }

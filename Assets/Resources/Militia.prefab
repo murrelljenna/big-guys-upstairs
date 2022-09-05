@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6878699215683291197}
   - component: {fileID: 213061824016318938}
   - component: {fileID: 6782018684372980868}
+  - component: {fileID: 7660449444357449806}
   m_Layer: 12
   m_Name: Militia
   m_TagString: Untagged
@@ -71,7 +72,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owned: 0
-  owner: {fileID: 0}
+  owner: 0
 --- !u!114 &6878699215683291197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +92,8 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 213061824016318938}
+  - {fileID: 7660449444357449806}
+  - {fileID: 5123192314128408069}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -123,6 +126,24 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7660449444357449806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530132536708170180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ba19fca8704836499dd9058b931a928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 0
+  id: 0
+  attackers: []
+  atk: 0
+  rng: 0
+  isAttacking: 0
 --- !u!1 &530132536991763332
 GameObject:
   m_ObjectHideFlags: 0

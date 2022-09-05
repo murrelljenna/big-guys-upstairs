@@ -21,7 +21,6 @@ public class showMenu : MonoBehaviourPun
     void OnEnable()
     {
         BuildingMenu.SetActive(true);
-
     }
 
     // Update is called once per frame

@@ -35,7 +35,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     		PhotonNetwork.JoinRandomRoom();
     	} else {
     		PhotonNetwork.GameVersion = gameVersion;
-    		string region = "us";
+    		//string region = "us";
     		//PhotonNetwork.ConnectToRegion(region);
     		PhotonNetwork.ConnectUsingSettings();
     	}

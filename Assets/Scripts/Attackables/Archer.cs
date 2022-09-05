@@ -15,6 +15,7 @@ public class Archer : Unit
     // Start is called before the first frame update
     void Start()
     {
+        this.prefabName = "Archer";
     	this.movable = true;
     	this.responseRange = 3f;
         this.woodCost = 2;
@@ -24,7 +25,7 @@ public class Archer : Unit
         this.hp = 8;
         this.lastHP = this.hp;
         this.rng = 3f;
-        this.attackRate = 1.8f;
+        this.attackRate = 2.5f;
 
         base.Start();
     }

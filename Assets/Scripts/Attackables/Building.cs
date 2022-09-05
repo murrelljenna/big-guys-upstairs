@@ -54,6 +54,10 @@ public class Building : Attackable
             photonView.RPC("playDestructionEffect", RpcTarget.All);
         }
 
+        if (this.prefabName != "Town") {
+            getTownInRange(this.transform.position, 10f, this.owner.owner).removeBuilding();
+        }
+
         if (this.photonView.IsMine && this.prefabName != "Wall") {
             for (int i = 0; i < Random.Range(2, 5); i++) {
                 Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
@@ -74,6 +78,17 @@ public class Building : Attackable
             owner.getPlayer().giveResources("food", this.foodCost/2);
             base.destroyObject();
         }
+    }
+
+    private Town getTownInRange(Vector3 location, float range, int ownerID) {
+        Collider[] hitColliders = Physics.OverlapSphere(location, range);
+        for (int i = 0; i < hitColliders.Length; i++) {
+            if (hitColliders[i].tag == "town" && hitColliders[i].gameObject.GetComponent<ownership>().owner == ownerID) { // If there is a town in range that belongs to the player.
+                return hitColliders[i].gameObject.GetComponent<Town>();
+            }
+        }
+
+        return null;
     }
     
     [PunRPC]

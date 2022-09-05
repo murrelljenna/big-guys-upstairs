@@ -35,17 +35,33 @@ public class selection : MonoBehaviour
     private const float DOUBLE_CLICK_TIME = 0.2f;
 
     private float lastClickTime;
+
+    private GameObject CommandMenu;
+    private commandUIController controller;
     // Start is called before the first frame update
     void Start()
     {
         allMask = terrainMask | attackableMask;  // For terrain and attackable objects.
         player = this.transform.parent.parent.parent.parent.gameObject.GetComponent<game.assets.Player>();
+        
+
 
         lineRen = this.GetComponent<LineRenderer>();
         this.gameObject.GetComponent<Renderer>().material.color = player.playerColor;
     }
 
+    void OnEnable() {
+        if (CommandMenu != null) {
+            CommandMenu.SetActive(true);
+        } else {
+            CommandMenu = GameObject.Find("Command_UI");
+            controller = CommandMenu.GetComponent<commandUIController>();
+            CommandMenu.SetActive(false);
+        }
+    }
+
     void OnDisable() {
+        CommandMenu.SetActive(false);
         clearSelection();
     }
 
@@ -194,6 +210,7 @@ public class selection : MonoBehaviour
         selected.Add(unit.GetComponent<Collider>().gameObject);
 
         if (unit.GetComponent<LineRenderer>() != null) {
+            controller.addCard(unit.GetComponent<Unit>());
             unit.GetComponent<LineRenderer>().enabled = true;
         }
 
@@ -202,6 +219,7 @@ public class selection : MonoBehaviour
 
     public void deselectUnit(GameObject unit) {
         if (selected.Contains(unit)) {
+            controller.removeCard(unit.GetComponent<Unit>());
             selected.Remove(unit.GetComponent<Collider>().gameObject);
         }
 
@@ -213,15 +231,16 @@ public class selection : MonoBehaviour
     }
                                                         // 0.
 
-       private float getTerrainHeight(Vector3 point) {
-           RaycastHit hit;
-           Physics.Raycast(new Vector3(point.x, 300, point.z), Vector3.down, out hit, Mathf.Infinity, terrainMask);
-           return hit.point.y;
-       }
+   private float getTerrainHeight(Vector3 point) {
+       RaycastHit hit;
+       Physics.Raycast(new Vector3(point.x, 300, point.z), Vector3.down, out hit, Mathf.Infinity, terrainMask);
+       return hit.point.y;
+   }
 
     private void clearSelection() {
         selected.ForEach(unit => {
             if (unit != null && unit.GetComponent<LineRenderer>() != null) {
+                controller.clearCards();
                 unit.GetComponent<LineRenderer>().enabled = false;
                 unit.GetComponent<Unit>().onDeSelect();
             }
@@ -234,7 +253,8 @@ public class selection : MonoBehaviour
         for (int i = 0; i < hitColliders.Length; i++) {
             if (hitColliders[i].GetComponent<ownership>() != null &&
                 hitColliders[i].GetComponent<ownership>().owned == true && 
-                hitColliders[i].GetComponent<ownership>().owner == player.playerID) { 
+                hitColliders[i].GetComponent<ownership>().owner == player.playerID &&
+                hitColliders[i].GetComponent<Unit>().isSelected == false) { 
 
                 selectUnit(hitColliders[i].gameObject);
             }

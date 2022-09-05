@@ -89,6 +89,8 @@ public class playerRaycast : MonoBehaviour
                     tooltips.flashLackResources();
                 }      	
             }
+
+            return;
 	    } else if (resourceViewed != null) {
             resourceViewed.SetActive(false);
             resourceViewed = null;
@@ -103,6 +105,8 @@ public class playerRaycast : MonoBehaviour
                 hit.collider.gameObject.GetComponent<Attackable>().interactionOptions(player);
 
                 buildingViewed = hit.collider.gameObject.transform.Find("Info").gameObject;
+
+                return;
             }
         } else if (buildingViewed != null) {
             buildingViewed.SetActive(false);
@@ -116,6 +120,8 @@ public class playerRaycast : MonoBehaviour
                 hit.collider.gameObject.GetComponent<Attackable>().interactionOptions(player);
 
                 cityViewed = hit.collider.gameObject.transform.Find("Info").gameObject;
+
+                return;
             }
         }   else if (cityViewed != null) {
             cityViewed.SetActive(false);

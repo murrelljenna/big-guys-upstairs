@@ -5,18 +5,29 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
+using UnityEngine.UI;
+using UnityEngine.Events;
+
 public class Town : Building, IPunObservable
 {
     private int yield = 1;
     private int lastNoEnemies = 0;
+
+    private int noBuildings = 0;
+    private int maxBuildings = 5;
 
     private bool underAttack = false;
 
     private int resourceMask = 1 << 9;
     private int unitMask = 1 << 12;
 
+    private Text buildingMaxText;
+
     protected override void Start() {
         prefabName = "Town";
+
+        buildingMaxText = this.transform.Find("Info").Find("buildingMax").Find("buildingMaxText").GetComponent<Text>();
+        setBuildingCounts();
 
         this.hp = 600;
         this.woodCost = 50;
@@ -68,6 +79,24 @@ public class Town : Building, IPunObservable
                 underAttack = false;
             }
         }
+    }
+
+    public bool maxedBuildings() {
+        return (noBuildings >= maxBuildings);
+    }
+
+    private void setBuildingCounts() {
+        buildingMaxText.text = noBuildings + "/" + maxBuildings;
+    }
+
+    public void addBuilding() {
+        noBuildings++;
+        setBuildingCounts();
+    }
+
+    public void removeBuilding() {
+        noBuildings--;
+        setBuildingCounts();
     }
 
     private void callForHelp() {

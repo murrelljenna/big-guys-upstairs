@@ -8,6 +8,9 @@ public class TooltipController : MonoBehaviour
 	private GameObject cityRadius;
 	private GameObject insideTown;
     private GameObject buildingBlocked;
+    private GameObject friendUnitsNearby;
+    private GameObject enemyUnitsNearby;
+    private GameObject buildingMax;
 
 	private IEnumerator currentRoutine;
 
@@ -18,6 +21,9 @@ public class TooltipController : MonoBehaviour
         cityRadius = this.transform.Find("CityRadius").gameObject;
         insideTown = this.transform.Find("insideTown").gameObject;
         buildingBlocked = this.transform.Find("buildingBlocked").gameObject;
+        friendUnitsNearby = this.transform.Find("friendUnitsNearby").gameObject;
+        enemyUnitsNearby = this.transform.Find("enemyUnitsNearby").gameObject;
+        buildingMax = this.transform.Find("buildingMax").gameObject;
 
         clearUI();
     }
@@ -40,6 +46,24 @@ public class TooltipController : MonoBehaviour
     	StartCoroutine(currentRoutine);
     }
 
+    public void flashFriendUnitsNearby() {
+        clearUI();
+        currentRoutine = flashUI(friendUnitsNearby);
+        StartCoroutine(currentRoutine);
+    }
+
+    public void flashBuildingMax() {
+        clearUI();
+        currentRoutine = flashUI(buildingMax);
+        StartCoroutine(currentRoutine);
+    }
+
+    public void flashEnemyUnitsNearby() {
+        clearUI();
+        currentRoutine = flashUI(enemyUnitsNearby);
+        StartCoroutine(currentRoutine);
+    }
+
     public void flashBuildingBlocked() {
         clearUI();
         currentRoutine = flashUI(buildingBlocked);
@@ -59,6 +83,9 @@ public class TooltipController : MonoBehaviour
     		StopCoroutine(currentRoutine);
     	}
     	
+        buildingMax.SetActive(false);
+        enemyUnitsNearby.SetActive(false);
+        friendUnitsNearby.SetActive(false);
     	lackResources.SetActive(false);
         cityRadius.SetActive(false);
         insideTown.SetActive(false);

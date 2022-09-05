@@ -7,13 +7,14 @@ public class LightInfantry : Unit
     // Start is called before the first frame update
     void Start()
     {
+        this.prefabName = "Light Infantry";
     	this.movable = true;
     	this.responseRange = 2f;
         this.woodCost = 2;
         this.foodCost = 10;
 
         this.atk = 3;
-        this.hp = 10;
+        this.hp = 12;
         this.lastHP = this.hp;
         this.rng = 0.5f;
         this.attackRate = 1.2f;

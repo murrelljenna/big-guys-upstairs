@@ -106,6 +106,20 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
 	    			if (wallet.canAfford(wood, food)) { // If can afford and no town radius overlapping
                         if (!currentBuilding.GetComponent<buildingGhost>().colliding) {
                             if (currentBuilding.name == "town") {
+                                if (!unitInRange(hit.point, 10f, wallet.playerID)) {
+                                    StopAllCoroutines();
+                                    tooltips.flashFriendUnitsNearby();
+                                    StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
+                                    return;
+                                }
+
+                                if (enemyUnitInRange(hit.point, 10f, wallet.playerID)) {
+                                    StopAllCoroutines();
+                                    tooltips.flashEnemyUnitsNearby();
+                                    StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
+                                    return;
+                                }
+
                                 if (!townInRange(hit.point, 20f)) {
                                     StartCoroutine(plopBuilding(currentBuilding.gameObject, hit.point));
                                     currentBuilding = null;
@@ -157,7 +171,15 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
                                 }
                             } else {
                                 if (townInRange(hit.point, 10f, wallet.playerID)) {
+
+                                    if (getTownInRange(hit.point, 10f, wallet.playerID).maxedBuildings()) {
+                                        tooltips.flashBuildingMax();
+                                        return;
+                                    }
                                     StartCoroutine(plopBuilding(currentBuilding.gameObject, hit.point));
+                                    Town town = getTownInRange(hit.point, 10f, wallet.playerID);
+                                    town.addBuilding();
+
                                     currentBuilding = null;
                                 } else { // If town is NOT in range
                                     StopAllCoroutines();
@@ -210,6 +232,39 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
         Collider[] hitColliders = Physics.OverlapSphere(location, range);
         for (int i = 0; i < hitColliders.Length; i++) {
             if (hitColliders[i].tag == "town" && hitColliders[i].gameObject.GetComponent<ownership>().owner == ownerID) { // If there is a town in range that belongs to the player.
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private Town getTownInRange(Vector3 location, float range, int ownerID) {
+        Collider[] hitColliders = Physics.OverlapSphere(location, range);
+        for (int i = 0; i < hitColliders.Length; i++) {
+            if (hitColliders[i].tag == "town" && hitColliders[i].gameObject.GetComponent<ownership>().owner == ownerID) { // If there is a town in range that belongs to the player.
+                return hitColliders[i].gameObject.GetComponent<Town>();
+            }
+        }
+
+        return null;
+    }
+
+    private bool unitInRange(Vector3 location, float range, int ownerID) {
+        Collider[] hitColliders = Physics.OverlapSphere(location, range);
+        for (int i = 0; i < hitColliders.Length; i++) {
+            if (hitColliders[i].tag == "unit" && hitColliders[i].gameObject.GetComponent<ownership>().owner == ownerID) { // If there is a town in range that belongs to the player.
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private bool enemyUnitInRange(Vector3 location, float range, int ownerID) {
+        Collider[] hitColliders = Physics.OverlapSphere(location, range);
+        for (int i = 0; i < hitColliders.Length; i++) {
+            if (hitColliders[i].tag == "unit" && hitColliders[i].gameObject.GetComponent<ownership>().owner != ownerID) { // If there is a town in range that belongs to the player.
                 return true;
             }
         }

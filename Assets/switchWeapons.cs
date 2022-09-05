@@ -17,8 +17,7 @@ public class switchWeapons : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(transform.parent.parent.gameObject.name);
-        if (transform.parent.parent.parent.gameObject.GetComponent<PhotonView>().IsMine == false && PhotonNetwork.IsConnected == true) {
+        if (transform.parent.parent.gameObject.GetComponent<PhotonView>().IsMine == false && PhotonNetwork.IsConnected == true) {
             return;
         }
         if (Input.GetAxis("Mouse ScrollWheel") > 0f) {

@@ -5,6 +5,8 @@ using UnityEngine;
 public class ownership : MonoBehaviour
 {
 	public bool owned;
+    [SerializeField]
+    public game.assets.Player owner;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +19,8 @@ public class ownership : MonoBehaviour
         
     }
 
-    public void capture() {
+    public void capture(game.assets.Player player) {
     	owned = true;
+        this.owner = player;
     }
 }

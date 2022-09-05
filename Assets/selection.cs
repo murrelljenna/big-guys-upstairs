@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class selection : MonoBehaviour
 {
 	public Camera cam;
-	public List<GameObject> selected;
+	[SerializeField] List<GameObject> selected;
  	int layerMask;
  	int terrainMask;
     // Start is called before the first frame update
@@ -33,10 +33,13 @@ public class selection : MonoBehaviour
 		if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)) {
 			if (Input.GetMouseButtonDown(0)) {
 				Debug.Log(hit.collider.gameObject.name);
-				if (selected.Exists(unit => unit.GetInstanceID() == hit.collider.gameObject.GetInstanceID())) {
-					selected.Remove(hit.collider.gameObject);
-				} else {
-					selected.Add(hit.collider.gameObject);
+				if (hit.collider.gameObject.GetComponent<ownership>().owner == this.transform.parent.parent.parent.parent.gameObject.GetComponent<game.assets.Player>()) {
+					if (selected.Count > 0 && selected.Exists(unit => unit.GetInstanceID() == hit.collider.gameObject.GetInstanceID())) {
+						Debug.Log(selected.Count);
+						selected.Remove(hit.collider.gameObject);
+					} else {
+						selected.Add(hit.collider.gameObject);
+					}
 				}
 			}
 		}
@@ -45,7 +48,7 @@ public class selection : MonoBehaviour
 				Vector3 destination = hit.point;
 				bool alt = true;
 				selected.ForEach(unit => {
-					unit.transform.parent.gameObject.GetComponent<NavMeshAgent>().destination = (destination);
+					unit.gameObject.GetComponent<NavMeshAgent>().destination = (destination);
 
 					if (alt = true) {
 						destination.x += 0.2f;

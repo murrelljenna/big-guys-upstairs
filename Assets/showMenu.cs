@@ -7,10 +7,10 @@ public class showMenu : MonoBehaviourPun
 {
 	public GameObject BuildingMenu;
 	public GameObject[] options;
-    // Start is called before the first frame update
-    void Start()
+    
+    void Awake()
     {
-       
+       BuildingMenu = GameObject.Find("BuildingMenu");
     }
 
     void OnDisable()
@@ -27,8 +27,7 @@ public class showMenu : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(transform.parent.parent.gameObject.name);
-        if (transform.parent.parent.parent.parent.GetComponent<PhotonView>().IsMine == false && PhotonNetwork.IsConnected == true) {
+        if (transform.parent.parent.parent.GetComponent<PhotonView>().IsMine == false && PhotonNetwork.IsConnected == true) { // This gets the FPSController gameobject
             return;
         }
 

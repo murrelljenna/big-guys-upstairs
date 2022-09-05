@@ -53,7 +53,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\buildingCost.cs" />
      <Compile Include="Assets\buildingPlacement.cs" />
      <Compile Include="Assets\GameManager.cs" />
      <Compile Include="Assets\Launcher.cs" />
@@ -72,13 +71,12 @@
      <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\IgnoreUiRaycastWhenInactive.cs" />
      <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\NamePickGui.cs" />
      <Compile Include="Assets\Photon\PhotonRealtime\Demos\DemoLoadBalancing\ConnectAndJoinRandomLb.cs" />
-     <Compile Include="Assets\PlayerAnimatorManager.cs" />
+     <Compile Include="Assets\Player.cs" />
      <Compile Include="Assets\PlayerNameInputField.cs" />
      <Compile Include="Assets\playerRaycast.cs" />
      <Compile Include="Assets\radius.cs" />
      <Compile Include="Assets\Raycast.cs" />
-     <Compile Include="Assets\res.cs" />
-     <Compile Include="Assets\resCounter.cs" />
+     <Compile Include="Assets\ResourcePanel.cs" />
      <Compile Include="Assets\Resources.cs" />
      <Compile Include="Assets\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />
      <Compile Include="Assets\SampleScenes\Menu\Scripts\PauseMenu.cs" />
@@ -92,8 +90,7 @@
      <Compile Include="Assets\showMenu.cs" />
      <Compile Include="Assets\spawnUnit.cs" />
      <Compile Include="Assets\switchWeapons.cs" />
-     <Compile Include="Assets\UpdateFoodUI.cs" />
-     <Compile Include="Assets\UpdateWoodUI.cs" />
+     <Compile Include="Assets\Town.cs" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <None Include="Assets\Photon\PhotonUnityNetworking\link.xml" />

@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class buildingPlacement : MonoBehaviour
+using Photon.Pun;
+using Photon.Realtime;
+
+public class buildingPlacement : MonoBehaviourPunCallbacks
 {
-	res wallet;
+	game.assets.Player wallet;
 	public Camera cam;
 	private Transform currentBuilding;
 	private int layerMask;
-    // Start is called before the first frame update
+    
     void Start()
     {
-    	wallet = GameObject.Find("Player").GetComponent<res>();
+        Debug.Log(this.transform.parent.parent.parent.parent.name);
+    	wallet = this.transform.parent.parent.parent.parent.GetComponent<game.assets.Player>();
         currentBuilding = null;
         layerMask = 1 << 11;
     }
@@ -37,13 +41,16 @@ public class buildingPlacement : MonoBehaviour
 	    		// Left-click to place building
 
 	    		if (Input.GetMouseButtonDown(0)) {
-	    			int wood = currentBuilding.Find("Logic").GetComponent<buildingCost>().wood;
-	    			int food = currentBuilding.Find("Logic").GetComponent<buildingCost>().food;
+	    			int wood = currentBuilding.GetComponent<Town>().woodCost;
+	    			int food = currentBuilding.GetComponent<Town>().foodCost;
 
 	    			if (wallet.canAfford(wood, food)) {
 	    				wallet.makeTransaction(wood, food);
-	    				currentBuilding.Find("Logic").GetComponent<LineRenderer>().enabled = false;
-	    				currentBuilding = null;
+                        this.currentBuilding.gameObject.name = "Town";
+                        GameObject placedBuilding = PhotonNetwork.Instantiate(this.currentBuilding.gameObject.name, hit.point, Quaternion.identity, 0);
+                        placedBuilding.GetComponent<LineRenderer>().enabled = false;
+                        placedBuilding.GetComponent<ownership>().capture(wallet);
+                        Destroy(currentBuilding.gameObject);
 	    			} else {
 	    				Debug.Log("Not True");
 	    			}

@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class spawnUnit : MonoBehaviour
 {
-	res wallet;
+	game.assets.Player wallet;
 	public Camera cam;
 	private int layerMask;
     // Start is called before the first frame update
     void Start()
     {
-        wallet = GameObject.Find("Player").GetComponent<res>();
+        wallet = GameObject.Find("Player").GetComponent<game.assets.Player>();
         layerMask = 1 << 11;
     }
 

@@ -7,6 +7,8 @@ using Photon.Realtime;
 
 public class Building : Attackable
 {
+  protected bool canBeRecycled = true;
+
     void Start()
     {
     	buildingInteraction interactionOptions = this.GetComponent<buildingInteraction>();
@@ -39,4 +41,19 @@ public class Building : Attackable
 
 	    base.destroyObject();
     }
+
+    public override void interactionOptions(game.assets.Player player) {
+      if (this.photonView.IsMine && canBeRecycled && Input.GetKeyDown(KeyCode.X)) {
+        owner.getPlayer().giveResources("wood", this.woodCost/2);
+        owner.getPlayer().giveResources("food", this.foodCost/2);
+        base.destroyObject();
+      }
+    }
+
+    /* Called by buildingPlacement.cs. Returns error code interpreted by buildingPlacement.cs explaining reason why can't build */ 
+/*
+    public int constructionOptions() {
+      Debug.Log("Not put in place yet")
+    }
+    */
 }

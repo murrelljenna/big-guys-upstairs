@@ -91,7 +91,7 @@ public class playerRaycast : MonoBehaviour
         }
 
         
-        /* Interaction with towns */ 
+        /* Interaction with buildings */ 
 
         ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, buildingMask)) {
@@ -105,14 +105,6 @@ public class playerRaycast : MonoBehaviour
             buildingViewed = null;
         }
 
-        /* Towns and buildings can be recycled */
-/*
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, allBuildings)) {
-            if (hit.collider.gameObject.tag != "buildingGhost" && hit.collider.GetComponent<ownership>().owner == player.playerID) {
-
-            }
-        }
-*/
         /* Interaction with towns */ 
 
         ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));

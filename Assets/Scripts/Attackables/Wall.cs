@@ -66,6 +66,24 @@ public class Wall : Building, IPunObservable
         base.Awake();
     }
 
+    public override void interactionOptions(game.assets.Player player) {
+        if (Input.GetKeyDown(KeyCode.U)) {
+            PhotonNetwork.Destroy(this.gameObject);
+
+            Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.GetComponent<Collider>().bounds.center, 0.2f, (1 << 14));
+            for (int i = 0; i < hitColliders.Length; i++) {
+                if (hitColliders[i].gameObject.tag == "wall") {
+                    PhotonNetwork.Destroy(hitColliders[i].gameObject);
+                }
+            }
+
+            GameObject gate = PhotonNetwork.Instantiate("Gate", this.transform.position, this.transform.rotation, 0);
+            gate.GetComponent<ownership>().capture(player);
+        }
+
+        base.interactionOptions(player);
+    }
+
     [PunRPC]
     private void playDestructionEffect() {
         AudioSource[] sources = this.transform.Find("DestroySounds").GetComponents<AudioSource>();

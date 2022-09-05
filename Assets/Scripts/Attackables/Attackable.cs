@@ -36,6 +36,7 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     List<string> colourStrings = new List<string>() { "black", "blue", "white", "green", "pink", "red", "yellow" };
 
     protected TooltipController tooltips;
+    //protected bool underAttack;
     
     // UI Animation
     protected bool midAnimation;
@@ -163,6 +164,28 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     public virtual void interactionOptions(game.assets.Player player) {
 
     } 
+
+    protected bool townInRange(Vector3 location, float range) {       
+        Collider[] hitColliders = Physics.OverlapSphere(location, range);
+        for (int i = 0; i < hitColliders.Length; i++) {
+            if (hitColliders[i].tag == "town") {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected bool townInRange(Vector3 location, float range, int ownerID) {
+        Collider[] hitColliders = Physics.OverlapSphere(location, range);
+        for (int i = 0; i < hitColliders.Length; i++) {
+            if (hitColliders[i].tag == "town" && hitColliders[i].gameObject.GetComponent<ownership>().owner == ownerID) { // If there is a town in range that belongs to the player.
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     void releaseButton1() {
         up1.SetActive(true);

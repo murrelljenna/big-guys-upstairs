@@ -21,6 +21,7 @@ public class Town : Building, IPunObservable
         this.hp = 600;
         this.woodCost = 50;
         this.foodCost = 50;
+        this.canBeRecycled = false;
 
         Transform infoTransform = this.gameObject.transform.Find("Info");
         if (infoTransform != null) {
@@ -157,6 +158,8 @@ public class Town : Building, IPunObservable
                 
             }
         } 
+
+        base.interactionOptions(player);
     }
 
     public override void takeDamage(int damage) {

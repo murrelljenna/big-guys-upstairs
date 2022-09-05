@@ -148,5 +148,7 @@ public class Barracks : Building, IPunObservable
             up2.SetActive(false);
             down2.SetActive(true);
         }
+
+        base.interactionOptions(player);
     }
 }

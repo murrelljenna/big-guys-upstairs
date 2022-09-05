@@ -158,7 +158,7 @@ namespace game.assets {
         }
 
 
-        void iterateResources() {
+        private void iterateResources() {
         	wood += woodIt;
             food += foodIt;
             gold += goldIt;
@@ -176,6 +176,20 @@ namespace game.assets {
                     goldIt += yield;
                 break;
     		}
+        }
+
+        public void giveResources(string resType, int yield = 4) {
+            switch (resType) {
+                case "wood":
+                    wood += yield;
+                break;
+                case "food":
+                    food += yield;
+                break;
+                case "gold":
+                    gold += yield;
+                break;
+            }
         }
 
         public void loseResource(string resType, int yield = 4) {

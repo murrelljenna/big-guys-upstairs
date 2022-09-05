@@ -39,8 +39,8 @@ public class selection : MonoBehaviour
     	selected = new List<GameObject>();
         layerMask = 1 << 12;
         terrainMask = 1 << 11;
-        unitMask = 1 << 12;
-        attackableMask = (1 << 9) | (1 << 10) | (1 << 12) | (1 << 14);
+        unitMask = (1 << 12) | (1 << 17);
+        attackableMask = (1 << 9) | (1 << 10) | (1 << 12) | (1 << 14) | (1 << 16) | (1 << 18);
         allMask = terrainMask | attackableMask;  // For terrain and attackable objects.
         player = this.transform.parent.parent.parent.parent.gameObject.GetComponent<game.assets.Player>();
 
@@ -61,7 +61,7 @@ public class selection : MonoBehaviour
         RaycastHit hit;
 
 		Ray ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
-		if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)) {
+		if (Physics.Raycast(ray, out hit, Mathf.Infinity, unitMask)) {
 			if (Input.GetMouseButtonDown(0)) {
 				firstPointPlaced = false;
 				if (hit.collider.gameObject.GetComponent<ownership>().owner == player.playerID) {

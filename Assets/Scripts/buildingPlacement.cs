@@ -120,13 +120,17 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
                                         int mapLayer = ~(1 <<11);
                                         if (wallet.canAfford(wood * (int)noWalls, food * (int)noWalls)) {
                                             RaycastHit info;
-                                            if (firstPoint.y == lastPoint.y && !Physics.Linecast(firstPoint, lastPoint, out info, mapLayer) || info.collider.gameObject.name == "wall" || info.collider.gameObject.GetComponent<Attackable>().prefabName == "Wall_Corner") {
-                                                wallet.makeTransaction(wood * (int)noWalls, food * (int)noWalls);
-                                                StartCoroutine(placeWalls(noWalls, firstPointSnapped, lastPointSnapped));
+                                            if ((!Physics.Linecast(firstPoint, lastPoint, out info, mapLayer) || info.collider.gameObject.name == "wall" || info.collider.gameObject.GetComponent<Attackable>().prefabName == "Wall_Corner")) {
+                                                if (firstPoint.y == lastPoint.y) {
+                                                    wallet.makeTransaction(wood * (int)noWalls, food * (int)noWalls);
+                                                    StartCoroutine(placeWalls(noWalls, firstPointSnapped, lastPointSnapped));
 
-                                                firstPointPlaced = false;
-                                                lastPointSnapped = false;
-                                                firstPointSnapped = false;
+                                                    firstPointPlaced = false;
+                                                    lastPointSnapped = false;
+                                                    firstPointSnapped = false;
+                                                } else {
+                                                    Debug.Log("PLEASE ADD NOTIFICATION HERE - UNEVEN WALL PLACEMENT ATTEMPT");
+                                                }
                                             } else {
                                                 StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
                                                 StartCoroutine(flashRed(info.collider.gameObject, 0.2f));

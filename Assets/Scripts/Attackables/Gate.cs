@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine;
+using UnityEngine.AI;
+
 using Photon.Pun;
 using Photon.Realtime;
 
-public class House : Building, IPunObservable
+public class Gate : Building, IPunObservable
 {
-    private int housingBump = 5;
+    private gateController controller;
 
     void Start() {
-        prefabName = "House";
-
-        this.hp = 150;
-        this.woodCost = 20;
+    	prefabName = "Gate";
+        
+        this.hp = 250;
+        this.woodCost = 30;
         this.foodCost = 0;
 
         Transform infoTransform = this.gameObject.transform.Find("Info");
@@ -24,9 +27,7 @@ public class House : Building, IPunObservable
             }
         }
 
-        if (!this.photonView.IsMine) {
-            this.GetComponent<buildingGhost>().active = false;
-        }
+        controller = this.transform.Find("Entrance").GetComponent<gateController>();
 
         base.Start();
     }
@@ -42,20 +43,14 @@ public class House : Building, IPunObservable
     }
 
     public override void onCapture() {
-        if (photonView.IsMine) {
-            owner.getPlayer().addUnitMax(housingBump);
-        }
-
         string colorName = GetComponent<ownership>().getPlayer().colorName;
-        this.transform.Find("Model").gameObject.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Buildings_" + colorName) as Texture));
+        this.transform.Find("Model").Find("Wall_A_gate").gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Buildings_" + colorName) as Texture));
     }
 
     public override void destroyObject() {
-        if (photonView.IsMine) {
-            owner.getPlayer().addUnitMax(-housingBump);
+        if (this.photonView.IsMine) {
+            photonView.RPC("playDestructionEffect", RpcTarget.All);
         }
-
-        photonView.RPC("playDestructionEffect", RpcTarget.All);
 
         base.destroyObject();
     }
@@ -72,6 +67,33 @@ public class House : Building, IPunObservable
         base.Awake();
     }
 
+    public override void interactionOptions(game.assets.Player player) {
+        GameObject buildingViewed = this.gameObject.transform.Find("Info").gameObject;
+        buildingViewed.SetActive(true);
+
+        if (!midAnimation) {
+            buildingViewed.transform.Find("Lock selector").Find("1_Pressed").gameObject.SetActive(false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E)) {
+            up1 = buildingViewed.transform.Find("Lock selector").Find("1_Normal").gameObject;
+            down1 = buildingViewed.transform.Find("Lock selector").Find("1_Pressed").gameObject;
+
+            up1.SetActive(false);
+            down1.SetActive(true);
+            midAnimation = true;
+            Invoke("releaseButton1", 0.2f);
+            
+            if (controller.locked) {
+                controller.unlockGate();
+            } else {
+                controller.lockGate();
+            }
+        }
+
+        base.interactionOptions(player);
+    }
+
     [PunRPC]
     private void playDestructionEffect() {
         AudioSource[] sources = this.transform.Find("DestroySounds").GetComponents<AudioSource>();
@@ -85,7 +107,4 @@ public class House : Building, IPunObservable
         Destroy(effect.gameObject, effect.duration);
     }
 
-    public override void interactionOptions(game.assets.Player player) {
-        base.interactionOptions(player);
-    }
 }

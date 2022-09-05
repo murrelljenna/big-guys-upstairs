@@ -16,7 +16,7 @@ public class Unit : Attackable
     public bool inFight = false;
     public bool isSelected = false;
 	public bool selectable = false;
-    protected int attackableMask = (1 << 9) | (1 << 10) | (1 << 12) | (1 << 14);
+    protected int attackableMask = (1 << 9) | (1 << 10) | (1 << 12) | (1 << 14) | (1 << 16) | (1 << 18);
     protected float attackRate = 1f;
     public int frameCount;
 
@@ -305,7 +305,7 @@ public class Unit : Attackable
                                 dist += Vector3.Distance(path.corners[j], path.corners[j + 1]);
                             }
 
-                            if (this.isInRange(hitColliders[i].GetComponent<Attackable>()) || dist < 3f ) {
+                            if (this.isInRange(hitColliders[i].GetComponent<Attackable>()) || dist < 10f ) {
                                 callAttack(hitColliders[i].gameObject.GetComponent<Attackable>().id);
                                 break;
                             }

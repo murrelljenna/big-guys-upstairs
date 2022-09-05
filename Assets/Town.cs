@@ -7,6 +7,7 @@ using Photon.Realtime;
 
 public class Town : Attackable, IPunObservable
 {
+    private int yield = 2;
     private int lastNoEnemies = 0;
 
     private bool underAttack = false;
@@ -45,6 +46,11 @@ public class Town : Attackable, IPunObservable
         base.Update();
     }
 
+    public override void onCapture() {
+        game.assets.Player player = owner.getPlayer();
+        player.addResource("gold", yield);
+    }
+
     private void checkEnemiesInRadius() {
         Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.GetComponent<Renderer>().bounds.center, 10f, unitMask);
         int attackers = 0;
@@ -81,6 +87,9 @@ public class Town : Attackable, IPunObservable
     }
 
     public override void destroyObject() {
+        game.assets.Player player = owner.getPlayer();
+        player.loseResource("gold", yield);
+
         Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.GetComponent<Renderer>().bounds.center, 10f, resourceMask);
 
         if (hitColliders.Length != lastNoEnemies) {

@@ -31,13 +31,11 @@ public class selection : MonoBehaviour
         terrainMask = 1 << 11;
         attackableMask = (1 << 9) | (1 << 10) | (1 << 12);
         allMask = terrainMask | attackableMask;  // For terrain and attackable objects.
-        Debug.Log(allMask);
         player = this.transform.parent.parent.parent.parent.gameObject.GetComponent<game.assets.Player>();
     }
 
     void OnDisable() {
 		clearSelection();
-		selected.Clear();
     }
 
     void onEnable() {
@@ -110,14 +108,10 @@ public class selection : MonoBehaviour
 				Vector3 destination = hit.point;
 				bool alt = true; // Used to offset movement targets so not all units navigate to exact same positiln.
 
-				Debug.Log(hit.collider.gameObject.name);
-
 				if (attackableMask == (attackableMask | (1 << hit.collider.gameObject.layer)) 
 					&& hit.collider.gameObject.GetComponent<ownership>().owned == true 
 					&& hit.collider.gameObject.GetComponent<ownership>().owner != player.playerID) {
 
-					Debug.Log("OK WERE IN THE ATTACK THING");
-					
 					selected.ForEach(unit => {
 						if (unit != null) {
 							unit.gameObject.GetComponent<Unit>().cancelOrders();

@@ -14,7 +14,6 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
     
     void Start()
     {
-        Debug.Log(this.transform.parent.parent.parent.parent.name);
     	wallet = this.transform.parent.parent.parent.parent.GetComponent<game.assets.Player>();
         currentBuilding = null;
         layerMask = 1 << 11;
@@ -65,8 +64,9 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
                                 }
                             }
                         }
-	    			} else {
-	    				Debug.Log("Put menu notification that player cant afford");
+	    			} else { // If cannot afford.
+                        Debug.Log("Starting coroutine");
+                        StartCoroutine(flashRed(currentBuilding.gameObject, 3f));
 	    			}
 	    		}
 	    	}
@@ -107,5 +107,22 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
         }
 
         return false;
+    }
+
+    private IEnumerator flashRed(GameObject building, float offset) {
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        List<Color> previousColors = new List<Color>();
+Debug.Log(renderers.Length);
+        for (int i = 0; i < renderers.Length; i++) {
+            Debug.Log(renderers[i].gameObject.name);
+            previousColors.Add(renderers[i].material.color);
+            renderers[i].material.color = Color.red;
+        }
+
+        yield return new WaitForSeconds(offset);
+
+        for (int i = 0; i < renderers.Length; i++) {
+            renderers[i].material.color = previousColors[i];
+        }
     }
 }

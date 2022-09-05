@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Militia : Unit
 {
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,5 +19,11 @@ public class Militia : Unit
         this.rng = 0.12f;
 
         base.Start();
+    }
+
+    void Update() {
+        animator.SetFloat("speed", this.GetComponent<UnityEngine.AI.NavMeshAgent>().velocity.magnitude);
+
+        base.Update();
     }
 }

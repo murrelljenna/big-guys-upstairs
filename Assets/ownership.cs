@@ -48,10 +48,13 @@ public class ownership : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
+    public game.assets.Player getPlayer() {
+        return (GameObject.Find(this.owner.ToString()).GetComponent<game.assets.Player>());
+    }
+
     private IEnumerator waitForPlayerColour(GameObject player) {
         yield return new WaitUntil(() => {
-            Debug.Log(GameObject.Find(this.owner.ToString()).name);
-            return (GameObject.Find(this.owner.ToString()).GetComponent<game.assets.Player>().hasColor != false);
+            return (getPlayer().hasColor != false);
         });
             this.playerColor = player.GetComponent<game.assets.Player>().playerColor;
             this.gameObject.GetComponent<Renderer>().material.color = player.GetComponent<game.assets.Player>().playerColor;

@@ -26,7 +26,8 @@ public class ResourceTile : Attackable
 
     public override void Start()
     {
-        this.woodCost = 20;
+        this.woodCost = 10;
+        this.foodCost = 10;
         this.hp = 75;
         ownerInfo = this.gameObject.GetComponent<ownership>();
         this.id = this.gameObject.GetComponent<PhotonView>().ViewID;
@@ -37,7 +38,6 @@ public class ResourceTile : Attackable
             if (infoTransform.gameObject != null) {
                 info = infoTransform.gameObject;
                 info.SetActive(false);
-                Debug.Log("INFO HAS BEEN SET");
             }
         }
 
@@ -56,7 +56,6 @@ public class ResourceTile : Attackable
 
     private IEnumerator checkOwnerAndCapture() {
         yield return new WaitUntil(() => {
-            Debug.Log(GameObject.Find(ownerInfo.owner.ToString()).name);
             return (GameObject.Find(ownerInfo.owner.ToString()) != null);
         });
         GameObject.Find(ownerInfo.owner.ToString()).GetComponent<game.assets.Player>().addResource(resType, yield);

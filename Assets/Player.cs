@@ -10,9 +10,11 @@ namespace game.assets {
     {
     	public int wood;
     	public int food;
+        public int gold;
 
     	public int woodIt;
     	public int foodIt;
+        public int goldIt;
 
         public string playerName;
         public int playerID;
@@ -101,6 +103,7 @@ namespace game.assets {
         void iterateResources() {
         	wood += woodIt;
             food += foodIt;
+            gold += goldIt;
         }
 
         public void addResource(string resType, int yield = 4) {
@@ -111,6 +114,9 @@ namespace game.assets {
     			case "food":
     				foodIt += yield;
     			break;
+                case "gold":
+                    goldIt += yield;
+                break;
     		}
         }
 
@@ -122,11 +128,14 @@ namespace game.assets {
                 case "food":
                     foodIt -= yield;
                 break;
+                case "gold":
+                    goldIt -= yield;
+                break;
             }
         }
 
-        public bool canAfford(int wood = 0, int food = 0) {
-            if (this.wood >= wood && this.food >= food) {
+        public bool canAfford(int wood = 0, int food = 0, int gold = 0) {
+            if (this.wood >= wood && this.food >= food && this.gold >= gold) {
                 return true;
             }
 

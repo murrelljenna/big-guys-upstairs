@@ -15,6 +15,7 @@ public class Unit : Attackable
 	public bool isAttacking = false;
     public bool isSelected = false;
 	public bool selectable = false;
+    private int unitMask = 1 << 12;
 
     public bool updateTargetLive = false;
 
@@ -32,6 +33,10 @@ public class Unit : Attackable
     // Update is called once per frame
     public override void Update()
     {
+        if (animator != null && GetComponent<UnityEngine.AI.NavMeshAgent>() != null) {
+            animator.SetFloat("speed", this.GetComponent<UnityEngine.AI.NavMeshAgent>().velocity.magnitude);
+        }
+
         // If unit is currently attacking another unit (attackable that can move), update that target's position every frame.
 
         if (updateTargetLive == true && attackee != null && this.gameObject.GetComponent<NavMeshAgent>() != null) {
@@ -42,7 +47,7 @@ public class Unit : Attackable
     }
 
     public override void onCapture() {
-    	this.gameObject.transform.Find("Capsule").GetComponent<MeshRenderer>().material.color = GetComponent<ownership>().playerColor;
+    	this.gameObject.transform.Find("Model").transform.Find("Body_08b").GetComponent<SkinnedMeshRenderer>().material.color = GetComponent<ownership>().playerColor;
     }
 
     public override void destroyObject() {
@@ -54,7 +59,7 @@ public class Unit : Attackable
 
 		player.transform.Find("FPSController").transform.Find("FirstPersonCharacter").transform.Find("Tools").transform.Find("Command").GetComponent<selection>().deselectUnit(this.gameObject);
         base.destroyObject();
-    } 
+    }
 
     public void move(Vector3 destination) {
         cancelOrders();
@@ -92,7 +97,7 @@ public class Unit : Attackable
                 attackee.attackers.Add(this);
                 isAttacking = true;
 
-				bool arf = this.gameObject.GetComponent<NavMeshAgent>().SetDestination(attackee.gameObject.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
+				move(attackee.gameObject.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
 
 				yield return new WaitUntil (() => isInRange(thingToAttack));
 				this.gameObject.GetComponent<NavMeshAgent>().isStopped = true;
@@ -104,6 +109,8 @@ public class Unit : Attackable
 
     public virtual void attack() {
     	if (attackee != null && attackee.hp > 0) {
+            this.faceTarget(attackee.transform);
+            animator.SetTrigger("attack");
     		attackee.takeDamage(atk);
     	} else {
     		cancelOrders();
@@ -144,7 +151,7 @@ public class Unit : Attackable
 
     public void checkEnemiesInRange() {
     	if (!isAttacking && canAttack) {
-		    Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.GetComponent<Collider>().bounds.center, responseRange);
+		    Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.GetComponent<Collider>().bounds.center, responseRange, unitMask);
             Attackable closestAttackee = null;
             Vector3 playerPos = this.GetComponent<Collider>().bounds.center;
 
@@ -194,6 +201,12 @@ public class Unit : Attackable
                 lastNoEnemies = hitColliders.Length;
             }
         }  
+    }
+
+    private void faceTarget(Transform target) {
+        Vector3 direction = (target.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        this.transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * this.GetComponent<UnityEngine.AI.NavMeshAgent>().angularSpeed);
     }
 
     public void onSelect() {

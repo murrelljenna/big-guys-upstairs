@@ -7,6 +7,8 @@ using Photon.Realtime;
 
 public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
 {
+    public Animator animator;
+    protected ownership owner;
 	protected GameObject info;
 	public bool canAttack = true;
 
@@ -38,10 +40,14 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     public virtual void OnEnable() {
-
+        Transform model = this.transform.Find("Model");
+        if (model != null) {
+            animator = model.gameObject.GetComponent<Animator>();
+        }
     }
 
     public virtual void Awake() {
+        owner = GetComponent<ownership>();
     	photonView = PhotonView.Get(this);
 
         this.id = this.photonView.ViewID;

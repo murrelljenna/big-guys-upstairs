@@ -168,8 +168,11 @@ public class selection : MonoBehaviour
 		unit.GetComponent<Collider>().gameObject.GetComponent<LineRenderer>().enabled = true;
     }
 
-    void deselectUnit(GameObject unit) {
-		selected.Remove(unit.GetComponent<Collider>().gameObject);
+    public void deselectUnit(GameObject unit) {
+    	if (selected.Contains(unit)) {
+			selected.Remove(unit.GetComponent<Collider>().gameObject);
+		}
+
 		unit.GetComponent<Collider>().gameObject.GetComponent<LineRenderer>().enabled = false;
     }
 

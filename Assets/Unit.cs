@@ -42,6 +42,15 @@ public class Unit : Attackable
     	this.gameObject.transform.Find("Capsule").GetComponent<MeshRenderer>().material.color = GetComponent<ownership>().playerColor;
     }
 
+    public override void destroyObject() {
+        int playerID = this.gameObject.GetComponent<ownership>().owner;
+        GameObject player = GameObject.Find(playerID.ToString());
+
+		player.transform.Find("FPSController").transform.Find("FirstPersonCharacter").transform.Find("Tools").transform.Find("Command").GetComponent<selection>().deselectUnit(this.gameObject);
+
+        base.destroyObject();
+    }
+
     public void move(Vector3 destination) {
     	this.gameObject.GetComponent<NavMeshAgent>().destination = (destination);
     }

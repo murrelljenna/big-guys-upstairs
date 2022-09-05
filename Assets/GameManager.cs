@@ -53,10 +53,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 		    	PhotonNetwork.SetPlayerCustomProperties(playerSettings);
 		    }
-		    Debug.Log("HERES THE FUCKING NUMBER");
-Debug.Log(PhotonNetwork.LocalPlayer.CustomProperties["color"]);
+		    
 		    // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-		    localPlayer = PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(15f,0f,15f), Quaternion.identity, 0);
+		    localPlayer = PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(35f,0f,35f), Quaternion.identity, 0);
 		    localPlayer.GetComponent<game.assets.Player>().playerColor = colours[Convert.ToInt32(PhotonNetwork.LocalPlayer.CustomProperties["color"])];
 	    	localPlayer.transform.Find("FPSController").transform.Find("Capsule").GetComponent<MeshRenderer>().material.color = colours[Convert.ToInt32(PhotonNetwork.LocalPlayer.CustomProperties["color"])];
 		}
@@ -89,6 +88,10 @@ Debug.Log(PhotonNetwork.LocalPlayer.CustomProperties["color"]);
 			*/
 		}
 	}
+
+	//public override void IInRoomCallbacks.OnMasterClientSwitched(Player newMasterClient) {
+		// Put 
+	//}
 
 	public override void OnPlayerEnteredRoom(Player other) {
     	Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName);

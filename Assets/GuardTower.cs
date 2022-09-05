@@ -7,6 +7,8 @@ using Photon.Realtime;
 
 public class GuardTower : Unit
 {
+    public GameObject missile;
+
     void Start()
     {
     	this.movable = false;
@@ -16,7 +18,7 @@ public class GuardTower : Unit
         this.foodCost = 0;
 
         this.atk = 5;
-        this.hp = 100;
+        this.hp = 125;
         this.lastHP = this.hp;
         this.rng = 4f;
 
@@ -86,6 +88,13 @@ public class GuardTower : Unit
     }
 
     public override void attack() {
+        if (attackee != null) {
+            GameObject arrow = Instantiate(missile, GetComponent<Renderer>().bounds.center, Quaternion.LookRotation((attackee.gameObject.transform.position - GetComponent<Renderer>().bounds.center).normalized));
+            arrow.transform.Rotate(-90, 0, 0); // Can't figure out how to get this fucking thing to face the right way.
+            arrow.GetComponent<ownership>().localCapture(GetComponent<ownership>().getPlayer());
+            arrow.GetComponent<Rigidbody>().AddForce((attackee.gameObject.transform.position - this.transform.position).normalized * 500);
+        }
+
         AudioSource[] sources = this.gameObject.transform.Find("AttackSounds1").GetComponents<AudioSource>();
         sources[UnityEngine.Random.Range(0, sources.Length)].Play(0);
 

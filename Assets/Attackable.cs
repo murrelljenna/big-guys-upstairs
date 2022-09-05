@@ -88,9 +88,11 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     		playerCamera = getLocalCamera();
     	}
 
-    	if (this.hp != this.maxHP) {
+    	if (this.hp != this.maxHP && this.hp > 0) {
     		canvas.SetActive(true);
-    	}
+    	} else {
+            canvas.SetActive(false);
+        }
 
         if (this.hp != this.lastHP) {
             healthBar.UpdateBar(this.hp, this.maxHP);

@@ -7,6 +7,7 @@ using Photon.Realtime;
 
 public class buildingPlacement : MonoBehaviourPunCallbacks
 {
+    private LineRenderer lineRen;
 	game.assets.Player wallet;
 	public Camera cam;
 	private Transform currentBuilding;
@@ -14,6 +15,10 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
 
     private TooltipController tooltips;
     Color previousColor;
+
+    Vector3 firstPoint;
+    Vector3 lastPoint;
+    bool firstPointPlaced = false;
 
     public AudioClip[] plopSounds;
     
@@ -23,6 +28,9 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
         currentBuilding = null;
         tooltips = GameObject.Find("Tooltips").GetComponent<TooltipController>();
         layerMask = 1 << 11;
+
+        lineRen = this.GetComponent<LineRenderer>();
+        this.gameObject.GetComponent<Renderer>().material.color = wallet.playerColor;
     }
 
     void OnDisable() {
@@ -44,6 +52,19 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
 
                 currentBuilding.position = new Vector3(hit.point.x, hit.point.y+0.5f, hit.point.z);
 
+                if (firstPointPlaced) {
+                    Vector3[] positions = new Vector3[2];
+                    positions[0] = firstPoint;
+                    positions[1] = hit.point;
+                    lineRen.SetPositions(positions);
+
+                    currentBuilding.rotation = Quaternion.LookRotation(hit.point - firstPoint);
+                }
+                
+                if (currentBuilding.name == "wall") {
+                    currentBuilding.position = hit.point;   
+                }
+
 	    		if (Input.GetMouseButtonDown(0)) {
 
                     int wood = currentBuilding.GetComponent<Attackable>().woodCost;
@@ -59,6 +80,47 @@ public class buildingPlacement : MonoBehaviourPunCallbacks
                                     StopAllCoroutines();
                                     tooltips.flashCityRadius();
                                     StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
+                                }
+                            } else if (currentBuilding.name == "wall") {
+                                if (firstPointPlaced) {
+                                    if (Input.GetMouseButtonDown(1)) {
+                                        firstPointPlaced = false;
+                                    }
+                                    lastPoint = hit.point;
+                                    float wallUnitLength = currentBuilding.transform.Find("Model").GetComponent<MeshFilter>().mesh.bounds.size.z/2.3f * currentBuilding.transform.Find("Model").localScale.z;
+                                    float pointDistance = Vector3.Distance(firstPoint, lastPoint);
+
+                                    float noWalls = pointDistance/wallUnitLength;
+                                    int mapLayer = ~(1 <<11);
+                                    if (wallet.canAfford(wood * (int)noWalls, food * (int)noWalls)) {
+                                        RaycastHit info;
+                                        if (!Physics.Linecast(firstPoint, lastPoint, out info, mapLayer) || info.collider.gameObject.name == "wall") {
+                                            for (int i = 0; i < noWalls; i++) {
+                                                Vector3 destination = Vector3.Lerp(firstPoint, lastPoint, (float)i * (1f/noWalls));
+                                                wallet.makeTransaction(wood, food);
+
+                                                GameObject placedBuilding = PhotonNetwork.Instantiate(currentBuilding.GetComponent<Attackable>().prefabName, destination, Quaternion.LookRotation(lastPoint - destination), 0);
+                                                placedBuilding.transform.Find("Dust").gameObject.GetComponent<ParticleSystem>().Emit(30);
+                                                placedBuilding.GetComponent<buildingGhost>().active = false;
+                                                placedBuilding.GetComponent<ownership>().capture(wallet);
+                                            
+                                                AudioSource.PlayClipAtPoint(plopSounds[Random.Range(0, plopSounds.Length - 1)], destination);
+                                            }
+                                        } else {
+                                            StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
+                                            StartCoroutine(flashRed(info.collider.gameObject, 0.2f));
+                                            tooltips.flashBuildingBlocked();
+                                        }
+                                    } else {
+                                        StopAllCoroutines();
+                                        tooltips.flashLackResources();
+                                        StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
+                                    }
+
+                                    firstPointPlaced = false;
+                                } else {
+                                    firstPoint = hit.point;
+                                    firstPointPlaced = true;
                                 }
                             } else {
                                 if (townInRange(hit.point, 10f, wallet.playerID)) {

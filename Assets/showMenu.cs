@@ -82,6 +82,14 @@ public class showMenu : MonoBehaviourPun
 
             GetComponent<buildingPlacement>().setBuilding(options[2]); // Barracks
         }
+
+        if (Input.GetKeyDown("4")) {
+            //up3.SetActive(false);
+            //down3.SetActive(true);
+            //Invoke("releaseButton3", 0.2f);
+
+            GetComponent<buildingPlacement>().setBuilding(options[3]); // Wall
+        }
     }
 
     void releaseButton1() {

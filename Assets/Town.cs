@@ -18,7 +18,7 @@ public class Town : Building, IPunObservable
     void Start() {
         prefabName = "Town";
 
-        this.hp = 400;
+        this.hp = 600;
         this.woodCost = 75;
         this.foodCost = 25;
 

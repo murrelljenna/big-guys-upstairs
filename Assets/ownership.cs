@@ -12,6 +12,11 @@ public class ownership : MonoBehaviourPunCallbacks, IPunObservable
     public int owner;
     public Color playerColor;
 
+    public void localCapture(game.assets.Player player) {
+        this.owned = true;
+        this.owner = player.playerID;
+    }
+
     public void capture(game.assets.Player player) {
         this.playerColor = player.playerColor;
         PhotonView photonView = this.gameObject.GetComponent<PhotonView>();

@@ -16,6 +16,7 @@ public class LightInfantry : Unit
         this.hp = 12;
         this.lastHP = this.hp;
         this.rng = 0.5f;
+        this.attackRate = 1.2f;
 
         base.Start();
     }

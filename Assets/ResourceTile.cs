@@ -55,10 +55,6 @@ public class ResourceTile : Attackable
     }
 
     public override void onDeCapture() {
-        this.transform.Find("Info").Find("1_Normal").Find("Text").GetComponent<Text>().text = "E";
-        this.transform.Find("Info").Find("1_Pressed").Find("Text").GetComponent<Text>().text = "E";
-        this.transform.Find("Info").Find("Text").GetComponent<Text>().text = "Capture";
-
         destroyObject();
     }
 
@@ -79,11 +75,18 @@ public class ResourceTile : Attackable
         }
 
         this.gameObject.transform.Find("RegularFlag").GetComponent<Renderer>().material.color = Color.white;
-   		GameObject.Find(ownerInfo.owner.ToString()).GetComponent<game.assets.Player>().loseResource(resType, yield);
-        
-        ownerInfo.owned = false;
-        ownerInfo.owner = 0;
-        this.hp = this.maxHP;
+
+        this.transform.Find("Info").Find("1_Normal").Find("Text").GetComponent<Text>().text = "E";
+        this.transform.Find("Info").Find("1_Pressed").Find("Text").GetComponent<Text>().text = "E";
+        this.transform.Find("Info").Find("Text").GetComponent<Text>().text = "Capture";
+
+        if (this.photonView.IsMine) {
+       		ownerInfo.getPlayer().loseResource(resType, yield);
+            
+            ownerInfo.owned = false;
+            ownerInfo.owner = 0;
+            this.hp = this.maxHP;
+        }
     }
 
     public override void takeDamage(int damage) {

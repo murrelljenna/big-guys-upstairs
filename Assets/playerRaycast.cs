@@ -95,68 +95,9 @@ public class playerRaycast : MonoBehaviour
         ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, buildingMask)) {
             if (hit.collider.gameObject.tag != "buildingGhost" && hit.collider.GetComponent<ownership>().owner == player.playerID) {
+                hit.collider.gameObject.GetComponent<Attackable>().interactionOptions(player);
+
                 buildingViewed = hit.collider.gameObject.transform.Find("Info").gameObject;
-                buildingViewed.SetActive(true);
-
-                if (!midAnimation) {
-                    buildingViewed.transform.Find("Light Infantry Selector").Find("1_Pressed").gameObject.SetActive(false);
-                    buildingViewed.transform.Find("Archer Selector").Find("2_Pressed").gameObject.SetActive(false);
-                }
-
-                if (Input.GetKeyDown(KeyCode.E)) {
-                    int wood = 2; // Please replace with real values soon.
-                    int food = 10;
-
-                    up1 = buildingViewed.transform.Find("Light Infantry Selector").Find("1_Normal").gameObject;
-                    down1 = buildingViewed.transform.Find("Light Infantry Selector").Find("1_Pressed").gameObject;
-
-                    up1.SetActive(false);
-                    down1.SetActive(true);
-                    midAnimation = true;
-                    Invoke("releaseButton1", 0.2f);
-
-                    if (player.canAfford(wood, food)) {
-                        player.makeTransaction(wood, food);
-
-                        /* Instantiate new militia outside city */
-
-                        Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
-                        Vector3 spawnLocation = new Vector3(randomInCircle.x+hit.transform.position.x, 0, randomInCircle.y+hit.transform.position.z);
-
-                        GameObject militia = PhotonNetwork.Instantiate("Light Infantry", spawnLocation, Quaternion.identity, 0);
-
-                        militia.GetComponent<ownership>().capture(player);
-                    } else {
-                        tooltips.flashLackResources();
-                    }
-                } else if (Input.GetKeyDown(KeyCode.R)) {
-                    int wood = 5; // Please replace with real values soon.
-                    int food = 7;
-
-                    up2 = buildingViewed.transform.Find("Archer Selector").Find("2_Normal").gameObject;
-                    down2 = buildingViewed.transform.Find("Archer Selector").Find("2_Pressed").gameObject;
-
-                    midAnimation = true;
-                    Invoke("releaseButton2", 0.2f);
-
-                    if (player.canAfford(wood, food)) {
-                        player.makeTransaction(wood, food);
-
-                        /* Instantiate new militia outside city */
-
-                        Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
-                        Vector3 spawnLocation = new Vector3(randomInCircle.x+hit.transform.position.x, 0, randomInCircle.y+hit.transform.position.z);
-
-                        GameObject militia = PhotonNetwork.Instantiate("Archer", spawnLocation, Quaternion.identity, 0);
-
-                        militia.GetComponent<ownership>().capture(player);
-                    } else {
-                        tooltips.flashLackResources();
-                    }
-
-                    up2.SetActive(false);
-                    down2.SetActive(true);
-                }
             }
         }   else if (buildingViewed != null) {
             buildingViewed.SetActive(false);

@@ -26,14 +26,16 @@ public class Building : Attackable
     }
 
     public override void destroyObject() {
-    	for (int i = 0; i < Random.Range(3, 5); i++) {
-	        Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
-	        Vector3 spawnLocation = new Vector3(randomInCircle.x+this.transform.position.x, 0, randomInCircle.y+this.transform.position.z);
+    	if (this.photonView.IsMine) {
+	    	for (int i = 0; i < Random.Range(2, 5); i++) {
+		        Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
+		        Vector3 spawnLocation = new Vector3(randomInCircle.x+this.transform.position.x, 0, randomInCircle.y+this.transform.position.z);
 
-	        GameObject militia = PhotonNetwork.Instantiate("Militia", spawnLocation, Quaternion.identity, 0);
+		        GameObject militia = PhotonNetwork.Instantiate("Militia", spawnLocation, Quaternion.identity, 0);
 
-	        militia.GetComponent<ownership>().capture(this.gameObject.GetComponent<ownership>().getPlayer());
-	    }
+		        militia.GetComponent<ownership>().capture(this.gameObject.GetComponent<ownership>().getPlayer());
+		    }
+		}
 
 	    base.destroyObject();
     }

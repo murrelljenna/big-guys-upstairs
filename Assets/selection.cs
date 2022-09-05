@@ -24,6 +24,8 @@ public class selection : MonoBehaviour
  	int allMask;
  	int unitMask;
 
+ 	private LineRenderer lineRen;
+
  	private const float QUICK_SELECT_RANGE = 5f;
 
  	private const float DOUBLE_CLICK_TIME = 0.2f;
@@ -38,6 +40,9 @@ public class selection : MonoBehaviour
         attackableMask = (1 << 9) | (1 << 10) | (1 << 12) | (1 << 14);
         allMask = terrainMask | attackableMask;  // For terrain and attackable objects.
         player = this.transform.parent.parent.parent.parent.gameObject.GetComponent<game.assets.Player>();
+
+        lineRen = this.GetComponent<LineRenderer>();
+		this.gameObject.GetComponent<Renderer>().material.color = player.playerColor;
     }
 
     void OnDisable() {
@@ -97,7 +102,6 @@ public class selection : MonoBehaviour
 							unit.gameObject.GetComponent<Unit>().cancelOrders();
 
 							destination = grid[i];
-							Debug.Log(destination);
 
 							if (unit.gameObject.GetComponent<NavMeshAgent>() != null) {
 								unit.gameObject.GetComponent<Unit>().move(destination);
@@ -110,7 +114,7 @@ public class selection : MonoBehaviour
 			}
 		}
 
-		// Group select with shift-left-click
+		// Group select with left-click hold
 
 		if (Physics.Raycast(ray, out hit, Mathf.Infinity, terrainMask)) {
 			if (Input.GetMouseButtonDown(0)) {
@@ -119,7 +123,10 @@ public class selection : MonoBehaviour
 				return;
 			}
 
-			if (!Input.GetMouseButton(0)) return;
+			if (!Input.GetMouseButton(0)) {
+				lineRen.positionCount = 0;
+				return;
+			}
 
 			lastPoint = hit.point;
 
@@ -128,11 +135,23 @@ public class selection : MonoBehaviour
 			float bottomX = firstPoint.x < lastPoint.x ? firstPoint.x : lastPoint.x;
 			float bottomZ = firstPoint.z < lastPoint.z ? firstPoint.z : lastPoint.z;
 
+			lineRen.positionCount = 5;
+
+			Vector3[] lineRenPositions = new Vector3[5];
+			lineRenPositions[0] = firstPoint;
+			lineRenPositions[1] = new Vector3(firstPoint.x, 0, lastPoint.z);
+			lineRenPositions[2] = lastPoint;
+			lineRenPositions[3] = new Vector3(lastPoint.x, 0, firstPoint.z);
+			lineRenPositions[4] = firstPoint;
+
+			lineRen.SetPositions(lineRenPositions);
+
 			Vector3 center = new Vector3(bottomX + (topX-bottomX)/2, 0, bottomZ + (topZ-bottomZ)/2);
 			Vector3 halfExtent = new Vector3(topX - bottomX, 20, topZ-bottomZ);
 	        Vector3 something = new Vector3(cam.transform.position.x, 0, cam.transform.position.z);
 
-			Collider[] selectedUnits = Physics.OverlapBox(center, halfExtent, Quaternion.LookRotation(hit.point - something), layerMask);
+	        Rect rectangle = new Rect(topX, topZ, bottomX - topX, bottomZ - topZ);
+			Collider[] selectedUnits = Physics.OverlapBox(center, halfExtent/2, Quaternion.identity, layerMask);
 
 			foreach(Collider unit in selectedUnits) {
 				if (unit.gameObject.GetComponent<ownership>().owner == player.playerID && unit.gameObject.GetComponent<Unit>().isSelected == false) {
@@ -208,7 +227,6 @@ public class selection : MonoBehaviour
 
     private void selectUnitsInRadius(Vector3 point) {
 		Collider[] hitColliders = Physics.OverlapSphere(point, QUICK_SELECT_RANGE, unitMask);
-		Debug.Log(hitColliders.Length);
 		for (int i = 0; i < hitColliders.Length; i++) {
 			if (hitColliders[i].GetComponent<ownership>() != null &&
                 hitColliders[i].GetComponent<ownership>().owned == true && 

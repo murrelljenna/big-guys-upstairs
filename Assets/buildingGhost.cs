@@ -17,14 +17,18 @@ public class buildingGhost : MonoBehaviour
     public void OnTriggerExit(Collider other) {
     	if (active) {
     		colliding = false;
-    		renderer.material.color = previousColor;
+            if (renderer != null) {
+                renderer.material.color = previousColor;
+            }
     	}
     }
 
     public void OnTriggerEnter(Collider other) {
     	if (active) {
     		colliding = true;
-    		renderer.material.color = Color.red;
+            if (renderer != null) {
+                renderer.material.color = Color.red;
+            }
     	}
     }
 }

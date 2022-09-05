@@ -17,6 +17,7 @@ public class Militia : Unit
         this.hp = 5;
         this.lastHP = this.hp;
         this.rng = 0.3f;
+        this.attackRate = 1.2f;
 
         base.Start();
     }
@@ -38,7 +39,7 @@ public class Militia : Unit
     }
 
     private IEnumerator delayMovement(Vector3 destination) {
-        yield return new WaitForSeconds(Random.Range(0.05f, 1.25f));
+        yield return new WaitForSeconds(Random.Range(0.05f, 1f));
         base.move(destination);
     }
 }

@@ -17,6 +17,7 @@ public class Unit : Attackable
     public bool isSelected = false;
 	public bool selectable = false;
     private int unitMask = 1 << 12;
+    protected float attackRate = 1f;
 
     public bool updateTargetLive = false;
 
@@ -114,7 +115,7 @@ public class Unit : Attackable
                 this.inFight = true;
 				this.gameObject.GetComponent<NavMeshAgent>().isStopped = true;
 
-				InvokeRepeating("attack", 1f, 1f);
+				InvokeRepeating("attack", attackRate, attackRate);
 			}
 		}
     }
@@ -221,9 +222,7 @@ public class Unit : Attackable
 
     void OnCollisionEnter(Collision collision) {
         Unit collidingUnit = collision.gameObject.GetComponent<Unit>();
-        Debug.Log("Colliding");
         if (collidingUnit != null && collidingUnit.gameObject.GetComponent<ownership>().owner != this.gameObject.GetComponent<ownership>().owner && !this.inFight) {
-            Debug.Log("Colliding - is ENEMY");
             cancelOrders();
             photonView.RPC("callAttack", RpcTarget.All, collidingUnit.id);
         }

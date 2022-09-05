@@ -21,9 +21,11 @@ public class ResourcePanel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        foodCount.text = player.food.ToString() + " (+" + player.foodIt.ToString() + ")";
-        woodCount.text = player.wood.ToString() + " (+" + player.woodIt.ToString() + ")";
-        goldCount.text = player.gold.ToString() + " (+" + player.goldIt.ToString() + ")";
+        if (player != null) {
+            foodCount.text = player.food.ToString() + " (+" + player.foodIt.ToString() + ")";
+            woodCount.text = player.wood.ToString() + " (+" + player.woodIt.ToString() + ")";
+            goldCount.text = player.gold.ToString() + " (+" + player.goldIt.ToString() + ")";
+        }
     }
 
     public void assignPlayer(game.assets.Player player) {

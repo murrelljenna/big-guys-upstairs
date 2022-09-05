@@ -49,9 +49,10 @@ public class ownership : MonoBehaviourPunCallbacks, IPunObservable
         yield return new WaitUntil(() => {
             return (getPlayer().hasColor != false);
         });
-            this.playerColor = player.GetComponent<game.assets.Player>().playerColor;
-            this.gameObject.GetComponent<Renderer>().material.color = playerColor;
-            this.gameObject.GetComponent<Attackable>().onCapture(); // Callback function that is overriden by various classes to respond to capture.
+        
+        this.playerColor = player.GetComponent<game.assets.Player>().playerColor;
+        this.gameObject.GetComponent<Renderer>().material.color = playerColor;
+        this.gameObject.GetComponent<Attackable>().onCapture(); // Callback function that is overriden by various classes to respond to capture.
     }
 
     [PunRPC] public void captureRPC(int playerID, PhotonMessageInfo info) {

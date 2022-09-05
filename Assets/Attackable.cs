@@ -26,6 +26,7 @@ public class Attackable : MonoBehaviourPunCallbacks, IPunObservable
     private SimpleHealthBar healthBar;
 
     public string color;
+    [SerializeField]
 	public int hp;
 	public int id;
 	public List<Unit> attackers;

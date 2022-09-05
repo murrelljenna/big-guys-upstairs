@@ -42,13 +42,19 @@ public class House : Building, IPunObservable
     }
 
     public override void onCapture() {
-        owner.getPlayer().addUnitMax(housingBump);
+        if (photonView.IsMine) {
+            owner.getPlayer().addUnitMax(housingBump);
+        }
+
         string colorName = GetComponent<ownership>().getPlayer().colorName;
         this.transform.Find("Model").gameObject.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Buildings_" + colorName) as Texture));
     }
 
     public override void destroyObject() {
-        owner.getPlayer().addUnitMax(-housingBump);
+        if (photonView.IsMine) {
+            owner.getPlayer().addUnitMax(-housingBump);
+        }
+
         photonView.RPC("playDestructionEffect", RpcTarget.All);
 
         base.destroyObject();

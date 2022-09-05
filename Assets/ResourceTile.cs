@@ -8,7 +8,7 @@ using Photon.Realtime;
 
 public class ResourceTile : Attackable
 {	
-
+    GameObject banner;
 	ownership ownerInfo;
 	int yield = 4;
 	public string resType;
@@ -33,6 +33,8 @@ public class ResourceTile : Attackable
         ownerInfo = this.gameObject.GetComponent<ownership>();
         this.id = this.gameObject.GetComponent<PhotonView>().ViewID;
         this.gameObject.name = id.ToString();
+        this.banner = this.transform.Find("Banner").gameObject;
+        this.banner.SetActive(false);
 
         Transform infoTransform = this.gameObject.transform.Find("Info");
         if (infoTransform != null) {
@@ -41,6 +43,8 @@ public class ResourceTile : Attackable
                 info.SetActive(false);
             }
         }
+
+        animator = banner.GetComponent<Animator>();
 
         base.Start();
     }
@@ -63,8 +67,9 @@ public class ResourceTile : Attackable
             return (GameObject.Find(ownerInfo.owner.ToString()) != null);
         });
         GameObject.Find(ownerInfo.owner.ToString()).GetComponent<game.assets.Player>().addResource(resType, yield);
-
-        this.gameObject.transform.Find("RegularFlag").GetComponent<Renderer>().material.color = GetComponent<ownership>().playerColor;
+        banner.SetActive(true);
+        print("TT_Banner_" + owner.getPlayer().colorName);
+        banner.transform.Find("TT_Flag_A").gameObject.GetComponent<Renderer>().material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Banner_" + owner.getPlayer().colorName) as Texture));
     }
 
     public override void destroyObject() {
@@ -74,24 +79,34 @@ public class ResourceTile : Attackable
             };
         }
 
-        this.gameObject.transform.Find("RegularFlag").GetComponent<Renderer>().material.color = Color.white;
+        playDestructionEffect();
+        animator.SetTrigger("destroy");
+        Invoke("clearBanner", 1.5f);
 
         this.transform.Find("Info").Find("1_Normal").Find("Text").GetComponent<Text>().text = "E";
         this.transform.Find("Info").Find("1_Pressed").Find("Text").GetComponent<Text>().text = "E";
         this.transform.Find("Info").Find("Text").GetComponent<Text>().text = "Capture";
 
-        if (this.photonView.IsMine) {
-       		ownerInfo.getPlayer().loseResource(resType, yield);
-            
-            ownerInfo.owned = false;
-            ownerInfo.owner = 0;
-            this.hp = this.maxHP;
-        }
+   		ownerInfo.getPlayer().loseResource(resType, yield);
+        
+        ownerInfo.owned = false;
+        ownerInfo.owner = 0;
+        this.hp = this.maxHP;
     }
 
     public override void takeDamage(int damage) {
         if (this.GetComponent<ownership>().owned) { // Unowned resource tiles should not take damage.
             base.takeDamage(damage);
         }
+    }
+
+    public void clearBanner() {
+        banner.SetActive(false);
+    }
+
+    private void playDestructionEffect() {
+        AudioSource[] sources = this.transform.Find("DestroySounds").GetComponents<AudioSource>();
+        AudioSource source = sources[UnityEngine.Random.Range(0, sources.Length)];
+        AudioSource.PlayClipAtPoint(source.clip, this.transform.position);
     }
 }

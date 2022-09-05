@@ -181,9 +181,6 @@ public class SpawnManager : MonoBehaviourPunCallbacks, IPunObservable
     	bool[] spawnsAvail = (bool[])PhotonNetwork.CurrentRoom.CustomProperties["spawnsAvail"];
     	spawnsAvail[index] = false;
 
-    	Debug.Log("Clearing point");
-    	Debug.Log(index);
-
 		ExitGames.Client.Photon.Hashtable roomProperties = new ExitGames.Client.Photon.Hashtable();
     	roomProperties.Add("spawnsAvail", spawnsAvail);
 

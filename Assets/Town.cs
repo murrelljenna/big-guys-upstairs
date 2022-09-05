@@ -127,30 +127,34 @@ public class Town : Building, IPunObservable
         }
 
         if (Input.GetKeyDown(KeyCode.E)) {
-            int wood = 0; // Please replace with real values soon.
-            int food = 5;
+            if (!player.maxedUnits()) {
+                int wood = 0; // Please replace with real values soon.
+                int food = 5;
 
-            up1 = cityViewed.transform.Find("1_Normal").gameObject;
-            down1 = cityViewed.transform.Find("1_Pressed").gameObject;
+                up1 = cityViewed.transform.Find("1_Normal").gameObject;
+                down1 = cityViewed.transform.Find("1_Pressed").gameObject;
 
-            up1.SetActive(false);
-            down1.SetActive(true);
-            midAnimation = true;
-            Invoke("releaseButton1", 0.2f);
+                up1.SetActive(false);
+                down1.SetActive(true);
+                midAnimation = true;
+                Invoke("releaseButton1", 0.2f);
 
-            if (player.canAfford(wood, food)) {
-                player.makeTransaction(wood, food);
+                if (player.canAfford(wood, food)) {
+                    player.makeTransaction(wood, food);
 
-                /* Instantiate new militia outside city */
+                    /* Instantiate new militia outside city */
 
-                Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
-                Vector3 spawnLocation = new Vector3(randomInCircle.x+this.transform.position.x, 0, randomInCircle.y+this.transform.position.z);
+                    Vector2 randomInCircle = RandomPointOnUnitCircle(1.2f);
+                    Vector3 spawnLocation = new Vector3(randomInCircle.x+this.transform.position.x, 0, randomInCircle.y+this.transform.position.z);
 
-                GameObject militia = PhotonNetwork.Instantiate("Militia", spawnLocation, Quaternion.identity, 0);
+                    GameObject militia = PhotonNetwork.Instantiate("Militia", spawnLocation, Quaternion.identity, 0);
 
-                militia.GetComponent<ownership>().capture(player);
+                    militia.GetComponent<ownership>().capture(player);
+                } else {
+                    tooltips.flashLackResources();
+                }
             } else {
-                tooltips.flashLackResources();
+                
             }
         } 
     }

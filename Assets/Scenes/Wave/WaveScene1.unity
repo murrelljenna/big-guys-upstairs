@@ -312,7 +312,8 @@ GameObject:
   m_Component:
   - component: {fileID: 12977732}
   - component: {fileID: 12977733}
-  m_Layer: 0
+  - component: {fileID: 12977734}
+  m_Layer: 11
   m_Name: CPT_River_S_b_01_LOD (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -363,6 +364,20 @@ LODGroup:
     renderers:
     - renderer: {fileID: 172263682}
   m_Enabled: 1
+--- !u!64 &12977734
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 12977731}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &38313633
 GameObject:
   m_ObjectHideFlags: 0
@@ -775,6 +790,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Water_S_a_01 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 182024, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 182024, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 450566, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.2
@@ -872,7 +895,7 @@ GameObject:
   - component: {fileID: 132140258}
   - component: {fileID: 132140256}
   - component: {fileID: 132140257}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CPT_River_S_b_01_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1029,7 +1052,7 @@ GameObject:
   - component: {fileID: 172263683}
   - component: {fileID: 172263682}
   - component: {fileID: 172263681}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CPT_River_S_b_01_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2100,7 +2123,8 @@ GameObject:
   m_Component:
   - component: {fileID: 251057495}
   - component: {fileID: 251057494}
-  m_Layer: 0
+  - component: {fileID: 251057496}
+  m_Layer: 11
   m_Name: CPT_River_S_b_01_LOD (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2151,6 +2175,20 @@ Transform:
   m_Father: {fileID: 40844352}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!64 &251057496
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251057493}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &274058626
 GameObject:
   m_ObjectHideFlags: 0
@@ -3422,7 +3460,7 @@ GameObject:
   - component: {fileID: 464529874}
   - component: {fileID: 464529872}
   - component: {fileID: 464529873}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CPT_River_S_b_01_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3612,6 +3650,14 @@ PrefabInstance:
     - target: {fileID: 182024, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
       propertyPath: m_Name
       value: Water_S_a_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 182024, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 182024, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 450566, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4281,6 +4327,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Water_S_a_01 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 182024, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 182024, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 450566, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.3
@@ -4843,6 +4897,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Water_S_a_01 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 182024, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 182024, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 450566, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -17.2
@@ -5195,7 +5257,7 @@ GameObject:
   - component: {fileID: 691231920}
   - component: {fileID: 691231918}
   - component: {fileID: 691231919}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CPT_River_S_b_01_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7000,17 +7062,33 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 126052, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 164798, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 164798, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 182704, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
       propertyPath: m_Name
       value: CPT_River_S_a_01_LOD (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 182704, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 192076, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 192076, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 437010, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7064,6 +7142,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 948335321}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &948335323 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 182704, guid: 617424db1d9e6594980b85203da3d0fc,
+    type: 3}
+  m_PrefabInstance: {fileID: 948335321}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &948335324
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 948335323}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &974514259
 GameObject:
   m_ObjectHideFlags: 0
@@ -7678,7 +7776,7 @@ GameObject:
   - component: {fileID: 1055790648}
   - component: {fileID: 1055790646}
   - component: {fileID: 1055790647}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CPT_River_S_b_01_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7773,17 +7871,33 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 126052, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 164798, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 164798, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 182704, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
       propertyPath: m_Name
       value: CPT_River_S_a_01_LOD
       objectReference: {fileID: 0}
+    - target: {fileID: 182704, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 192076, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 192076, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 437010, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7837,6 +7951,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1057525394}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1057525396 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 182704, guid: 617424db1d9e6594980b85203da3d0fc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1057525394}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1057525397
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1057525396}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1001 &1073324458
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7848,17 +7982,33 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 126052, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 164798, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 164798, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 182704, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
       propertyPath: m_Name
       value: CPT_River_S_a_01_LOD (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 182704, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 192076, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 192076, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 437010, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7912,6 +8062,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1073324458}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1073324460 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 182704, guid: 617424db1d9e6594980b85203da3d0fc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1073324458}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1073324461
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073324460}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &1073865120
 GameObject:
   m_ObjectHideFlags: 0
@@ -8922,7 +9092,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1171120784}
   - component: {fileID: 1171120783}
-  m_Layer: 0
+  - component: {fileID: 1171120785}
+  m_Layer: 11
   m_Name: CPT_River_S_b_01_LOD (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8973,6 +9144,20 @@ Transform:
   m_Father: {fileID: 40844352}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!64 &1171120785
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171120782}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &1189714974
 GameObject:
   m_ObjectHideFlags: 0
@@ -8985,7 +9170,7 @@ GameObject:
   - component: {fileID: 1189714977}
   - component: {fileID: 1189714975}
   - component: {fileID: 1189714976}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CPT_River_S_b_01_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9347,6 +9532,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Water_S_a_01
       objectReference: {fileID: 0}
+    - target: {fileID: 182024, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 182024, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 450566, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 22.443588
@@ -9568,7 +9761,7 @@ GameObject:
   - component: {fileID: 1257111764}
   - component: {fileID: 1257111763}
   - component: {fileID: 1257111762}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CPT_River_S_b_01_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10291,7 +10484,7 @@ GameObject:
   - component: {fileID: 1367606377}
   - component: {fileID: 1367606376}
   - component: {fileID: 1367606375}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CPT_River_S_b_01_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11407,6 +11600,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Water_S_a_01 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 182024, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 182024, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 450566, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -17.2
@@ -11757,6 +11958,14 @@ PrefabInstance:
     - target: {fileID: 182024, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
       propertyPath: m_Name
       value: Water_S_a_01 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 182024, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 182024, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 450566, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12160,17 +12369,33 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 126052, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 164798, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 164798, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 182704, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
       propertyPath: m_Name
       value: CPT_River_S_a_01_LOD (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 182704, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 192076, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 192076, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 437010, guid: 617424db1d9e6594980b85203da3d0fc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12224,6 +12449,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1570790066}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1570790068 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 182704, guid: 617424db1d9e6594980b85203da3d0fc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1570790066}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1570790069
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570790068}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &1571106410
 GameObject:
   m_ObjectHideFlags: 0
@@ -12775,7 +13020,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1604463419}
   - component: {fileID: 1604463418}
-  m_Layer: 0
+  - component: {fileID: 1604463420}
+  m_Layer: 11
   m_Name: CPT_River_S_b_01_LOD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12826,6 +13072,20 @@ Transform:
   m_Father: {fileID: 40844352}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &1604463420
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1604463417}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &1607220324
 GameObject:
   m_ObjectHideFlags: 0
@@ -13030,7 +13290,7 @@ GameObject:
   - component: {fileID: 1616491848}
   - component: {fileID: 1616491846}
   - component: {fileID: 1616491847}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CPT_River_S_b_01_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13604,6 +13864,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Water_S_a_01 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 182024, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 182024, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 450566, guid: 85618b791fe867846961dabc55cb5cc9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 22.443588
@@ -13774,7 +14042,7 @@ GameObject:
   - component: {fileID: 1817060430}
   - component: {fileID: 1817060428}
   - component: {fileID: 1817060429}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CPT_River_S_b_01_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13966,7 +14234,7 @@ GameObject:
   - component: {fileID: 1843184002}
   - component: {fileID: 1843184000}
   - component: {fileID: 1843184001}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CPT_River_S_b_01_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16054,7 +16322,7 @@ GameObject:
   - component: {fileID: 2089759978}
   - component: {fileID: 2089759976}
   - component: {fileID: 2089759977}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CPT_River_S_b_01_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

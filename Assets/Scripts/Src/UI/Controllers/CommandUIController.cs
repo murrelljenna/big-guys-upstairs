@@ -32,6 +32,7 @@ namespace game.assets.ui
                     setCard(card, unit);
                     count++;
                     this.transform.Find("UnitCount").Find("Selected_Count").gameObject.GetComponent<Text>().text = count.ToString();
+                    unit.onZeroHP.AddListener(removeCard);
                     break;
                 }
             }

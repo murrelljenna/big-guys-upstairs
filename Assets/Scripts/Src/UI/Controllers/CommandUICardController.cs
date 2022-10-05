@@ -11,13 +11,14 @@ public class CommandUICardController : MonoBehaviour
     void OnEnable()
     {
         healthBar = this.transform.Find("Simple Bar").Find("Status Fill 01").gameObject.GetComponent<SimpleHealthBar>();
-    }
-
-    void Update()
-    {
         if (this.unit != null)
         {
-            healthBar.UpdateBar(this.unit.HP, this.unit.maxHP);
+            this.unit.onLowerHP.AddListener(updateHealth);
+            this.unit.onRaiseHP.AddListener(updateHealth);
         }
+    }
+
+    private void updateHealth(float current, float max) {
+        healthBar.UpdateBar(current, max);
     }
 }

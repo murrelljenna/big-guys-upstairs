@@ -6,6 +6,7 @@ using game.assets.ai;
 using static game.assets.utilities.GameUtils;
 using game.assets.spawners;
 using game.assets;
+using UnityEngine.Events;
 
 public static class BarbarianWaveSettings
 {
@@ -15,7 +16,11 @@ public static class BarbarianWaveSettings
 
 public class BarbarianWavePlayer : BarbarianPlayer
 {
-    public BarbarianWavePlayer()
+    private static BarbarianWavePlayer singleton;
+
+    public UnityEvent<int, int> nextWaveReady = new UnityEvent<int, int>();
+
+    private BarbarianWavePlayer()
     {
         this.colour = PlayerColours.Black;
     }
@@ -29,6 +34,9 @@ public class BarbarianWavePlayer : BarbarianPlayer
     }
 
     void attackIn30Seconds(Spawner spawnPoint) {
+        // TODO: Update our wait values and unit count here
+        nextWaveReady.Invoke((int)BarbarianWaveSettings.WAVE_TIME_BASE, BarbarianWaveSettings.BARBARIAN_WAVE_COUNT_BASE);
+
         LocalGameManager.Get().StartCoroutine(waitToAttack(30f, spawnPoint));
     }
 
@@ -66,5 +74,15 @@ public class BarbarianWavePlayer : BarbarianPlayer
 
         grouping.onNoUnits.AddListener(disbandGrouping);
         grouping.onNoUnits.AddListener(AttackIn30SecondsFromRandomSpawnPoint);
+    }
+
+    public static BarbarianWavePlayer Get()
+    {
+        if (singleton == null)
+        {
+            singleton = new BarbarianWavePlayer();
+        }
+
+        return singleton;
     }
 }

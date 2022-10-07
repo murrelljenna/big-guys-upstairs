@@ -65,7 +65,7 @@ namespace game.assets
         {
             if (gameMode == GameMode.Wave)
             {
-                barbarianPlayer = new BarbarianWavePlayer();
+                barbarianPlayer = BarbarianWavePlayer.Get();
             }
             this.spawnPoints = spawnPoints;
             SceneManager.sceneLoaded += onSceneLoaded;

@@ -68,9 +68,7 @@ public class TestAttackAggregationGuards : MonoBehaviour
         agg.guard(guardCenter, 5f);
         intruder.onLowerHP.AddListener(onTookDamageCallback);
         putIntruderInRadius(intruder);
-        Debug.Log(intruder.HP);
         yield return new WaitForSeconds(10);
-        Debug.Log(intruder.HP);
         Assert.True(attackeeTookDamage);
     }
 

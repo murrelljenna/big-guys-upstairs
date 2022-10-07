@@ -10,6 +10,10 @@ public class BarbarianWavePlayerUIController : MonoBehaviour
     public Text timer;
     public Text unitCount;
 
+    private int timerAmt;
+
+    private Coroutine currentTimer;
+
     public void Start()
     {
         if (timer == null || unitCount == null)
@@ -20,13 +24,34 @@ public class BarbarianWavePlayerUIController : MonoBehaviour
         player = BarbarianWavePlayer.Get();
         player.nextWaveReady.AddListener(updateValues);
 
-        timer.text = BarbarianWaveSettings.WAVE_TIME_BASE.ToString();
-        unitCount.text = BarbarianWaveSettings.BARBARIAN_WAVE_COUNT_BASE.ToString();
+        updateValues((int)BarbarianWaveSettings.WAVE_TIME_BASE, BarbarianWaveSettings.BARBARIAN_WAVE_COUNT_BASE);
     }
 
     private void updateValues(int time, int count)
     {
+        Debug.Log("Doing a new attack in " + time);
+        timerAmt = time;
         timer.text = time.ToString();
         unitCount.text = count.ToString();
+        restartTimer();
+    }
+
+    private void restartTimer()
+    {
+        if (currentTimer != null)
+        {
+            StopCoroutine(currentTimer);
+        }
+        currentTimer = StartCoroutine(countDown());
+    }
+
+    private IEnumerator countDown()
+    {
+        while (timerAmt > 0)
+        {
+            yield return new WaitForSeconds(1);
+            timerAmt--;
+            timer.text = timerAmt.ToString();
+        }
     }
 }

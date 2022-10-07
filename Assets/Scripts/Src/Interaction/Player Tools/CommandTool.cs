@@ -43,7 +43,7 @@ namespace game.assets.interaction
             }
         }
 
-        private void Start()
+        private void Awake()
         {
             uiController = GameObject.Find(MagicWords.GameObjectNames.CommandMenu).GetComponent<CommandUIController>();
             if (camera == null)

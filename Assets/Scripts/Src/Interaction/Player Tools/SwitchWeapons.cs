@@ -9,12 +9,12 @@ namespace game.assets.player
 
         public uint selectedTool = 0u;
 
-        private void Start()
+        public void Start()
         {
             selectWeapons();
         }
 
-        private void Update()
+        public void Update()
         {
             if (Input.GetAxis("Mouse ScrollWheel") > 0f)
             {

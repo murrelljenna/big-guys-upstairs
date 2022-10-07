@@ -19,9 +19,11 @@ namespace game.assets.ai {
         public UnityEvent onMaxUnits;
         public UnityEvent onNoUnits;
 
+        private bool autoReplenish;
+
         private Coroutine replenishment;
 
-        public AIUnitGrouping(player.Player player, int maxUnits, int recruitRateInSeconds, Vector3 startingLocation) {
+        public AIUnitGrouping(player.Player player, int maxUnits, int recruitRateInSeconds, Vector3 startingLocation, bool autoReplenish = true) {
             onMaxUnits = new UnityEvent();
             onNoUnits = new UnityEvent();
             this.maxUnits = maxUnits;
@@ -30,8 +32,14 @@ namespace game.assets.ai {
             this.location = startingLocation;
             recruiter = new AIUnitRecruiter(player);
             units.unitDead.AddListener(reportIfNoUnits);
+            this.autoReplenish = autoReplenish;
 
             replenishment = LocalGameManager.Get().StartCoroutine(startReplenishment(recruitRateInSeconds, recruiter));
+        }
+
+        public void stopReplenishing()
+        {
+            autoReplenish = false;
         }
 
         private void reportIfNoUnits(Attack attack)
@@ -74,7 +82,7 @@ namespace game.assets.ai {
             while (true)
             {
                 yield return new WaitForSecondsRealtime(time);
-                if (units.Count() < maxUnits)
+                if (autoReplenish && units.Count() < maxUnits)
                 {
                     Attack unit = replenishUnit(location);
                     units.add(unit);

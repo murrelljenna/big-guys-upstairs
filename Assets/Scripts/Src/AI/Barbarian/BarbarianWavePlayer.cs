@@ -62,7 +62,18 @@ public class BarbarianWavePlayer : BarbarianPlayer
     {
         AIUnitGrouping attackSquad = new AIUnitGrouping(this, 10, 1, location);
         attackSquad.onMaxUnits.AddListener(attackSquad.attackNearestEnemy);
+        void stopReplenishing()
+        {
+            attackSquad.stopReplenishing();
+        }
+        attackSquad.onMaxUnits.AddListener(stopReplenishing);
+
         registerDisbandListener(attackSquad);
+    }
+
+    private void stopReplenishing(AIUnitGrouping group)
+    {
+        
     }
 
     private void registerDisbandListener(AIUnitGrouping grouping)

@@ -29,10 +29,9 @@ public class BarbarianWavePlayerUIController : MonoBehaviour
 
     private void updateValues(int time, int count)
     {
-        Debug.Log("Doing a new attack in " + time);
         timerAmt = time;
         timer.text = time.ToString();
-        unitCount.text = count.ToString();
+        unitCount.text = "x" + count.ToString();
         restartTimer();
     }
 

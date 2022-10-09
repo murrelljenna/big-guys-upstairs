@@ -132,5 +132,21 @@ namespace game.assets
         {
             return GameObject.Find(MagicWords.GameObjectNames.GameManager)?.GetComponent<LocalGameManager>();
         }
+
+        private void playerWins(Player player) {
+            var cities = player.getCities();
+
+            for (int i = 0; i < cities.Length; i++)
+            {
+                var city = cities[i];
+
+                fireworksAtCity(city);
+            }
+        }
+
+        private void fireworksAtCity(GameObject go)
+        {
+
+        }
     }
 }

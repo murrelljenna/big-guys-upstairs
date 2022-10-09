@@ -1,4 +1,6 @@
-﻿using static game.assets.utilities.GameUtils;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using static game.assets.utilities.GameUtils;
 
 namespace game.assets.player
 {
@@ -19,6 +21,23 @@ namespace game.assets.player
         public bool maxPop()
         {
             return popCount >= maxCount;
+        }
+
+        public GameObject[] getCities()
+        {
+            var myCities = new List<GameObject>();
+            var cities = GameObject.FindObjectsOfType<Depositor>();
+            for (int i = 0; i < cities.Length; i++)
+            {
+                var city = cities[i];
+
+                if (city.BelongsTo(this))
+                {
+                    myCities.Add(city.gameObject);
+                }
+            }
+
+            return myCities.ToArray();
         }
     }
 }

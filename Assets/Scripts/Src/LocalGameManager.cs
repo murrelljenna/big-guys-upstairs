@@ -5,6 +5,7 @@ using static game.assets.utilities.GameUtils;
 using UnityEngine.SceneManagement;
 using game.assets.player;
 using System;
+using game.assets.ai;
 
 public enum GameMode
 {
@@ -94,6 +95,10 @@ namespace game.assets
             }
 
             barbarianPlayer.Awake();
+
+            var capital = getLocalPlayer().getCities()[0];
+            var health = capital.GetComponent<Health>();
+            health.onZeroHP.AddListener(localPlayerLoses);
         }
 
         private void instantiateLocalPlayerStart()
@@ -139,6 +144,15 @@ namespace game.assets
 
         private void localPlayerWins() {
             playerWins(players[0]);
+        }
+
+        private void localPlayerLoses(Health health) {
+            playerLoses(getLocalPlayer());
+        }
+
+        private void playerLoses(Player player)
+        {
+            // TODO: Figure out what to do
         }
 
         private void playerWins(Player player) {

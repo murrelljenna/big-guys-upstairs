@@ -10,9 +10,9 @@ using UnityEngine.Events;
 
 public static class BarbarianWaveSettings
 {
-    public static float WAVE_TIME_BASE = 30f;
-    public static int BARBARIAN_WAVE_UNIT_COUNT_BASE = 10;
-    public static int BARBARIAN_WAVE_COUNT = 1;
+    public static float WAVE_TIME_BASE = 60f;
+    public static int BARBARIAN_WAVE_UNIT_COUNT_BASE = 15;
+    public static int BARBARIAN_WAVE_COUNT = 10;
 } 
 
 public class BarbarianWavePlayer : BarbarianPlayer

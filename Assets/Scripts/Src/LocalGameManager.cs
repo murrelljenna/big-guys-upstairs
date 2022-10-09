@@ -15,6 +15,8 @@ namespace game.assets
 {
     public class LocalGameManager : MonoBehaviour
     {
+        [Tooltip("Fireworks prefab to use when player wins")]
+        public GameObject fireworksPrefab;
         private struct ColourAvailability
         {
             public PlayerColour colour;
@@ -135,7 +137,6 @@ namespace game.assets
 
         private void playerWins(Player player) {
             var cities = player.getCities();
-
             for (int i = 0; i < cities.Length; i++)
             {
                 var city = cities[i];
@@ -146,7 +147,7 @@ namespace game.assets
 
         private void fireworksAtCity(GameObject go)
         {
-
+            Instantiate(fireworksPrefab, go.transform);
         }
     }
 }

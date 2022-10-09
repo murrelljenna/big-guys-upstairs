@@ -67,7 +67,9 @@ namespace game.assets
         {
             if (gameMode == GameMode.Wave)
             {
-                barbarianPlayer = BarbarianWavePlayer.Get();
+                var wavePlayer = BarbarianWavePlayer.Get();
+                wavePlayer.lastBarbarianWaveDefeated.AddListener(localPlayerWins); // Note, if we have multiplayer wave games we cannot do this
+                barbarianPlayer = wavePlayer;
             }
             this.spawnPoints = spawnPoints;
             SceneManager.sceneLoaded += onSceneLoaded;
@@ -133,6 +135,10 @@ namespace game.assets
         public static LocalGameManager Get()
         {
             return GameObject.Find(MagicWords.GameObjectNames.GameManager)?.GetComponent<LocalGameManager>();
+        }
+
+        private void localPlayerWins() {
+            playerWins(players[0]);
         }
 
         private void playerWins(Player player) {

@@ -11,7 +11,8 @@ using UnityEngine.Events;
 public static class BarbarianWaveSettings
 {
     public static float WAVE_TIME_BASE = 30f;
-    public static int BARBARIAN_WAVE_COUNT_BASE = 10;
+    public static int BARBARIAN_WAVE_UNIT_COUNT_BASE = 10;
+    public static int BARBARIAN_WAVE_COUNT = 1;
 } 
 
 public class BarbarianWavePlayer : BarbarianPlayer
@@ -19,6 +20,10 @@ public class BarbarianWavePlayer : BarbarianPlayer
     private static BarbarianWavePlayer singleton;
 
     public UnityEvent<int, int> nextWaveReady = new UnityEvent<int, int>();
+
+    public UnityEvent lastBarbarianWaveDefeated = new UnityEvent();
+
+    private int wave = 0;
 
     private BarbarianWavePlayer()
     {
@@ -35,13 +40,18 @@ public class BarbarianWavePlayer : BarbarianPlayer
 
     void attackIn30Seconds(Spawner spawnPoint) {
         // TODO: Update our wait values and unit count here
-        nextWaveReady.Invoke((int)BarbarianWaveSettings.WAVE_TIME_BASE, BarbarianWaveSettings.BARBARIAN_WAVE_COUNT_BASE);
+        nextWaveReady.Invoke((int)BarbarianWaveSettings.WAVE_TIME_BASE, BarbarianWaveSettings.BARBARIAN_WAVE_UNIT_COUNT_BASE);
 
         LocalGameManager.Get().StartCoroutine(waitToAttack(30f, spawnPoint));
     }
 
     void AttackIn30SecondsFromRandomSpawnPoint()
     {
+        if (wave > BarbarianWaveSettings.BARBARIAN_WAVE_COUNT)
+        {
+            lastBarbarianWaveDefeated.Invoke();
+            return;
+        }
         Spawner[] spawners = GameObject.FindObjectsOfType<Spawner>();
 
         int index = Random.RandomRange(0, spawners.Length);
@@ -50,6 +60,7 @@ public class BarbarianWavePlayer : BarbarianPlayer
         if (spawnPoint.GetComponent<BarbarianOwnership>())
         {
             attackIn30Seconds(spawnPoint);
+            wave++;
         }
     }
 

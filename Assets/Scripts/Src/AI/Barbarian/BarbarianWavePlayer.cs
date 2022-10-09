@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using game.assets.player;
 using game.assets.ai;
 using static game.assets.utilities.GameUtils;
 using game.assets.spawners;
@@ -11,8 +9,14 @@ using UnityEngine.Events;
 public static class BarbarianWaveSettings
 {
     public static float WAVE_TIME_BASE = 60f;
-    public static int BARBARIAN_WAVE_UNIT_COUNT_BASE = 15;
+    public static int BARBARIAN_WAVE_UNIT_COUNT_BASE = 10;
     public static int BARBARIAN_WAVE_COUNT = 10;
+    public static int CALCULATE_NEW_UNIT_COUNT()
+    {
+        unitCount = unitCount * 2;
+        return unitCount;
+    }
+    public static int unitCount = BARBARIAN_WAVE_UNIT_COUNT_BASE;
 } 
 
 public class BarbarianWavePlayer : BarbarianPlayer
@@ -29,23 +33,23 @@ public class BarbarianWavePlayer : BarbarianPlayer
     {
         this.colour = PlayerColours.Black;
     }
-    IEnumerator waitToAttack(float delayTime, Spawner spawnPoint)
+    IEnumerator waitToAttack(float delayTime, Spawner spawnPoint, int amt)
     {
         //Wait for the specified delay time before continuing.
         yield return new WaitForSeconds(delayTime);
 
-        spawnUnitGroupToAttackNearestEnemy(spawnPoint.transform.position);
+        spawnUnitGroupToAttackNearestEnemy(spawnPoint.transform.position, amt);
         //Do the action after the delay time has finished.
     }
 
-    void attackIn30Seconds(Spawner spawnPoint) {
+    void attackIn30Seconds(Spawner spawnPoint, int amt) {
         // TODO: Update our wait values and unit count here
-        nextWaveReady.Invoke((int)BarbarianWaveSettings.WAVE_TIME_BASE, BarbarianWaveSettings.BARBARIAN_WAVE_UNIT_COUNT_BASE);
+        nextWaveReady.Invoke((int)BarbarianWaveSettings.WAVE_TIME_BASE, amt);
 
-        LocalGameManager.Get().StartCoroutine(waitToAttack(30f, spawnPoint));
+        LocalGameManager.Get().StartCoroutine(waitToAttack(30f, spawnPoint, amt));
     }
 
-    void AttackIn30SecondsFromRandomSpawnPoint()
+    void AttackIn30SecondsFromRandomSpawnPoint(int amt)
     {
         if (wave > BarbarianWaveSettings.BARBARIAN_WAVE_COUNT)
         {
@@ -59,19 +63,24 @@ public class BarbarianWavePlayer : BarbarianPlayer
 
         if (spawnPoint.GetComponent<BarbarianOwnership>())
         {
-            attackIn30Seconds(spawnPoint);
+            attackIn30Seconds(spawnPoint, amt);
             wave++;
         }
     }
 
     override public void Awake()
     {
-        AttackIn30SecondsFromRandomSpawnPoint();
+        nextWave();
     }
 
-    private void spawnUnitGroupToAttackNearestEnemy(Vector3 location)
+    private void nextWave()
     {
-        AIUnitGrouping attackSquad = new AIUnitGrouping(this, 10, 1, location);
+        AttackIn30SecondsFromRandomSpawnPoint(BarbarianWaveSettings.CALCULATE_NEW_UNIT_COUNT());
+    }
+
+    private void spawnUnitGroupToAttackNearestEnemy(Vector3 location, int amt)
+    {
+        AIUnitGrouping attackSquad = new AIUnitGrouping(this, amt, 1, location);
         attackSquad.onMaxUnits.AddListener(attackSquad.attackNearestEnemy);
         void stopReplenishing()
         {
@@ -95,7 +104,7 @@ public class BarbarianWavePlayer : BarbarianPlayer
         }
 
         grouping.onNoUnits.AddListener(disbandGrouping);
-        grouping.onNoUnits.AddListener(AttackIn30SecondsFromRandomSpawnPoint);
+        grouping.onNoUnits.AddListener(nextWave);
     }
 
     public static BarbarianWavePlayer Get()

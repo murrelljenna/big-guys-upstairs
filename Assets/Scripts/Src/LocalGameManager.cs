@@ -146,7 +146,7 @@ namespace game.assets
             for (int i = 0; i < cities.Length; i++)
             {
                 var city = cities[i];
-
+                PlayAudio.PlayRandomSourceOnGameobject(city.transform?.Find("Audio")?.Find("CheerSounds").gameObject);
                 fireworksAtCity(city);
             }
         }

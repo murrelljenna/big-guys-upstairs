@@ -24,7 +24,7 @@ public class BarbarianWavePlayerUIController : MonoBehaviour
         player = BarbarianWavePlayer.Get();
         player.nextWaveReady.AddListener(updateValues);
 
-        updateValues((int)BarbarianWaveSettings.WAVE_TIME_BASE, BarbarianWaveSettings.unitCount);
+        updateValues((int)BarbarianWaveSettings.WAVE_TIME_BASE, BarbarianWaveSettings.CURRENT_UNIT_COUNT);
     }
 
     private void updateValues(int time, int count)

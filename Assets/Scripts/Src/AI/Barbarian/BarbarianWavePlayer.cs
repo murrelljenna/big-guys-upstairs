@@ -25,7 +25,7 @@ public class BarbarianWavePlayer : BarbarianPlayer
 {
     private static BarbarianWavePlayer singleton;
 
-    public UnityEvent<int, int> nextWaveReady = new UnityEvent<int, int>();
+    public UnityEvent<int, int, int> nextWaveReady = new UnityEvent<int, int, int>();
 
     public UnityEvent lastBarbarianWaveDefeated = new UnityEvent();
 
@@ -46,7 +46,7 @@ public class BarbarianWavePlayer : BarbarianPlayer
 
     void attackIn30Seconds(Spawner spawnPoint, int amt) {
         // TODO: Update our wait values and unit count here
-        nextWaveReady.Invoke((int)BarbarianWaveSettings.WAVE_TIME_BASE, amt);
+        nextWaveReady.Invoke(wave, (int)BarbarianWaveSettings.WAVE_TIME_BASE, amt);
 
         LocalGameManager.Get().StartCoroutine(waitToAttack(BarbarianWaveSettings.WAVE_TIME_BASE, spawnPoint, amt));
     }

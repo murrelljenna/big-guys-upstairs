@@ -9,6 +9,7 @@ public class BarbarianWavePlayerUIController : MonoBehaviour
 
     public Text timer;
     public Text unitCount;
+    public Text waveCount;
 
     private int timerAmt;
 
@@ -24,13 +25,14 @@ public class BarbarianWavePlayerUIController : MonoBehaviour
         player = BarbarianWavePlayer.Get();
         player.nextWaveReady.AddListener(updateValues);
 
-        updateValues((int)BarbarianWaveSettings.WAVE_TIME_BASE, BarbarianWaveSettings.CURRENT_UNIT_COUNT);
+        updateValues(1, (int)BarbarianWaveSettings.WAVE_TIME_BASE, BarbarianWaveSettings.CURRENT_UNIT_COUNT);
     }
 
-    private void updateValues(int time, int count)
+    private void updateValues(int wave, int time, int count)
     {
         timerAmt = time;
         timer.text = time.ToString();
+        waveCount.text = wave + "/" + BarbarianWaveSettings.BARBARIAN_WAVE_COUNT;
         unitCount.text = "x" + count.ToString();
         restartTimer();
     }

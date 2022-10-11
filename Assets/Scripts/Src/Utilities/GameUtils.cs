@@ -26,6 +26,7 @@ namespace game.assets.utilities {
         public static class LayerMask
         {
             public static int Terrain = (1 << 11);
+            public static int Unit = (1 << 12);
             public static int Resource = (1 << 9);
             public static int Attackable = Resource | (1 << 10) | (1 << 12) | (1 << 14) | (1 << 16) | (1 << 18);
             public static int All = Terrain | Resource | (1 << 10) | (1 << 12) | (1 << 14) | (1 << 16) | (1 << 18);
@@ -61,7 +62,7 @@ namespace game.assets.utilities {
 
         public static Health[] findEnemyUnitsInRange(Vector3 center, float range)
         {
-            return Physics.OverlapSphere(center, range).GetComponents<Health>();
+            return Physics.OverlapSphere(center, range, LayerMask.Unit).GetComponents<Health>();
         }
         private static Vector2 randomPointOnUnitCircle(float radius) {
             float angle = Random.Range (0f, Mathf.PI * 2);

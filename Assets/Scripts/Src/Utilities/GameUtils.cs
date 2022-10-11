@@ -202,7 +202,27 @@ namespace game.assets.utilities {
             Physics.Raycast(new Vector3(point.x, 300, point.z), Vector3.down, out hit, Mathf.Infinity, GameUtils.LayerMask.Terrain);
             return hit.point.y;
         }
-        
+
+        public static A[] filterFor<T, A>(this A[] behaviours) 
+            where T : MonoBehaviour 
+            where A : MonoBehaviour
+        {
+            List<A> filteredGos = new List<A>(behaviours);
+            return filteredGos.FindAll(go =>
+            {
+                return (go.GetComponent<T>() != null);
+            }).ToArray();
+        }
+
+        /*public static GameObject[] filterFor<T>(this GameObject[] gos) where T: MonoBehaviour
+        {
+            var filteredGos = new List<GameObject>(gos);
+            return filteredGos.FindAll(go =>
+            {
+                return (go.GetComponent<T>() != null);
+            }).ToArray();
+        }*/
+
         public static class MagicNumbers
         {
             public static float PlayerSpawnRadius = 3f;

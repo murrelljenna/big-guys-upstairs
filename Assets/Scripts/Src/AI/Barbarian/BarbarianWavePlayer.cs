@@ -5,10 +5,11 @@ using static game.assets.utilities.GameUtils;
 using game.assets.spawners;
 using game.assets;
 using UnityEngine.Events;
+using game.assets.utilities;
 
 public static class BarbarianWaveSettings
 {
-    public static float WAVE_TIME_BASE = 60f;
+    public static float WAVE_TIME_BASE = 10f;
     public static int BARBARIAN_WAVE_UNIT_COUNT_BASE = 10;
     public static int BARBARIAN_WAVE_COUNT = 10;
     public static int CALCULATE_NEW_UNIT_COUNT(int wave)
@@ -52,15 +53,12 @@ public class BarbarianWavePlayer : BarbarianPlayer
 
     void AttackIn30SecondsFromRandomSpawnPoint(int amt)
     {
-        Debug.Log("Doing the wave");
-        Debug.Log("Wave: " + wave);
-        Debug.Log("Amt: " + amt);
         if (wave > BarbarianWaveSettings.BARBARIAN_WAVE_COUNT)
         {
             lastBarbarianWaveDefeated.Invoke();
             return;
         }
-        Spawner[] spawners = GameObject.FindObjectsOfType<Spawner>();
+        Spawner[] spawners = GameObject.FindObjectsOfType<Spawner>().filterFor<BarbarianOwnership, Spawner>();
 
         int index = Random.RandomRange(0, spawners.Length);
         Spawner spawnPoint = spawners[index];
@@ -79,14 +77,11 @@ public class BarbarianWavePlayer : BarbarianPlayer
 
     private void nextWave()
     {
-        Debug.Log("Next wave");
         AttackIn30SecondsFromRandomSpawnPoint(BarbarianWaveSettings.CALCULATE_NEW_UNIT_COUNT(wave));
     }
 
     private void spawnUnitGroupToAttackNearestEnemy(Vector3 location, int amt)
     {
-        Debug.Log("Wave: " + wave);
-        Debug.Log("Amt: " + amt);
         AIUnitGrouping attackSquad = new AIUnitGrouping(this, amt, 1, location);
         attackSquad.onMaxUnits.AddListener(attackSquad.attackNearestEnemy);
         void stopReplenishing()

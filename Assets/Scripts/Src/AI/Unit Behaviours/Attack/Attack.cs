@@ -63,7 +63,7 @@ namespace game.assets.ai
 
         void Update()
         {
-            if (updateTargetLive && frameCount % 10 == 0)
+            if (updateTargetLive && frameCount % 40 == 0)
             {
                 if (attackee != null && canMove)
                 {

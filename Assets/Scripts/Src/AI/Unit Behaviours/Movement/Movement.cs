@@ -68,11 +68,13 @@ namespace game.assets.ai
         public void goToSilently(Vector3 destination)
         {
             moveOrdered = true;
+            Debug.Log("Go to silently!");
             navAgent.SetDestination(destination);
         }
 
         public void goTo(Vector3 destination)
         {
+            Debug.Log("Goto! : " + destination);
             newMoveOrdered.Invoke();
             goToSilently(destination);
         }

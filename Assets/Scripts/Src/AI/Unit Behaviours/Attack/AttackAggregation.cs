@@ -37,6 +37,19 @@ public class AttackAggregation : IAttack
         units.ForEach(unit => unit.attack(attackee));
     }
 
+    private IEnumerator attackPar(Health attackee)
+    {
+        const int par = 3;
+        for (int i = 0; i < units.Count; i++)
+        {
+            var unit = units[i];
+            unit.attack(attackee);
+            if (i % par == 0)
+            {
+                yield return null;
+            }
+        }
+    }
     private void removeOnUnitDied(Health health) {
         Attack attack = health.GetComponent<Attack>();
         units.Remove(attack);

@@ -98,10 +98,5 @@ namespace game.assets.ai
         {
             return (HP <= 0);
         }
-
-        void OnDisable()
-        {
-            onZeroHP.Invoke(this);
-        }
     }
 }

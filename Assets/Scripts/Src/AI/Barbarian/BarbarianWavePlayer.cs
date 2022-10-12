@@ -74,7 +74,6 @@ public class BarbarianWavePlayer : BarbarianPlayer
     {
         nextWave();
     }
-
     private void nextWave()
     {
         AttackIn30SecondsFromRandomSpawnPoint(BarbarianWaveSettings.CALCULATE_NEW_UNIT_COUNT(wave));
@@ -101,6 +100,7 @@ public class BarbarianWavePlayer : BarbarianPlayer
         }
 
         grouping.onNoUnits.AddListener(disbandGrouping);
+        Debug.Log("Registering disband listener");
         grouping.onNoUnits.AddListener(nextWave);
     }
 

@@ -61,6 +61,11 @@ namespace game.assets.ai
             InvokeRepeating("checkEnemiesInRange", 2f, 2f);
         }
 
+        public bool isCurrentlyAttacking()
+        {
+            return isAttacking;
+        }
+
         void Update()
         {
             if (updateTargetLive && frameCount % 40 == 0)

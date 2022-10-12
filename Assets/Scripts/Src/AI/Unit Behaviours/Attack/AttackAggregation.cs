@@ -1,4 +1,5 @@
-﻿using game.assets.ai;
+﻿using game.assets;
+using game.assets.ai;
 using game.assets.economy;
 using System.Collections;
 using System.Collections.Generic;
@@ -34,7 +35,12 @@ public class AttackAggregation : IAttack
 
     public void attack(Health attackee)
     {
-        units.ForEach(unit => unit.attack(attackee));
+        LocalGameManager.Get().StartCoroutine(attackPar(attackee));
+    }
+
+    public void allIdleAttack(Health attackee)
+    {
+        LocalGameManager.Get().StartCoroutine(attackParIfNotBusy(attackee));
     }
 
     private IEnumerator attackPar(Health attackee)
@@ -50,6 +56,23 @@ public class AttackAggregation : IAttack
             }
         }
     }
+    private IEnumerator attackParIfNotBusy(Health attackee)
+    {
+        const int par = 5;
+        for (int i = 0; i < units.Count; i++)
+        {
+            var unit = units[i];
+            if (!unit.isCurrentlyAttacking())
+            {
+                unit.attack(attackee);
+            }
+            if (i % par == 0)
+            {
+                yield return null;
+            }
+        }
+    }
+
     private void removeOnUnitDied(Health health) {
         Attack attack = health.GetComponent<Attack>();
         units.Remove(attack);

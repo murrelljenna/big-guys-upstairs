@@ -100,7 +100,6 @@ public class BarbarianWavePlayer : BarbarianPlayer
         }
 
         grouping.onNoUnits.AddListener(disbandGrouping);
-        Debug.Log("Registering disband listener");
         grouping.onNoUnits.AddListener(nextWave);
     }
 

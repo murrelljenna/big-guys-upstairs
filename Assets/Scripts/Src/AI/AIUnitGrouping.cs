@@ -115,7 +115,7 @@ namespace game.assets.ai {
             Health nearestEnemyThingy = getNearestEnemy();
             if (nearestEnemyThingy != null)
             {
-                units.attack(nearestEnemyThingy);
+                units.allIdleAttack(nearestEnemyThingy);
                 nearestEnemyThingy.onZeroHP.AddListener(attackNearestEnemy);
             }
         }

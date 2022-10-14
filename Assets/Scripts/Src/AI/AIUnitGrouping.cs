@@ -29,6 +29,9 @@ namespace game.assets.ai {
         public UnityEvent<Vector3> reachedDestination = new UnityEvent<Vector3>();
         private bool destinationHasBeenReached = false;
 
+        private Stack<IArmyPlan> orders = new Stack<IArmyPlan>();
+        public UnityEvent<IArmyPlan> newOrder = new UnityEvent<IArmyPlan>();
+
         public AIUnitGrouping(player.Player player, int maxUnits, int recruitRateInSeconds, Vector3 startingLocation, bool autoReplenish = true) {
             onMaxUnits = new UnityEvent();
             onNoUnits = new UnityEvent();
@@ -41,7 +44,38 @@ namespace game.assets.ai {
             this.autoReplenish = autoReplenish;
 
             replenishment = LocalGameManager.Get().StartCoroutine(startReplenishment(recruitRateInSeconds, recruiter));
+            newOrder.AddListener((IArmyPlan plan) => nextOrder());
         }
+
+        /*
+         * Processing orders
+         */
+
+        public void order(IArmyPlan order) {
+            if (!order.possible())
+            {
+                return;
+            }
+
+            orders.Push(order);
+            newOrder.Invoke(order);
+        }
+
+        private void nextOrder()
+        {
+            if (orders.Count == 0)
+            {
+                return;
+            }
+
+            IArmyPlan order = orders.Pop();
+
+            if (order.possible())
+            {
+                order.execute();
+            }
+        }
+
 
         public void stopReplenishing()
         {
@@ -77,7 +111,7 @@ namespace game.assets.ai {
             }
         }
 
-        private Vector3 groupLocation()
+        public Vector3 groupLocation()
         {
             return units.location();
         }
@@ -169,66 +203,6 @@ namespace game.assets.ai {
         /// This should move guys along a more reasonable path
         /// </summary>
         /// 
-
-        interface IAttackPlan {
-            Vector3 moveToPoint();
-        }
-
-        private class CityAttackPlan : IAttackPlan {
-            private Vector3 location;
-
-            public CityAttackPlan(Vector3 location)
-            {
-                this.location = location;
-            }
-
-            public Vector3 moveToPoint()
-            {
-                return location;
-            }
-        }
-
-        private class CitizenAttackPlan : IAttackPlan
-        {
-            private Vector3 location;
-            private Health[] unitsToAttack;
-
-            public CitizenAttackPlan(Vector3 location)
-            {
-                this.location = location;
-            }
-
-            public Vector3 moveToPoint()
-            {
-                return location;
-            }
-
-            public Health[] citizensToAttack()
-            {
-                return unitsToAttack;
-            }
-        }
-
-        private class ArmyAttackPlan : IAttackPlan
-        {
-            private Vector3 location;
-            private Health[] unitsToAttack;
-
-            public ArmyAttackPlan(Vector3 location)
-            {
-                this.location = location;
-            }
-
-            public Vector3 moveToPoint()
-            {
-                return location;
-            }
-
-            public Health[] citizensToAttack()
-            {
-                return unitsToAttack;
-            }
-        }
 
         private void moveUnitsToLocation(Vector3 location) {
             destinationHasBeenReached = false;

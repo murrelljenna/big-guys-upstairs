@@ -85,7 +85,11 @@ public class BarbarianWavePlayer : BarbarianPlayer
 
         // THIS IS WHERE WE ACTUALLY TELL THE SQUAD TO ATTACK
         //attackSquad.onMaxUnits.AddListener(attackSquad.attackNearestEnemy);
-        attackSquad.onMaxUnits.AddListener(attackSquad.assaultRandomPlayer);
+        attackSquad.onMaxUnits.AddListener(() => {
+            var city = LocalGameManager.Get().players.RandomElem().getCities()[0];
+            PositionArmyToAssaultPlan plan = new PositionArmyToAssaultPlan(attackSquad, city);
+            attackSquad.order(plan);
+        });
         void stopReplenishing()
         {
             attackSquad.stopReplenishing();

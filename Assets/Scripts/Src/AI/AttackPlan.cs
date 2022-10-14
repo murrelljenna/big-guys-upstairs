@@ -30,7 +30,7 @@ public class PositionArmyToAssaultPlan : IArmyPlan {
     {
         return new IArmyPlan[]
         {
-
+            new CityAttackPlan(army, city)
         };
     }
 
@@ -61,30 +61,42 @@ public class PositionArmyToAssaultPlan : IArmyPlan {
         army.reachedDestination.AddListener((Vector3 v) => a());
     }
 }
-/*
+
 public class CityAttackPlan : IArmyPlan
 {
-    private Vector3 location;
+    private AIUnitGrouping army;
+    private GameObject city;
 
-    public CityAttackPlan(Vector3 location)
+    public CityAttackPlan(AIUnitGrouping army, GameObject city)
     {
-        this.location = location;
+        this.army = army;
+        this.city = city;
     }
 
-    public Vector3 moveToPoint()
-    {
-        return location;
-    }
-
-    IArmyPlan[] possibleNextMoves()
+    public IArmyPlan[] possibleNextMoves()
     {
         return new IArmyPlan[]
         {
 
         };
     }
-}
 
+    public bool possible()
+    {
+        return (city != null);
+    }
+
+    public void onComplete(Action a)
+    {
+        city.GetComponent<Health>().onZeroHP.AddListener((Health _) => a());
+    }
+
+    public void execute()
+    {
+        army.attack(city.GetComponent<Health>());
+    }
+}
+/*
 public class CitizenAttackPlan : IArmyPlan
 {
     private Vector3 location;

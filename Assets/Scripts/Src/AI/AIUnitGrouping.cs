@@ -44,7 +44,12 @@ namespace game.assets.ai {
             this.autoReplenish = autoReplenish;
 
             replenishment = LocalGameManager.Get().StartCoroutine(startReplenishment(recruitRateInSeconds, recruiter));
-            newOrder.AddListener((IArmyPlan plan) => nextOrder());
+            newOrder.AddListener((IArmyPlan _) => nextOrder());
+        }
+
+        public void attack(Health target)
+        {
+            units.attack(target);
         }
 
         /*
@@ -59,6 +64,7 @@ namespace game.assets.ai {
 
             orders.Push(order);
             newOrder.Invoke(order);
+            order.onComplete(() => orderComplete(order));
         }
 
         private void nextOrder()
@@ -74,6 +80,34 @@ namespace game.assets.ai {
             {
                 order.execute();
             }
+        }
+
+        private void orderComplete(IArmyPlan completedPlan)
+        {
+            var subPlan = getPossibleNextMove(completedPlan);
+
+            if (subPlan != null)
+            {
+                order(subPlan);
+            }
+            else
+            {
+                nextOrder();
+            }
+        }
+
+        private IArmyPlan getPossibleNextMove(IArmyPlan plan) {
+            var nextPlans = plan.possibleNextMoves();
+            for (int i = 0; i < nextPlans.Length; i++)
+            {
+                var candidate = nextPlans[i];
+                if (candidate.possible())
+                {
+                    return candidate;
+                }
+            }
+
+            return null;
         }
 
 
@@ -239,7 +273,7 @@ namespace game.assets.ai {
                 yield return new WaitUntil(() => destinationHasBeenReached);
             }
 
-            reachedDestination.Invoke(points[points.Length]);
+            reachedDestination.Invoke(points[points.Length - 1]);
         }
     }
 }

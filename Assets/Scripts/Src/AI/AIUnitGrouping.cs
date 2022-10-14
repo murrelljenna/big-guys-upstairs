@@ -262,9 +262,7 @@ namespace game.assets.ai {
             NavMeshAgent agent = units.getMeSomeonesNavMeshAgent();
             NavMeshPath path = new NavMeshPath();
             bool isReachable = agent.CalculatePath(point, path);
-            Debug.Log("Is reachable: " + isReachable);
             Vector3[] corners = path.corners;
-            Debug.Log("Coroutine started!");
             LocalGameManager.Get().StartCoroutine(moveAlongPoints(corners));
 
         }

@@ -148,8 +148,7 @@ namespace game.assets.ai
 
         private void reportEnemyDead(Health h) {
             enemyKilled.Invoke(h);
-            Debug.Log("Unit killed");
-            checkEnemiesInRange();
+            StartCoroutine(GameUtils.doNextFrame(checkEnemiesInRange));
         }
 
         public void attack(Health attackee)

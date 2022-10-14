@@ -1,4 +1,5 @@
 ﻿using game.assets.ai;
+using game.assets.economy;
 using game.assets.utilities;
 using System;
 using System.Collections;
@@ -124,8 +125,13 @@ public class AttackCitizensAroundCityPlan : IArmyPlan
 
     public bool possible()
     {
-        units = new List<Health>(GameUtils.findEnemyUnitsInRange(city.transform.position, CITY_RANGE).thatBelongTo(city));
+        units = getUnits(city);
         return (city != null && units.Count > UNIT_THRESHOLD);
+    }
+
+    private List<Health> getUnits(GameObject city)
+    {
+        return new List<Health>(GameUtils.findEnemyUnitsInRange(city.transform.position, CITY_RANGE).thatBelongTo(city).filterFor<Worker, Health>());
     }
 
     public void onComplete(Action a)
@@ -144,7 +150,7 @@ public class AttackCitizensAroundCityPlan : IArmyPlan
 
     public void execute()
     {
-        units = new List<Health>(GameUtils.findEnemyUnitsInRange(city.transform.position, CITY_RANGE).thatBelongTo(city));
+        units = getUnits(city);
         army.attack(units.ToArray());
     }
 }

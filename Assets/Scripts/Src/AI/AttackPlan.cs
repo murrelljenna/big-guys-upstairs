@@ -103,7 +103,7 @@ public class AttackCitizensAroundCityPlan : IArmyPlan
 {
     private AIUnitGrouping army;
     private GameObject city;
-    private Health[] units;
+    private List<Health> units;
 
     private const float CITY_RANGE = 15f;
     private const int UNIT_THRESHOLD = 9;
@@ -124,21 +124,28 @@ public class AttackCitizensAroundCityPlan : IArmyPlan
 
     public bool possible()
     {
-        units = GameUtils.findEnemyUnitsInRange(city.transform.position, CITY_RANGE).thatBelongTo(city);
-        Debug.Log("Wyatt: Units: " + units.Length);
-        return (city != null && units.Length > UNIT_THRESHOLD);
+        units = new List<Health>(GameUtils.findEnemyUnitsInRange(city.transform.position, CITY_RANGE).thatBelongTo(city));
+        return (city != null && units.Count > UNIT_THRESHOLD);
     }
 
     public void onComplete(Action a)
     {
-        // Check if original units are all dead
+        army.enemyKilled.AddListener((Attack unit, Health health) =>
+        {
+            units.Remove(health);
+            if (units.Count == 0)
+            {
+                a();
+            }
+        }
+
+      );
     }
 
     public void execute()
     {
-        units = GameUtils.findEnemyUnitsInRange(city.transform.position, CITY_RANGE).thatBelongTo(city);
-        Debug.Log("Wyatt: Units: " + units.Length);
-        army.attack(units);
+        units = new List<Health>(GameUtils.findEnemyUnitsInRange(city.transform.position, CITY_RANGE).thatBelongTo(city));
+        army.attack(units.ToArray());
     }
 }
     /*

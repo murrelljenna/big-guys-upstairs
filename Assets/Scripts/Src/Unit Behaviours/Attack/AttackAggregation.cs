@@ -14,13 +14,19 @@ public class AttackAggregation : IAttack
 
     public UnityEvent<Vector3> locationReached = new UnityEvent<Vector3>();
     public UnityEvent<Attack> attacked = new UnityEvent<Attack>();
+    public UnityEvent<Attack, Health> enemyKilled = new UnityEvent<Attack, Health>();
 
     public AttackAggregation(List<Attack> units)
     {
         this.units = units;
         unitDead = new UnityEvent<Attack>();
-        this.units.ForEach(unit => registerDeathCallbackIfCanDie(unit));
-        this.units.ForEach(unit => unit.GetComponent<Health>()?.onAttacked.AddListener((Attack atker) => attacked.Invoke(atker)));
+        this.units.ForEach(addListeners);
+    }
+
+    private void addListeners(Attack unit) {
+        registerDeathCallbackIfCanDie(unit);
+        unit.GetComponent<Health>()?.onAttacked.AddListener((Attack atker) => attacked.Invoke(atker));
+        unit.enemyKilled.AddListener((Health h) => enemyKilled.Invoke(unit, h));
     }
 
     private void registerDeathCallbackIfCanDie(Attack unit) {
@@ -131,7 +137,7 @@ public class AttackAggregation : IAttack
         if (!units.Contains(unit))
         {
             units.Add(unit);
-            registerDeathCallbackIfCanDie(unit);
+            addListeners(unit);
         }
     }
 

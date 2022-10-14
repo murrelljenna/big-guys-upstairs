@@ -34,6 +34,9 @@ namespace game.assets.ai
         [Tooltip("Invoked when attack is selected")]
         public UnityEvent onSelect;
 
+        [Tooltip("Invoked when enemy is killed")]
+        public UnityEvent<Health> enemyKilled = new UnityEvent<Health>();
+
 
         protected Health attackee;
 
@@ -143,6 +146,12 @@ namespace game.assets.ai
             return null;
         }
 
+        private void reportEnemyDead(Health h) {
+            enemyKilled.Invoke(h);
+            Debug.Log("Unit killed");
+            checkEnemiesInRange();
+        }
+
         public void attack(Health attackee)
         {
             if (!attackee.IsEnemyOf(this))
@@ -152,6 +161,7 @@ namespace game.assets.ai
             cancelOrders();
             attackee.onZeroHP.AddListener(cancelOrders);
             onAttackOrdered.Invoke();
+            attackee.onZeroHP.AddListener(reportEnemyDead);
             if (canMove)
             {
                 StartCoroutine(moveUntilInRangeAndAttack(attackee));
@@ -261,6 +271,10 @@ namespace game.assets.ai
 
         public void cancelOrders()
         {
+            if (attackee != null)
+            {
+                attackee.onZeroHP.RemoveListener(reportEnemyDead);
+            }
             StopAllCoroutines();
             updateTargetLive = false;
             inFight = false;

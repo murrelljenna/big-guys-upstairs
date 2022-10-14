@@ -31,6 +31,7 @@ namespace game.assets.ai {
 
         private Stack<IArmyPlan> orders = new Stack<IArmyPlan>();
         public UnityEvent<IArmyPlan> newOrder = new UnityEvent<IArmyPlan>();
+        public UnityEvent<Attack, Health> enemyKilled = new UnityEvent<Attack, Health>();
 
         public AIUnitGrouping(player.Player player, int maxUnits, int recruitRateInSeconds, Vector3 startingLocation, bool autoReplenish = true) {
             onMaxUnits = new UnityEvent();
@@ -45,6 +46,7 @@ namespace game.assets.ai {
 
             replenishment = LocalGameManager.Get().StartCoroutine(startReplenishment(recruitRateInSeconds, recruiter));
             newOrder.AddListener((IArmyPlan _) => nextOrder());
+            units.enemyKilled.AddListener((Attack a, Health h) => enemyKilled.Invoke(a, h));
         }
 
         public void attack(Health target)
@@ -79,7 +81,7 @@ namespace game.assets.ai {
                 return;
             }
 
-            IArmyPlan order = orders.Pop();
+            IArmyPlan order = orders.Peek();
 
             if (order.possible())
             {
@@ -89,6 +91,7 @@ namespace game.assets.ai {
 
         private void orderComplete(IArmyPlan completedPlan)
         {
+            IArmyPlan _ = orders.Pop();
             var subPlan = getPossibleNextMove(completedPlan);
 
             if (subPlan != null)

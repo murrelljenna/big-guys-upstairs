@@ -82,7 +82,10 @@ public class BarbarianWavePlayer : BarbarianPlayer
     private void spawnUnitGroupToAttackNearestEnemy(Vector3 location, int amt)
     {
         AIUnitGrouping attackSquad = new AIUnitGrouping(this, amt, 1, location);
-        attackSquad.onMaxUnits.AddListener(attackSquad.attackNearestEnemy);
+
+        // THIS IS WHERE WE ACTUALLY TELL THE SQUAD TO ATTACK
+        //attackSquad.onMaxUnits.AddListener(attackSquad.attackNearestEnemy);
+        attackSquad.onMaxUnits.AddListener(attackSquad.assaultRandomPlayer);
         void stopReplenishing()
         {
             attackSquad.stopReplenishing();

@@ -1,8 +1,10 @@
-﻿using game.assets.utilities;
+﻿using game.assets.player;
+using game.assets.utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 namespace game.assets.ai {
@@ -23,6 +25,9 @@ namespace game.assets.ai {
         private bool autoReplenish;
 
         private Coroutine replenishment;
+
+        public UnityEvent<Vector3> reachedDestination = new UnityEvent<Vector3>();
+        private bool destinationHasBeenReached = false;
 
         public AIUnitGrouping(player.Player player, int maxUnits, int recruitRateInSeconds, Vector3 startingLocation, bool autoReplenish = true) {
             onMaxUnits = new UnityEvent();
@@ -120,6 +125,20 @@ namespace game.assets.ai {
             }
         }
 
+        public void assaultRandomPlayer()
+        {
+            moveToAssault(LocalGameManager.Get().players.RandomElem());
+        }
+
+        public void moveToAssault(Player player)
+        {
+            var collider = player.getCities()[0]?.transform?.Find("AI")?.GetComponent<Collider>();
+            if (collider == null) {
+                Debug.LogError("Player's starting city either doesn't exist (unlikely) or doesn't have an AI child object with a collider");
+            }
+            getPathAndMoveAlong(collider.ClosestPointOnBounds(groupLocation()));
+        }
+
         private Health getNearestEnemy()
         {
             Health[] healths = GameObject.FindObjectsOfType<Health>();
@@ -144,6 +163,109 @@ namespace game.assets.ai {
         public void Disband()
         {
             LocalGameManager.Get().StopCoroutine(replenishment);
+        }
+
+        /// <summary>
+        /// This should move guys along a more reasonable path
+        /// </summary>
+        /// 
+
+        interface IAttackPlan {
+            Vector3 moveToPoint();
+        }
+
+        private class CityAttackPlan : IAttackPlan {
+            private Vector3 location;
+
+            public CityAttackPlan(Vector3 location)
+            {
+                this.location = location;
+            }
+
+            public Vector3 moveToPoint()
+            {
+                return location;
+            }
+        }
+
+        private class CitizenAttackPlan : IAttackPlan
+        {
+            private Vector3 location;
+            private Health[] unitsToAttack;
+
+            public CitizenAttackPlan(Vector3 location)
+            {
+                this.location = location;
+            }
+
+            public Vector3 moveToPoint()
+            {
+                return location;
+            }
+
+            public Health[] citizensToAttack()
+            {
+                return unitsToAttack;
+            }
+        }
+
+        private class ArmyAttackPlan : IAttackPlan
+        {
+            private Vector3 location;
+            private Health[] unitsToAttack;
+
+            public ArmyAttackPlan(Vector3 location)
+            {
+                this.location = location;
+            }
+
+            public Vector3 moveToPoint()
+            {
+                return location;
+            }
+
+            public Health[] citizensToAttack()
+            {
+                return unitsToAttack;
+            }
+        }
+
+        private void moveUnitsToLocation(Vector3 location) {
+            destinationHasBeenReached = false;
+            var agg = units.unitsThatCanMove();
+            agg.goTo(location);
+            agg.locationReached.AddListener((Vector3 v) =>
+            {
+                destinationHasBeenReached = true;
+            });
+        }
+
+        public void getPathAndMoveAlong(Vector3 point)
+        {
+            var loc = units.location();
+            NavMeshAgent agent = units.getMeSomeonesNavMeshAgent();
+            NavMeshPath path = new NavMeshPath();
+            bool isReachable = agent.CalculatePath(point, path);
+            Debug.Log("Is reachable: " + isReachable);
+            Vector3[] corners = path.corners;
+            Debug.Log("Coroutine started!");
+            LocalGameManager.Get().StartCoroutine(moveAlongPoints(corners));
+
+        }
+
+        private IEnumerator moveAlongPoints(Vector3[] points)
+        {
+            Debug.Log(points.Length);
+            for (int i = 0; i < points.Length; i++)
+            {
+                var loc = points[i];
+                Debug.Log("Going to: " + loc);
+                moveUnitsToLocation(loc);
+                destinationHasBeenReached = false; // Will be set once callback gets called
+
+                // Not necessary to do this in a for loop but whatevs
+                yield return new WaitUntil(() => destinationHasBeenReached);
+            }
         }
     }
 }

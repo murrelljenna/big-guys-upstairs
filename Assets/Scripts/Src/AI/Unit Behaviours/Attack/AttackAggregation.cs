@@ -4,12 +4,15 @@ using game.assets.economy;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class AttackAggregation : IAttack
 {
     public List<Attack> units;
     public UnityEvent<Attack> unitDead;
+
+    public UnityEvent<Vector3> locationReached = new UnityEvent<Vector3>();
 
     public AttackAggregation(List<Attack> units)
     {
@@ -115,7 +118,12 @@ public class AttackAggregation : IAttack
                 unitsThatCanMove.Add(movement);
             }
         });
-        return new MovementAggregation(unitsThatCanMove);
+
+        var agg = new MovementAggregation(unitsThatCanMove);
+
+        agg.locationReached.AddListener((Vector3 v) => locationReached.Invoke(v));
+
+        return agg;
     }
 
     public List<Worker> unitsThatCanWork()
@@ -158,6 +166,11 @@ public class AttackAggregation : IAttack
         {
             return new Vector3(0, 0, 0);
         }
+    }
+
+    public NavMeshAgent getMeSomeonesNavMeshAgent()
+    {
+        return units[0].GetComponent<NavMeshAgent>();
     }
 
     public int Count()

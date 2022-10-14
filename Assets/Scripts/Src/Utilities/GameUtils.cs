@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
 using game.assets.player;
+using UnityEngine.AI;
 
 namespace game.assets.utilities {
     public static class GameUtils
@@ -98,7 +99,6 @@ namespace game.assets.utilities {
             );
         }
 
-
         public static class MagicWords
         {
             public static class GameObjectNames
@@ -191,6 +191,11 @@ namespace game.assets.utilities {
             }
 
             return monos.ToArray();
+        }
+
+        public static T RandomElem<T>(this T[] arr)
+        {
+            return arr[Random.Range(0, arr.Length)];
         }
 
         public static bool isUnit(this GameObject gameObject) {

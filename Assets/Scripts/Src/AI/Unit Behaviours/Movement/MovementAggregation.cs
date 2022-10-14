@@ -4,12 +4,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using static game.assets.utilities.GameUtils;
 
 public class MovementAggregation : IMovement
 {
     public List<Movement> units = new List<Movement>();
+
+    public UnityEvent<Vector3> locationReached = new UnityEvent<Vector3>();
+
+    private int reachedLocation = 0;
+    private int lastSent = 0;
 
     public MovementAggregation(List<Movement> units)
     {
@@ -24,6 +30,8 @@ public class MovementAggregation : IMovement
         }
     }
 
+
+
     public void stop()
     {
         units.ForEach(unit => unit.stop());
@@ -31,6 +39,8 @@ public class MovementAggregation : IMovement
 
     private IEnumerator placeUnits(Vector3 center, Queue<Movement> units, float unitSize = 0.2f, float gapSize = 0.2f)
     {
+        reachedLocation = 0;
+        lastSent = 0;
         Queue<Vector3> points = new Queue<Vector3>();
         Queue<Vector3> taken = new Queue<Vector3>();
         points.Enqueue(center);
@@ -59,7 +69,24 @@ public class MovementAggregation : IMovement
 
             Vector3 destination = points.Dequeue();
 
+            Debug.Log("New location we're going to!");
+
+            void destinationReached()
+            {
+                reachedLocation++;
+                Debug.Log("Location reached!");
+                Debug.Log("ReachedLocation: " + reachedLocation);
+                Debug.Log("lastSent: " + lastSent);
+                if (reachedLocation == lastSent)
+                {
+                    locationReached.Invoke(center);
+                }
+            }
+
             unit.goTo(destination);
+
+            unit.reachedDestination.AddListener(destinationReached);
+            lastSent++;
 
             for (int i = 0; i < positionMods.Length; i++)
             {

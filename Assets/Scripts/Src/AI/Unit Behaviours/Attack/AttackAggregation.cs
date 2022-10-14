@@ -13,12 +13,14 @@ public class AttackAggregation : IAttack
     public UnityEvent<Attack> unitDead;
 
     public UnityEvent<Vector3> locationReached = new UnityEvent<Vector3>();
+    public UnityEvent<Attack> attacked = new UnityEvent<Attack>();
 
     public AttackAggregation(List<Attack> units)
     {
         this.units = units;
         unitDead = new UnityEvent<Attack>();
         this.units.ForEach(unit => registerDeathCallbackIfCanDie(unit));
+        this.units.ForEach(unit => unit.GetComponent<Health>()?.onAttacked.AddListener((Attack atker) => attacked.Invoke(atker)));
     }
 
     private void registerDeathCallbackIfCanDie(Attack unit) {

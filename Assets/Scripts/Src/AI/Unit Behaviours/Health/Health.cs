@@ -7,7 +7,7 @@ namespace game.assets.ai
 {
     public interface IHealth
     {
-        void lowerHP(int amt);
+        void lowerHP(int amt, Attack atker = null);
         void raiseHP(int amt);
         bool maxed();
         bool zero();
@@ -30,6 +30,8 @@ namespace game.assets.ai
         [Tooltip("Invoked when HP damaged")]
         public UnityEvent<float, float> onLowerHP;
 
+        public UnityEvent<Attack> onAttacked = new UnityEvent<Attack>();
+
         [Tooltip("Invoked when HP raised")]
         public UnityEvent<float, float> onRaiseHP;
 
@@ -44,10 +46,15 @@ namespace game.assets.ai
             onRaiseHP.Invoke(HP, maxHP);
         }
 
-        public void lowerHP(int amt)
+        public void lowerHP(int amt, Attack attacker = null)
         {
             HP = HP - amt;
             onLowerHP.Invoke(HP, maxHP);
+
+            if (attacker)
+            {
+                onAttacked.Invoke(attacker);
+            }
 
             if (zero())
             {

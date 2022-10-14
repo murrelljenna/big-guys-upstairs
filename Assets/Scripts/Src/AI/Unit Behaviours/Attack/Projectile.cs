@@ -11,6 +11,8 @@ public class Projectile : MonoBehaviour
     [Tooltip("Invoked when projectile hits an enemy")]
     public UnityEvent onCollision;
 
+    private Attack owner;
+
     public void OnTriggerEnter(Collider collision)
     {
         Health collidingEnemy = collision.gameObject.GetComponent<Health>();
@@ -18,7 +20,7 @@ public class Projectile : MonoBehaviour
         {
             onCollision.Invoke();
 
-            collidingEnemy.lowerHP(dmg);
+            collidingEnemy.lowerHP(dmg, owner);
 
             Destroy(gameObject, 0.2f);
         }
@@ -27,5 +29,10 @@ public class Projectile : MonoBehaviour
     public void setDmg(int dmg)
     {
         this.dmg = dmg;
+    }
+
+    public void setOwner(Attack attacker)
+    {
+        owner = attacker;
     }
 }

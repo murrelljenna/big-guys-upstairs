@@ -228,7 +228,7 @@ namespace game.assets.ai
         {
             onAttack.Invoke();
             faceTarget(attackee.transform.position);
-            this.attackee.lowerHP(attackPower);
+            this.attackee.lowerHP(attackPower, this);
         }
 
 

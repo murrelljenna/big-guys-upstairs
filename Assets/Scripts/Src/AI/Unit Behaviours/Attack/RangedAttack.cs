@@ -24,6 +24,7 @@ namespace game.assets.ai
 
             
             arrow.GetComponent<Projectile>().setDmg(attackPower);
+            arrow.GetComponent<Projectile>().setOwner(this);
 
             arrow.SetAsPlayer(this.GetComponent<Ownership>().owner);
 

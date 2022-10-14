@@ -156,7 +156,7 @@ namespace game.assets.ai
 
         public void attack(Health attackee)
         {
-            if (!attackee.IsEnemyOf(this))
+            if (attackee == null || !attackee.IsEnemyOf(this))
             {
                 return;
             }

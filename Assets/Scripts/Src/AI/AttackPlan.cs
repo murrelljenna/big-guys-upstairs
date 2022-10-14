@@ -13,6 +13,8 @@ public interface IArmyPlan
     bool possible();
     void execute();
     void onComplete(Action a);
+
+    bool interruptible();
 }
 
 public class PositionArmyToAssaultPlan : IArmyPlan {
@@ -64,6 +66,11 @@ public class PositionArmyToAssaultPlan : IArmyPlan {
     {
         army.reachedDestination.AddListener((Vector3 v) => a());
     }
+
+    public bool interruptible()
+    {
+        return true;
+    }
 }
 
 public class CityAttackPlan : IArmyPlan
@@ -98,6 +105,11 @@ public class CityAttackPlan : IArmyPlan
     public void execute()
     {
         army.attack(city.GetComponent<Health>());
+    }
+
+    public bool interruptible()
+    {
+        return true;
     }
 }
 
@@ -159,6 +171,11 @@ public class AttackCitizensAroundCityPlan : IArmyPlan
         units = getUnits(city);
         army.attack(units.ToArray());
     }
+
+    public bool interruptible()
+    {
+        return false;
+    }
 }
     
 public class AttackArmyAroundCityPlan : IArmyPlan
@@ -218,5 +235,81 @@ public class AttackArmyAroundCityPlan : IArmyPlan
     {
         units = getUnits(city);
         army.attack(units.ToArray());
+    }
+
+    public bool interruptible()
+    {
+        return false;
+    }
+}
+
+public class DefendAgainstAttackPlan : IArmyPlan
+{
+    private AIUnitGrouping army;
+    private List<Health> enemyUnits;
+
+    private const float RANGE = 5f;
+    private const int UNIT_THRESHOLD = 7;
+
+    public DefendAgainstAttackPlan(AIUnitGrouping army, Attack firstAttacker)
+    {
+        this.army = army;
+        this.enemyUnits = getUnitsAround(firstAttacker.gameObject);
+    }
+
+    public DefendAgainstAttackPlan(AIUnitGrouping army)
+    {
+        this.army = army;
+        this.enemyUnits = getUnitsAround(army.groupLocation());
+    }
+
+    public IArmyPlan[] possibleNextMoves()
+    {
+        return new IArmyPlan[]
+        {
+            new DefendAgainstAttackPlan(army)
+        };
+    }
+
+    public bool possible()
+    {
+        return (enemyUnits.Count > UNIT_THRESHOLD);
+    }
+
+    private List<Health> getUnitsAround(GameObject go)
+    {
+        return new List<Health>(GameUtils.findEnemyUnitsInRange(go.transform.position, RANGE).thatBelongTo(go));
+    }
+
+    private List<Health> getUnitsAround(Vector3 pos)
+    {
+        return new List<Health>(GameUtils.findEnemyUnitsInRange(pos, RANGE).thatDoNotBelongTo(army.player));
+    }
+
+    public void onComplete(Action a)
+    {
+        army.enemyKilled.AddListener((Attack unit, Health health) =>
+        {
+            enemyUnits.Remove(health);
+            if (enemyUnits.Count == 0)
+            {
+                a();
+            }
+            else
+            {
+                unit.attack(enemyUnits.RandomElem());
+            }
+        }
+      );
+    }
+
+    public void execute()
+    {
+        army.attack(enemyUnits.ToArray());
+    }
+
+    public bool interruptible()
+    {
+        return false;
     }
 }

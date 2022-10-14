@@ -10,7 +10,7 @@ using UnityEngine.Events;
 namespace game.assets.ai {
     public class AIUnitGrouping
     {
-        private player.Player player;
+        public player.Player player;
         private int maxUnits;
         private int recruitRateInSeconds;
 
@@ -48,6 +48,12 @@ namespace game.assets.ai {
             replenishment = LocalGameManager.Get().StartCoroutine(startReplenishment(recruitRateInSeconds, recruiter));
             newOrder.AddListener((IArmyPlan _) => nextOrder());
             units.enemyKilled.AddListener((Attack a, Health h) => enemyKilled.Invoke(a, h));
+            units.attacked.AddListener((Attack atker) =>
+            {
+                Interrupt(
+                    new DefendAgainstAttackPlan(this, atker)
+                    );
+            });
         }
 
         public void attack(Health target)
@@ -64,7 +70,7 @@ namespace game.assets.ai {
          * Processing orders
          */
 
-        public void order(IArmyPlan order) {
+        public void Order(IArmyPlan order) {
             if (!order.possible())
             {
                 return;
@@ -73,6 +79,16 @@ namespace game.assets.ai {
             orders.Push(order);
             newOrder.Invoke(order);
             order.onComplete(() => orderComplete(order));
+        }
+
+        private void Interrupt(IArmyPlan order)
+        {
+            if (orders.Count > 0 && !orders.Peek().interruptible())
+            {
+                return;
+            }
+
+            Order(order);
         }
 
         private void nextOrder()
@@ -100,7 +116,7 @@ namespace game.assets.ai {
 
             if (subPlan != null)
             {
-                order(subPlan);
+                Order(subPlan);
             }
             else
             {

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public interface IArmyPlan
 {
@@ -57,7 +58,7 @@ public class PositionArmyToAssaultPlan : IArmyPlan {
 
     public void onComplete(Action a)
     {
-        a();
+        army.reachedDestination.AddListener((Vector3 v) => a());
     }
 }
 /*

@@ -229,17 +229,17 @@ namespace game.assets.ai {
 
         private IEnumerator moveAlongPoints(Vector3[] points)
         {
-            Debug.Log(points.Length);
             for (int i = 0; i < points.Length; i++)
             {
                 var loc = points[i];
-                Debug.Log("Going to: " + loc);
                 moveUnitsToLocation(loc);
                 destinationHasBeenReached = false; // Will be set once callback gets called
 
                 // Not necessary to do this in a for loop but whatevs
                 yield return new WaitUntil(() => destinationHasBeenReached);
             }
+
+            reachedDestination.Invoke(points[points.Length]);
         }
     }
 }

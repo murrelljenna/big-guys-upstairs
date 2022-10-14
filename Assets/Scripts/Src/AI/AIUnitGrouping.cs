@@ -52,6 +52,11 @@ namespace game.assets.ai {
             units.attack(target);
         }
 
+        public void attack(Health[] targets)
+        {
+            units.Attack(targets);
+        }
+
         /*
          * Processing orders
          */

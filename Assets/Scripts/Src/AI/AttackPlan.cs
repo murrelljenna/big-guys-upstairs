@@ -1,4 +1,5 @@
 ﻿using game.assets.ai;
+using game.assets.utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ public class PositionArmyToAssaultPlan : IArmyPlan {
     {
         return new IArmyPlan[]
         {
+            new AttackCitizensAroundCityPlan(army, city),
             new CityAttackPlan(army, city)
         };
     }
@@ -96,35 +98,50 @@ public class CityAttackPlan : IArmyPlan
         army.attack(city.GetComponent<Health>());
     }
 }
-/*
-public class CitizenAttackPlan : IArmyPlan
+
+public class AttackCitizensAroundCityPlan : IArmyPlan
 {
-    private Vector3 location;
-    private Health[] unitsToAttack;
+    private AIUnitGrouping army;
+    private GameObject city;
+    private Health[] units;
 
-    public CitizenAttackPlan(Vector3 location)
+    private const float CITY_RANGE = 15f;
+    private const int UNIT_THRESHOLD = 9;
+
+    public AttackCitizensAroundCityPlan(AIUnitGrouping army, GameObject city)
     {
-        this.location = location;
+        this.army = army;
+        this.city = city;
     }
 
-    public Vector3 moveToPoint()
-    {
-        return location;
-    }
-
-    public Health[] citizensToAttack()
-    {
-        return unitsToAttack;
-    }
-
-    IArmyPlan[] possibleNextMoves()
+    public IArmyPlan[] possibleNextMoves()
     {
         return new IArmyPlan[]
         {
-            new CityAttackPlan(location)
+            new CityAttackPlan(army, city)
         };
     }
 
+    public bool possible()
+    {
+        units = GameUtils.findEnemyUnitsInRange(city.transform.position, CITY_RANGE).thatBelongTo(city);
+        Debug.Log("Wyatt: Units: " + units.Length);
+        return (city != null && units.Length > UNIT_THRESHOLD);
+    }
+
+    public void onComplete(Action a)
+    {
+        // Check if original units are all dead
+    }
+
+    public void execute()
+    {
+        units = GameUtils.findEnemyUnitsInRange(city.transform.position, CITY_RANGE).thatBelongTo(city);
+        Debug.Log("Wyatt: Units: " + units.Length);
+        army.attack(units);
+    }
+}
+    /*
 public class ArmyAttackPlan : IArmyPlan
 {
     private Vector3 location;

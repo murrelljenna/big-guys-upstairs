@@ -65,6 +65,19 @@ namespace game.assets.utilities {
         {
             return Physics.OverlapSphere(center, range, LayerMask.Unit).GetComponents<Health>();
         }
+
+        public static T[] thatDoNotBelongTo<T>(this T[] units, Player player) where T : MonoBehaviour
+        {
+            var unitList = new List<T>(units);
+            return unitList.FindAll((T h) => h.IsEnemyOf(player)).ToArray();
+        }
+
+        public static T[] thatBelongTo<T>(this T[] units, GameObject gameObject) where T : MonoBehaviour
+        {
+            var unitList = new List<T>(units);
+            return unitList.FindAll((T h) => h.gameObject.IsFriendOf(gameObject)).ToArray();
+        }
+
         private static Vector2 randomPointOnUnitCircle(float radius) {
             float angle = Random.Range (0f, Mathf.PI * 2);
             float x = Mathf.Sin (angle) * radius;

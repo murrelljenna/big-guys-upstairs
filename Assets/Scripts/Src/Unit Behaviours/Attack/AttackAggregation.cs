@@ -43,6 +43,48 @@ public class AttackAggregation : IAttack
         LocalGameManager.Get().StartCoroutine(attackPar(attackee));
     }
 
+    public void Attack(Health[] attackees)
+    {
+        if (units.Count > attackees.Length)
+        {
+            var ourStack = new Stack<Attack>(units);
+            var theirStack = new Stack<Health>(attackees);
+
+            int divisor = attackees.Length;
+            int quotient = units.Count / divisor;
+            int remainder = units.Count % divisor;
+
+            Debug.Log("WHATSUP divisor: " + divisor);
+            Debug.Log("WHATSUP quotient: " + quotient);
+            Debug.Log("WHATSUP remainder: " + remainder);
+
+            for (int i = 0; i < divisor; i++)
+            {
+                var target = theirStack.Pop();
+                for (int j = 0; j < quotient; j++)
+                {
+                    var attacker = ourStack.Pop();
+                    attacker.attack(target);
+                }
+            }
+
+            AttackRemainder(ourStack, attackees);
+        }
+        else
+        {
+            AttackRemainder(new Stack<Attack>(units), attackees);
+        }
+    }
+
+    private void AttackRemainder(Stack<Attack> attackers, Health[] attackees)
+    {
+        for (int i = 0; i < attackers.Count; i++)
+        {
+            var attacker = attackers.Pop();
+            attacker.attack(attackees[i]);
+        }
+    }
+
     public void allIdleAttack(Health attackee)
     {
         LocalGameManager.Get().StartCoroutine(attackParIfNotBusy(attackee));

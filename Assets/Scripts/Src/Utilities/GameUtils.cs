@@ -233,6 +233,17 @@ namespace game.assets.utilities {
             }).ToArray();
         }
 
+        public static A[] filterAgainsts<T, A>(this A[] behaviours)
+    where T : MonoBehaviour
+    where A : MonoBehaviour
+        {
+            List<A> filteredGos = new List<A>(behaviours);
+            return filteredGos.FindAll(go =>
+            {
+                return (go.GetComponent<T>() == null);
+            }).ToArray();
+        }
+
         /*public static GameObject[] filterFor<T>(this GameObject[] gos) where T: MonoBehaviour
         {
             var filteredGos = new List<GameObject>(gos);

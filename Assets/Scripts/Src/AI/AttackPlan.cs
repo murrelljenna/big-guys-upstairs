@@ -32,6 +32,7 @@ public class PositionArmyToAssaultPlan : IArmyPlan {
     {
         return new IArmyPlan[]
         {
+            new AttackArmyAroundCityPlan(army, city),
             new AttackCitizensAroundCityPlan(army, city),
             new CityAttackPlan(army, city)
         };
@@ -119,6 +120,7 @@ public class AttackCitizensAroundCityPlan : IArmyPlan
     {
         return new IArmyPlan[]
         {
+            new AttackArmyAroundCityPlan(army, city),
             new CityAttackPlan(army, city)
         };
     }
@@ -154,25 +156,60 @@ public class AttackCitizensAroundCityPlan : IArmyPlan
         army.attack(units.ToArray());
     }
 }
-    /*
-public class ArmyAttackPlan : IArmyPlan
+    
+public class AttackArmyAroundCityPlan : IArmyPlan
 {
-    private Vector3 location;
-    private Health[] unitsToAttack;
+    private AIUnitGrouping army;
+    private GameObject city;
+    private List<Health> units;
 
-    public ArmyAttackPlan(Vector3 location)
+    private const float CITY_RANGE = 15f;
+    private const int UNIT_THRESHOLD = 7;
+
+    public AttackArmyAroundCityPlan(AIUnitGrouping army, GameObject city)
     {
-        this.location = location;
+        this.army = army;
+        this.city = city;
     }
 
-    public Vector3 moveToPoint()
+    public IArmyPlan[] possibleNextMoves()
     {
-        return location;
+        return new IArmyPlan[]
+        {
+            new AttackArmyAroundCityPlan(army, city),
+            new AttackCitizensAroundCityPlan(army, city),
+            new CityAttackPlan(army, city)
+        };
     }
 
-    public Health[] citizensToAttack()
+    public bool possible()
     {
-        return unitsToAttack;
+        units = getUnits(city);
+        return (city != null && units.Count > UNIT_THRESHOLD);
+    }
+
+    private List<Health> getUnits(GameObject city)
+    {
+        return new List<Health>(GameUtils.findEnemyUnitsInRange(city.transform.position, CITY_RANGE).thatBelongTo(city).filterAgainsts<Worker, Health>());
+    }
+
+    public void onComplete(Action a)
+    {
+        army.enemyKilled.AddListener((Attack unit, Health health) =>
+        {
+            units.Remove(health);
+            if (units.Count == 0)
+            {
+                a();
+            }
+        }
+
+      );
+    }
+
+    public void execute()
+    {
+        units = getUnits(city);
+        army.attack(units.ToArray());
     }
 }
-*/

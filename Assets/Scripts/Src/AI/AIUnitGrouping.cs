@@ -91,7 +91,10 @@ namespace game.assets.ai {
 
         private void orderComplete(IArmyPlan completedPlan)
         {
-            IArmyPlan _ = orders.Pop();
+            if (orders.Count > 0)
+            {
+                IArmyPlan _ = orders.Pop();
+            }
             var subPlan = getPossibleNextMove(completedPlan);
 
             if (subPlan != null)

@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using static game.assets.utilities.GameUtils;
@@ -92,7 +93,11 @@ public class MovementAggregation : IMovement
             {
                 Vector3 modifiedPosition = destination + positionMods[i];
                 float height = getTerrainHeight(modifiedPosition);
-                if (!taken.Contains(modifiedPosition) && Math.Abs(height) - Math.Abs(center.y) < 1 && Math.Abs(height) - Math.Abs(center.y) > -1)
+
+                NavMeshHit hit;
+                // TODO: Fix magic 0.1f float
+                var isOnMesh = NavMesh.SamplePosition(modifiedPosition, out hit, 0.1f, NavMesh.AllAreas);
+                if (!taken.Contains(modifiedPosition) && Math.Abs(height) - Math.Abs(center.y) < 1 && Math.Abs(height) - Math.Abs(center.y) > -1 && isOnMesh)
                 {
                     points.Enqueue(modifiedPosition);
                     taken.Enqueue(modifiedPosition);

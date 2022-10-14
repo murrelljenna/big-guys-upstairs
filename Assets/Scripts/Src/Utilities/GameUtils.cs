@@ -211,6 +211,11 @@ namespace game.assets.utilities {
             return arr[Random.Range(0, arr.Length)];
         }
 
+        public static T RandomElem<T>(this List<T> list)
+        {
+            return list[Random.Range(0, list.Count)];
+        }
+
         public static bool isUnit(this GameObject gameObject) {
             return (gameObject.GetComponent<Health>() != null && gameObject.GetComponent<Movement>() != null);
         }
@@ -230,6 +235,15 @@ namespace game.assets.utilities {
             return filteredGos.FindAll(go =>
             {
                 return (go.GetComponent<T>() != null);
+            }).ToArray();
+        }
+
+        public static A[] filterNulls<A>(this A[] behaviours)
+        {
+            List<A> filteredGos = new List<A>(behaviours);
+            return filteredGos.FindAll(go =>
+            {
+                return (go != null);
             }).ToArray();
         }
 

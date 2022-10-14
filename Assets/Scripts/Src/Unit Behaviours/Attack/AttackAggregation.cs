@@ -1,6 +1,7 @@
 ﻿using game.assets;
 using game.assets.ai;
 using game.assets.economy;
+using game.assets.utilities;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class AttackAggregation : IAttack
     public UnityEvent<Vector3> locationReached = new UnityEvent<Vector3>();
     public UnityEvent<Attack> attacked = new UnityEvent<Attack>();
     public UnityEvent<Attack, Health> enemyKilled = new UnityEvent<Attack, Health>();
+    public UnityEvent<Attack> unitIdled = new UnityEvent<Attack>();
 
     public AttackAggregation(List<Attack> units)
     {
@@ -27,6 +29,7 @@ public class AttackAggregation : IAttack
         registerDeathCallbackIfCanDie(unit);
         unit.GetComponent<Health>()?.onAttacked.AddListener((Attack atker) => attacked.Invoke(atker));
         unit.enemyKilled.AddListener((Health h) => enemyKilled.Invoke(unit, h));
+        unit.idled.AddListener(() => unitIdled.Invoke(unit));
     }
 
     private void registerDeathCallbackIfCanDie(Attack unit) {
@@ -51,6 +54,8 @@ public class AttackAggregation : IAttack
 
     public void Attack(Health[] attackees)
     {
+        units.ForEach((Attack unit) => unit.idled.AddListener(() => attackRandom(unit, attackees)));
+
         if (units.Count > attackees.Length)
         {
             var ourStack = new Stack<Attack>(units);
@@ -59,10 +64,6 @@ public class AttackAggregation : IAttack
             int divisor = attackees.Length;
             int quotient = units.Count / divisor;
             int remainder = units.Count % divisor;
-
-            Debug.Log("WHATSUP divisor: " + divisor);
-            Debug.Log("WHATSUP quotient: " + quotient);
-            Debug.Log("WHATSUP remainder: " + remainder);
 
             for (int i = 0; i < divisor; i++)
             {
@@ -80,6 +81,11 @@ public class AttackAggregation : IAttack
         {
             AttackRemainder(new Stack<Attack>(units), attackees);
         }
+    }
+
+    private void attackRandom(Attack attacker, Health[] attackees)
+    {
+        attacker.attack(attackees.filterNulls().RandomElem());
     }
 
     private void AttackRemainder(Stack<Attack> attackers, Health[] attackees)

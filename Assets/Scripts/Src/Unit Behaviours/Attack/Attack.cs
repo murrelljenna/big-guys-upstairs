@@ -37,6 +37,9 @@ namespace game.assets.ai
         [Tooltip("Invoked when enemy is killed")]
         public UnityEvent<Health> enemyKilled = new UnityEvent<Health>();
 
+        [Tooltip("Invoked when unit has not done anything for several seconds")]
+        public UnityEvent idled = new UnityEvent();
+
 
         protected Health attackee;
 
@@ -284,6 +287,16 @@ namespace game.assets.ai
             }
             isAttacking = false;
             attackee = null;
+            CancelInvoke("reportIdle");
+            Invoke("reportIdle", 3f);
+        }
+
+        private void reportIdle()
+        {
+            if (canMove && !GetComponent<Movement>().moveOrdered && isAttacking == false)
+            {
+                idled.Invoke();
+            }
         }
 
         public void select()

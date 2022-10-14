@@ -145,6 +145,10 @@ public class AttackCitizensAroundCityPlan : IArmyPlan
             {
                 a();
             }
+            else
+            {
+                unit.attack(units.RandomElem());
+            }
         }
 
       );
@@ -202,8 +206,11 @@ public class AttackArmyAroundCityPlan : IArmyPlan
             {
                 a();
             }
+            else
+            {
+                unit.attack(units.RandomElem());
+            }
         }
-
       );
     }
 

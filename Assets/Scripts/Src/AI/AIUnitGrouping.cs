@@ -32,6 +32,7 @@ namespace game.assets.ai {
         private Stack<IArmyPlan> orders = new Stack<IArmyPlan>();
         public UnityEvent<IArmyPlan> newOrder = new UnityEvent<IArmyPlan>();
         public UnityEvent<Attack, Health> enemyKilled = new UnityEvent<Attack, Health>();
+        public UnityEvent<Attack> unitIdled = new UnityEvent<Attack>();
 
         public AIUnitGrouping(player.Player player, int maxUnits, int recruitRateInSeconds, Vector3 startingLocation, bool autoReplenish = true) {
             onMaxUnits = new UnityEvent();

@@ -89,6 +89,10 @@ public class MovementAggregation : IMovement
             Debug.Log("Destination: " + destination);
 
             unit.reachedDestination.AddListener(destinationReached);
+            unit.GetComponent<Health>()?.onZeroHP?.AddListener((Health _) =>
+            {
+                lastSent--;
+            });
             lastSent++;
 
             for (int i = 0; i < positionMods.Length; i++)

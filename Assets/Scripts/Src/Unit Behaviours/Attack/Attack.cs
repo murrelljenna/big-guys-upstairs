@@ -148,7 +148,7 @@ namespace game.assets.ai
 
         private void reportEnemyDead(Health h) {
             enemyKilled.Invoke(h);
-            Invoke("checkEnemiesInRange", 0.1f);
+            Invoke("checkEnemiesInRange", 0.05f);
         }
 
         public void attack(Health attackee)

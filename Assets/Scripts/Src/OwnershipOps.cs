@@ -1,4 +1,5 @@
-﻿using game.assets.player;
+﻿using game.assets;
+using game.assets.player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -110,6 +111,11 @@ public static class OwnershipOps
     public static void SetAsPlayer(this MonoBehaviour behaviour, game.assets.player.Player player)
     {
         behaviour.gameObject.SetAsPlayer(player);
+    }
+
+    public static bool IsBarbarian(this MonoBehaviour behaviour)
+    {
+        return behaviour.BelongsTo(LocalGameManager.Get().barbarianPlayer);
     }
 
     public static void SetAsPlayer(this GameObject gameObj, game.assets.player.Player player)

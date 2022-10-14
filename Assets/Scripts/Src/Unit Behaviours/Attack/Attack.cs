@@ -61,7 +61,11 @@ namespace game.assets.ai
                 movement.newMoveOrdered.AddListener(cancelOrders);
             }
 
-            InvokeRepeating("checkEnemiesInRange", 2f, 2f);
+            if (!this.IsBarbarian())
+            {
+                Debug.Log(gameObject.name);
+                InvokeRepeating("checkEnemiesInRange", 2f, 2f);
+            }
         }
 
         public bool isCurrentlyAttacking()
@@ -83,10 +87,6 @@ namespace game.assets.ai
 
         private void checkEnemiesInRange()
         {
-            if (gameObject.name.Contains("Barbarian"))
-            {
-                return;
-            }
             if (isAttacking || (canMove && movement.moveOrdered)) {
                 return;
             }
@@ -148,7 +148,7 @@ namespace game.assets.ai
 
         private void reportEnemyDead(Health h) {
             enemyKilled.Invoke(h);
-            StartCoroutine(GameUtils.doNextFrame(checkEnemiesInRange));
+            Invoke("checkEnemiesInRange", 0.1f);
         }
 
         public void attack(Health attackee)

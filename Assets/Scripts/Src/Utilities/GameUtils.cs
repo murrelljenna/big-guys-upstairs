@@ -233,12 +233,6 @@ namespace game.assets.utilities {
             }).ToArray();
         }
 
-        public static IEnumerator doNextFrame(System.Action f)
-        {
-            yield return null;
-            f();
-        }
-
         /*public static GameObject[] filterFor<T>(this GameObject[] gos) where T: MonoBehaviour
         {
             var filteredGos = new List<GameObject>(gos);

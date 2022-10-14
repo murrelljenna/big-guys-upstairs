@@ -38,12 +38,12 @@ public class MovementAggregation : IMovement
         units.ForEach(unit => unit.stop());
     }
 
-    private IEnumerator placeUnits(Vector3 center, Queue<Movement> units, float unitSize = 0.2f, float gapSize = 0.2f)
+    private IEnumerator placeUnits(Vector3 center, Queue<Movement> units, float unitSize = 0.2f, float gapSize = 0.3f)
     {
         reachedLocation = 0;
         lastSent = 0;
         Queue<Vector3> points = new Queue<Vector3>();
-        Queue<Vector3> taken = new Queue<Vector3>();
+        List<Vector3> taken = new List<Vector3>();
         points.Enqueue(center);
 
         float branchSize = unitSize / 2f + gapSize;
@@ -85,6 +85,8 @@ public class MovementAggregation : IMovement
             }
 
             unit.goTo(destination);
+            taken.Add(destination);
+            Debug.Log("Destination: " + destination);
 
             unit.reachedDestination.AddListener(destinationReached);
             lastSent++;
@@ -97,10 +99,10 @@ public class MovementAggregation : IMovement
                 NavMeshHit hit;
                 // TODO: Fix magic 0.1f float
                 var isOnMesh = NavMesh.SamplePosition(modifiedPosition, out hit, 0.1f, NavMesh.AllAreas);
-                if (!taken.Contains(modifiedPosition) && Math.Abs(height) - Math.Abs(center.y) < 1 && Math.Abs(height) - Math.Abs(center.y) > -1 && isOnMesh)
+                if (!alreadyTaken(taken, modifiedPosition) && modifiedPosition != destination && Math.Abs(height) - Math.Abs(center.y) < 3 && Math.Abs(height) - Math.Abs(center.y) > -3 && isOnMesh)
                 {
                     points.Enqueue(modifiedPosition);
-                    taken.Enqueue(modifiedPosition);
+                    taken.Add(modifiedPosition);
                 }
             }
 
@@ -110,5 +112,9 @@ public class MovementAggregation : IMovement
                 yield return null;
             }
         }
+    }
+    private static bool alreadyTaken(List<Vector3> vectors, Vector3 target)
+    {
+        return !vectors.TrueForAll((Vector3 v) => Vector3.Distance(v, target) > 0.3f);
     }
 }

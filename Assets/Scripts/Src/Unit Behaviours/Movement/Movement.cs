@@ -30,16 +30,41 @@ namespace game.assets.ai
         [Tooltip("Invoked when ordered to move to new position, but before actual orders are set.")]
         public UnityEvent newMoveOrdered;
 
+        void Awake()
+        {
+            var ev = new UnityEvent();
+            var otherfuckingthing = new UnityEvent();
+
+            void shouldNotRun()
+            {
+                Debug.Log("THIS SHOULD BE PRINTING");
+            }
+
+            ev.AddListener(shouldNotRun);
+            otherfuckingthing.AddListener(() => fuckyou(ev, new UnityAction(shouldNotRun)));
+            otherfuckingthing.Invoke();
+            ev.Invoke();
+        }
+
+        private void fuckyou(UnityEvent ev, UnityAction a)
+        {
+            ev.RemoveListener(a);
+        }
+
         void Start()
         {
             navAgent = this.GetComponent<UnityEngine.AI.NavMeshAgent>();
         }
+
+        private static int fuckyouasshole = 0;
+        private static int andfuckyoumostofall = 0;
 
         void Update()
         {
             if (moveOrdered && navAgent.remainingDistance <= navAgent.stoppingDistance) {
                 if (!navAgent.hasPath || Mathf.Abs(navAgent.velocity.sqrMagnitude) < float.Epsilon)
                 {
+                    fuckyouasshole++;
                     reachDestination();
                 }
             }
@@ -47,7 +72,7 @@ namespace game.assets.ai
 
         private void reachDestination()
         {
-            Debug.Log(" AB - Reached destination");
+            Debug.Log(" AB - Reached destination: " + fuckyouasshole);
             moveOrdered = false;
             reachedDestination.Invoke();
         }
@@ -69,13 +94,15 @@ namespace game.assets.ai
         public void goToSilently(Vector3 destination)
         {
             moveOrdered = true;
-            //Debug.Log("Go to silently!");
+            Debug.Log("Go to silently!");
             navAgent.SetDestination(destination);
+            debugNavMeshPath(navAgent.path.corners);
         }
 
         public void goTo(Vector3 destination)
         {
-            //Debug.Log("Goto! : " + destination);
+            andfuckyoumostofall++;
+            Debug.Log("AB Goto! : " + andfuckyoumostofall);
             newMoveOrdered.Invoke();
             goToSilently(destination);
         }
@@ -112,6 +139,21 @@ namespace game.assets.ai
         public void OnDisable()
         {
             CancelInvoke();
+        }
+
+        private void debugNavMeshPath(Vector3[] points)
+        {
+            Debug.Log("Debugging nav mesh path for individual unit. Point count: " + points.Length);
+            var lineRenderer = gameObject.GetComponent<LineRenderer>();
+            if (lineRenderer == null)
+            {
+                lineRenderer = gameObject.AddComponent<LineRenderer>();
+            }
+            lineRenderer.SetWidth(0.05f, 0.05f);
+            lineRenderer.SetColors(Color.red, Color.red);
+            lineRenderer.material = new Material(Shader.Find("Sprites/Default")) { color = Color.yellow };
+            lineRenderer.positionCount = points.Length;
+            lineRenderer.SetPositions(points);
         }
     }
 }

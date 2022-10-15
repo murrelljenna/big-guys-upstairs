@@ -279,13 +279,14 @@ namespace game.assets.ai {
         /// This should move guys along a more reasonable path
         /// </summary>
         /// 
-
+        int fuckyou = 0;
         private void moveUnitsToLocation(Vector3 location) {
             destinationHasBeenReached = false;
             var agg = units.unitsThatCanMove();
             agg.goTo(location);
             agg.locationReached.AddListener((Vector3 v) =>
             {
+                Debug.Log("AB fuck this bullshjit : " + fuckyou);
                 destinationHasBeenReached = true;
             });
         }
@@ -320,8 +321,12 @@ namespace game.assets.ai {
 
         private void debugNavMeshPath(Vector3[] points)
         {
-            Debug.Log("Debugging nav mesh path. Point count: " + points.Length);
-            var lineRenderer = LocalGameManager.Get().gameObject.AddComponent<LineRenderer>();
+            Debug.Log("Debugging nav mesh path for AIUnitGrouping. Point count: " + points.Length);
+            var lineRenderer = LocalGameManager.Get().gameObject.GetComponent<LineRenderer>();
+            if (lineRenderer == null)
+            {
+                lineRenderer = LocalGameManager.Get().gameObject.AddComponent<LineRenderer>();
+            }
             lineRenderer.SetWidth(0.2f, 0.2f);
             lineRenderer.SetColors(Color.yellow, Color.yellow);
             lineRenderer.material = new Material(Shader.Find("Sprites/Default")) { color = Color.yellow };

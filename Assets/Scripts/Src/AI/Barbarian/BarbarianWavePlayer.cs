@@ -9,7 +9,7 @@ using game.assets.utilities;
 
 public static class BarbarianWaveSettings
 {
-    public static float WAVE_TIME_BASE = 10f;
+    public static float WAVE_TIME_BASE = 1f;
     public static int BARBARIAN_WAVE_UNIT_COUNT_BASE = 10;
     public static int BARBARIAN_WAVE_COUNT = 10;
     public static int CALCULATE_NEW_UNIT_COUNT(int wave)
@@ -61,6 +61,7 @@ public class BarbarianWavePlayer : BarbarianPlayer
         Spawner[] spawners = GameObject.FindObjectsOfType<Spawner>().filterFor<BarbarianOwnership, Spawner>();
 
         int index = Random.RandomRange(0, spawners.Length);
+        Debug.Log("INDEX : " + index);
         Spawner spawnPoint = spawners[index];
 
         if (spawnPoint.GetComponent<BarbarianOwnership>())
@@ -81,7 +82,7 @@ public class BarbarianWavePlayer : BarbarianPlayer
 
     private void spawnUnitGroupToAttackNearestEnemy(Vector3 location, int amt)
     {
-        AIUnitGrouping attackSquad = new AIUnitGrouping(this, amt, 1, location);
+        AIUnitGrouping attackSquad = new AIUnitGrouping(this, amt, 0, location);
 
         // THIS IS WHERE WE ACTUALLY TELL THE SQUAD TO ATTACK
         //attackSquad.onMaxUnits.AddListener(attackSquad.attackNearestEnemy);

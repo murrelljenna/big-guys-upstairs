@@ -15,12 +15,21 @@ interface IInterruptibleJob
     void Interrupt();
 }
 
-public class InterruptibleJob : IInterruptibleJob {
+public abstract class InterruptibleJob : IInterruptibleJob {
     protected UnityEvent interrupted = new UnityEvent();
+    private LocalGameManager gameManager;
+    private Coroutine routine;
 
-    public virtual void Execute() { }
+    public void Execute() {
+        gameManager = LocalGameManager.Get();
+        routine = gameManager.StartCoroutine(execute_impl());
+    }
+
+    protected abstract IEnumerator execute_impl();
     public void Interrupt()
     {
+        Debug.Log("AB - Interrupted");
+        gameManager.StopCoroutine(routine);
         interrupted.Invoke();
     }
 
@@ -36,6 +45,7 @@ public class InterruptibleJob : IInterruptibleJob {
 
     ~InterruptibleJob()
     {
+        Debug.Log("AB - Destructor");
         Interrupt();
     }
 }
@@ -50,6 +60,8 @@ public class UnitPlacementJob : InterruptibleJob
     private const float unitSize = 0.2f;
     private const float gapSize = 0.3f;
 
+    private bool fuckOff = false;
+
     public UnitPlacementJob(Vector3 center, MovementAggregation movAgg)
     {
         this.center = center;
@@ -58,12 +70,7 @@ public class UnitPlacementJob : InterruptibleJob
 
     }
 
-    public override void Execute()
-    {
-        LocalGameManager.Get().StartCoroutine(placeUnits());
-    }
-
-    private IEnumerator placeUnits()
+    protected override IEnumerator execute_impl()
     {
         Queue<Vector3> points = new Queue<Vector3>();
         List<Vector3> taken = new List<Vector3>();
@@ -82,6 +89,7 @@ public class UnitPlacementJob : InterruptibleJob
         };
 
         int runCount = 0;
+        int j = 0;
         while (units.Count > 0)
         {
             Movement unit = units.Dequeue();
@@ -91,6 +99,7 @@ public class UnitPlacementJob : InterruptibleJob
                 continue;
             }
 
+
             Vector3 destination = points.Dequeue();
 
             Debug.Log("New location we're going to!");
@@ -98,19 +107,24 @@ public class UnitPlacementJob : InterruptibleJob
             void destinationReached()
             {
                 reachedLocation++;
-                Debug.Log("Location reached!");
-                Debug.Log("ReachedLocation: " + reachedLocation);
-                Debug.Log("lastSent: " + lastSent);
-                if (reachedLocation == lastSent)
+                Debug.Log("AB - Location reached!");
+                Debug.Log("AB - ReachedLocation: " + reachedLocation);
+                Debug.Log("AB - lastSent: " + lastSent);
+                Debug.Log(units.Count);
+                if (reachedLocation == lastSent && units.Count == 0 && !fuckOff)
                 {
+                    j++;
+                    Debug.Log("Location reached??? This has fired " + j + " times");
                     movAgg.locationReached.Invoke(center);
+                    Interrupt();
+                    fuckOff = true;
                 }
-
                 unit.reachedDestination.RemoveListener(destinationReached);
             }
 
             void lessLastSent(Health _)
             {
+                Debug.Log("AB - Subtracting last sent");
                 lastSent--;
                 unit.GetComponent<Health>()?.onZeroHP?.RemoveListener(lessLastSent);
             }
@@ -129,7 +143,7 @@ public class UnitPlacementJob : InterruptibleJob
                 zeroHpEvent.AddListener(lessLastSent);
                 markForCleanup(zeroHpEvent, action);
             }
-            
+
             lastSent++;
 
             for (int i = 0; i < positionMods.Length; i++)

@@ -40,6 +40,7 @@ namespace game.assets.ai
         [Tooltip("Invoked when unit has not done anything for several seconds")]
         public UnityEvent idled = new UnityEvent();
 
+        public bool idle = false;
 
         protected Health attackee;
 
@@ -86,6 +87,14 @@ namespace game.assets.ai
                 }
             }
             frameCount++;
+        }
+
+        public void attackRandom(Health[] units)
+        {
+            if (units.Length > 0)
+            {
+                attack(units.RandomElem());
+            }
         }
 
         private void checkEnemiesInRange()
@@ -151,7 +160,7 @@ namespace game.assets.ai
 
         private void reportEnemyDead(Health h) {
             enemyKilled.Invoke(h);
-            Invoke("checkEnemiesInRange", 0.05f);
+            //Invoke("checkEnemiesInRange", 0.05f);
         }
 
         public void attack(Health attackee)
@@ -161,6 +170,7 @@ namespace game.assets.ai
                 return;
             }
             cancelOrders();
+            idle = false;
             attackee.onZeroHP.AddListener(cancelOrders);
             onAttackOrdered.Invoke();
             attackee.onZeroHP.AddListener(reportEnemyDead);
@@ -295,7 +305,9 @@ namespace game.assets.ai
         {
             if (canMove && !GetComponent<Movement>().moveOrdered && isAttacking == false)
             {
+                Debug.Log("AB - Unit idled. : " + gameObject.name);
                 idled.Invoke();
+                idle = true;
             }
         }
 

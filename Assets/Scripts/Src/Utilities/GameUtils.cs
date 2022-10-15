@@ -271,5 +271,11 @@ namespace game.assets.utilities {
         {
             public static float PlayerSpawnRadius = 3f;
         }
+
+        public static void debugPrintPlans(this Stack<IArmyPlan> plans)
+        {
+            var list = new List<IArmyPlan>(plans);
+            list.ForEach((IArmyPlan plan) => Debug.Log(" AA " + plan.name()));
+        }
     }
 }

@@ -50,10 +50,16 @@ namespace game.assets.ai {
             units.enemyKilled.AddListener((Attack a, Health h) => enemyKilled.Invoke(a, h));
             units.attacked.AddListener((Attack atker) =>
             {
+                Debug.Log("We've been attacked by: " + atker.gameObject.name);
                 Interrupt(
                     new DefendAgainstAttackPlan(this, atker)
                     );
             });
+            units.unitIdled.AddListener(bubbleIdleInvoke);
+        }
+
+        private void bubbleIdleInvoke(Attack unit) {
+            unitIdled.Invoke(unit);
         }
 
         public void attack(Health target)
@@ -99,7 +105,9 @@ namespace game.assets.ai {
             }
 
             IArmyPlan order = orders.Peek();
-
+            Debug.Log("AA - Pulling order off the stack: " + order.name());
+            Debug.Log("AA - Current orders consist of: ");
+            orders.debugPrintPlans();
             if (order.possible())
             {
                 order.execute();
@@ -110,12 +118,18 @@ namespace game.assets.ai {
         {
             if (orders.Count > 0)
             {
-                IArmyPlan _ = orders.Pop();
+                IArmyPlan order = orders.Pop();
+                Debug.Log("AA - Order complete, removing this one off the stack: " + order.name());
+                Debug.Log("AA - Current orders now consist of: ");
+                orders.debugPrintPlans();
             }
+            completedPlan.cleanup();
             var subPlan = getPossibleNextMove(completedPlan);
-
             if (subPlan != null)
             {
+                Debug.Log("AA - Extrapolating this from a recently completed plan: " + subPlan.name());
+                Debug.Log("AA - Current orders consist of: ");
+                orders.debugPrintPlans();
                 Order(subPlan);
             }
             else
@@ -289,9 +303,11 @@ namespace game.assets.ai {
 
         private IEnumerator moveAlongPoints(Vector3[] points)
         {
+            debugNavMeshPath(points);
             for (int i = 0; i < points.Length; i++)
             {
                 var loc = points[i];
+                Debug.Log("AB - Moving to point: " + loc + " of index " + i);
                 moveUnitsToLocation(loc);
                 destinationHasBeenReached = false; // Will be set once callback gets called
 
@@ -300,6 +316,17 @@ namespace game.assets.ai {
             }
 
             reachedDestination.Invoke(points[points.Length - 1]);
+        }
+
+        private void debugNavMeshPath(Vector3[] points)
+        {
+            Debug.Log("Debugging nav mesh path. Point count: " + points.Length);
+            var lineRenderer = LocalGameManager.Get().gameObject.AddComponent<LineRenderer>();
+            lineRenderer.SetWidth(0.2f, 0.2f);
+            lineRenderer.SetColors(Color.yellow, Color.yellow);
+            lineRenderer.material = new Material(Shader.Find("Sprites/Default")) { color = Color.yellow };
+            lineRenderer.positionCount = points.Length;
+            lineRenderer.SetPositions(points);
         }
     }
 }

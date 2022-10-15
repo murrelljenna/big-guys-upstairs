@@ -76,6 +76,7 @@
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\VignetteAndChromaticAberration.cs" />
     <Compile Include="Assets\Scripts\Src\Spawners\SpawnerController.cs" />
     <Compile Include="Assets\Standard Assets\Utility\EventSystemChecker.cs" />
+    <Compile Include="Assets\Scripts\Src\AI\AttackPlan.cs" />
     <Compile Include="Assets\Scripts\Src\UI\FaceCamera.cs" />
     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\VirtualInput.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\ColorCorrectionCurves.cs" />
@@ -247,7 +248,7 @@
     <Compile Include="Assets\Scripts\Src\Utilities\Timer.cs" />
     <Compile Include="Assets\Scripts\Src\Economy\Resource.cs" />
     <Compile Include="Assets\Standard Assets\Utility\AutoMobileShaderSwitch.cs" />
-    <Compile Include="Assets\Scripts\Src\AI\AttackPlan.cs" />
+    <Compile Include="Assets\Scripts\Src\Utilities\InterruptableJob.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />

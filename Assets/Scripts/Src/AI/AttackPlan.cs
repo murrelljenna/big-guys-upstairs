@@ -15,6 +15,9 @@ public interface IArmyPlan
     void onComplete(Action a);
 
     bool interruptible();
+    void cleanup();
+
+    string name();
 }
 
 public class PositionArmyToAssaultPlan : IArmyPlan {
@@ -71,6 +74,16 @@ public class PositionArmyToAssaultPlan : IArmyPlan {
     {
         return true;
     }
+
+    public void cleanup()
+    {
+
+    }
+
+    public string name()
+    {
+        return "PositionArmyToAssaultPlan";
+    }
 }
 
 public class CityAttackPlan : IArmyPlan
@@ -105,11 +118,27 @@ public class CityAttackPlan : IArmyPlan
     public void execute()
     {
         army.attack(city.GetComponent<Health>());
+        army.unitIdled.AddListener(attackCity);
     }
 
     public bool interruptible()
     {
         return true;
+    }
+
+    public void cleanup()
+    {
+        army.unitIdled.RemoveListener(attackCity);
+    }
+
+    private void attackCity(Attack unit)
+    {
+        unit.attack(city.GetComponent<Health>());
+    }
+
+    public string name()
+    {
+        return "CityAttackPlan";
     }
 }
 
@@ -118,6 +147,7 @@ public class AttackCitizensAroundCityPlan : IArmyPlan
     private AIUnitGrouping army;
     private GameObject city;
     private List<Health> units;
+    private Action action;
 
     private const float CITY_RANGE = 15f;
     private const int UNIT_THRESHOLD = 9;
@@ -150,31 +180,52 @@ public class AttackCitizensAroundCityPlan : IArmyPlan
 
     public void onComplete(Action a)
     {
-        army.enemyKilled.AddListener((Attack unit, Health health) =>
-        {
-            units.Remove(health);
-            if (units.Count == 0)
-            {
-                a();
-            }
-            else
-            {
-                unit.attack(units.RandomElem());
-            }
-        }
-
-      );
+        this.action = a;
+        army.enemyKilled.AddListener(updateUnitCount);
     }
 
     public void execute()
     {
         units = getUnits(city);
         army.attack(units.ToArray());
+
+        army.unitIdled.AddListener(attackRandom);
     }
 
     public bool interruptible()
     {
         return false;
+    }
+
+    public void cleanup()
+    {
+        army.unitIdled.RemoveListener(attackRandom);
+        army.enemyKilled.RemoveListener(updateUnitCount);
+    }
+
+    private void updateUnitCount(Attack unit, Health health)
+    {
+        units.Remove(health);
+        Debug.Log("AB - Unit dead and unit count is : " + units.Count);
+        if (units.Count == 0)
+        {
+            Debug.Log("AB - Unit count is zero");
+            action();
+        }
+        else
+        {
+            attackRandom(unit);
+        }
+    }
+
+    private void attackRandom(Attack unit)
+    {
+        unit.attackRandom(units.ToArray());
+    }
+
+    public string name()
+    {
+        return "AttackCitizensAroundCityPlan";
     }
 }
     
@@ -183,6 +234,7 @@ public class AttackArmyAroundCityPlan : IArmyPlan
     private AIUnitGrouping army;
     private GameObject city;
     private List<Health> units;
+    private Action action;
 
     private const float CITY_RANGE = 15f;
     private const int UNIT_THRESHOLD = 7;
@@ -216,30 +268,53 @@ public class AttackArmyAroundCityPlan : IArmyPlan
 
     public void onComplete(Action a)
     {
-        army.enemyKilled.AddListener((Attack unit, Health health) =>
-        {
-            units.Remove(health);
-            if (units.Count == 0)
-            {
-                a();
-            }
-            else
-            {
-                unit.attack(units.RandomElem());
-            }
-        }
-      );
+        this.action = a;
+        army.enemyKilled.AddListener(updateUnitCount);
     }
 
     public void execute()
     {
         units = getUnits(city);
         army.attack(units.ToArray());
+
+        army.unitIdled.AddListener((Attack unit) =>
+        {
+            unit.attackRandom(units.ToArray());
+        });
     }
 
     public bool interruptible()
     {
         return false;
+    }
+
+    public void cleanup()
+    {
+        army.unitIdled.RemoveListener(attackRandom);
+        army.enemyKilled.RemoveListener(updateUnitCount);
+    }
+
+    private void updateUnitCount(Attack unit, Health health)
+    {
+        units.Remove(health);
+        if (units.Count == 0)
+        {
+            action();
+        }
+        else
+        {
+            attackRandom(unit);
+        }
+    }
+
+    private void attackRandom(Attack unit)
+    {
+        unit.attackRandom(units.ToArray());
+    }
+
+    public string name()
+    {
+        return "AttackArmyAroundCityPlan";
     }
 }
 
@@ -247,6 +322,7 @@ public class DefendAgainstAttackPlan : IArmyPlan
 {
     private AIUnitGrouping army;
     private List<Health> enemyUnits;
+    private Action action;
 
     private const float RANGE = 5f;
     private const int UNIT_THRESHOLD = 7;
@@ -288,19 +364,8 @@ public class DefendAgainstAttackPlan : IArmyPlan
 
     public void onComplete(Action a)
     {
-        army.enemyKilled.AddListener((Attack unit, Health health) =>
-        {
-            enemyUnits.Remove(health);
-            if (enemyUnits.Count == 0)
-            {
-                a();
-            }
-            else
-            {
-                unit.attack(enemyUnits.RandomElem());
-            }
-        }
-      );
+        this.action = a;
+        army.enemyKilled.AddListener(updateUnitCount);
     }
 
     public void execute()
@@ -311,5 +376,34 @@ public class DefendAgainstAttackPlan : IArmyPlan
     public bool interruptible()
     {
         return false;
+    }
+
+    public void cleanup()
+    {
+        army.unitIdled.RemoveListener(attackRandom);
+        army.enemyKilled.RemoveListener(updateUnitCount);
+    }
+
+    private void updateUnitCount(Attack unit, Health health)
+    {
+        enemyUnits.Remove(health);
+        if (enemyUnits.Count == 0)
+        {
+            action();
+        }
+        else
+        {
+            attackRandom(unit);
+        }
+    }
+
+    private void attackRandom(Attack unit)
+    {
+        unit.attackRandom(enemyUnits.ToArray());
+    }
+
+    public string name()
+    {
+        return "DefendAgainstAttackPlan";
     }
 }

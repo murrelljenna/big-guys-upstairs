@@ -47,6 +47,7 @@ namespace game.assets.ai
 
         private void reachDestination()
         {
+            Debug.Log(" AB - Reached destination");
             moveOrdered = false;
             reachedDestination.Invoke();
         }

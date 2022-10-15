@@ -85,11 +85,17 @@ public class AttackAggregation : IAttack
 
     private void attackRandom(Attack attacker, Health[] attackees)
     {
-        attacker.attack(attackees.filterNulls().RandomElem());
+        var aliveUnits = attackees.filterNulls();
+        if (aliveUnits.Length == 0)
+        {
+            return;
+        }
+        attacker.attack(aliveUnits.RandomElem());
     }
 
     private void AttackRemainder(Stack<Attack> attackers, Health[] attackees)
     {
+        Debug.Log("AB - Attacking remainder: " + attackers.Count);
         for (int i = 0; i < attackers.Count; i++)
         {
             var attacker = attackers.Pop();
@@ -108,6 +114,7 @@ public class AttackAggregation : IAttack
         for (int i = 0; i < units.Count; i++)
         {
             var unit = units[i];
+            Debug.Log("AB - Attacking with unit number: " + i);
             unit.attack(attackee);
             if (i % par == 0)
             {

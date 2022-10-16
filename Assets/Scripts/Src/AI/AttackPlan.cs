@@ -25,6 +25,7 @@ public class PositionArmyToAssaultPlan : IArmyPlan {
     private GameObject city;
     private Vector3 targetPosition;
     private UnitGroupingMovementJob job;
+    private UnityAction action;
 
     public PositionArmyToAssaultPlan(AIUnitGrouping army, GameObject city)
     {
@@ -47,6 +48,7 @@ public class PositionArmyToAssaultPlan : IArmyPlan {
     public void execute()
     {
         job = new UnitGroupingMovementJob(targetPosition, army.unitsThatCanMove());
+        job.reachedDestination.AddOneTimeListener(action);
         job.Execute();
     }
 
@@ -70,6 +72,7 @@ public class PositionArmyToAssaultPlan : IArmyPlan {
     public void onComplete(Action a)
     {
         job.reachedDestination.AddOneTimeListener(new UnityAction(a));
+        this.action = new UnityAction(a);
     }
 
     public bool interruptible()
@@ -208,10 +211,8 @@ public class AttackCitizensAroundCityPlan : IArmyPlan
     private void updateUnitCount(Attack unit, Health health)
     {
         units.Remove(health);
-        Debug.Log("AB - Unit dead and unit count is : " + units.Count);
         if (units.Count == 0)
         {
-            Debug.Log("AB - Unit count is zero");
             action();
         }
         else
@@ -325,6 +326,7 @@ public class DefendAgainstAttackPlan : IArmyPlan
     private AIUnitGrouping army;
     private List<Health> enemyUnits;
     private Action action;
+    private ManyAttackManyJob job;
 
     private const float RANGE = 5f;
     private const int UNIT_THRESHOLD = 7;
@@ -333,25 +335,27 @@ public class DefendAgainstAttackPlan : IArmyPlan
     {
         this.army = army;
         this.enemyUnits = getUnitsAround(firstAttacker.gameObject);
+        job = new ManyAttackManyJob(this.army.units.units, enemyUnits);
     }
 
     public DefendAgainstAttackPlan(AIUnitGrouping army)
     {
         this.army = army;
         this.enemyUnits = getUnitsAround(army.groupLocation());
+        job = new ManyAttackManyJob(this.army.units.units, enemyUnits);
     }
 
     public IArmyPlan[] possibleNextMoves()
     {
         return new IArmyPlan[]
         {
-            new DefendAgainstAttackPlan(army)
+            //new DefendAgainstAttackPlan(army)
         };
     }
 
     public bool possible()
     {
-        return (enemyUnits.Count > UNIT_THRESHOLD);
+        return enemyUnits.Count > 0;
     }
 
     private List<Health> getUnitsAround(GameObject go)
@@ -367,12 +371,12 @@ public class DefendAgainstAttackPlan : IArmyPlan
     public void onComplete(Action a)
     {
         this.action = a;
-        army.enemyKilled.AddListener(updateUnitCount);
+        job.allInvadersDead.AddListener(new UnityAction(a));
     }
 
     public void execute()
     {
-        army.attack(enemyUnits.ToArray());
+        job.Execute();
     }
 
     public bool interruptible()
@@ -382,26 +386,7 @@ public class DefendAgainstAttackPlan : IArmyPlan
 
     public void cleanup()
     {
-        army.unitIdled.RemoveListener(attackRandom);
-        army.enemyKilled.RemoveListener(updateUnitCount);
-    }
-
-    private void updateUnitCount(Attack unit, Health health)
-    {
-        enemyUnits.Remove(health);
-        if (enemyUnits.Count == 0)
-        {
-            action();
-        }
-        else
-        {
-            attackRandom(unit);
-        }
-    }
-
-    private void attackRandom(Attack unit)
-    {
-        unit.attackRandom(enemyUnits.ToArray());
+        job.Interrupt();
     }
 
     public string name()

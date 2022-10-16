@@ -247,6 +247,13 @@ namespace game.assets.utilities {
                 return (go != null);
             }).ToArray();
         }
+        public static List<A> filterNulls<A>(this List<A> behaviours)
+        {
+            return behaviours.FindAll(go =>
+            {
+                return (go != null);
+            });
+        }
 
         public static A[] filterAgainsts<T, A>(this A[] behaviours)
     where T : MonoBehaviour

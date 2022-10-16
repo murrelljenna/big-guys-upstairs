@@ -125,7 +125,6 @@ namespace game.assets.ai
         public void goToSilently(Vector3 destination)
         {
             moveOrdered = true;
-            Debug.Log("Go to silently!");
             CapsuleCollider col = GetComponent<CapsuleCollider>();
             if (col == null)
             {
@@ -180,7 +179,6 @@ namespace game.assets.ai
 
         private void debugNavMeshPath(Vector3[] points)
         {
-            Debug.Log("Debugging nav mesh path for individual unit. Point count: " + points.Length);
             var lineRenderer = gameObject.GetComponent<LineRenderer>();
             if (lineRenderer == null)
             {

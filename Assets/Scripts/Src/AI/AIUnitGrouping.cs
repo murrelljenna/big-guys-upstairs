@@ -14,7 +14,7 @@ namespace game.assets.ai {
         private int maxUnits;
         private int recruitRateInSeconds;
 
-        private AttackAggregation units = new AttackAggregation();
+        public AttackAggregation units = new AttackAggregation();
         private AIUnitRecruiter recruiter;
 
         private Vector3 location;
@@ -50,7 +50,6 @@ namespace game.assets.ai {
             units.enemyKilled.AddListener((Attack a, Health h) => enemyKilled.Invoke(a, h));
             units.attacked.AddListener((Attack atker) =>
             {
-                Debug.Log("We've been attacked by: " + atker.gameObject.name);
                 Interrupt(
                     new DefendAgainstAttackPlan(this, atker)
                     );
@@ -123,6 +122,7 @@ namespace game.assets.ai {
 
         private void orderComplete(IArmyPlan completedPlan)
         {
+            Debug.Log("AA - Order complete!");
             if (orders.Count > 0)
             {
                 IArmyPlan order = orders.Pop();

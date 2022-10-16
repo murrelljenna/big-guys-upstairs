@@ -62,6 +62,11 @@ namespace game.assets.ai {
             unitIdled.Invoke(unit);
         }
 
+        public MovementAggregation unitsThatCanMove()
+        {
+            return units.unitsThatCanMove();
+        }
+
         public void attack(Health target)
         {
             units.attack(target);
@@ -93,6 +98,8 @@ namespace game.assets.ai {
             {
                 return;
             }
+
+            orders.Peek().cleanup();
 
             Order(order);
         }
@@ -235,20 +242,6 @@ namespace game.assets.ai {
             }
         }
 
-        public void assaultRandomPlayer()
-        {
-            moveToAssault(LocalGameManager.Get().players.RandomElem());
-        }
-
-        public void moveToAssault(Player player)
-        {
-            var collider = player.getCities()[0]?.transform?.Find("AI")?.GetComponent<Collider>();
-            if (collider == null) {
-                Debug.LogError("Player's starting city either doesn't exist (unlikely) or doesn't have an AI child object with a collider");
-            }
-            getPathAndMoveAlong(collider.ClosestPointOnBounds(groupLocation()));
-        }
-
         private Health getNearestEnemy()
         {
             Health[] healths = GameObject.FindObjectsOfType<Health>();
@@ -273,65 +266,6 @@ namespace game.assets.ai {
         public void Disband()
         {
             LocalGameManager.Get().StopCoroutine(replenishment);
-        }
-
-        /// <summary>
-        /// This should move guys along a more reasonable path
-        /// </summary>
-        /// 
-        int fuckyou = 0;
-        private void moveUnitsToLocation(Vector3 location) {
-            destinationHasBeenReached = false;
-            var agg = units.unitsThatCanMove();
-            agg.goTo(location);
-            agg.locationReached.AddListener((Vector3 v) =>
-            {
-                Debug.Log("AB fuck this bullshjit : " + fuckyou);
-                destinationHasBeenReached = true;
-            });
-        }
-
-        public void getPathAndMoveAlong(Vector3 point)
-        {
-            var loc = units.location();
-            NavMeshAgent agent = units.getMeSomeonesNavMeshAgent();
-            NavMeshPath path = new NavMeshPath();
-            bool isReachable = agent.CalculatePath(point, path);
-            Vector3[] corners = path.corners;
-            LocalGameManager.Get().StartCoroutine(moveAlongPoints(corners));
-
-        }
-
-        private IEnumerator moveAlongPoints(Vector3[] points)
-        {
-            debugNavMeshPath(points);
-            for (int i = 0; i < points.Length; i++)
-            {
-                var loc = points[i];
-                Debug.Log("AB - Moving to point: " + loc + " of index " + i);
-                moveUnitsToLocation(loc);
-                destinationHasBeenReached = false; // Will be set once callback gets called
-
-                // Not necessary to do this in a for loop but whatevs
-                yield return new WaitUntil(() => destinationHasBeenReached);
-            }
-
-            reachedDestination.Invoke(points[points.Length - 1]);
-        }
-
-        private void debugNavMeshPath(Vector3[] points)
-        {
-            Debug.Log("Debugging nav mesh path for AIUnitGrouping. Point count: " + points.Length);
-            var lineRenderer = LocalGameManager.Get().gameObject.GetComponent<LineRenderer>();
-            if (lineRenderer == null)
-            {
-                lineRenderer = LocalGameManager.Get().gameObject.AddComponent<LineRenderer>();
-            }
-            lineRenderer.SetWidth(0.2f, 0.2f);
-            lineRenderer.SetColors(Color.yellow, Color.yellow);
-            lineRenderer.material = new Material(Shader.Find("Sprites/Default")) { color = Color.yellow };
-            lineRenderer.positionCount = points.Length;
-            lineRenderer.SetPositions(points);
         }
     }
 }

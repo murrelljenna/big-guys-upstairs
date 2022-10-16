@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Text.RegularExpressions;
 using game.assets.player;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 namespace game.assets.utilities {
     public static class GameUtils
@@ -270,6 +271,39 @@ namespace game.assets.utilities {
         public static class MagicNumbers
         {
             public static float PlayerSpawnRadius = 3f;
+        }
+
+        public static void AddOneTimeListener<T>(this UnityEvent<T> ev, UnityAction<T> action)
+        {
+            void oneTimeAction(T t)
+            {
+                action(t);
+                ev.RemoveListener(oneTimeAction);
+            }
+
+            ev.AddListener(oneTimeAction);
+        }
+
+        public static void AddOneTimeListener<T>(this UnityEvent<T> ev, UnityAction action)
+        {
+            void oneTimeAction(T _)
+            {
+                action();
+                ev.RemoveListener(oneTimeAction);
+            }
+
+            ev.AddListener(oneTimeAction);
+        }
+
+        public static void AddOneTimeListener(this UnityEvent ev, UnityAction action)
+        {
+            void oneTimeAction()
+            {
+                action();
+                ev.RemoveListener(oneTimeAction);
+            }
+
+            ev.AddListener(oneTimeAction);
         }
 
         public static void debugPrintPlans(this Stack<IArmyPlan> plans)

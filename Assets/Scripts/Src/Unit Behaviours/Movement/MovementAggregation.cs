@@ -3,6 +3,7 @@ using game.assets.utilities;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class MovementAggregation : IMovement
@@ -17,6 +18,23 @@ public class MovementAggregation : IMovement
     public MovementAggregation(List<Movement> units)
     {
         this.units = units;
+    }
+
+    public Vector3 location()
+    {
+        if (units.Count > 0)
+        {
+            return units[0].transform.position;
+        }
+        else
+        {
+            return new Vector3(0, 0, 0);
+        }
+    }
+
+    public NavMeshAgent getMeSomeonesNavMeshAgent()
+    {
+        return units[0].GetComponent<NavMeshAgent>();
     }
 
     public void goTo(Vector3 destination)

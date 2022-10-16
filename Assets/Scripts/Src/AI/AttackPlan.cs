@@ -24,6 +24,7 @@ public class PositionArmyToAssaultPlan : IArmyPlan {
     private AIUnitGrouping army;
     private GameObject city;
     private Vector3 targetPosition;
+    private UnitGroupingMovementJob job;
 
     public PositionArmyToAssaultPlan(AIUnitGrouping army, GameObject city)
     {
@@ -45,7 +46,8 @@ public class PositionArmyToAssaultPlan : IArmyPlan {
 
     public void execute()
     {
-        army.getPathAndMoveAlong(targetPosition);
+        job = new UnitGroupingMovementJob(targetPosition, army.unitsThatCanMove());
+        job.Execute();
     }
 
     public bool possible()
@@ -67,7 +69,7 @@ public class PositionArmyToAssaultPlan : IArmyPlan {
 
     public void onComplete(Action a)
     {
-        army.reachedDestination.AddListener((Vector3 v) => a());
+        job.reachedDestination.AddOneTimeListener(new UnityAction(a));
     }
 
     public bool interruptible()
@@ -77,7 +79,7 @@ public class PositionArmyToAssaultPlan : IArmyPlan {
 
     public void cleanup()
     {
-
+        job.Interrupt();
     }
 
     public string name()

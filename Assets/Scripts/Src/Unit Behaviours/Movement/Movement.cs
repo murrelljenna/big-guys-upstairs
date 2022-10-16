@@ -14,6 +14,34 @@ namespace game.assets.ai
         void stop();
     }
 
+    public class DestinationWatcher : MonoBehaviour
+    {
+        private Movement ourMovement;
+        public void SetState(Movement movement)
+        {
+            ourMovement = movement;
+        }
+
+        public static void Create(Vector3 pos, float radius, Movement movement) {
+            var obj = new GameObject("Movement Collider for unit");
+            SphereCollider col = obj.AddComponent<SphereCollider>();
+            col.isTrigger = true;
+            col.radius = radius;
+            obj.transform.position = pos;
+            var watcher = obj.AddComponent<DestinationWatcher>();
+            watcher.SetState(movement);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            var otherMovementMaybe = other.gameObject.GetComponent<Movement>();
+            if (otherMovementMaybe != null && otherMovementMaybe == ourMovement) {
+                ourMovement.reachedDestination.Invoke();
+                Destroy(this.gameObject);
+            }
+        }
+    }
+
     [RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
     public class Movement : MonoBehaviour, IMovement
     {
@@ -61,13 +89,13 @@ namespace game.assets.ai
 
         void Update()
         {
-            if (moveOrdered && navAgent.remainingDistance <= navAgent.stoppingDistance) {
+            /*if (moveOrdered && navAgent.remainingDistance <= navAgent.stoppingDistance) {
                 if (!navAgent.hasPath || Mathf.Abs(navAgent.velocity.sqrMagnitude) < float.Epsilon)
                 {
                     fuckyouasshole++;
                     reachDestination();
                 }
-            }
+            }*/
         }
 
         private void reachDestination()
@@ -85,9 +113,12 @@ namespace game.assets.ai
 
         public void stop()
         {
-            navAgent.isStopped = true;
-            navAgent.ResetPath();
-            navAgent.isStopped = false;
+            if (navAgent.isOnNavMesh)
+            {
+                navAgent.isStopped = true;
+                navAgent.ResetPath();
+                navAgent.isStopped = false;
+            }
             halt();
         }
 
@@ -95,6 +126,12 @@ namespace game.assets.ai
         {
             moveOrdered = true;
             Debug.Log("Go to silently!");
+            CapsuleCollider col = GetComponent<CapsuleCollider>();
+            if (col == null)
+            {
+                Debug.LogError("Buddy you fucked up. This movement needs a capsule collider or you need to write code that works with other collider.");
+            }
+            DestinationWatcher.Create(destination, col.radius, this);
             navAgent.SetDestination(destination);
             debugNavMeshPath(navAgent.path.corners);
         }

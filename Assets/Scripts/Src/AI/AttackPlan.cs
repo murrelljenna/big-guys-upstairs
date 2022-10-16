@@ -12,7 +12,7 @@ public interface IArmyPlan
     IArmyPlan[] possibleNextMoves();
     bool possible();
     void execute();
-    void onComplete(Action a);
+    void onComplete(Action<IArmyPlan> a);
 
     bool interruptible();
     void cleanup();
@@ -25,7 +25,7 @@ public class PositionArmyToAssaultPlan : IArmyPlan {
     private GameObject city;
     private Vector3 targetPosition;
     private UnitGroupingMovementJob job;
-    private UnityAction action;
+    private UnityAction<IArmyPlan> action;
 
     public PositionArmyToAssaultPlan(AIUnitGrouping army, GameObject city)
     {
@@ -48,7 +48,7 @@ public class PositionArmyToAssaultPlan : IArmyPlan {
     public void execute()
     {
         job = new UnitGroupingMovementJob(targetPosition, army.unitsThatCanMove());
-        job.reachedDestination.AddOneTimeListener(action);
+        job.reachedDestination.AddOneTimeListener(() => action(this));
         job.Execute();
     }
 
@@ -69,10 +69,10 @@ public class PositionArmyToAssaultPlan : IArmyPlan {
         return collider.ClosestPointOnBounds(army.groupLocation());
     }
 
-    public void onComplete(Action a)
+    public void onComplete(Action<IArmyPlan> a)
     {
-        job.reachedDestination.AddOneTimeListener(new UnityAction(a));
-        this.action = new UnityAction(a);
+        this.action = new UnityAction<IArmyPlan>(a);
+        job.reachedDestination.AddOneTimeListener(() => action(this));
     }
 
     public bool interruptible()
@@ -115,9 +115,9 @@ public class CityAttackPlan : IArmyPlan
         return (city != null);
     }
 
-    public void onComplete(Action a)
+    public void onComplete(Action<IArmyPlan> a)
     {
-        city.GetComponent<Health>().onZeroHP.AddListener((Health _) => a());
+        city.GetComponent<Health>().onZeroHP.AddListener((Health _) => a(this));
     }
 
     public void execute()
@@ -152,7 +152,7 @@ public class AttackCitizensAroundCityPlan : IArmyPlan
     private AIUnitGrouping army;
     private GameObject city;
     private List<Health> units;
-    private Action action;
+    private UnityAction<IArmyPlan> action;
 
     private const float CITY_RANGE = 15f;
     private const int UNIT_THRESHOLD = 9;
@@ -183,9 +183,9 @@ public class AttackCitizensAroundCityPlan : IArmyPlan
         return new List<Health>(GameUtils.findEnemyUnitsInRange(city.transform.position, CITY_RANGE).thatBelongTo(city).filterFor<Worker, Health>());
     }
 
-    public void onComplete(Action a)
+    public void onComplete(Action<IArmyPlan> a)
     {
-        this.action = a;
+        this.action = new UnityAction<IArmyPlan>(a);
         army.enemyKilled.AddListener(updateUnitCount);
     }
 
@@ -213,7 +213,7 @@ public class AttackCitizensAroundCityPlan : IArmyPlan
         units.Remove(health);
         if (units.Count == 0)
         {
-            action();
+            action(this);
         }
         else
         {
@@ -237,7 +237,7 @@ public class AttackArmyAroundCityPlan : IArmyPlan
     private AIUnitGrouping army;
     private GameObject city;
     private List<Health> units;
-    private Action action;
+    private UnityAction<IArmyPlan> action;
 
     private const float CITY_RANGE = 15f;
     private const int UNIT_THRESHOLD = 7;
@@ -269,9 +269,9 @@ public class AttackArmyAroundCityPlan : IArmyPlan
         return new List<Health>(GameUtils.findEnemyUnitsInRange(city.transform.position, CITY_RANGE).thatBelongTo(city).filterAgainsts<Worker, Health>());
     }
 
-    public void onComplete(Action a)
+    public void onComplete(Action<IArmyPlan> a)
     {
-        this.action = a;
+        this.action = new UnityAction<IArmyPlan>(a);
         army.enemyKilled.AddListener(updateUnitCount);
     }
 
@@ -302,7 +302,7 @@ public class AttackArmyAroundCityPlan : IArmyPlan
         units.Remove(health);
         if (units.Count == 0)
         {
-            action();
+            action(this);
         }
         else
         {
@@ -325,7 +325,7 @@ public class DefendAgainstAttackPlan : IArmyPlan
 {
     private AIUnitGrouping army;
     private List<Health> enemyUnits;
-    private Action action;
+    private UnityAction<IArmyPlan> action;
     private ManyAttackManyJob job;
 
     private const float RANGE = 5f;
@@ -368,10 +368,10 @@ public class DefendAgainstAttackPlan : IArmyPlan
         return new List<Health>(GameUtils.findEnemyUnitsInRange(pos, RANGE).thatDoNotBelongTo(army.player));
     }
 
-    public void onComplete(Action a)
+    public void onComplete(Action<IArmyPlan> a)
     {
-        this.action = a;
-        job.allInvadersDead.AddListener(new UnityAction(a));
+        this.action = new UnityAction<IArmyPlan>(a);
+        job.allInvadersDead.AddListener(() => action(this));
     }
 
     public void execute()

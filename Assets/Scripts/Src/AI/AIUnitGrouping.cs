@@ -88,7 +88,7 @@ namespace game.assets.ai {
 
             orders.Push(order);
             newOrder.Invoke(order);
-            order.onComplete(() => orderComplete(order));
+            order.onComplete(orderComplete);
         }
 
         private void Interrupt(IArmyPlan order)

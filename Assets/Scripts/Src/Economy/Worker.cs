@@ -185,5 +185,10 @@ namespace game.assets.economy {
 
             return;
         }
+
+        private void OnDestroy()
+        {
+            clearAssignment();
+        }
     }
 }

@@ -4,7 +4,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Events;
 
 namespace game.assets.ai {
@@ -111,8 +110,6 @@ namespace game.assets.ai {
             }
 
             IArmyPlan order = orders.Peek();
-            Debug.Log("AA - Pulling order off the stack: " + order.name());
-            Debug.Log("AA - Current orders consist of: ");
             orders.debugPrintPlans();
             if (order.possible())
             {

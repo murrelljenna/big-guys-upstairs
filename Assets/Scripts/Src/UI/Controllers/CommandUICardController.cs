@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CommandUICardController : MonoBehaviour
 {
-    public Health unit;
+    private Health unit;
     private SimpleHealthBar healthBar;
 
     void OnEnable()
@@ -15,10 +15,29 @@ public class CommandUICardController : MonoBehaviour
         {
             this.unit.onLowerHP.AddListener(updateHealth);
             this.unit.onRaiseHP.AddListener(updateHealth);
+            updateHealth(unit.HP, unit.maxHP);
         }
     }
 
+    public void setUnit(Health unit)
+    {
+        if (this.unit != null)
+        {
+            this.unit.onLowerHP.RemoveListener(updateHealth);
+            this.unit.onRaiseHP.RemoveListener(updateHealth);
+        }
+        this.unit = unit;
+
+        updateHealth(unit.HP, unit.maxHP);
+    }
+
+    public Health getUnit()
+    {
+        return unit;
+    }
+
     private void updateHealth(float current, float max) {
+        Debug.Log("Unit " + gameObject.name + " has taken damage, now at " + current);
         healthBar.UpdateBar(current, max);
     }
 }

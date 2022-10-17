@@ -62,18 +62,26 @@ namespace game.assets.interaction
         {
             RaycastHit hit;
             Ray ray = camera.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
-
+            Debug.Log("AD - Raycasting");
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
                 Attack attacker = hit.collider.gameObject.GetComponent<Attack>();
+                Debug.Log("AD - attacker null? " + (attacker == null).ToString());
+                if (attacker != null)
+                {
+                    Debug.Log("AD - attacker is mine? " + attacker.IsMine().ToString());
+                }
                 if (attacker != null && attacker.IsMine())
                 {
+                    Debug.Log("AD - Attacker is not null and is mine");
                     if (attackAggregation.contains(attacker))
                     {
+                        Debug.Log("AD - unit is contained already");
                         removeUnit(attacker);
                     }
                     else
                     {
+                        Debug.Log("AD - And were selecting!!!!!!!!!!!!!!!!!!!!!");
                         attacker.select();
                         attackAggregation.add(attacker);
                         if (useUi)

@@ -42,7 +42,7 @@ namespace game.assets.ui
         {
             card.SetActive(true);
 
-            card.GetComponent<CommandUICardController>().unit = unit;
+            card.GetComponent<CommandUICardController>().setUnit(unit);
 
             Transform[] trans = card.GetComponentsInChildren<Transform>(true);
             foreach (Transform t in trans)
@@ -65,10 +65,10 @@ namespace game.assets.ui
             {
                 if (card.gameObject.activeSelf == true && cardFound == true && lastCard != null)
                 {
-                    setCard(lastCard, card.GetComponent<CommandUICardController>().unit);
+                    setCard(lastCard, card.GetComponent<CommandUICardController>().getUnit());
                     card.SetActive(false);
                 }
-                else if (card.activeSelf == true && card.GetComponent<CommandUICardController>().unit == unit)
+                else if (card.activeSelf == true && card.GetComponent<CommandUICardController>().getUnit() == unit)
                 {
                     card.transform.Find("Worker").gameObject.SetActive(true);
                     card.transform.Find("Light Infantry").gameObject.SetActive(true);

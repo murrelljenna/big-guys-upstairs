@@ -27,7 +27,7 @@ namespace game.assets.economy {
         private Construction construction;
 
         /* Getting resources */
-        private Resource resource;
+        public Resource resource;
         private GameObject node;
         private ResourceSet yield;
         private bool assigned = false;
@@ -39,13 +39,13 @@ namespace game.assets.economy {
         private const int BUILD_AMT = 2;
 
         private bool collectingResources = false;
-        private bool currentlyBuilding = false;
+        public bool currentlyBuilding = false;
 
         private void Start() {
             movement = GetComponent<Movement>();
             movement.newMoveOrdered.AddListener(cancelOrders);
 
-            InvokeRepeating("buildNearestBuilding", 2f, 2f);
+            //InvokeRepeating("buildNearestBuilding", 2f, 2f); 
         }
 
         public bool isCollectingResources() { return collectingResources; }
@@ -148,7 +148,8 @@ namespace game.assets.economy {
             }
             else
             {
-                CancelInvoke("build");
+                clearBuilding();
+                buildNearestBuilding();
             }
         }
 

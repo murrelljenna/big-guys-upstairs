@@ -1,6 +1,8 @@
 ﻿using game.assets;
 using game.assets.ai;
+using game.assets.economy;
 using game.assets.player;
+using game.assets.utilities;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +23,22 @@ public class Construction : MonoBehaviour
     {
         health = GetComponent<Health>();
         health.onMaxHP.AddListener(finish);
+
+        // Fetch all nearby workers and have them build me if they're not doing anything important
+
+        GameObject[] nearby = GameUtils.findGameObjectsInRange(transform.position, 10f);
+        var workers = nearby.GetComponents<Worker>();
+
+        for (int i = 0; i < workers.Length; i++)
+        {
+            var worker = workers[i];
+            if (worker.currentlyBuilding || worker.resource != null || workers[i].IsEnemyOf(this))
+            {
+                continue;
+            }
+
+            worker.setBuildingTarget(this);
+        }
 
         setToFirstModel();
     }

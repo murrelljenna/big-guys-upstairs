@@ -97,6 +97,10 @@ namespace game.assets.ai {
                 return;
             }
 
+            Debug.Log("AA - Order interrupted, adding this one on the stack: " + order.name());
+            Debug.Log("AA - Current orders now consist of: ");
+            orders.debugPrintPlans();
+
             orders.Peek().cleanup();
 
             Order(order);

@@ -85,6 +85,10 @@ namespace game.assets.ai {
                 return;
             }
 
+            Debug.Log("AA - New order: " + order.name());
+            Debug.Log("AA - Current orders: ");
+            orders.debugPrintPlans();
+
             orders.Push(order);
             newOrder.Invoke(order);
             order.onComplete(orderComplete);

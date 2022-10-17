@@ -72,7 +72,6 @@ public class PositionArmyToAssaultPlan : IArmyPlan {
     public void onComplete(Action<IArmyPlan> a)
     {
         this.action = new UnityAction<IArmyPlan>(a);
-        job.reachedDestination.AddOneTimeListener(() => action(this));
     }
 
     public bool interruptible()

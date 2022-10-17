@@ -46,6 +46,7 @@ namespace game.assets.economy {
         public void removeWorker(Worker worker)
         {
             workers.Remove(worker);
+            workerCountChanged.Invoke(workers.Count);
         }
 
         public virtual GameObject getNode()

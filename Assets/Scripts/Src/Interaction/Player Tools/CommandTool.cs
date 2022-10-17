@@ -107,7 +107,7 @@ namespace game.assets.interaction
             RaycastHit hit;
             Ray ray = camera.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Attackable))
             {
                 Attack attacker = hit.collider.gameObject.GetComponent<Attack>();
                 if (attacker != null && attacker.IsMine())
@@ -169,7 +169,7 @@ namespace game.assets.interaction
         {
             RaycastHit hit;
             Ray ray = camera.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity)) {
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.All)) {
                 Health health = hit.collider.GetComponent<Health>();
                 if (health != null && health.IsEnemy())
                 {

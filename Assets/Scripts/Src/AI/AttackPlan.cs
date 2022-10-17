@@ -334,14 +334,12 @@ public class DefendAgainstAttackPlan : IArmyPlan
     {
         this.army = army;
         this.enemyUnits = getUnitsAround(firstAttacker.gameObject);
-        job = new ManyAttackManyJob(this.army.units.units, enemyUnits);
     }
 
     public DefendAgainstAttackPlan(AIUnitGrouping army)
     {
         this.army = army;
         this.enemyUnits = getUnitsAround(army.groupLocation());
-        job = new ManyAttackManyJob(this.army.units.units, enemyUnits);
     }
 
     public IArmyPlan[] possibleNextMoves()
@@ -370,12 +368,13 @@ public class DefendAgainstAttackPlan : IArmyPlan
     public void onComplete(Action<IArmyPlan> a)
     {
         this.action = new UnityAction<IArmyPlan>(a);
-        job.allInvadersDead.AddListener(() => action(this));
     }
 
     public void execute()
     {
+        job = new ManyAttackManyJob(this.army.units.units, enemyUnits);
         job.Execute();
+        job.allInvadersDead.AddOneTimeListener(() => action(this));
     }
 
     public bool interruptible()

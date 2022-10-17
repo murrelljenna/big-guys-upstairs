@@ -112,7 +112,9 @@ namespace game.assets.routines
                     }
                     else
                     {
-                        Debug.Log("Throwing away this position!");
+                        Debug.Log("Is on mesh? : " + isOnMesh.ToString());
+
+                         Debug.Log("Throwing away this position!");
                     }
                 }
 

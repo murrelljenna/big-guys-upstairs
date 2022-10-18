@@ -110,12 +110,6 @@ namespace game.assets.routines
                         points.Enqueue(modifiedPosition);
                         taken.Add(modifiedPosition);
                     }
-                    else
-                    {
-                        Debug.Log("Is on mesh? : " + isOnMesh.ToString());
-
-                         Debug.Log("Throwing away this position!");
-                    }
                 }
 
                 runCount++;

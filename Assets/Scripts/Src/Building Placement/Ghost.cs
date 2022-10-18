@@ -59,6 +59,9 @@ public class Ghost : MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {
         Debug.Log("Entering collision");
-        setColliding(true);
+        if (!other.isTrigger)
+        {
+            setColliding(true);
+        }
     }
 }

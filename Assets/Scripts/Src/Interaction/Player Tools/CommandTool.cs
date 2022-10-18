@@ -206,7 +206,7 @@ namespace game.assets.interaction
 
                 Resource resource = hit.collider.GetComponent<Resource>();
 
-                if (resource != null && !noWorkers(attackAggregation.units))
+                if (resource != null && !noWorkers(attackAggregation.units) && resource.workers.Count < resource.maxWorkers)
                 {
                     List<Worker> workers = attackAggregation.unitsThatCanWork();
 

@@ -27,12 +27,13 @@ namespace game.assets.utilities {
 
         public static class LayerMask
         {
+            public static int Default = (1 << 0);
             public static int Terrain = (1 << 11);
             public static int Unit = (1 << 12);
             public static int Resource = (1 << 9);
             public static int IgnoreRaycast = (1 << 2);
             public static int Attackable = (1 << 10) | (1 << 12) | (1 << 14) | (1 << 16) | (1 << 18);
-            public static int All = Terrain | Resource | (1 << 10) | (1 << 12) | (1 << 14) | (1 << 16) | (1 << 18);
+            public static int All = Terrain | Resource | Default | (1 << 10) | (1 << 12) | (1 << 14) | (1 << 16) | (1 << 18);
         }
 
         public static class PlayerColours

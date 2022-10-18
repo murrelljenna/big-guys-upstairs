@@ -94,6 +94,8 @@ namespace game.assets.routines
             }
             else
             {
+                Debug.Log("AA - Outnumbered");
+                Debug.Log("AA - Attacker count: " + attackers.Count);
                 AttackRemainder(new Stack<Attack>(attackers), attackees);
             }
 
@@ -102,10 +104,10 @@ namespace game.assets.routines
 
         private void AttackRemainder(Stack<Attack> attackers, List<Health> attackees)
         {
-            for (int i = 0; i < attackers.Count; i++)
+            while (attackers.Count > 0)
             {
                 var attacker = attackers.Pop();
-                attacker.attack(attackees[i]);
+                attacker.attack(attackees.RandomElem());
             }
         }
     }

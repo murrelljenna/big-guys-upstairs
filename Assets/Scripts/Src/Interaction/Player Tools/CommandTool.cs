@@ -63,7 +63,7 @@ namespace game.assets.interaction
             RaycastHit hit;
             Ray ray = camera.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
             Debug.Log("AD - Raycasting");
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Unit))
             {
                 Attack attacker = hit.collider.gameObject.GetComponent<Attack>();
                 Debug.Log("AD - attacker null? " + (attacker == null).ToString());

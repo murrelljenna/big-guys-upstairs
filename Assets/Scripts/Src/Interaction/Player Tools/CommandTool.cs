@@ -82,14 +82,24 @@ namespace game.assets.interaction
                     else
                     {
                         Debug.Log("AD - And were selecting!!!!!!!!!!!!!!!!!!!!!");
-                        attacker.select();
-                        attackAggregation.add(attacker);
-                        if (useUi)
-                        {
-                            uiController.addCard(attacker.GetComponent<Health>());
-                        }
+                        addUnit(attacker);
                     }
                 }
+            }
+        }
+
+        private void addUnit(Attack unit)
+        {
+            if (attackAggregation.contains(unit))
+            {
+                return;
+            }
+
+            unit.select();
+            attackAggregation.add(unit);
+            if (useUi)
+            {
+                uiController.addCard(unit.GetComponent<Health>());
             }
         }
 
@@ -109,6 +119,8 @@ namespace game.assets.interaction
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Attackable))
             {
+                Debug.Log("Hitting an attackable");
+                Debug.Log(hit.collider.gameObject.name);
                 Attack attacker = hit.collider.gameObject.GetComponent<Attack>();
                 if (attacker != null && attacker.IsMine())
                 {
@@ -117,7 +129,21 @@ namespace game.assets.interaction
                     else
                         selectUnitsInRadius(hit.transform.position);
                 }
-            }           
+            } else if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Resource))
+            {
+                Resource resource = hit.collider.gameObject.GetComponent<Resource>();
+                Debug.Log("Hit a resource");
+                if (resource != null)
+                {
+                    resource.workers.ForEach((Worker worker) =>
+                    {
+                        var atk = worker.GetComponent<Attack>();
+                        if (worker.IsMine() && atk != null) {
+                            addUnit(atk);
+                        }
+                    });
+                }
+            }
         }
 
         private bool isActiveWorker(Attack unit) {

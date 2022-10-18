@@ -31,7 +31,7 @@ namespace game.assets.utilities {
             public static int Unit = (1 << 12);
             public static int Resource = (1 << 9);
             public static int IgnoreRaycast = (1 << 2);
-            public static int Attackable = Resource | (1 << 10) | (1 << 12) | (1 << 14) | (1 << 16) | (1 << 18);
+            public static int Attackable = (1 << 10) | (1 << 12) | (1 << 14) | (1 << 16) | (1 << 18);
             public static int All = Terrain | Resource | (1 << 10) | (1 << 12) | (1 << 14) | (1 << 16) | (1 << 18);
         }
 
@@ -78,6 +78,11 @@ namespace game.assets.utilities {
         {
             var unitList = new List<T>(units);
             return unitList.FindAll((T h) => h.gameObject.IsFriendOf(gameObject)).ToArray();
+        }
+
+        public static List<T> thatBelongTo<T>(this List<T> units, GameObject gameObject) where T : MonoBehaviour
+        {
+            return units.FindAll((T h) => h.gameObject.IsFriendOf(gameObject));
         }
 
         private static Vector2 randomPointOnUnitCircle(float radius) {

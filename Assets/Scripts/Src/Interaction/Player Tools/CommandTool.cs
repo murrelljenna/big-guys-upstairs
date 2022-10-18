@@ -195,6 +195,7 @@ namespace game.assets.interaction
         {
             RaycastHit hit;
             Ray ray = camera.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
+
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.All)) {
                 Health health = hit.collider.GetComponent<Health>();
                 if (health != null && health.IsEnemy())
@@ -205,7 +206,7 @@ namespace game.assets.interaction
 
                 Resource resource = hit.collider.GetComponent<Resource>();
 
-                if (resource != null)
+                if (resource != null && !noWorkers(attackAggregation.units))
                 {
                     List<Worker> workers = attackAggregation.unitsThatCanWork();
 
@@ -229,6 +230,11 @@ namespace game.assets.interaction
                 attackAggregation.unitsThatCanMove().goTo(hit.point);
                 return;
             }
+        }
+
+        private bool noWorkers(List<Attack> units)
+        {
+            return units.TrueForAll((Attack unit) => unit.GetComponent<Worker>() == null);
         }
 
         private IEnumerator assignWorkersToResource(Resource resourceTile, List<Worker> workers)

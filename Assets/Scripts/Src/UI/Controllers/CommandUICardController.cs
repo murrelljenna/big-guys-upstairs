@@ -37,7 +37,6 @@ public class CommandUICardController : MonoBehaviour
     }
 
     private void updateHealth(float current, float max) {
-        Debug.Log("Unit " + gameObject.name + " has taken damage, now at " + current);
         healthBar.UpdateBar(current, max);
     }
 }

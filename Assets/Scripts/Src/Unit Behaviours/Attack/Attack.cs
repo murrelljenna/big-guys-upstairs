@@ -67,7 +67,6 @@ namespace game.assets.ai
 
             if (!this.IsBarbarian())
             {
-                Debug.Log(gameObject.name);
                 InvokeRepeating("checkEnemiesInRange", 2f, 2f);
             }
         }
@@ -303,6 +302,12 @@ namespace game.assets.ai
 
         private void reportIdle()
         {
+            if (gameObject.name.Contains("Barbarian"))
+            {
+                Debug.Log("AC - Trying to report idle. canMove? : " + (canMove).ToString());
+                Debug.Log("AC - Trying to report idle. MoveORdered? : " + (GetComponent<Movement>().moveOrdered).ToString());
+                Debug.Log("AC - Trying to report idle. isAttacking? : " + isAttacking.ToString());
+            }
             if (canMove && !GetComponent<Movement>().moveOrdered && isAttacking == false)
             {
                 Debug.Log("AB - Unit idled. : " + gameObject.name);

@@ -81,6 +81,7 @@ namespace game.assets.ai
 
         public void stop()
         {
+            moveOrdered = false;
             if (navAgent.isOnNavMesh)
             {
                 navAgent.isStopped = true;
@@ -146,7 +147,6 @@ namespace game.assets.ai
         public void OnDestroy()
         {
             CancelInvoke();
-            Debug.Log("Destroying thingie. Currentwatcher == null? : " + (currentWatcher == null).ToString());
             if (currentWatcher != null)
             {
                 currentWatcher.Destroy();

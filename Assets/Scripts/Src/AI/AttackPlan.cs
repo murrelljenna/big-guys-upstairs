@@ -152,6 +152,7 @@ public class AttackCitizensAroundCityPlan : IArmyPlan
     private GameObject city;
     private List<Health> units;
     private UnityAction<IArmyPlan> action;
+    private ManyAttackManyJob job;
 
     private const float CITY_RANGE = 15f;
     private const int UNIT_THRESHOLD = 9;
@@ -185,15 +186,14 @@ public class AttackCitizensAroundCityPlan : IArmyPlan
     public void onComplete(Action<IArmyPlan> a)
     {
         this.action = new UnityAction<IArmyPlan>(a);
-        army.enemyKilled.AddListener(updateUnitCount);
     }
 
     public void execute()
     {
         units = getUnits(city);
-        army.attack(units.ToArray());
-
-        army.unitIdled.AddListener(attackRandom);
+        job = new ManyAttackManyJob(this.army.units.units, units);
+        job.Execute();
+        job.allInvadersDead.AddOneTimeListener(() => action(this));
     }
 
     public bool interruptible()
@@ -203,26 +203,7 @@ public class AttackCitizensAroundCityPlan : IArmyPlan
 
     public void cleanup()
     {
-        army.unitIdled.RemoveListener(attackRandom);
-        army.enemyKilled.RemoveListener(updateUnitCount);
-    }
-
-    private void updateUnitCount(Attack unit, Health health)
-    {
-        units.Remove(health);
-        if (units.Count == 0)
-        {
-            action(this);
-        }
-        else
-        {
-            attackRandom(unit);
-        }
-    }
-
-    private void attackRandom(Attack unit)
-    {
-        unit.attackRandom(units.ToArray());
+        job.Interrupt();
     }
 
     public string name()
@@ -237,6 +218,7 @@ public class AttackArmyAroundCityPlan : IArmyPlan
     private GameObject city;
     private List<Health> units;
     private UnityAction<IArmyPlan> action;
+    private ManyAttackManyJob job;
 
     private const float CITY_RANGE = 15f;
     private const int UNIT_THRESHOLD = 7;
@@ -271,18 +253,15 @@ public class AttackArmyAroundCityPlan : IArmyPlan
     public void onComplete(Action<IArmyPlan> a)
     {
         this.action = new UnityAction<IArmyPlan>(a);
-        army.enemyKilled.AddListener(updateUnitCount);
     }
 
     public void execute()
     {
         units = getUnits(city);
-        army.attack(units.ToArray());
-
-        army.unitIdled.AddListener((Attack unit) =>
-        {
-            unit.attackRandom(units.ToArray());
-        });
+        job = new ManyAttackManyJob(this.army.units.units, units);
+        job.Execute();
+        job.allInvadersDead.AddOneTimeListener(() => Debug.Log("AA - All army units dead!"));
+        job.allInvadersDead.AddOneTimeListener(() => action(this));
     }
 
     public bool interruptible()
@@ -292,26 +271,7 @@ public class AttackArmyAroundCityPlan : IArmyPlan
 
     public void cleanup()
     {
-        army.unitIdled.RemoveListener(attackRandom);
-        army.enemyKilled.RemoveListener(updateUnitCount);
-    }
-
-    private void updateUnitCount(Attack unit, Health health)
-    {
-        units.Remove(health);
-        if (units.Count == 0)
-        {
-            action(this);
-        }
-        else
-        {
-            attackRandom(unit);
-        }
-    }
-
-    private void attackRandom(Attack unit)
-    {
-        unit.attackRandom(units.ToArray());
+        job.Interrupt();
     }
 
     public string name()

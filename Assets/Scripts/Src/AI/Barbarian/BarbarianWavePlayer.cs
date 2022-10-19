@@ -9,7 +9,7 @@ using game.assets.utilities;
 
 public static class BarbarianWaveSettings
 {
-    public static float WAVE_TIME_BASE = 30f;
+    public static float WAVE_TIME_BASE = 1f;
     public static int BARBARIAN_WAVE_UNIT_COUNT_BASE = 10;
     public static int BARBARIAN_WAVE_COUNT = 10;
     public static int CALCULATE_NEW_UNIT_COUNT(int wave)

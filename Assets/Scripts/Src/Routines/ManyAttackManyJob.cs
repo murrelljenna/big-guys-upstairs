@@ -25,12 +25,9 @@ namespace game.assets.routines
 
         private void attackRandomUnit(Attack unit)
         {
-            var aliveUnits = attackees.filterNulls(); // TODO: Shouldn't be necessary???
-            if (aliveUnits.Count == 0)
-            {
-                return;
-            }
-            unit.attack(aliveUnits.RandomElem());
+            Debug.Log("AC - Attacking random unit: ");
+            Debug.Log("AC - Picking from one of " + attackees.Count + " random units");
+            unit.attack(attackees.RandomElem());
         }
 
         protected override IEnumerator execute_impl()
@@ -64,11 +61,23 @@ namespace game.assets.routines
                 {
                     this.attackRandomUnit(unit);
                 }
+
+                // Give direction if unit is without something to do
+
                 unit.idled.AddListener(attackRandomUnit);
                 markForCleanup(unit.idled, attackRandomUnit);
 
                 unit.enemyKilled.AddListener(updateUnitCount);
                 markForCleanup(unit.enemyKilled, updateUnitCount);
+
+                // Cleanup if this unit dies
+
+                unit.GetComponent<Health>()?.onZeroHP.AddListener((Health h) =>
+                {
+                    unit.enemyKilled.RemoveListener(updateUnitCount);
+                    unit.idled.RemoveListener(attackRandomUnit);
+                    attackers.Remove(unit);
+                });
             });
 
             if (attackers.Count > attackees.Count)

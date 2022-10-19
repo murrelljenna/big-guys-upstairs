@@ -243,6 +243,10 @@ public class AttackAggregation : IAttack
 
     public void clear()
     {
+        units.ForEach((Attack unit) =>
+        {
+            unit.deselect();
+        });
         units.Clear();
     }
 }

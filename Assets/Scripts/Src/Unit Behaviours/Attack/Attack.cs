@@ -34,6 +34,9 @@ namespace game.assets.ai
         [Tooltip("Invoked when attack is selected")]
         public UnityEvent onSelect;
 
+        [Tooltip("Invoked when unit is deselected")]
+        public UnityEvent onDeselect;
+
         [Tooltip("Invoked when enemy is killed")]
         public UnityEvent<Health> enemyKilled = new UnityEvent<Health>();
 
@@ -319,6 +322,11 @@ namespace game.assets.ai
         public void select()
         {
             onSelect.Invoke();
+        }
+
+        public void deselect()
+        {
+            onDeselect.Invoke();
         }
 
         public void OnDestroy()

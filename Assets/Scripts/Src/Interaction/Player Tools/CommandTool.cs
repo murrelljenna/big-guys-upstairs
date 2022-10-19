@@ -110,6 +110,8 @@ namespace game.assets.interaction
             {
                 uiController.removeCard(attacker.GetComponent<Health>());
             }
+
+            attacker.deselect();
         }
 
         private void selectUnitsInRadiusIfCan()
@@ -162,11 +164,7 @@ namespace game.assets.interaction
 
                 if (unit != null && unit.IsMine() && !attackAggregation.contains(unit) && !isActiveWorker(unit))
                 {
-                    attackAggregation.add(unit);
-                    if (useUi)
-                    {
-                        uiController.addCard(unit.GetComponent<Health>()); //TODO: Rethink this a bit, I'm doing unsafe things for convenience
-                    }
+                    addUnit(unit);
                 }
             }
         }

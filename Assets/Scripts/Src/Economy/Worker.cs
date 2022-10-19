@@ -52,6 +52,7 @@ namespace game.assets.economy {
         public bool isCurrentlyBuilding() { return currentlyBuilding; }
 
         public void startCollectingResources(GameObject node, ResourceSet yield)  {
+            clearBuildingAssignment();
             collectingResources = true;
             this.node = node;
             this.yield = yield;
@@ -112,13 +113,20 @@ namespace game.assets.economy {
 
         public void clearAssignment() {
             CancelInvoke("getResource");
-            
+
             if (resource != null) {
                 resource.removeWorker(this);
             }
             this.resource = null;
             this.assigned = false;
             this.collectingResources = false;
+        }
+
+        // NEWLY ADDED. LOOK AT THIS IS THINGS GET FUCKY
+        private void clearBuildingAssignment()
+        {
+            CancelInvoke("build");
+            StopAllCoroutines();
         }
 
         public List<Worker> getFellowWorkers() {

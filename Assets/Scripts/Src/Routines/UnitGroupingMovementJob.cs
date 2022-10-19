@@ -1,4 +1,6 @@
 ﻿using game.assets;
+using game.assets.ai;
+using game.assets.utilities;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -12,6 +14,7 @@ namespace game.assets.routines
         private Vector3 destination;
         private bool destinationHasBeenReached = false;
         public UnityEvent<Vector3> reachedDestination = new UnityEvent<Vector3>();
+        private Vector3 currentDestination;
 
         public UnitGroupingMovementJob(Vector3 point, MovementAggregation units)
         {
@@ -24,11 +27,31 @@ namespace game.assets.routines
             return getPathAndMoveAlong(destination);
         }
 
+        private void allGoToCurrentDestination()
+        {
+            units.goTo(currentDestination);
+        }
+
         private void moveUnitsToLocation(Vector3 location)
         {
+            currentDestination = location;
             destinationHasBeenReached = false;
-            units.goTo(location);
+            allGoToCurrentDestination();
             units.locationReached.AddListener(setDestinationReached);
+            units.units.ForEach((Movement unit) =>
+            {
+                UnityEvent idled = unit.GetComponent<Attack>()?.idled;
+                if (idled != null)
+                {
+                    idled.AddListener(allGoToCurrentDestination);
+                    markForCleanup(idled, allGoToCurrentDestination);
+
+                    unit.reachedDestination.AddOneTimeListener(() =>
+                    {
+                        idled.RemoveListener(allGoToCurrentDestination);
+                    });
+                }
+            });
             markForCleanup(units.locationReached, setDestinationReached);
         }
 

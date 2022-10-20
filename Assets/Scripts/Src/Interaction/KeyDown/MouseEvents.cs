@@ -8,6 +8,9 @@ public class MouseEvents : MonoBehaviour
     [Tooltip("Invoked when left mouse button clicked")]
     public UnityEvent leftClick;
 
+    [Tooltip("Invoked when left mouse button up")]
+    public UnityEvent leftClickUp;
+
     [Tooltip("Invoked when left mouse button double clicked. ")]
     public UnityEvent leftDoubleClick;
 
@@ -36,6 +39,8 @@ public class MouseEvents : MonoBehaviour
         else if (Input.GetMouseButtonDown(1))
         {
             rightClick.Invoke();
+        } else if (Input.GetMouseButtonUp(0)) {
+            leftClickUp.Invoke();
         }
     }
 }

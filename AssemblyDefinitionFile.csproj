@@ -62,6 +62,7 @@
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\TiltShift.cs" />
     <Compile Include="Assets\Scripts\Src\UI\PlayerNameInputField.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\ImageEffectBase.cs" />
+    <Compile Include="Assets\SetShaderColour.cs" />
     <Compile Include="Assets\Scripts\Src\Utilities\GameUtils.cs" />
     <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\ParticleSystemMultiplier.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\BlurOptimized.cs" />
@@ -238,6 +239,7 @@
     <Compile Include="Assets\Scripts\Src\LocalGameManager.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\PostEffectsBase.cs" />
     <Compile Include="Assets\Scripts\Src\Player.cs" />
+    <Compile Include="Assets\SquareSelection.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Quads.cs" />
     <Compile Include="Assets\Scripts\Src\Unit Behaviours\Attack\Attack.cs" />
     <Compile Include="Assets\Scripts\Src\Unit Behaviours\Movement\Movement.cs" />
@@ -253,7 +255,6 @@
     <Compile Include="Assets\Scripts\Src\Utilities\Timer.cs" />
     <Compile Include="Assets\Scripts\Src\Economy\Resource.cs" />
     <Compile Include="Assets\Standard Assets\Utility\AutoMobileShaderSwitch.cs" />
-    <Compile Include="Assets\SetShaderColour.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />
@@ -310,6 +311,7 @@
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\Bokeh34.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ColorCorrectionEffect.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\FisheyeShader.shader" />
+     <None Include="Assets\Prefabs\Projectors\SquareSelection.shader" />
      <None Include="Assets\Standard Assets\Environment\Water (Basic)\DO_NOT_WORK_IN_VR.txt" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BrightPassFilter.shader" />
@@ -352,6 +354,7 @@
      <None Include="Assets\Standard Assets\ParticleSystems\Shaders\PriorityParticleAlpha.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\EdgeDetectNormals.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
+     <None Include="Assets\Prefabs\Projectors\SquareSelectionUnlit.shader" />
      <None Include="Assets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
      <None Include="Assets\Models and Textures\Cartoony Spruces\Shaders\AlphaTest-Glossy.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\FXAA2.shader" />

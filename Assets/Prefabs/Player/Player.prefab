@@ -155,6 +155,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  leftClickUp:
+    m_PersistentCalls:
+      m_Calls: []
   leftDoubleClick:
     m_PersistentCalls:
       m_Calls: []
@@ -641,6 +644,7 @@ GameObject:
   - component: {fileID: 5412320226224618373}
   - component: {fileID: 5412320226224618375}
   - component: {fileID: 5412320226224618374}
+  - component: {fileID: 7383583874581135426}
   m_Layer: 13
   m_Name: Command Tool
   m_TagString: Untagged
@@ -676,7 +680,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7383583874581135426}
+        m_TargetAssemblyTypeName: SquareSelection, AssemblyDefinitionFile
+        m_MethodName: StartSquareSelection
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  leftClickUp:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7383583874581135426}
+        m_TargetAssemblyTypeName: SquareSelection, AssemblyDefinitionFile
+        m_MethodName: LetGo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   leftDoubleClick:
     m_PersistentCalls:
       m_Calls: []
@@ -697,6 +728,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 5412320226246771053}
   useUi: 1
+--- !u!114 &7383583874581135426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5412320226224618372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c4a64be45b8b684fac3ea8cdd3e7b3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 5412320226246771053}
+  projectorPrefab: {fileID: 2613409546988062853, guid: 4cc37246cef69804caa99b0b22996e4a,
+    type: 3}
 --- !u!114 &5412320226245559791
 MonoBehaviour:
   m_ObjectHideFlags: 0

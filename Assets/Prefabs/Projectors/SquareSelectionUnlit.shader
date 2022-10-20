@@ -8,9 +8,14 @@
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "RenderType"="Overlay" "Queue"="Overlay"}
         LOD 100
         Blend Zero One
+        ZTest Always
+
+            ColorMask RGB
+    Cull Off Lighting Off ZWrite Off
+
         CGPROGRAM
 
         #pragma surface surfaceFunc Lambert

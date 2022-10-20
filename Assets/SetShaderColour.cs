@@ -10,6 +10,6 @@ public class SetShaderColour : MonoBehaviour
     {
         var projector = GetComponent<Projector>();
         var color = LocalGameManager.Get().getLocalPlayer().colour.color;
-        projector.material.SetColor("Tint Color", color);
+        projector.material.SetColor("_Color", color);
     }
 }

@@ -12,14 +12,18 @@ public class SquareSelection : MonoBehaviour
 
     private const float PROJECTOR_Z_AXIS = 2f;
 
-    public GameObject projectorPrefab;
     private GameObject projectorObj;
 
     private void Start()
     {
-        if (projectorPrefab == null)
+        var maybeProjectorObj = GameObject.Find("SquareProjector");
+        if (maybeProjectorObj == null)
         {
-            Debug.LogError("SquareSelection has no projector prefab to spawn");
+            Debug.LogError("SquareSelection couldn't find the projector for the visible square. SquareSelection will be invisible");
+        }
+        else
+        {
+            projectorObj = maybeProjectorObj;
         }
     }
 
@@ -38,15 +42,10 @@ public class SquareSelection : MonoBehaviour
             Debug.Log("B- First point is taken, raycast hit terrain");
             var secondPoint = hit.point;
 
-            var xDist = secondPoint.x - firstPoint.x;
-            var zDist = secondPoint.z - firstPoint.z;
-
-            var projectorScale = new Vector3(xDist, PROJECTOR_Z_AXIS, zDist);
-
-            //projectorObj.GetComponent<Projector>().aspectRatio = projectorScale;
-
-            //projectorObj.transform.LookAt(camera.transform);
+            projectorObj?.GetComponent<Projector>()?.material?.SetVector("_Corner2", secondPoint);
         }
+
+        projectorObj?.GetComponent<Projector>()?.material?.SetVector("_Corner1", firstPoint);
     }
 
     public void StartSquareSelection()
@@ -59,20 +58,12 @@ public class SquareSelection : MonoBehaviour
             Debug.Log("B - Looking at terrain, starting square selection");
             firstPointTaken = true;
             firstPoint = hit.point;
-
-            if (projectorObj == null)
-            {
-                projectorObj = GameObject.Instantiate(projectorPrefab);
-            }
-
-            //var projectorPos = new Vector3(firstPoint.x, 1f, firstPoint.z);
-
-            //projectorObj.transform.position = projectorPos;
         }
     }
 
     public void LetGo()
     {
+        firstPoint = new Vector3(0, 0, 0);
         firstPointTaken = false;
     }
 }

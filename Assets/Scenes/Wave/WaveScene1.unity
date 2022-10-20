@@ -5588,7 +5588,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &785917566
 Transform:
   m_ObjectHideFlags: 0
@@ -5612,7 +5612,7 @@ MeshCollider:
   m_GameObject: {fileID: 785917565}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -13052,7 +13052,7 @@ PrefabInstance:
     - target: {fileID: -6705720943211480609, guid: 4cc37246cef69804caa99b0b22996e4a,
         type: 3}
       propertyPath: m_FieldOfView
-      value: 5
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: -6705720943211480609, guid: 4cc37246cef69804caa99b0b22996e4a,
         type: 3}
@@ -13062,7 +13062,7 @@ PrefabInstance:
     - target: {fileID: -6705720943211480609, guid: 4cc37246cef69804caa99b0b22996e4a,
         type: 3}
       propertyPath: m_FarClipPlane
-      value: 100
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: -6705720943211480609, guid: 4cc37246cef69804caa99b0b22996e4a,
         type: 3}
@@ -13082,12 +13082,12 @@ PrefabInstance:
     - target: {fileID: 2613409546988062858, guid: 4cc37246cef69804caa99b0b22996e4a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.234331
+      value: 6.4
       objectReference: {fileID: 0}
     - target: {fileID: 2613409546988062858, guid: 4cc37246cef69804caa99b0b22996e4a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 24.6
+      value: 94.3
       objectReference: {fileID: 0}
     - target: {fileID: 2613409546988062858, guid: 4cc37246cef69804caa99b0b22996e4a,
         type: 3}
@@ -13623,7 +13623,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1675245205
 Transform:
   m_ObjectHideFlags: 0

@@ -3,9 +3,8 @@
     Properties
     {
         _ShapeColour("Square Colour", Color) = (1, 0, 1)
-        _Center("Center", Vector) = (0, 0, 0)
-        _Radius("Radius", Range(0, 100)) = 10
-        _Thickness("Thickness", Range(0, 100)) = 5
+        _Corner1("First Corner", Vector) = (0, 0, 0)
+        _Corner2("Second Corner", Vector) = (50, 50, 50)
     }
     SubShader
     {
@@ -21,20 +20,24 @@
         struct Input
         {
             float3 worldPos;
-            float4 color;
-            float2 uv_MainText;
-            float2 uv_BumpMap;
         };
 
-        float3 _Center;
-        float _Border;
-        float _Radius;
         fixed3 _ShapeColour;
-        float _Thickness;
+
+        float3 _Corner1;
+        float3 _Corner2;
 
         void surfaceFunc(Input IN, inout SurfaceOutput o) {
-            float dist = distance(_Center, IN.worldPos);
-            if (dist > _Radius && dist < (_Radius + _Thickness)) {
+            if (
+                (IN.worldPos.x > _Corner1.x && IN.worldPos.x > _Corner2.x)
+                || (IN.worldPos.z > _Corner1.z && IN.worldPos.z > _Corner2.z)
+                || (IN.worldPos.x < _Corner1.x && IN.worldPos.x < _Corner2.x)
+                || (IN.worldPos.z < _Corner1.z && IN.worldPos.z < _Corner2.z)
+                )
+            {
+
+            }
+            else {
                 o.Albedo = _ShapeColour;
             }
         }

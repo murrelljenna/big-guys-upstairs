@@ -16,7 +16,7 @@ namespace game.assets.player
 
         public void Update()
         {
-            if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+            if (Input.GetAxis("Mouse ScrollWheel") > 0f || Input.GetKeyDown(KeyCode.Q))
             {
                 if (selectedTool >= transform.childCount - 1)
                 {

@@ -22,6 +22,7 @@ namespace Tests
         public void giveResources(ResourceSet resourceSet) {}
 
         public void takeResources(ResourceSet resourceSet) {}
+        public ResourceSet resources() { return new ResourceSet(); }
     }
 
     class MockPlayerTransactionFailure : IPlayerTransaction
@@ -35,6 +36,7 @@ namespace Tests
         public void giveResources(ResourceSet resourceSet) {}
 
         public void takeResources(ResourceSet resourceSet) {}
+        public ResourceSet resources() { return new ResourceSet(); }
     }
 
     #endregion

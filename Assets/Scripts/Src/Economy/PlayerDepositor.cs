@@ -11,6 +11,7 @@ namespace game.assets {
         bool canAfford(ResourceSet resourceSet);
         void giveResources(ResourceSet resourceSet);
         void takeResources(ResourceSet resourceSet);
+        ResourceSet resources();
     }
 
     public class PlayerDepositor : Depositor, IPlayerTransaction
@@ -18,5 +19,6 @@ namespace game.assets {
         public void giveResources(ResourceSet resourceSet) { this.store = this.store + resourceSet; }
         public void takeResources(ResourceSet resourceSet) { this.store = this.store - resourceSet; }
         public bool canAfford(ResourceSet resourceSet) { return (this.store >= resourceSet); }
+        public ResourceSet resources() { return this.store; }
     }
 }

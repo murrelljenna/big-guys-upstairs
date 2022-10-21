@@ -11,12 +11,18 @@ namespace game.assets.spawners
         IInstantiator instantiator;
         IPlayerTransaction transactor;
 
+        FlashResourceIconsRed flasher;
+
         public GameObject Spawn(GameObject prefab, ResourceSet price, Vector3 spawnLocation, Quaternion rotation)
         {
             if (transactor.canAfford(price))
             {
                 transactor.takeResources(price);
                 return instantiator.InstantiateAsMine(prefab, spawnLocation, rotation);
+            }
+            else
+            {
+                getFlasher()?.flashRelevant(transactor.resources(), price);
             }
             return null;
         }
@@ -27,7 +33,21 @@ namespace game.assets.spawners
                 transactor.takeResources(price);
                 return instantiator.InstantiateAsPlayer(prefab, spawnLocation, rotation, player);
             }
+            else
+            {
+                getFlasher()?.flashRelevant(transactor.resources(), price);
+            }
             return null;
+        }
+
+        private FlashResourceIconsRed getFlasher()
+        {
+            if (flasher == null)
+            {
+                flasher = GameObject.Find("ResourcePanel").GetComponent<FlashResourceIconsRed>();
+            }
+
+            return flasher;
         }
 
         public void setInstantiator(IInstantiator instantiator)

@@ -37,12 +37,10 @@ namespace game.assets.tools
             index--;
             if (index == 5)
             {
-                Debug.Log("Gonna place walls");
                 placeWalls.enabled = true;
                 spawner.enabled = false;
             } else if (index < buildableItems.Length)
             {
-                Debug.Log("Ok so we selected something else");
                 placeWalls.enabled = false;
                 spawner.enabled = true;
                 spawner.prefab = buildableItems[index].prefab;

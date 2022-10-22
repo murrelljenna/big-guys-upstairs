@@ -7,8 +7,10 @@ public class IncreaseMaxPopCount : MonoBehaviour
 {
     [Tooltip("Increases max population by this once built")]
     public int increaseBy = 10;
+    private Text maxText;
     void Start()
     {
+        maxText = GameObject.Find("Pop_Max").GetComponent<Text>();
         Ownership ownership = GetComponent<Ownership>();
         ownership.owner.maxCount += increaseBy;
         Debug.Log(ownership.owner.maxCount);
@@ -24,6 +26,9 @@ public class IncreaseMaxPopCount : MonoBehaviour
 
     private void updateUI(int max)
     {
-        GameObject.Find("Pop_Max").GetComponent<Text>().text = max.ToString();
+        if (maxText != null)
+        {
+            maxText.text = max.ToString();
+        }
     }
 }

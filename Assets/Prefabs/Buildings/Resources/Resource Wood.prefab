@@ -2938,7 +2938,7 @@ PrefabInstance:
     - target: {fileID: 1763586960617962116, guid: 4cefe824744107b4e98f7412555884bc,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2774343326219634404, guid: 4cefe824744107b4e98f7412555884bc,
         type: 3}
@@ -3049,6 +3049,11 @@ PrefabInstance:
         type: 3}
       propertyPath: searchTag
       value: unitResourceNode
+      objectReference: {fileID: 0}
+    - target: {fileID: 9009600901033172039, guid: 4cefe824744107b4e98f7412555884bc,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.84
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7408335846332513839, guid: 4cefe824744107b4e98f7412555884bc, type: 3}

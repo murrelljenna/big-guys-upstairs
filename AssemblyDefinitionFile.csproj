@@ -56,7 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Src\UI\Controllers\ResourceUIController.cs" />
-    <Compile Include="Assets\Standard Assets\Editor\CrossPlatformInput\CrossPlatformInputInitialize.cs" />
     <Compile Include="Assets\Scripts\Src\Unit Behaviours\Guard\Guard.cs" />
     <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\ExtinguishableParticleSystem.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\TiltShift.cs" />
@@ -89,9 +88,7 @@
     <Compile Include="Assets\Standard Assets\Environment\Water\Water\Scripts\WaterBase.cs" />
     <Compile Include="Assets\Scripts\Src\Spawners\Spawner.cs" />
     <Compile Include="Assets\Standard Assets\Characters\RollerBall\Scripts\BallUserControl.cs" />
-    <Compile Include="Assets\Standard Assets\Cameras\Scripts\AutoCam.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\NoiseAndScratches.cs" />
-    <Compile Include="Assets\Standard Assets\Editor\Water\Water4\SpecularLightingEditor.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Antialiasing.cs" />
     <Compile Include="Assets\Standard Assets\Utility\TimedObjectActivator.cs" />
     <Compile Include="Assets\Simple Health Bar\Scripts\SimpleHealthBar.cs" />
@@ -99,10 +96,8 @@
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\MotionBlur.cs" />
     <Compile Include="Assets\Scripts\Src\Controllers\AudioController.cs" />
     <Compile Include="Assets\Scripts\Src\AI\AIAttackRoutines.cs" />
-    <Compile Include="Assets\Standard Assets\Cameras\Scripts\ProtectCameraFromWallClip.cs" />
     <Compile Include="Assets\Standard Assets\Utility\WaypointProgressTracker.cs" />
     <Compile Include="Assets\Scripts\Src\Economy\Depositor.cs" />
-    <Compile Include="Assets\Standard Assets\Editor\Water\Water4\PlanarReflectionEditor.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\ScreenSpaceAmbientObscurance.cs" />
     <Compile Include="Assets\Scripts\Src\AI\Barbarian\BarbarianOwnership.cs" />
     <Compile Include="Assets\Scripts\Src\Economy\PlayerDepositor.cs" />
@@ -121,7 +116,6 @@
     <Compile Include="Assets\Standard Assets\Utility\CameraRefocus.cs" />
     <Compile Include="Assets\Standard Assets\Utility\PlatformSpecificContent.cs" />
     <Compile Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\Scripts\ThirdPersonCharacter.cs" />
-    <Compile Include="Assets\Standard Assets\Editor\Water\Water4\GerstnerDisplaceEditor.cs" />
     <Compile Include="Assets\Scripts\Src\Unit Behaviours\Attack\Projectile.cs" />
     <Compile Include="Assets\Standard Assets\Utility\ActivateTrigger.cs" />
     <Compile Include="Assets\Scripts\Src\UI\Controllers\CommandUIController.cs" />
@@ -130,7 +124,6 @@
     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\InputAxisScrollbar.cs" />
     <Compile Include="Assets\Scripts\Src\UI\Controllers\WorkerCountUIController.cs" />
     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\AxisTouchButton.cs" />
-    <Compile Include="Assets\Standard Assets\Cameras\Scripts\LookatTarget.cs" />
     <Compile Include="Assets\Scripts\Src\Utilities\SetOwnershipToPlayer.cs" />
     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\ButtonHandler.cs" />
     <Compile Include="Assets\Scripts\Src\UI\Controllers\BuildingColourController.cs" />
@@ -162,11 +155,9 @@
     <Compile Include="Assets\Scripts\Src\Spawners\Destruction\Destroy.cs" />
     <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\FireLight.cs" />
     <Compile Include="Assets\Scripts\Src\UI\Controllers\UnitColourController.cs" />
-    <Compile Include="Assets\Standard Assets\Cameras\Scripts\AbstractTargetFollower.cs" />
     <Compile Include="Assets\Scripts\Src\Spawners\RaycastSpawner.cs" />
     <Compile Include="Assets\Low Poly Modular Terrain Pack\Bonus_Assets\Scripts\ModularTerrainSunControl.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\PostEffectsHelper.cs" />
-    <Compile Include="Assets\Standard Assets\Cameras\Scripts\FreeLookCam.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\ImageEffects.cs" />
     <Compile Include="Assets\Scripts\Src\AI\Barbarian\BarbarianWavePlayerUIController.cs" />
     <Compile Include="Assets\Scripts\Test\TestUtils.cs" />
@@ -179,14 +170,12 @@
     <Compile Include="Assets\Scripts\Src\Utilities\OwnershipOps.cs" />
     <Compile Include="Assets\Standard Assets\Environment\Water\Water\Scripts\SpecularLighting.cs" />
     <Compile Include="Assets\Standard Assets\Utility\WaypointCircuit.cs" />
-    <Compile Include="Assets\Standard Assets\Cameras\Scripts\TargetFieldOfView.cs" />
     <Compile Include="Assets\Scripts\Src\Routines\UnitPlacementJob.cs" />
     <Compile Include="Assets\Standard Assets\Environment\Water\Water\Scripts\Water.cs" />
     <Compile Include="Assets\Scripts\Src\UI\FlashResourceIconsRed.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\CreaseShading.cs" />
     <Compile Include="Assets\Standard Assets\Characters\FirstPersonCharacter\Scripts\RigidbodyFirstPersonController.cs" />
     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\CrossPlatformInputManager.cs" />
-    <Compile Include="Assets\Standard Assets\Cameras\Scripts\HandHeldCam.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\ContrastEnhance.cs" />
     <Compile Include="Assets\Scripts\Src\Unit Behaviours\Idle.cs" />
     <Compile Include="Assets\Scripts\Src\Unit Behaviours\Health\DoNotAutoAttack.cs" />
@@ -216,7 +205,6 @@
     <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\SmokeParticles.cs" />
     <Compile Include="Assets\Low Poly Modular Terrain Pack\Bonus_Assets\Scripts\ModularTerrainCloudsControl.cs" />
     <Compile Include="Assets\Standard Assets\Utility\FollowTarget.cs" />
-    <Compile Include="Assets\Standard Assets\Editor\Water\Water4\WaterEditorUtility.cs" />
     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\TouchPad.cs" />
     <Compile Include="Assets\Standard Assets\Characters\RollerBall\Scripts\Ball.cs" />
     <Compile Include="Assets\Standard Assets\Utility\TimedObjectDestructor.cs" />
@@ -232,7 +220,6 @@
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\DepthOfFieldDeprecated.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Fisheye.cs" />
     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\PlatformSpecific\MobileInput.cs" />
-    <Compile Include="Assets\Standard Assets\Cameras\Scripts\PivotBasedCameraRig.cs" />
     <Compile Include="Assets\Standard Assets\Utility\FPSCounter.cs" />
     <Compile Include="Assets\Scripts\Src\LocalGameManager.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\PostEffectsBase.cs" />
@@ -247,7 +234,6 @@
     <Compile Include="Assets\Standard Assets\Utility\FOVKick.cs" />
     <Compile Include="Assets\Scripts\Src\Unit Behaviours\Health\Health.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Tonemapping.cs" />
-    <Compile Include="Assets\Standard Assets\Editor\Water\Water4\WaterBaseEditor.cs" />
     <Compile Include="Assets\Scripts\Src\Utilities\Timer.cs" />
     <Compile Include="Assets\Scripts\Src\Economy\Resource.cs" />
     <Compile Include="Assets\Standard Assets\Utility\AutoMobileShaderSwitch.cs" />
@@ -296,7 +282,6 @@
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ScreenSpaceRaytrace.cginc" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\VignetteShader.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\MotionBlurClear.shader" />
-     <None Include="Assets\Standard Assets\Cameras\CameraGuidelines.txt" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\SepiaToneEffect.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ColorCorrection3DLut.shader" />

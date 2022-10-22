@@ -6,10 +6,12 @@ using UnityEngine.UI;
 public class PopCount : MonoBehaviour
 {
     private Ownership ownership;
+    Text popCount;
     void Start()
     {
         ownership = GetComponent<Ownership>();
         ownership.owner.popCount++;
+        popCount = GameObject.Find("Pop_Count").GetComponent<Text>();
 
         updateUI();
     }
@@ -25,7 +27,7 @@ public class PopCount : MonoBehaviour
     {
         if (this.IsMine())
         {
-            GameObject.Find("Pop_Count").GetComponent<Text>().text = ownership.owner.popCount.ToString();
+            popCount.text = ownership.owner.popCount.ToString();
         }
     }
 }

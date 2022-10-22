@@ -111,7 +111,6 @@ namespace game.assets.ai
             }
             currentWatcher = DestinationWatcher.Create(destination, col.radius, this);
             navAgent.SetDestination(destination);
-            debugNavMeshPath(navAgent.path.corners);
         }
 
         public void goTo(Vector3 destination)

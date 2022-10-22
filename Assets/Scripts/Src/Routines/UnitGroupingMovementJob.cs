@@ -74,14 +74,12 @@ namespace game.assets.routines
 
         private IEnumerator moveAlongPoints(Vector3[] points)
         {
-            debugNavMeshPath(points);
             for (int i = 0; i < points.Length; i++)
             {
                 var loc = points[i];
                 moveUnitsToLocation(loc);
                 destinationHasBeenReached = false; // Will be set once callback gets called
 
-                // Not necessary to do this in a for loop but whatevs
                 yield return new WaitUntil(() => destinationHasBeenReached);
             }
 

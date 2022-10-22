@@ -25,7 +25,7 @@ public class PopCount : MonoBehaviour
 
     private void updateUI()
     {
-        if (this.IsMine())
+        if (this.IsMine() && popCount != null)
         {
             popCount.text = ownership.owner.popCount.ToString();
         }

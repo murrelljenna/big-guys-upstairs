@@ -34,7 +34,7 @@ namespace game.assets.economy {
 
         private const float COLLECT_RANGE = 0.3f;
         private const float DEPOSIT_RANGE = 0.6f;
-        private const float COLLECT_RATE = 2.5f;
+        private const float COLLECT_RATE = 4f;
         private const float BUILD_RATE = 2.5f;
         private const int BUILD_AMT = 2;
 

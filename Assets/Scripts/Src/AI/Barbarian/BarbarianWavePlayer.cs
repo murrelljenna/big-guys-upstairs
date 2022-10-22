@@ -61,7 +61,6 @@ public class BarbarianWavePlayer : BarbarianPlayer
         Spawner[] spawners = GameObject.FindObjectsOfType<Spawner>().filterFor<BarbarianOwnership, Spawner>();
 
         int index = Random.RandomRange(0, spawners.Length);
-        Debug.Log("INDEX : " + index);
         Spawner spawnPoint = spawners[index];
 
         if (spawnPoint.GetComponent<BarbarianOwnership>())
@@ -87,7 +86,7 @@ public class BarbarianWavePlayer : BarbarianPlayer
         // THIS IS WHERE WE ACTUALLY TELL THE SQUAD TO ATTACK
         //attackSquad.onMaxUnits.AddListener(attackSquad.attackNearestEnemy);
         attackSquad.onMaxUnits.AddListener(() => {
-            var city = LocalGameManager.Get().players.RandomElem().getCities()[0];
+            var city = LocalGameManager.Get().players.RandomElem().getCities().RandomElem();
             PositionArmyToAssaultPlan plan = new PositionArmyToAssaultPlan(attackSquad, city);
             attackSquad.Order(plan);
         });

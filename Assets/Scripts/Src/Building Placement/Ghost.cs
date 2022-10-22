@@ -5,7 +5,7 @@
 public class Ghost : MonoBehaviour
 {
     private Color previousColor;
-    private Renderer renderer;
+    private Renderer ren;
     public bool colliding = false;
 
 
@@ -18,8 +18,8 @@ public class Ghost : MonoBehaviour
             return;
         }
 
-        renderer = transrights.gameObject.GetComponent<MeshRenderer>();
-        previousColor = renderer.material.color;
+        ren = transrights.gameObject.GetComponent<MeshRenderer>();
+        previousColor = ren.material.color;
     }
 
     public void setColliding(bool isColliding)
@@ -27,25 +27,25 @@ public class Ghost : MonoBehaviour
         if (isColliding)
         {
             colliding = true;
-            if (renderer != null)
+            if (ren != null)
             {
-                renderer.material.color = Color.red;
+                ren.material.color = Color.red;
             }
             else
             {
-                Debug.LogError("This ghost has a model, but that model doesn't have a renderer, wtf are you doing?");
+                Debug.LogError("This ghost has a model, but that model doesn't have a ren, wtf are you doing?");
             }
         }
         else
         {
             colliding = false;
-            if (renderer != null)
+            if (ren != null)
             {
-                renderer.material.color = previousColor;
+                ren.material.color = previousColor;
             }
             else
             {
-                Debug.LogError("This ghost has a model, but that model doesn't have a renderer, wtf are you doing?");
+                Debug.LogError("This ghost has a model, but that model doesn't have a ren, wtf are you doing?");
             }
         }
     }

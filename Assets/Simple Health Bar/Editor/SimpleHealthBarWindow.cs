@@ -54,9 +54,11 @@ public class SimpleHealthBarWindow : EditorWindow
 	bool configuredFontSize = false;
 
 	static Texture2D introThumbnail;
+	#pragma warning disable
 	static WWW introThumbnailPage;
+	#pragma warning restore
 
-	
+
 	class DocumentationInfo
 	{
 		public string functionName = "";

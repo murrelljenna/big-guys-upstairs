@@ -80,7 +80,6 @@ namespace game.assets.interaction
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Terrain))
             {
-                Debug.Log("B - Looking at terrain, starting square selection");
                 firstPointTaken = true;
                 firstPoint = hit.point;
             }

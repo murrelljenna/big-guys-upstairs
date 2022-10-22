@@ -113,7 +113,7 @@ namespace game.assets.economy {
 
         public void clearAssignment() {
             CancelInvoke("getResource");
-
+            StopAllCoroutines();
             if (resource != null) {
                 resource.removeWorker(this);
             }

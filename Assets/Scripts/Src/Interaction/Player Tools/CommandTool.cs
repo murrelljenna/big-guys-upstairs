@@ -112,8 +112,6 @@ namespace game.assets.interaction
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Attackable))
             {
-                Debug.Log("Hitting an attackable");
-                Debug.Log(hit.collider.gameObject.name);
                 Attack attacker = hit.collider.gameObject.GetComponent<Attack>();
                 if (attacker != null && attacker.IsMine())
                 {

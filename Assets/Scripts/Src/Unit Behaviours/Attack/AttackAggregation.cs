@@ -114,7 +114,6 @@ public class AttackAggregation : IAttack
         for (int i = 0; i < units.Count; i++)
         {
             var unit = units[i];
-            Debug.Log("AB - Attacking with unit number: " + i);
             unit.attack(attackee);
             if (i % par == 0)
             {

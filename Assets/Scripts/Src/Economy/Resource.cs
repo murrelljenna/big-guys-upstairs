@@ -4,6 +4,7 @@ using UnityEngine;
 using game.assets.utilities.resources;
 using game.assets.utilities;
 using UnityEngine.Events;
+using game.assets.ai;
 
 namespace game.assets.economy {
     [RequireComponent(typeof(GameObjectSearcher))]
@@ -31,6 +32,7 @@ namespace game.assets.economy {
         public bool addWorker(Worker worker)
         {
             upstream = closestDepositor();
+
             if (workers.Count < maxWorkers)
             {
                 worker.clearAssignment();
@@ -38,6 +40,8 @@ namespace game.assets.economy {
                 worker.assignResourceTile(this);
                 worker.startCollectingResources(getNode(), yield);
                 workerCountChanged.Invoke(workers.Count);
+
+                upstream?.GetComponent<Health>()?.onZeroHP.AddListener((Health _) => worker.cancelOrders());
                 return true;
             }
             return false;
@@ -83,7 +87,7 @@ namespace game.assets.economy {
                     }
                 }
             }
-            return tMin.GetComponent<Depositor>();
+            return tMin?.GetComponent<Depositor>();
         }
     }
 }

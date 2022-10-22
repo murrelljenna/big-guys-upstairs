@@ -14,7 +14,12 @@ public enum GameMode
 
 namespace game.assets
 {
-    public class LocalGameManager : MonoBehaviour
+    public class GameManager : MonoBehaviour
+    {
+        public const string version = "0.1.0-alpha";
+    }
+
+    public class LocalGameManager : GameManager
     {
         [Tooltip("Fireworks prefab to use when player wins")]
         public GameObject fireworksPrefab;

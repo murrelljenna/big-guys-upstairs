@@ -13,7 +13,7 @@ namespace game.assets.interaction
     public class CommandTool : MonoBehaviour
     {
         [Tooltip("Camera Used By Command Tool")]
-        public Camera camera;
+        public Camera cam;
         [Tooltip("Turn on/off ui for testing")]
         public bool useUi = true;
 
@@ -46,7 +46,7 @@ namespace game.assets.interaction
         private void Awake()
         {
             uiController = GameObject.Find(MagicWords.GameObjectNames.CommandMenu).GetComponent<CommandUIController>();
-            if (camera == null)
+            if (cam == null)
             {
                 Debug.LogError("CommandTool Camera has not been assigned.");
             }
@@ -61,26 +61,18 @@ namespace game.assets.interaction
         private void selectUnitIfCan()
         {
             RaycastHit hit;
-            Ray ray = camera.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
+            Ray ray = cam.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Unit))
             {
                 Attack attacker = hit.collider.gameObject.GetComponent<Attack>();
-                Debug.Log("AD - attacker null? " + (attacker == null).ToString());
-                if (attacker != null)
-                {
-                    Debug.Log("AD - attacker is mine? " + attacker.IsMine().ToString());
-                }
                 if (attacker != null && attacker.IsMine())
                 {
-                    Debug.Log("AD - Attacker is not null and is mine");
                     if (attackAggregation.contains(attacker))
                     {
-                        Debug.Log("AD - unit is contained already");
                         removeUnit(attacker);
                     }
                     else
                     {
-                        Debug.Log("AD - And were selecting!!!!!!!!!!!!!!!!!!!!!");
                         addUnit(attacker);
                     }
                 }
@@ -116,7 +108,7 @@ namespace game.assets.interaction
         private void selectUnitsInRadiusIfCan()
         {
             RaycastHit hit;
-            Ray ray = camera.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
+            Ray ray = cam.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Attackable))
             {
@@ -191,7 +183,7 @@ namespace game.assets.interaction
         private void orderAttackOrMoveIfCan()
         {
             RaycastHit hit;
-            Ray ray = camera.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
+            Ray ray = cam.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.All)) {
                 Health health = hit.collider.GetComponent<Health>();

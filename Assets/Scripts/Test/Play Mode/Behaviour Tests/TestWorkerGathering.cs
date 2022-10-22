@@ -23,12 +23,6 @@ namespace Tests
         private Resource resource;
         private Depositor town;
 
-        private bool callBackInvoked = false;
-        public void callbackInvoked()
-        {
-            callBackInvoked = true;
-        }
-
         [UnitySetUp]
         public IEnumerator SetUp()
         {
@@ -38,8 +32,6 @@ namespace Tests
             );
 
             yield return null;
-
-            callBackInvoked = false;
 
             worker = GameObject.Find("Worker").GetComponent<Worker>();
             resource = GameObject.Find("Resource").GetComponent<Resource>();

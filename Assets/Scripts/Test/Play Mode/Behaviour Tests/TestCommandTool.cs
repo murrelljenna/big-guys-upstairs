@@ -27,7 +27,7 @@ namespace Tests {
         {
             for (int i = 0; i < attackers.Count; i++)
             {
-                commandTool.camera.lookAt(attackers[i].transform.position);
+                commandTool.cam.lookAt(attackers[i].transform.position);
                 yield return null;
                 yield return null;
                 commandTool.mouse().leftClick.Invoke();
@@ -37,7 +37,7 @@ namespace Tests {
         }
         public static IEnumerator selectAttackersAroundUnit(this CommandTool commandTool, Attack attacker)
         {
-            commandTool.camera.lookAt(attacker.transform.position);
+            commandTool.cam.lookAt(attacker.transform.position);
             yield return null;
             yield return null;
             yield return new WaitForSeconds(2);
@@ -136,7 +136,7 @@ namespace Tests {
             attackee.onLowerHP.AddListener(callback);
             yield return commandTool.StartCoroutine(commandTool.selectAllAttackers(attackers));
 
-            commandTool.camera.lookAt(attackee.transform.position);
+            commandTool.cam.lookAt(attackee.transform.position);
             commandTool.mouse().rightClick.Invoke();
             yield return new WaitForSeconds(3);
             Assert.True(callBackTriggered);
@@ -148,7 +148,7 @@ namespace Tests {
             attackee.onLowerHP.AddListener(callback);
             yield return commandTool.StartCoroutine(commandTool.selectAllAttackers(attackers));
 
-            commandTool.camera.lookAt(destination);
+            commandTool.cam.lookAt(destination);
             commandTool.mouse().rightClick.Invoke();
             yield return new WaitForSeconds(2);
             Attack[] inRange = GameUtils.findGameObjectsInRange(destination, 1f).GetComponents<Attack>();
@@ -165,7 +165,7 @@ namespace Tests {
             commandTool.gameObject.SetActive(true);
             yield return null;
 
-            commandTool.camera.lookAt(destination);
+            commandTool.cam.lookAt(destination);
             commandTool.mouse().rightClick.Invoke();
 
             yield return new WaitForSeconds(2);
@@ -180,7 +180,7 @@ namespace Tests {
             attackee.onLowerHP.AddListener(callback);
             yield return commandTool.StartCoroutine(commandTool.selectAttackersAroundUnit(attackers[0]));
 
-            commandTool.camera.lookAt(destination);
+            commandTool.cam.lookAt(destination);
             commandTool.mouse().rightClick.Invoke();
             yield return new WaitForSeconds(2);
             Attack[] inRange = GameUtils.findGameObjectsInRange(destination, 1f).GetComponents<Attack>();

@@ -8,7 +8,7 @@ namespace game.assets.interaction
     {
         private CommandTool commandTool;
         private Vector3 VIEWPORT_POINT_TO_RAY = new Vector3(0.5F, 0.5F, 0);
-        public Camera camera;
+        public Camera cam;
         private bool firstPointTaken = false;
         private Vector3 firstPoint;
 
@@ -43,7 +43,7 @@ namespace game.assets.interaction
             }
 
             RaycastHit hit;
-            Ray ray = camera.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
+            Ray ray = cam.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Terrain))
             {
@@ -76,7 +76,7 @@ namespace game.assets.interaction
         public void StartSquareSelection()
         {
             RaycastHit hit;
-            Ray ray = camera.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
+            Ray ray = cam.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Terrain))
             {

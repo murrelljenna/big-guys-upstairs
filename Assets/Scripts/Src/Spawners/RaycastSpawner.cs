@@ -54,9 +54,11 @@ namespace game.assets.spawners
 
         public void setGhost(GameObject ghost)
         {
-            if (this.ghostInstance != null)
-            { // Destroy old ghost, if its there
-                DestroyImmediate(this.ghostInstance);
+            DestroyImmediate(this.ghostInstance);
+
+            if (ghost == null)
+            {
+                return;
             }
 
             this.ghostInstance = ((GameObject)Instantiate(ghost));

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 839893009417160365}
   - component: {fileID: 839893009417160366}
+  - component: {fileID: 6927983087559078590}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -44,11 +45,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireworksPrefab: {fileID: 100002, guid: 180149b1a35449044a27b451e816d2de, type: 3}
-  playerPrefab: {fileID: 5412320225974601536, guid: c7a8c645d78681b4ba5edc7aba22e523,
-    type: 3}
   cityPrefab: {fileID: 9081007910819821753, guid: d5035ede5af4272438f88a342bdb045f,
     type: 3}
   clientSingleton: {fileID: 6934031111204332693, guid: f600258ad9968fb4aba09a902496bbf6,
     type: 3}
   gameMode: 0
   players: []
+  playerPrefab: {fileID: 5412320225974601536, guid: c7a8c645d78681b4ba5edc7aba22e523,
+    type: 3}
+--- !u!114 &6927983087559078590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839893009417160364}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e3080a439dc81d40a0a78c8691fbc33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireworksPrefab: {fileID: 100002, guid: 180149b1a35449044a27b451e816d2de, type: 3}
+  cityPrefab: {fileID: 9081007910819821753, guid: d5035ede5af4272438f88a342bdb045f,
+    type: 3}
+  clientSingleton: {fileID: 6934031111204332693, guid: f600258ad9968fb4aba09a902496bbf6,
+    type: 3}
+  gameMode: 0
+  players: []
+  _playerPrefab:
+    RawGuidValue: e4df49d0bf125a740a2c14ab6e887572

@@ -41,9 +41,6 @@ namespace game.assets
             new ColourAvailability(PlayerColours.Black)
         };
 
-        [Tooltip("Prefab used for player")]
-        public GameObject playerPrefab;
-
         [Tooltip("Prefab used for city")]
         public GameObject cityPrefab;
 

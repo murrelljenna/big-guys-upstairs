@@ -11,6 +11,9 @@ namespace game.assets
 {
     public class LocalGameManager : GameManager
     {
+        [Tooltip("Prefab used for player")]
+        public GameObject playerPrefab;
+
         public override Scene Initialize(string mapName, Vector3[] spawnPoints)
         {
             if (gameMode == GameMode.Wave)

@@ -12,6 +12,10 @@ public class InitializeGameOnStart : MonoBehaviour
     void Start()
     {
         GameManager gameManager = GameObject.Find(MagicWords.GameObjectNames.GameManager).GetComponent<LocalGameManager>();
+        if (gameManager == null || gameManager.enabled == false)
+        {
+            gameManager = GameObject.Find(MagicWords.GameObjectNames.GameManager).GetComponent<NetworkedGameManager>();
+        }
         gameManager.Initialize(scenePath, new Vector3[] { playerSpawn });
     }
 }

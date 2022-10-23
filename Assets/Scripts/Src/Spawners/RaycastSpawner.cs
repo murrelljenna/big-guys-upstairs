@@ -96,6 +96,7 @@ namespace game.assets.spawners
                         Destroy(ghostInstance);
                     }
                     StartCoroutine(plop(spawnedObject, endSpawnLocation));
+                    onPlopped.Invoke();
                 }
 
                 return spawnedObject;

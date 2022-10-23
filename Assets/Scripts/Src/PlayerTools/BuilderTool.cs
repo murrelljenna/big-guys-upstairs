@@ -30,6 +30,13 @@ namespace game.assets.tools
         {
             spawner = GetComponent<RaycastSpawner>();
             placeWalls = GetComponent<PlaceWalls>();
+
+            spawner.onPlopped.AddListener(() => resetSpawner());
+        }
+
+        private void OnDisable()
+        {
+            resetSpawner();
         }
 
         public void setPrefab(int index)
@@ -47,6 +54,13 @@ namespace game.assets.tools
                 spawner.price = buildableItems[index].cost;
                 spawner.setGhost(buildableItems[index].ghost);
             }
+        }
+
+        private void resetSpawner() {
+            spawner.enabled = false;
+            spawner.prefab = null;
+            spawner.price = new ResourceSet();
+            spawner.setGhost(null);
         }
     }
 }

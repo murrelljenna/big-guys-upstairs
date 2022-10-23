@@ -11,7 +11,7 @@ public class InitializeGameOnStart : MonoBehaviour
 
     void Start()
     {
-        LocalGameManager gameManager = GameObject.Find(MagicWords.GameObjectNames.GameManager).GetComponent<LocalGameManager>();
+        GameManager gameManager = GameObject.Find(MagicWords.GameObjectNames.GameManager).GetComponent<LocalGameManager>();
         gameManager.Initialize(scenePath, new Vector3[] { playerSpawn });
     }
 }

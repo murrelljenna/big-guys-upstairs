@@ -7,13 +7,13 @@ using game.assets.player;
 using System;
 using game.assets.ai;
 
-public enum GameMode
-{
-    Wave
-}
-
 namespace game.assets
 {
+    public enum GameMode
+    {
+        Wave
+    }
+
     public class GameManager : MonoBehaviour
     {
         public const string version = "0.1.1-alpha";

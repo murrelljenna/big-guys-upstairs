@@ -79,17 +79,22 @@ public class BarbarianWavePlayer : BarbarianPlayer
         AttackIn30SecondsFromRandomSpawnPoint(BarbarianWaveSettings.CALCULATE_NEW_UNIT_COUNT(wave));
     }
 
+    private void attackRandomPlayersRandomCity(AIUnitGrouping squad) {
+        var city = LocalGameManager.Get().players.RandomElem().getCities().RandomElem();
+        PositionArmyToAssaultPlan plan = new PositionArmyToAssaultPlan(squad, city);
+        squad.Order(plan);
+    }
+
     private void spawnUnitGroupToAttackNearestEnemy(Vector3 location, int amt)
     {
         AIUnitGrouping attackSquad = new AIUnitGrouping(this, amt, 0, location);
 
         // THIS IS WHERE WE ACTUALLY TELL THE SQUAD TO ATTACK
         //attackSquad.onMaxUnits.AddListener(attackSquad.attackNearestEnemy);
-        attackSquad.onMaxUnits.AddListener(() => {
-            var city = LocalGameManager.Get().players.RandomElem().getCities().RandomElem();
-            PositionArmyToAssaultPlan plan = new PositionArmyToAssaultPlan(attackSquad, city);
-            attackSquad.Order(plan);
-        });
+        attackSquad.onMaxUnits.AddListener(() => attackRandomPlayersRandomCity(attackSquad));
+
+        attackSquad.ordersEmpty.AddListener(() => attackRandomPlayersRandomCity(attackSquad));
+
         void stopReplenishing()
         {
             attackSquad.stopReplenishing();

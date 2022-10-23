@@ -32,6 +32,7 @@ namespace game.assets.ai {
         public UnityEvent<IArmyPlan> newOrder = new UnityEvent<IArmyPlan>();
         public UnityEvent<Attack, Health> enemyKilled = new UnityEvent<Attack, Health>();
         public UnityEvent<Attack> unitIdled = new UnityEvent<Attack>();
+        public UnityEvent ordersEmpty = new UnityEvent();
 
         public AIUnitGrouping(player.Player player, int maxUnits, int recruitRateInSeconds, Vector3 startingLocation, bool autoReplenish = true) {
             onMaxUnits = new UnityEvent();
@@ -114,6 +115,7 @@ namespace game.assets.ai {
         {
             if (orders.Count == 0)
             {
+                ordersEmpty.Invoke();
                 return;
             }
 

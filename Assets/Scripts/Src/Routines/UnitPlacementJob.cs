@@ -104,8 +104,8 @@ namespace game.assets.routines
 
                     NavMeshHit hit;
                     // TODO: Fix magic 0.1f float
-                    var isOnMesh = NavMesh.SamplePosition(modifiedPosition, out hit, 0.1f, NavMesh.AllAreas);
-                    if (!alreadyTaken(taken, modifiedPosition) && Math.Abs(height) - Math.Abs(center.y) < 4 && Math.Abs(height) - Math.Abs(center.y) > -4 && isOnMesh)
+                    var isOnMesh = NavMesh.SamplePosition(modifiedPosition, out hit, 0.2f, NavMesh.AllAreas);
+                    if (!alreadyTaken(taken, modifiedPosition) && isOnMesh)
                     {
                         points.Enqueue(modifiedPosition);
                         taken.Add(modifiedPosition);
@@ -121,7 +121,7 @@ namespace game.assets.routines
         }
         private static bool alreadyTaken(List<Vector3> vectors, Vector3 target)
         {
-            return !vectors.TrueForAll((Vector3 v) => Vector3.Distance(v, target) > 0.2f);
+            return !vectors.TrueForAll((Vector3 v) => Vector3.Distance(v, target) > 0.1f);
         }
     }
 }

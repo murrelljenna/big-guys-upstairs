@@ -6,6 +6,7 @@ using game.assets.utilities;
 using game.assets.ai;
 using static game.assets.utilities.GameUtils;
 using game.assets.economy;
+using UnityEngine.AI;
 
 namespace game.assets.interaction
 {
@@ -214,7 +215,12 @@ namespace game.assets.interaction
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Terrain))
             {
-                attackAggregation.unitsThatCanMove().goTo(hit.point);
+                NavMeshHit navMeshHit;
+                bool isOnMesh = NavMesh.SamplePosition(hit.point, out navMeshHit, 0.2f, NavMesh.AllAreas);
+                if (isOnMesh)
+                {
+                    attackAggregation.unitsThatCanMove().goTo(hit.point);
+                }
                 return;
             }
         }

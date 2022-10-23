@@ -646,6 +646,7 @@ GameObject:
   - component: {fileID: 5412320226224618375}
   - component: {fileID: 5412320226224618374}
   - component: {fileID: 7383583874581135426}
+  - component: {fileID: 811529218032586145}
   m_Layer: 13
   m_Name: Command Tool
   m_TagString: Untagged
@@ -743,6 +744,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 5412320226246771053}
+--- !u!114 &811529218032586145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5412320226224618372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 330de188410816e4a9f02d2d6662aff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eOnPressed:
+    m_PersistentCalls:
+      m_Calls: []
+  xOnPressed:
+    m_PersistentCalls:
+      m_Calls: []
+  uOnPressed:
+    m_PersistentCalls:
+      m_Calls: []
+  rOnPressed:
+    m_PersistentCalls:
+      m_Calls: []
+  escOnPressed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5412320226224618374}
+        m_TargetAssemblyTypeName: game.assets.interaction.CommandTool, InteractionSystemAssembly
+        m_MethodName: clearSelection
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5412320226245559791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1067,18 +1107,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
---- !u!4 &5412320226245173101 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0,
-    type: 3}
-  m_PrefabInstance: {fileID: 5412320226245559789}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5412320226245526351 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100002, guid: 5e9e851c0e142814dac026a256ba2ac0,
-    type: 3}
-  m_PrefabInstance: {fileID: 5412320226245559789}
-  m_PrefabAsset: {fileID: 0}
 --- !u!20 &5412320226246771053 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 2000000, guid: 5e9e851c0e142814dac026a256ba2ac0,
@@ -1088,6 +1116,18 @@ Camera:
 --- !u!4 &5412320226245173103 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400002, guid: 5e9e851c0e142814dac026a256ba2ac0,
+    type: 3}
+  m_PrefabInstance: {fileID: 5412320226245559789}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5412320226245526351 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100002, guid: 5e9e851c0e142814dac026a256ba2ac0,
+    type: 3}
+  m_PrefabInstance: {fileID: 5412320226245559789}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5412320226245173101 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0,
     type: 3}
   m_PrefabInstance: {fileID: 5412320226245559789}
   m_PrefabAsset: {fileID: 0}

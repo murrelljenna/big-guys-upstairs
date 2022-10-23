@@ -244,7 +244,7 @@ namespace game.assets.interaction
             }
         }
 
-        private void clearSelection() {
+        public void clearSelection() {
             attackAggregation.clear();
             if (useUi && uiController != null)
             {

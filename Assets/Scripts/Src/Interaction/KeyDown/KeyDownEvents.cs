@@ -22,6 +22,8 @@ namespace game.assets.interaction
         public UnityEvent uOnPressed;
         [Tooltip("Invoked when R key is pressed.")]
         public UnityEvent rOnPressed;
+        [Tooltip("Invoked when Esc key is pressed.")]
+        public UnityEvent escOnPressed;
 
         void Update()
         {
@@ -40,6 +42,10 @@ namespace game.assets.interaction
             else if (Input.GetKeyDown(KeyCode.R))
             {
                 rOnPressed.Invoke();
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                escOnPressed.Invoke();
             }
         }
     }

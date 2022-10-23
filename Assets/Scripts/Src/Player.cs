@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using game.assets.ai;
+using System.Collections.Generic;
 using UnityEngine;
 using static game.assets.utilities.GameUtils;
 
@@ -15,7 +16,7 @@ namespace game.assets.player
         {
             colour = PlayerColours.Blue;
             popCount = 0;
-            maxCount = 10;
+            maxCount = 20;
         }
 
         public bool maxPop()
@@ -38,6 +39,23 @@ namespace game.assets.player
             }
 
             return myCities.ToArray();
+        }
+
+        public List<Health> getAllAttackables()
+        {
+            var myAttackables = new List<Health>();
+            var attackables = GameObject.FindObjectsOfType<Health>();
+            for (int i = 0; i < attackables.Length; i++)
+            {
+                var health = attackables[i];
+
+                if (health.BelongsTo(this))
+                {
+                    myAttackables.Add(health);
+                }
+            }
+
+            return myAttackables;
         }
     }
 }

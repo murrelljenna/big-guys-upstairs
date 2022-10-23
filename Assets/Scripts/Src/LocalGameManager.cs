@@ -157,7 +157,18 @@ namespace game.assets
 
         private void playerLoses(Player player)
         {
-            // TODO: Figure out what to do
+            StartCoroutine(killAllUnits(player));
+        }
+
+        private IEnumerator killAllUnits(Player player)
+        {
+            var thingsToDie = player.getAllAttackables().ToArray();
+
+            for (int i = 0; i < thingsToDie.Length; i++)
+            {
+                thingsToDie[i].kill();
+                yield return null;
+            }
         }
 
         private void playerWins(Player player) {

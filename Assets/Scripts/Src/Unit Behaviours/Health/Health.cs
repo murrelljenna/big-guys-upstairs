@@ -105,5 +105,10 @@ namespace game.assets.ai
         {
             return (HP <= 0);
         }
+
+        public void kill()
+        {
+            lowerHP(this.maxHP);
+        }
     }
 }

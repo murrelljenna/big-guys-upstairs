@@ -25,7 +25,10 @@ namespace game.assets.routines
         protected abstract IEnumerator execute_impl();
         public void Interrupt()
         {
-            gameManager.StopCoroutine(routine);
+            if (routine != null)
+            {
+                gameManager.StopCoroutine(routine);
+            }
             interrupted.Invoke();
         }
 

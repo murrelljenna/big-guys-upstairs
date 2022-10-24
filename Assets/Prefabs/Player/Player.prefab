@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 5670587663590423910}
   - component: {fileID: 5670587663590423996}
   - component: {fileID: 5670587663590423877}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,10 +125,10 @@ GameObject:
   - component: {fileID: 5670587663590423954}
   - component: {fileID: 5670587663590424058}
   - component: {fileID: 5670587663590423956}
-  - component: {fileID: 5670587663590423941}
   - component: {fileID: 8379337852045708003}
   - component: {fileID: 3643581894541174985}
-  m_Layer: 6
+  - component: {fileID: 6642740390509252936}
+  m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,8 +175,8 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 5670587663590424035}
   - {fileID: 5670587663590424058}
-  - {fileID: 5670587663590423941}
   - {fileID: 3643581894541174985}
+  - {fileID: 6642740390509252936}
   SimulationBehaviours:
   - {fileID: 8379337852045708003}
 --- !u!114 &5670587663590424035
@@ -242,40 +242,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5670587663590423941
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5670587663590423814}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 378411a89480da345945c2f888327a2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  InterpolationSpace: 0
-  InterpolationTarget: {fileID: 5670587663590423819}
-  InterpolateErrorCorrection: 1
-  InterpolatedErrorCorrectionSettings:
-    MinRate: 3.3
-    MaxRate: 10
-    PosBlendStart: 0.25
-    PosBlendEnd: 1
-    PosMinCorrection: 0.025
-    PosTeleportDistance: 2
-    RotBlendStart: 0.1
-    RotBlendEnd: 0.5
-    RotTeleportRadians: 1.5
-  gravity: -20
-  jumpImpulse: 8
-  acceleration: 20
-  braking: 10
-  maxSpeed: 4
-  rotationSpeed: 15
-  _IsGrounded: 0
-  _Velocity: {x: 0, y: 0, z: 0}
 --- !u!114 &8379337852045708003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,6 +270,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   isLocal: 0
+--- !u!114 &6642740390509252936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5670587663590423814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f0c2ba345b126a4d8ba11bd9be1bd29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  InterpolationSpace: 0
+  InterpolationTarget: {fileID: 0}
+  InterpolateErrorCorrection: 1
+  InterpolatedErrorCorrectionSettings:
+    MinRate: 3.3
+    MaxRate: 10
+    PosBlendStart: 0.25
+    PosBlendEnd: 1
+    PosMinCorrection: 0.025
+    PosTeleportDistance: 2
+    RotBlendStart: 0.1
+    RotBlendEnd: 0.5
+    RotTeleportRadians: 1.5
+  gravity: -20
+  jumpImpulse: 8
+  acceleration: 10
+  braking: 10
+  maxSpeed: 2
+  rotationSpeed: 15
+  _IsGrounded: 0
+  _Velocity: {x: 0, y: 0, z: 0}
 --- !u!1 &5670587663590423831
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,7 +315,7 @@ GameObject:
   - component: {fileID: 5670587663590423916}
   - component: {fileID: 5670587663590423984}
   - component: {fileID: 5670587663590423897}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -396,7 +396,7 @@ GameObject:
   - component: {fileID: 5670587663590423819}
   - component: {fileID: 5670587663590423886}
   - component: {fileID: 5670587663590423892}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Graphic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -480,7 +480,7 @@ GameObject:
   - component: {fileID: 5670587663590423914}
   - component: {fileID: 5670587663590423879}
   - component: {fileID: 5670587663590423895}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -567,6 +567,11 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 374119972681408291, guid: a148c3e18732ba942912b2c03001f579,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 826912687750057651, guid: a148c3e18732ba942912b2c03001f579,
         type: 3}
       propertyPath: m_Name
@@ -625,6 +630,16 @@ PrefabInstance:
     - target: {fileID: 1274704009692992290, guid: a148c3e18732ba942912b2c03001f579,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2521050092104859985, guid: a148c3e18732ba942912b2c03001f579,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5497834011752039536, guid: a148c3e18732ba942912b2c03001f579,
+        type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5692196036970110120, guid: a148c3e18732ba942912b2c03001f579,

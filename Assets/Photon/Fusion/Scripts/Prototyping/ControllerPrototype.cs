@@ -1,10 +1,11 @@
 
 using UnityEngine;
 using Fusion;
+using game.assets;
 
 [ScriptHelp(BackColor = EditorHeaderBackColor.Steel)]
 public class ControllerPrototype : Fusion.NetworkBehaviour {
-  protected NetworkCharacterControllerPrototype _ncc;
+  protected game.assets.NetworkCharacterController _ncc;
   protected NetworkRigidbody _nrb;
   protected NetworkRigidbody2D _nrb2d;
   protected NetworkTransform _nt;
@@ -17,7 +18,7 @@ public class ControllerPrototype : Fusion.NetworkBehaviour {
   [DrawIf(nameof(ShowSpeed), Hide = true)]
   public float Speed = 6f;
 
-  bool ShowSpeed => this && !TryGetComponent<NetworkCharacterControllerPrototype>(out _);
+  bool ShowSpeed => this && !TryGetComponent<game.assets.NetworkCharacterController>(out _);
 
   public void Awake() {
     CacheComponents();
@@ -28,20 +29,22 @@ public class ControllerPrototype : Fusion.NetworkBehaviour {
   }
 
   private void CacheComponents() {
-    if (!_ncc) _ncc     = GetComponent<NetworkCharacterControllerPrototype>();
+    if (!_ncc) _ncc     = GetComponent<game.assets.NetworkCharacterController>();
     if (!_nrb) _nrb     = GetComponent<NetworkRigidbody>();
     if (!_nrb2d) _nrb2d = GetComponent<NetworkRigidbody2D>();
     if (!_nt) _nt       = GetComponent<NetworkTransform>();
   }
   
   public override void FixedUpdateNetwork() {
+        Debug.Log("Update network");
     if (Runner.Config.PhysicsEngine == NetworkProjectConfig.PhysicsEngines.None) {
       return;
     }
-
-    Vector3 direction;
-    if (GetInput(out NetworkInputPrototype input)) {
+        Debug.Log("Update network after ");
+        Vector3 direction;
+    if (GetInput(out PlayerNetworkInput input)) {
       direction = default;
+            Debug.Log("Getting input!");
 
       if (input.IsDown(NetworkInputPrototype.BUTTON_FORWARD)) {
         direction += TransformLocal ? transform.forward : Vector3.forward;

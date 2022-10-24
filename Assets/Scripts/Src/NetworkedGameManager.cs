@@ -18,16 +18,17 @@ namespace game.assets
         [SerializeField] private NetworkPrefabRef _playerPrefab;
 
         private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
-
-
+        [SerializeField]
+        private Scene targetScene;
         public override Scene Initialize(string mapName, Vector3[] spawnPoints)
         {
             if (_runner == null)
             {
-                StartGame(Fusion.GameMode.Host);
+                targetScene = SceneManager.LoadScene(mapName, new LoadSceneParameters(LoadSceneMode.Single));
+                StartGame(targetScene, Fusion.GameMode.Host);
             }
 
-            return SceneManager.GetActiveScene();
+            return targetScene;
         }
 
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
@@ -40,7 +41,7 @@ namespace game.assets
             _spawnedCharacters.Add(player, networkPlayerObject);
         }
 
-        async void StartGame(Fusion.GameMode mode)
+        async void StartGame(Scene scene, Fusion.GameMode mode)
         {
             // Create the Fusion runner and let it know that we will be providing user input
             _runner = gameObject.AddComponent<NetworkRunner>();
@@ -51,7 +52,7 @@ namespace game.assets
             {
                 GameMode = mode,
                 SessionName = "TestRoom",
-                Scene = SceneManager.GetActiveScene().buildIndex,
+                Scene = scene.buildIndex,
                 SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
             });
         }

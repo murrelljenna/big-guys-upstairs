@@ -1,4 +1,5 @@
 using Fusion;
+using game.assets;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,7 +44,7 @@ public class CharacterViewHandler : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        if (GetInput(out NetworkInputPrototype input))
+        if (GetInput(out PlayerNetworkInput input))
         {
             transform.localRotation = Quaternion.Euler(-input.cameraRotationY, input.cameraRotationX, 0f);
         }

@@ -62,12 +62,15 @@ namespace game.assets
         private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
         [SerializeField]
         private Scene targetScene;
+
+        Fusion.GameMode networkMode;
+
         public override Scene Initialize(string mapName, Vector3[] spawnPoints)
         {
             if (_runner == null)
             {
                 targetScene = SceneManager.LoadScene(mapName, new LoadSceneParameters(LoadSceneMode.Single));
-                StartGame(targetScene, Fusion.GameMode.Host);
+                StartGame(targetScene, networkMode);
             }
             this.spawnPoints = spawnPoints;
             return targetScene;
@@ -223,5 +226,25 @@ namespace game.assets
         }
         public void OnSceneLoadStart(NetworkRunner runner) { }
 
+        private void OnGUI()
+        {
+            if (_runner == null)
+            {
+                if (GUI.Button(new Rect(0, 0, 200, 40), "Host"))
+                {
+                    networkMode = Fusion.GameMode.Host;
+                    Initialize("TwoPlayer", new Vector3[] {
+                        new Vector3(8.79f, 1f, 11f)
+                    });
+                }
+                if (GUI.Button(new Rect(0, 40, 200, 40), "Join"))
+                {
+                    networkMode = Fusion.GameMode.Client;
+                    Initialize("TwoPlayer", new Vector3[] {
+                        new Vector3(8.79f, 1f, 11f)
+                    });
+                }
+            }
+        }
     }
 }

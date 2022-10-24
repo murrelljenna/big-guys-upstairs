@@ -6,14 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Wave/LoadWaveScene1.unity
-    guid: 890fc61cfdbf7154a826c294823f041d
+    path: Assets/Scenes/LoadTwoPlayerNetworked.unity
+    guid: eac5a23eaebfb414ca49db1a38937e7f
+  - enabled: 1
+    path: Assets/Scenes/TwoPlayer.unity
+    guid: db675fd9069d25e4cabb4abde2706b2c
   - enabled: 1
     path: Assets/Scenes/Wave/WaveScene1.unity
     guid: ffb1038a8446c744093d4f40c887a87b
   - enabled: 1
-    path: Assets/Scenes/TwoPlayer.unity
-    guid: db675fd9069d25e4cabb4abde2706b2c
+    path: Assets/Scenes/Wave/LoadWaveScene1.unity
+    guid: 890fc61cfdbf7154a826c294823f041d
   - enabled: 0
     path: Assets/Scenes/TestScenes/Manual Test Scenes/TestLoadGameAndPlay/TestPlayDontUseThisDirectly.unity
     guid: 325e7184e66f12149a8c4daa3bc92447
@@ -26,7 +29,4 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/TestScenes/Empty.unity
     guid: 0c86d00846b70414a84dad5c100c5270
-  - enabled: 0
-    path: Assets/Scenes/LoadTwoPlayerNetworked.unity
-    guid: eac5a23eaebfb414ca49db1a38937e7f
   m_configObjects: {}

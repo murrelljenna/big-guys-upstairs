@@ -27,16 +27,29 @@ namespace game.assets
                 targetScene = SceneManager.LoadScene(mapName, new LoadSceneParameters(LoadSceneMode.Single));
                 StartGame(targetScene, Fusion.GameMode.Host);
             }
-
+            this.spawnPoints = spawnPoints;
             return targetScene;
         }
 
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
             // Create a unique position for the player
-            Vector3 spawnPosition = new Vector3(0, 0, 0);
-            //runner.Spawn(_ballPrefab, new Vector3(0, 0, 0), Quaternion.identity, player);
-            NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
+            players = new player.Player[spawnPoints.Length];
+
+            for (int i = 0; i < players.Length; i++)
+            {
+                PlayerColour colour = pickFirstAvailableColour();
+                players[i] = new player.Player();
+                players[i].colour = pickFirstAvailableColour();
+            }
+
+            instantiateNetworkedPlayerStart(runner, player);
+        }
+
+        private void instantiateNetworkedPlayerStart(NetworkRunner runner, PlayerRef player)
+        {
+            Vector3 playerSpawn = randomPointOnUnitCircle(spawnPoints[0], MagicNumbers.PlayerSpawnRadius);
+            NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, playerSpawn, Quaternion.identity, player);
             // Keep track of the player avatars so we can remove it when they disconnect
             _spawnedCharacters.Add(player, networkPlayerObject);
         }

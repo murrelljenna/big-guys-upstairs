@@ -46,19 +46,19 @@ public class ControllerPrototype : Fusion.NetworkBehaviour {
       direction = default;
             Debug.Log("Getting input!");
 
-      if (input.IsDown(NetworkInputPrototype.BUTTON_FORWARD)) {
+      if (input.IsDown(PlayerNetworkInput.BUTTON_FORWARD)) {
         direction += TransformLocal ? transform.forward : Vector3.forward;
       }
 
-      if (input.IsDown(NetworkInputPrototype.BUTTON_BACKWARD)) {
+      if (input.IsDown(PlayerNetworkInput.BUTTON_BACKWARD)) {
         direction -= TransformLocal ? transform.forward : Vector3.forward;
       }
 
-      if (input.IsDown(NetworkInputPrototype.BUTTON_LEFT)) {
+      if (input.IsDown(PlayerNetworkInput.BUTTON_LEFT)) {
         direction -= TransformLocal ? transform.right : Vector3.right;
       }
 
-      if (input.IsDown(NetworkInputPrototype.BUTTON_RIGHT)) {
+      if (input.IsDown(PlayerNetworkInput.BUTTON_RIGHT)) {
         direction += TransformLocal ? transform.right : Vector3.right;
       }
 
@@ -66,7 +66,7 @@ public class ControllerPrototype : Fusion.NetworkBehaviour {
 
       MovementDirection = direction;
 
-      if (input.IsDown(NetworkInputPrototype.BUTTON_JUMP)) {
+      if (input.IsDown(PlayerNetworkInput.BUTTON_JUMP)) {
         if (_ncc) {
           _ncc.Jump();
         } else {

@@ -129,37 +129,37 @@ namespace game.assets
 
             if (Input.GetKey(KeyCode.W))
             {
-                frameworkInput.Buttons |= NetworkInputPrototype.BUTTON_FORWARD;
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_FORWARD;
             }
 
             if (Input.GetKey(KeyCode.S))
             {
-                frameworkInput.Buttons |= NetworkInputPrototype.BUTTON_BACKWARD;
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_BACKWARD;
             }
 
             if (Input.GetKey(KeyCode.A))
             {
-                frameworkInput.Buttons |= NetworkInputPrototype.BUTTON_LEFT;
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_LEFT;
             }
 
             if (Input.GetKey(KeyCode.D))
             {
-                frameworkInput.Buttons |= NetworkInputPrototype.BUTTON_RIGHT;
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_RIGHT;
             }
 
             if (Input.GetKey(KeyCode.Space))
             {
-                frameworkInput.Buttons |= NetworkInputPrototype.BUTTON_JUMP;
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_JUMP;
             }
 
             if (Input.GetKey(KeyCode.C))
             {
-                frameworkInput.Buttons |= NetworkInputPrototype.BUTTON_CROUCH;
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_CROUCH;
             }
 
             if (Input.GetKey(KeyCode.E))
             {
-                frameworkInput.Buttons |= NetworkInputPrototype.BUTTON_ACTION1;
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ACTION1;
             }
 
             if (Input.GetKeyDown(KeyCode.E))
@@ -173,27 +173,27 @@ namespace game.assets
 
             if (Input.GetKey(KeyCode.Q))
             {
-                frameworkInput.Buttons |= NetworkInputPrototype.BUTTON_ACTION2;
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ACTION2;
             }
 
             if (Input.GetKey(KeyCode.F))
             {
-                frameworkInput.Buttons |= NetworkInputPrototype.BUTTON_ACTION3;
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ACTION3;
             }
 
             if (Input.GetKey(KeyCode.G))
             {
-                frameworkInput.Buttons |= NetworkInputPrototype.BUTTON_ACTION4;
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ACTION4;
             }
 
             if (Input.GetKey(KeyCode.R))
             {
-                frameworkInput.Buttons |= NetworkInputPrototype.BUTTON_RELOAD;
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_RELOAD;
             }
 
             if (Input.GetMouseButton(0))
             {
-                frameworkInput.Buttons |= NetworkInputPrototype.BUTTON_FIRE;
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_FIRE;
             }
 
             var localView = LocalPlayer.getView();

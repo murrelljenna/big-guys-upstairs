@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 24397518509530285}
   - component: {fileID: 5114157168724781488}
   - component: {fileID: 6708746170872158254}
+  - component: {fileID: 5460925871562422707}
   m_Layer: 0
   m_Name: PlayerRig
   m_TagString: MainCamera
@@ -170,6 +171,30 @@ Behaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6113973318045424944}
   m_Enabled: 1
+--- !u!114 &5460925871562422707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6113973318045424944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: 76ebb233cf6a81e429814cad249903cb
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 5882456245406804736}
+  SimulationBehaviours: []
 --- !u!1 &6637832834198359106
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,6 +211,7 @@ GameObject:
   - component: {fileID: 1498633534753881107}
   - component: {fileID: 7839956965659805172}
   - component: {fileID: 9044289636470612102}
+  - component: {fileID: 5882456245406804736}
   m_Layer: 13
   m_Name: Building Tool
   m_TagString: Untagged
@@ -491,6 +517,22 @@ MonoBehaviour:
     type: 3}
   cornerPrefab: {fileID: 1280554732642606245, guid: a10ac2bbcba2c8b42a574637c69779ff,
     type: 3}
+--- !u!114 &5882456245406804736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6637832834198359106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18b312c7e50c93489e027adfd16225a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  onKeyPressed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8619984425100497420
 GameObject:
   m_ObjectHideFlags: 0
@@ -586,7 +628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09adc06dfa303fd45b20fda069f66751, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
+  cam: {fileID: 5114157168724781488}
   useUi: 1
 --- !u!114 &6073425215074060614
 MonoBehaviour:
@@ -600,7 +642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4a64be45b8b684fac3ea8cdd3e7b3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
+  cam: {fileID: 5114157168724781488}
 --- !u!114 &3300887965827985037
 MonoBehaviour:
   m_ObjectHideFlags: 0

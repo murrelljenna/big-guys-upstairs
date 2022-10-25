@@ -44,9 +44,14 @@ namespace game.assets.interaction
             }
         }
 
+        private void getUIController()
+        {
+            uiController = GameObject.Find(MagicWords.GameObjectNames.CommandMenu)?.GetComponent<CommandUIController>();
+        }
+
         private void Awake()
         {
-            uiController = GameObject.Find(MagicWords.GameObjectNames.CommandMenu).GetComponent<CommandUIController>();
+            
             if (cam == null)
             {
                 Debug.LogError("CommandTool Camera has not been assigned.");

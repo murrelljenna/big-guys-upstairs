@@ -8,9 +8,10 @@ public class PlayerRigSpawner : SimulationBehaviour, ISpawned
     public GameObject playerRigPrefab;
     public void Spawned()
     {
+        Camera cam = Instantiate(playerRigPrefab, transform).GetComponent<Camera>();
         if (Object.HasInputAuthority)
         {
-            Instantiate(playerRigPrefab, transform);
+            cam.depth = float.MaxValue;
         }
 
         if (!Object.HasStateAuthority)

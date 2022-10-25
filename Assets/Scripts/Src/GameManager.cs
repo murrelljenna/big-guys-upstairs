@@ -66,6 +66,7 @@ namespace game.assets
 
         public player.Player getLocalPlayer()
         {
+            Debug.Log("AA - " + players.Length);
             return players[0];
         }
 
@@ -82,9 +83,9 @@ namespace game.assets
             throw new ArgumentException("No available colours found", nameof(availableColours));
         }
 
-        public static LocalGameManager Get()
+        public static GameManager Get()
         {
-            return GameObject.Find(MagicWords.GameObjectNames.GameManager)?.GetComponent<LocalGameManager>();
+            return GameObject.Find(MagicWords.GameObjectNames.GameManager)?.GetComponent<GameManager>();
         }
 
         protected void localPlayerWins()

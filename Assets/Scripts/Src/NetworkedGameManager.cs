@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace game.assets
 {
-    struct PlayerNetworkInput : INetworkInput
+    public struct PlayerNetworkInput : INetworkInput
     {
         public const uint BUTTON_USE = 1 << 0;
         public const uint BUTTON_FIRE = 1 << 1;
@@ -23,15 +23,22 @@ namespace game.assets
         public const uint BUTTON_RIGHT = 1 << 6;
 
         public const uint BUTTON_JUMP = 1 << 7;
-        public const uint BUTTON_CROUCH = 1 << 8;
-        public const uint BUTTON_WALK = 1 << 9;
 
         public const uint BUTTON_ACTION1 = 1 << 10;
         public const uint BUTTON_ACTION2 = 1 << 11;
         public const uint BUTTON_ACTION3 = 1 << 12;
         public const uint BUTTON_ACTION4 = 1 << 14;
 
-        public const uint BUTTON_RELOAD = 1 << 15;
+        public const uint BUTTON_ALPHA1 = 1 << 15;
+        public const uint BUTTON_ALPHA2 = 1 << 16;
+        public const uint BUTTON_ALPHA3 = 1 << 17;
+        public const uint BUTTON_ALPHA4 = 1 << 18;
+        public const uint BUTTON_ALPHA5 = 1 << 19;
+        public const uint BUTTON_ALPHA6 = 1 << 20;
+        public const uint BUTTON_ALPHA7 = 1 << 21;
+        public const uint BUTTON_ALPHA8 = 1 << 22;
+        public const uint BUTTON_ALPHA9 = 1 << 23;
+        public const uint BUTTON_ALPHA0 = 1 << 24;
 
         public float cameraRotationX;
         public float cameraRotationY;
@@ -62,31 +69,38 @@ namespace game.assets
         private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
         [SerializeField]
         private Scene targetScene;
-
         Fusion.GameMode networkMode;
+
+        private int playerCount;
+        private Player localPlayer;
 
         public override Scene Initialize(string mapName, Vector3[] spawnPoints)
         {
             if (_runner == null)
             {
                 targetScene = SceneManager.LoadScene(mapName, new LoadSceneParameters(LoadSceneMode.Single));
-                StartGame(targetScene, networkMode);
+                StartGame(targetScene,  networkMode);
             }
             this.spawnPoints = spawnPoints;
+            players = new player.Player[spawnPoints.Length];
+            Debug.Log("AA - Initializing. Player length: " + players.Length);
             return targetScene;
         }
 
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
             // Create a unique position for the player
-            players = new player.Player[spawnPoints.Length];
-
+            
             for (int i = 0; i < players.Length; i++)
             {
                 PlayerColour colour = pickFirstAvailableColour();
                 players[i] = new player.Player();
                 players[i].colour = pickFirstAvailableColour();
             }
+
+            Debug.Log("Player joined");
+
+            Debug.Log("AA - length when player joined " + players.Length);
 
             instantiateNetworkedPlayerStart(runner, player);
         }
@@ -95,8 +109,12 @@ namespace game.assets
         {
             Vector3 playerSpawn = randomPointOnUnitCircle(spawnPoints[0], MagicNumbers.PlayerSpawnRadius);
             NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, playerSpawn, Quaternion.identity, player);
+            Debug.Log("AA - Am I right? - " + networkPlayerObject == null);
             // Keep track of the player avatars so we can remove it when they disconnect
             _spawnedCharacters.Add(player, networkPlayerObject);
+
+            GameObject clientSingletonObj = Instantiate(clientSingleton, spawnPoints[0], Quaternion.identity);
+            clientSingletonObj.name = MagicWords.GameObjectNames.ClientSingleton;
         }
 
         async void StartGame(Scene scene, Fusion.GameMode mode)
@@ -155,11 +173,6 @@ namespace game.assets
                 frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_JUMP;
             }
 
-            if (Input.GetKey(KeyCode.C))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_CROUCH;
-            }
-
             if (Input.GetKey(KeyCode.E))
             {
                 frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ACTION1;
@@ -189,14 +202,50 @@ namespace game.assets
                 frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ACTION4;
             }
 
-            if (Input.GetKey(KeyCode.R))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_RELOAD;
-            }
-
             if (Input.GetMouseButton(0))
             {
                 frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_FIRE;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA1;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA2;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA3;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA4;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA5;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha6))
+            {
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA6;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha7))
+            {
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA7;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha8))
+            {
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA8;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha9))
+            {
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA9;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha0))
+            {
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA0;
             }
 
             var localView = LocalPlayer.getView();

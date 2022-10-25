@@ -9,7 +9,7 @@ namespace game.assets.player {
     {
         public static Player get()
         {
-            return GameObject.Find(GameObjectNames.GameManager)?.GetComponent<LocalGameManager>()?.getLocalPlayer();
+            return GameObject.Find(GameObjectNames.GameManager)?.GetComponent<GameManager>()?.getLocalPlayer();
         }
 
         public static Camera getPlayerCamera()

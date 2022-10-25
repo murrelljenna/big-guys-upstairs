@@ -13,12 +13,12 @@ namespace game.assets.routines
     public abstract class InterruptibleJob : IInterruptibleJob
     {
         protected UnityEvent interrupted = new UnityEvent();
-        private LocalGameManager gameManager;
+        private GameManager gameManager;
         private Coroutine routine;
 
         public void Execute()
         {
-            gameManager = LocalGameManager.Get();
+            gameManager = GameManager.Get();
             routine = gameManager.StartCoroutine(execute_impl());
         }
 

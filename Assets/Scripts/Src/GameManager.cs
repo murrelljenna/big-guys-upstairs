@@ -64,7 +64,7 @@ namespace game.assets
             DontDestroyOnLoad(gameObject);
         }
 
-        public player.Player getLocalPlayer()
+        public virtual player.Player getLocalPlayer()
         {
             Debug.Log("AA - " + players.Length);
             return players[0];

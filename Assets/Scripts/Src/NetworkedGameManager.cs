@@ -65,14 +65,59 @@ namespace game.assets
         private NetworkRunner _runner;
 
         [SerializeField] private NetworkPrefabRef _playerPrefab;
+        [SerializeField] private NetworkPrefabRef _gameManagerState;
 
         private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
         [SerializeField]
         private Scene targetScene;
         Fusion.GameMode networkMode;
 
-        private int playerCount;
+
         private Player localPlayer;
+
+        private bool isHost;
+
+        Vector3[] spawnPoints;
+
+        private NetworkedGameManagerState state;
+        public void InitGame(string mapName, Vector3[] spawnPoints)
+        {
+            if (_runner == null)
+            {
+                isHost = true;
+                var targetScene = SceneManager.LoadScene(mapName, new LoadSceneParameters(LoadSceneMode.Single));
+                StartGame(targetScene, Fusion.GameMode.Host);
+            }
+
+            this.spawnPoints = spawnPoints;
+        }
+
+        public void JoinGame(string sessionName, string mapName, Vector3[] spawnPoints)
+        {
+
+        }
+
+        private void InitNetworkGameState(Vector3[] spawnPoints)
+        {
+            state = _runner.Spawn(_gameManagerState, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<NetworkedGameManagerState>();
+            state.Init(spawnPoints);
+        }
+
+        async void StartGame(Scene scene, Fusion.GameMode mode)
+        {
+            _runner = gameObject.AddComponent<NetworkRunner>();
+            _runner.ProvideInput = true;
+
+            await _runner.StartGame(new StartGameArgs()
+            {
+                GameMode = mode,
+                SessionName = "TestRoom",
+                Scene = scene.buildIndex,
+                SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
+            });
+        }
+
+
 
         public override Scene Initialize(string mapName, Vector3[] spawnPoints)
         {
@@ -89,20 +134,12 @@ namespace game.assets
 
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
-            // Create a unique position for the player
-            
-            for (int i = 0; i < players.Length; i++)
+            if (isHost)
             {
-                PlayerColour colour = pickFirstAvailableColour();
-                players[i] = new player.Player();
-                players[i].colour = pickFirstAvailableColour();
+                state.reserveNewPlayer(player.PlayerId);
+
+                instantiateNetworkedPlayerStart(runner, player);
             }
-
-            Debug.Log("Player joined");
-
-            Debug.Log("AA - length when player joined " + players.Length);
-
-            instantiateNetworkedPlayerStart(runner, player);
         }
 
         private void instantiateNetworkedPlayerStart(NetworkRunner runner, PlayerRef player)
@@ -115,22 +152,6 @@ namespace game.assets
 
             GameObject clientSingletonObj = Instantiate(clientSingleton, spawnPoints[0], Quaternion.identity);
             clientSingletonObj.name = MagicWords.GameObjectNames.ClientSingleton;
-        }
-
-        async void StartGame(Scene scene, Fusion.GameMode mode)
-        {
-            // Create the Fusion runner and let it know that we will be providing user input
-            _runner = gameObject.AddComponent<NetworkRunner>();
-            _runner.ProvideInput = true;
-
-            // Start or join (depends on gamemode) a session with a specific name
-            await _runner.StartGame(new StartGameArgs()
-            {
-                GameMode = mode,
-                SessionName = "TestRoom",
-                Scene = scene.buildIndex,
-                SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
-            });
         }
 
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
@@ -271,9 +292,14 @@ namespace game.assets
         public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data) { }
         public void OnSceneLoadDone(NetworkRunner runner)
         {
+            if (isHost)
+            {
+                InitNetworkGameState(spawnPoints);
+            }
+        }
+        public void OnSceneLoadStart(NetworkRunner runner) {
 
         }
-        public void OnSceneLoadStart(NetworkRunner runner) { }
 
         private void OnGUI()
         {
@@ -282,14 +308,14 @@ namespace game.assets
                 if (GUI.Button(new Rect(0, 0, 200, 40), "Host"))
                 {
                     networkMode = Fusion.GameMode.Host;
-                    Initialize("TwoPlayer", new Vector3[] {
+                    InitGame("TwoPlayer", new Vector3[] {
                         new Vector3(8.79f, 1f, 11f)
                     });
                 }
                 if (GUI.Button(new Rect(0, 40, 200, 40), "Join"))
                 {
                     networkMode = Fusion.GameMode.Client;
-                    Initialize("TwoPlayer", new Vector3[] {
+                    JoinGame("TestRoom", "TwoPlayer", new Vector3[] {
                         new Vector3(8.79f, 1f, 11f)
                     });
                 }

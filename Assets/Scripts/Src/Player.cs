@@ -1,4 +1,5 @@
-﻿using game.assets.ai;
+﻿using Fusion;
+using game.assets.ai;
 using System.Collections.Generic;
 using UnityEngine;
 using static game.assets.utilities.GameUtils;
@@ -11,6 +12,7 @@ namespace game.assets.player
         public PlayerColour colour { get; set; }
         public int popCount { get; set; }
         public int maxCount { get; set; }
+        public int PlayerId { get; set; }
 
         public Player()
         {

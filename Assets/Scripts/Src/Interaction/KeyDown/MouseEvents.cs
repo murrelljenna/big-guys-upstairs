@@ -1,15 +1,14 @@
-﻿using System.Collections;
+﻿using Fusion;
+using game.assets;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class MouseEvents : MonoBehaviour
+public class MouseEvents : NetworkBehaviour
 {
     [Tooltip("Invoked when left mouse button clicked")]
     public UnityEvent leftClick;
-
-    [Tooltip("Invoked when left mouse button up")]
-    public UnityEvent leftClickUp;
 
     [Tooltip("Invoked when left mouse button double clicked. ")]
     public UnityEvent leftDoubleClick;
@@ -20,27 +19,29 @@ public class MouseEvents : MonoBehaviour
     private float lastClickTime;
     private const float DOUBLE_CLICK_TIME = 0.2f;
 
-    void Update()
+    public override void FixedUpdateNetwork()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (GetInput(out PlayerNetworkInput input))
         {
-            float lastClick = Time.time - lastClickTime;
-            if (lastClick <= DOUBLE_CLICK_TIME)
+            if (input.IsDown(PlayerNetworkInput.BUTTON_FIRE))
             {
-                leftDoubleClick.Invoke();
-            }
-            else
-            {
-                leftClick.Invoke();
-            }
+                float lastClick = Time.time - lastClickTime;
+                if (lastClick <= DOUBLE_CLICK_TIME)
+                {
+                    leftDoubleClick.Invoke();
+                }
+                else
+                {
+                    leftClick.Invoke();
+                }
 
-            lastClickTime = Time.time;
+                lastClickTime = Time.time;
+            }
+            else if (input.IsDown(PlayerNetworkInput.BUTTON_FIRE_ALT))
+            {
+                rightClick.Invoke();
+            }
         }
-        else if (Input.GetMouseButtonDown(1))
-        {
-            rightClick.Invoke();
-        } else if (Input.GetMouseButtonUp(0)) {
-            leftClickUp.Invoke();
-        }
+
     }
 }

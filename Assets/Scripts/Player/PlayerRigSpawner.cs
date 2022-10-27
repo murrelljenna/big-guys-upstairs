@@ -16,7 +16,7 @@ public class PlayerRigSpawner : SimulationBehaviour, ISpawned
 
         if (!Object.HasStateAuthority)
         {
-            transform.Find("PlayerRigFacade").gameObject.SetActive(false);
+            transform?.Find("PlayerRigFacade")?.gameObject?.SetActive(false);
         }
     }
 }

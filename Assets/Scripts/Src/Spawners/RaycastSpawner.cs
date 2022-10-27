@@ -66,7 +66,7 @@ namespace game.assets.spawners
 
         public override GameObject Spawn()
         {
-            if (!enabled)
+            if (!enabled || !Object.HasStateAuthority || !prefab.IsValid)
             {
                 return null;
             }
@@ -89,7 +89,7 @@ namespace game.assets.spawners
                 Vector3 startSpawnLocation = endSpawnLocation;
                 startSpawnLocation.y += 0.5f;
 
-                GameObject spawnedObject = spawnerController.Spawn(prefab, price, startSpawnLocation, Quaternion.identity);
+                GameObject spawnedObject = SpawnIfCanAfford(prefab, startSpawnLocation, Quaternion.identity, player);
 
                 if (spawnedObject != null)
                 {

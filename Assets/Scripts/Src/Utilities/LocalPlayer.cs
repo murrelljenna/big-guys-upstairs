@@ -17,11 +17,6 @@ namespace game.assets.player {
             return GameObject.Find(GameObjectNames.FirstPersonCharacter)?.GetComponent<Camera>();
         }
 
-        public static PlayerDepositor getPlayerDepositor()
-        {
-            return GameObject.Find("ClientSingleton")?.GetComponent<PlayerDepositor>();
-        }
-
         private static CharacterViewHandler cache;
 
         public static CharacterViewHandler getView()

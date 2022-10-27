@@ -4,6 +4,7 @@ using UnityEngine;
 
 using game.assets.spawners;
 using game.assets.utilities.resources;
+using Fusion;
 
 namespace game.assets.tools
 {
@@ -13,7 +14,7 @@ namespace game.assets.tools
         [Tooltip("Floats above the ground before you've placed the building")]
         public GameObject ghost;
         [Tooltip("Actual building to place")]
-        public GameObject prefab;
+        public NetworkPrefabRef prefab;
         public ResourceSet cost;
     }
 
@@ -60,7 +61,6 @@ namespace game.assets.tools
             placeWalls.enabled = false;
 
             spawner.enabled = false;
-            spawner.prefab = null;
             spawner.price = new ResourceSet();
             spawner.setGhost(null);
         }

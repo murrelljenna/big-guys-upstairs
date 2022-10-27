@@ -1,5 +1,6 @@
 using Fusion;
 using game.assets.player;
+using game.assets.utilities.resources;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -35,6 +36,8 @@ public class NetworkedGameManagerState : NetworkBehaviour
             new ColourAvailability(PlayerColours.Black)
         };
 
+    private ResourceSet startingResources = new ResourceSet(200, 200);
+
     public void Init(Vector3[] spawnPoints) 
     {
         players = new Player[spawnPoints.Length];
@@ -60,11 +63,12 @@ public class NetworkedGameManagerState : NetworkBehaviour
         throw new ArgumentException("No available colours found", nameof(availableColours));
     }
 
-    public Player reserveNewPlayer(int playerId)
+    public Player reserveNewPlayer(PlayerRef player)
     {
         Debug.Log("AA - " + playerCount);
         playerCount++;
-        players[playerCount - 1].PlayerId = playerId;
+        players[playerCount - 1].networkPlayer = player;
+        players[playerCount - 1].resources = startingResources;
         return players[playerCount - 1];
     }
 

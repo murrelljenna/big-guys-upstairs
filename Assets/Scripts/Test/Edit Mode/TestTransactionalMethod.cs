@@ -13,18 +13,13 @@ namespace Tests
 {
     public class TestTransactionalMethod : MonoBehaviour
     {
-        PlayerDepositor playerDepositor;
+        Player player = new Player();
         TransactionalMethod transactionalMethod;
 
         [SetUp]
         public void SetUp()
         {
             ClearGameObjects();
-
-
-            FakeClientSingleton();
-
-            playerDepositor = LocalPlayer.getPlayerDepositor();
 
             GameObject goWithTransactionalMethod = new GameObject("Whatevs");
 
@@ -37,7 +32,7 @@ namespace Tests
             ResourceSet resourceSet = new ResourceSet(25);
             transactionalMethod.price = resourceSet;
 
-            playerDepositor.giveResources(new ResourceSet(26));
+            player.giveResources(new ResourceSet(26));
 
             var result = transactionalMethod.Try();
 

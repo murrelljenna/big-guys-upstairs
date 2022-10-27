@@ -9263,13 +9263,18 @@ PrefabInstance:
     - target: {fileID: 6465246549917436453, guid: e01155afa7ed6364380770c2b17018ef,
         type: 3}
       propertyPath: NetworkedBehaviours.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6465246549917436453, guid: e01155afa7ed6364380770c2b17018ef,
         type: 3}
       propertyPath: NetworkedBehaviours.Array.data[0]
       value: 
       objectReference: {fileID: 8041047479867100032}
+    - target: {fileID: 6465246549917436453, guid: e01155afa7ed6364380770c2b17018ef,
+        type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[1]
+      value: 
+      objectReference: {fileID: 7587519854675207194}
     - target: {fileID: 6465246549917436453, guid: e01155afa7ed6364380770c2b17018ef,
         type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
@@ -9317,24 +9322,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e01155afa7ed6364380770c2b17018ef, type: 3}
---- !u!4 &9081007910819821748 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6439999395031838842, guid: e01155afa7ed6364380770c2b17018ef,
+--- !u!1 &9081007910819821753 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6439999395031838839, guid: e01155afa7ed6364380770c2b17018ef,
     type: 3}
   m_PrefabInstance: {fileID: 2835369735988119758}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8041047479867100032 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5246354730614014798, guid: e01155afa7ed6364380770c2b17018ef,
+--- !u!224 &486594887201681677 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2421241944636815811, guid: e01155afa7ed6364380770c2b17018ef,
     type: 3}
   m_PrefabInstance: {fileID: 2835369735988119758}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9081007910819821753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &3443539734434995373 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 617178848043717731, guid: e01155afa7ed6364380770c2b17018ef,
@@ -9353,15 +9352,21 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2835369735988119758}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &486594887201681677 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2421241944636815811, guid: e01155afa7ed6364380770c2b17018ef,
+--- !u!114 &8041047479867100032 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5246354730614014798, guid: e01155afa7ed6364380770c2b17018ef,
     type: 3}
   m_PrefabInstance: {fileID: 2835369735988119758}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &9081007910819821753 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6439999395031838839, guid: e01155afa7ed6364380770c2b17018ef,
+  m_GameObject: {fileID: 9081007910819821753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &9081007910819821748 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6439999395031838842, guid: e01155afa7ed6364380770c2b17018ef,
     type: 3}
   m_PrefabInstance: {fileID: 2835369735988119758}
   m_PrefabAsset: {fileID: 0}
@@ -9413,7 +9418,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb2b21629e4ccad40bb6aff22ca0910b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 5951973910665734273, guid: 614f03697f4144341a8837a7e9ebdac5, type: 3}
+  _interpolationDataSource: 0
+  prefab:
+    RawGuidValue: 00000000000000000000000000000000
   price:
     wood: 0
     food: 5
@@ -9423,6 +9430,38 @@ MonoBehaviour:
     horse: 0
   networked: 0
   spawnRadius: 1.2
+  player:
+    resources:
+      wood: 0
+      food: 0
+      gold: 0
+      stone: 0
+      iron: 0
+      horse: 0
+--- !u!114 &1581442339150912341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7581022230668857585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13cd7f9aed8944143bfa86ce4209aa95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owned: 0
+  owner:
+    resources:
+      wood: 0
+      food: 0
+      gold: 0
+      stone: 0
+      iron: 0
+      horse: 0
+  onNewOwner:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &3141575179347960903
 PrefabInstance:
   m_ObjectHideFlags: 0

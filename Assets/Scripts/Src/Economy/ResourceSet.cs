@@ -86,5 +86,25 @@ namespace game.assets.utilities.resources {
         public bool empty() {
             return anyValOver(-1);
         }
+
+        public void giveResources(ResourceSet resourceSet)
+        {
+            wood = wood + resourceSet.wood;
+            food = food + resourceSet.food;
+            gold = gold + resourceSet.gold;
+            stone = stone + resourceSet.stone;
+            iron = iron + resourceSet.iron;
+            horse = horse + resourceSet.horse;
+        }
+        public void takeResources(ResourceSet resourceSet)
+        {
+            wood = wood - resourceSet.wood;
+            food = food - resourceSet.food;
+            gold = gold - resourceSet.gold;
+            stone = stone - resourceSet.stone;
+            iron = iron - resourceSet.iron;
+            horse = horse - resourceSet.horse;
+        }
+        public bool canAfford(ResourceSet resourceSet) { return (this >= resourceSet); }
     }
 }

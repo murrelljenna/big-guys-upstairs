@@ -17,7 +17,7 @@ public class PlaceWalls : MonoBehaviour
     private Transform currentBuilding;
     private LineRenderer lineRen;
     public Camera cam;
-    private PlayerDepositor wallet;
+    private Player player;
     public GameObject ghostPrefab;
     private Color previousColor;
 
@@ -27,7 +27,6 @@ public class PlaceWalls : MonoBehaviour
     void Start()
     {
         lineRen = this.GetComponent<LineRenderer>();
-        wallet = LocalPlayer.getPlayerDepositor();
     }
 
     void OnDisable()
@@ -113,14 +112,14 @@ public class PlaceWalls : MonoBehaviour
                     int mapLayer = ~(1 << 11);
                     int wood = 1;
 
-                    if (wallet.canAfford(new ResourceSet(wood = (wood * (int)noWalls))))
+                    if (player.canAfford(new ResourceSet(wood = (wood * (int)noWalls))))
                     {
                         RaycastHit info;
                         if ((!Physics.Linecast(firstPoint, lastPoint, out info, mapLayer) || info.collider.gameObject.GetComponent<DoNotAutoAttack>() != null))
                         {
                             if (System.Math.Abs(firstPoint.y) - System.Math.Abs(lastPoint.y) < 0.5f && System.Math.Abs(firstPoint.y) - System.Math.Abs(lastPoint.y) > -0.5f)
                             {
-                                wallet.takeResources(new ResourceSet(wood = (wood * (int)noWalls)));
+                                player.takeResources(new ResourceSet(wood = (wood * (int)noWalls)));
                                 StartCoroutine(placeWalls(noWalls, firstPointSnapped, lastPointSnapped));
 
                                 firstPointPlaced = false;

@@ -5,13 +5,15 @@ using UnityEngine;
 using game.assets.utilities.resources;
 using game.assets.player;
 using static game.assets.utilities.GameUtils;
+using Fusion;
 
 namespace game.assets.spawners
 {
-    public class Spawner : MonoBehaviour
+    [RequireComponent(typeof(Ownership))]
+    public class Spawner : NetworkBehaviour
     {
         [Tooltip("Prefab to Instantiate")]
-        public GameObject prefab;
+        public NetworkPrefabRef prefab;
         [Tooltip("Price to Instantiate")]
         public ResourceSet price = new ResourceSet();
         [Tooltip("Networked. Requires Photon network access when ticked.")]
@@ -19,22 +21,42 @@ namespace game.assets.spawners
         [Tooltip("Radius in which units spawn")]
         public float spawnRadius = 1.2f;
 
-        protected SpawnerController spawnerController = new SpawnerController();
+        public Player player;
+
+        private FlashResourceIconsRed flasher;
 
         public virtual void Start()
         {
-            spawnerController.setInstantiator(InstantiatorFactory.getInstantiator(networked));
-            spawnerController.setTransactor(LocalPlayer.getPlayerDepositor());
+            player = GetComponent<Ownership>().owner;
         }
 
         public virtual GameObject Spawn()
         {
-            if (LocalGameManager.Get().getLocalPlayer().maxPop())
+            if (!Object.HasStateAuthority || player.maxPop() || !prefab.IsValid)
             {
                 return null;
             }
-            Vector3 spawnLocation = getSpawnLocation(this.transform.position);
-            return spawnerController.Spawn(prefab, price, spawnLocation, Quaternion.identity);
+            Vector3 spawnLocation = getSpawnLocation(transform.position);
+            return SpawnIfCanAfford(prefab, spawnLocation, Quaternion.identity, player);
+        }
+
+        protected GameObject SpawnIfCanAfford(NetworkPrefabRef prefab, Vector3 spawnLocation, Quaternion rotation, Player player)
+        {
+            if (player.canAfford(price))
+            {
+                player.takeResources(price);
+                return Spawn(prefab, spawnLocation, Quaternion.identity, player.networkPlayer);
+            }
+            else
+            {
+                getFlasher()?.flashRelevant(player.resources, price);
+                return null;
+            }
+        }
+
+        protected GameObject Spawn(NetworkPrefabRef prefab, Vector3 spawnLocation, Quaternion rotation, PlayerRef playerInput)
+        {
+            return Runner.Spawn(prefab, spawnLocation, Quaternion.identity, player.networkPlayer).gameObject;
         }
 
         private Vector3 getSpawnLocation(Vector3 spawnCenter)
@@ -42,14 +64,19 @@ namespace game.assets.spawners
             return randomPointOnUnitCircle(transform.position, spawnRadius);
         }
 
-        public GameObject SpawnForPlayer(player.Player player) {
-            Vector3 spawnLocation = getSpawnLocation(this.transform.position);
-            return spawnerController.SpawnAsPlayer(prefab, price, spawnLocation, Quaternion.identity, player);
-        }
-
         public void InvokeSpawn()
         {
             Spawn();
+        }
+
+        private FlashResourceIconsRed getFlasher()
+        {
+            if (flasher == null)
+            {
+                flasher = GameObject.Find("ResourcePanel").GetComponent<FlashResourceIconsRed>();
+            }
+
+            return flasher;
         }
     }
 }

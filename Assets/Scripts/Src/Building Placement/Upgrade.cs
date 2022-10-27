@@ -12,14 +12,13 @@ public class Upgrade : MonoBehaviour
     public GameObject upgradeTo;
     [Tooltip("Cost of upgrading")]
     public ResourceSet price;
-    private IPlayerTransaction transactor;
+    public Player player;
 
     public void upgrade()
     {
-        transactor = LocalPlayer.getPlayerDepositor();
-        if (transactor.canAfford(price))
+        if (player.canAfford(price))
         {
-            transactor.takeResources(price);
+            player.takeResources(price);
 
             spawnUpgradeTo();
             Destroy(gameObject);

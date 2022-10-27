@@ -22,7 +22,7 @@ namespace game.assets.ai {
         public GameObject InvokeSpawn(Vector3 position) {
             Spawner[] spawners = nearbySpawners(closestSpawner(position));
             Spawner randomSpawner = spawners[Random.Range(0, spawners.Length)];
-            return randomSpawner.SpawnForPlayer(player);
+            return randomSpawner.Spawn();
         }
 
         private Spawner closestSpawner(Vector3 position) {
@@ -45,6 +45,12 @@ namespace game.assets.ai {
         }
 
         private Spawner[] nearbySpawners(Spawner spawner)
+        {
+            GameObject[] gameObjects = findGameObjectsInRange(spawner.transform.position, 20f);
+            return gameObjects.GetComponents<Spawner>();
+        }
+
+        private Spawner[] nearbySpawnersBelongingTo(Spawner spawner)
         {
             GameObject[] gameObjects = findGameObjectsInRange(spawner.transform.position, 20f);
             return gameObjects.GetComponents<Spawner>();

@@ -11,16 +11,13 @@ namespace game.assets
         public UnityEvent cannotAfford = new UnityEvent();
         public UnityEvent canAfford = new UnityEvent();
         public ResourceSet price;
-        IPlayerTransaction transactor;
+        public Player player; 
 
         public bool Try()
         {
-            transactor = LocalPlayer.getPlayerDepositor();
-            Debug.Log(price.wood);
-            Debug.Log(transactor.canAfford(price));
-            if (transactor.canAfford(price))
+            if (player.canAfford(price))
             {
-                transactor.takeResources(price);
+                player.takeResources(price);
                 canAfford.Invoke();
                 return true;
             }

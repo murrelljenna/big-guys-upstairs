@@ -75,6 +75,12 @@ namespace game.assets.utilities {
             return unitList.FindAll((T h) => h.IsEnemyOf(player)).ToArray();
         }
 
+        public static T[] thatBelongTo<T>(this T[] units, Player player) where T : MonoBehaviour
+        {
+            var unitList = new List<T>(units);
+            return unitList.FindAll((T h) => h.GetComponent<Ownership>()?.owner == (player)).ToArray();
+        }
+
         public static T[] thatBelongTo<T>(this T[] units, GameObject gameObject) where T : MonoBehaviour
         {
             var unitList = new List<T>(units);

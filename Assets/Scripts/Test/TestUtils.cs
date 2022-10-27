@@ -12,7 +12,6 @@ namespace Test
         public static GameObject FakeClientSingleton()
         {
             GameObject cs = new GameObject("ClientSingleton");
-            cs.AddComponent<PlayerDepositor>();
             return cs;
         }
 

@@ -77,7 +77,7 @@ namespace game.assets
 
         private bool isHost;
 
-        Vector3[] spawnPoints;
+        Vector3[] spawns;
 
         private NetworkedGameManagerState state;
         public void InitGame(string mapName, Vector3[] spawnPoints)
@@ -89,12 +89,16 @@ namespace game.assets
                 StartGame(targetScene, Fusion.GameMode.Host);
             }
 
-            this.spawnPoints = spawnPoints;
+            this.spawns = spawnPoints;
         }
 
         public void JoinGame(string sessionName, string mapName, Vector3[] spawnPoints)
         {
-
+            if (_runner == null)
+            {
+                var targetScene = SceneManager.LoadScene(mapName, new LoadSceneParameters(LoadSceneMode.Single));
+                StartGame(targetScene, Fusion.GameMode.Client);
+            }
         }
 
         private void InitNetworkGameState(Vector3[] spawnPoints)
@@ -126,7 +130,7 @@ namespace game.assets
                 targetScene = SceneManager.LoadScene(mapName, new LoadSceneParameters(LoadSceneMode.Single));
                 StartGame(targetScene,  networkMode);
             }
-            this.spawnPoints = spawnPoints;
+            this.spawns = spawnPoints;
             players = new player.Player[spawnPoints.Length];
             Debug.Log("AA - Initializing. Player length: " + players.Length);
             return targetScene;
@@ -136,22 +140,26 @@ namespace game.assets
         {
             if (isHost)
             {
-                state.reserveNewPlayer(player.PlayerId);
+                Player gamePlayer = state.reserveNewPlayer(player.PlayerId);
 
-                instantiateNetworkedPlayerStart(runner, player);
+                var playerObj = instantiateNetworkedPlayerStart(runner, player);
+                playerObj.GetComponent<Ownership>().setOwnerRecursively(gamePlayer);
+
             }
         }
 
-        private void instantiateNetworkedPlayerStart(NetworkRunner runner, PlayerRef player)
+        private GameObject instantiateNetworkedPlayerStart(NetworkRunner runner, PlayerRef player)
         {
-            Vector3 playerSpawn = randomPointOnUnitCircle(spawnPoints[0], MagicNumbers.PlayerSpawnRadius);
-            NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, playerSpawn, Quaternion.identity, player);
+            Vector3 playerSpawn = randomPointOnUnitCircle(spawns[0], MagicNumbers.PlayerSpawnRadius);
+            NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, playerSpawn + new Vector3(0, 10, 0), Quaternion.identity, player);
             Debug.Log("AA - Am I right? - " + networkPlayerObject == null);
             // Keep track of the player avatars so we can remove it when they disconnect
             _spawnedCharacters.Add(player, networkPlayerObject);
 
-            GameObject clientSingletonObj = Instantiate(clientSingleton, spawnPoints[0], Quaternion.identity);
+            GameObject clientSingletonObj = Instantiate(clientSingleton, spawns[0], Quaternion.identity);
             clientSingletonObj.name = MagicWords.GameObjectNames.ClientSingleton;
+
+            return networkPlayerObject.gameObject;
         }
 
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
@@ -294,7 +302,7 @@ namespace game.assets
         {
             if (isHost)
             {
-                InitNetworkGameState(spawnPoints);
+                InitNetworkGameState(spawns);
             }
         }
         public void OnSceneLoadStart(NetworkRunner runner) {
@@ -309,14 +317,16 @@ namespace game.assets
                 {
                     networkMode = Fusion.GameMode.Host;
                     InitGame("TwoPlayer", new Vector3[] {
-                        new Vector3(8.79f, 1f, 11f)
+                        new Vector3(8.79f, 1f, 11f),
+                                                new Vector3(8.79f, 1f, 11f)
                     });
                 }
                 if (GUI.Button(new Rect(0, 40, 200, 40), "Join"))
                 {
                     networkMode = Fusion.GameMode.Client;
                     JoinGame("TestRoom", "TwoPlayer", new Vector3[] {
-                        new Vector3(8.79f, 1f, 11f)
+                        new Vector3(8.79f, 1f, 11f),
+                                                new Vector3(8.79f, 1f, 11f)
                     });
                 }
             }

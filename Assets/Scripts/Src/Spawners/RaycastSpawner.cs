@@ -46,17 +46,14 @@ namespace game.assets.spawners
 
         public override void FixedUpdateNetwork()
         {
-
-            /*if (showGhost && ghostInstance != null)
+            Debug.Log("AA - Updating");
+            if (Object.HasInputAuthority && showGhost && ghostInstance != null)
             {
+                Debug.Log("AA - Updating ghost position");
                 ghostInstance.transform.position = ghostPosition;
-            }*/
-
-            if (!Object.HasStateAuthority)
-            {
-                return;
             }
-            if (showGhost && ghostInstance != null)
+
+            if (Object.HasStateAuthority && showGhost && ghostInstance != null)
             {
                 Vector3? point = raycastFromCamera(cam);
 
@@ -64,7 +61,7 @@ namespace game.assets.spawners
                 {
                     Vector3 position = point.Value;
                     position.y += 0.5f;
-                    ghostInstance.transform.position = position;
+                    ghostPosition = position;
                 }
             }
         }
@@ -72,11 +69,15 @@ namespace game.assets.spawners
         public void setGhost(GameObject ghost)
         {
             DestroyImmediate(this.ghostInstance);
+            Debug.Log("AA - Setting ghost");
 
             if (ghost == null)
             {
+                Debug.Log("AA - Ghost is null");
                 return;
             }
+
+            showGhost = true;
 
             this.ghostInstance = ((GameObject)Instantiate(ghost));
         }

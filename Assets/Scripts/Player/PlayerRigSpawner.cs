@@ -14,9 +14,9 @@ public class PlayerRigSpawner : SimulationBehaviour, ISpawned
             cam.depth = float.MaxValue;
         }
 
-        if (!Object.HasStateAuthority)
+        /*if (!Object.HasStateAuthority)
         {
             transform?.Find("PlayerRigFacade")?.gameObject?.SetActive(false);
-        }
+        }*/
     }
 }

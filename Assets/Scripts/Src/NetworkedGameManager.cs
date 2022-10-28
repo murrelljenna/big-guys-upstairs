@@ -143,6 +143,7 @@ namespace game.assets
                 Player gamePlayer = state.reserveNewPlayer(player.PlayerId);
 
                 var playerObj = instantiateNetworkedPlayerStart(runner, player);
+                Debug.Log("Fucking Setting start");
                 playerObj.GetComponent<Ownership>().setOwnerRecursively(gamePlayer);
 
             }

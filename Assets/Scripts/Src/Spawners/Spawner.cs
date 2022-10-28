@@ -21,23 +21,23 @@ namespace game.assets.spawners
         [Tooltip("Radius in which units spawn")]
         public float spawnRadius = 1.2f;
 
-        public Player player;
+        public Ownership ownership;
 
         private FlashResourceIconsRed flasher;
 
-        public virtual void Start()
+        public override void Spawned()
         {
-            player = GetComponent<Ownership>().owner;
+            ownership = GetComponent<Ownership>();
         }
 
         public virtual GameObject Spawn()
         {
-            if (!Object.HasStateAuthority || player.maxPop() || !prefab.IsValid)
+            if (!Object.HasStateAuthority || ownership.owner.maxPop() || !prefab.IsValid)
             {
                 return null;
             }
             Vector3 spawnLocation = getSpawnLocation(transform.position);
-            return SpawnIfCanAfford(prefab, spawnLocation, Quaternion.identity, player);
+            return SpawnIfCanAfford(prefab, spawnLocation, Quaternion.identity, ownership.owner);
         }
 
         protected GameObject SpawnIfCanAfford(NetworkPrefabRef prefab, Vector3 spawnLocation, Quaternion rotation, Player player)
@@ -56,7 +56,7 @@ namespace game.assets.spawners
 
         protected GameObject Spawn(NetworkPrefabRef prefab, Vector3 spawnLocation, Quaternion rotation, PlayerRef playerInput)
         {
-            return Runner.Spawn(prefab, spawnLocation, Quaternion.identity, player.networkPlayer).gameObject;
+            return Runner.Spawn(prefab, spawnLocation, Quaternion.identity, ownership.owner.networkPlayer).gameObject;
         }
 
         private Vector3 getSpawnLocation(Vector3 spawnCenter)

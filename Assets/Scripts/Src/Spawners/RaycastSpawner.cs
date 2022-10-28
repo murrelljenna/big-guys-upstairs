@@ -1,4 +1,6 @@
-﻿using game.assets.audio;
+﻿using Fusion;
+using game.assets.audio;
+using game.assets.player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,8 +14,11 @@ namespace game.assets.spawners
         [Tooltip("Numeric value representing layer mask used by raycast")]
         public int layer;
 
-        [Tooltip("Show building ghost at raycast")]
-        public bool showGhost;
+        [Networked]
+        public NetworkBool showGhost { get; set; }
+
+        [Networked]
+        public Vector3 ghostPosition { get; set; }
 
         [Tooltip("Invoked on plop animation complete")]
         public UnityEvent onPlopped;
@@ -25,7 +30,7 @@ namespace game.assets.spawners
         public GameObject ghost;
         private GameObject ghostInstance;
 
-        public override void Start()
+        public override void Spawned()
         {
             if (cam == null)
             {
@@ -34,11 +39,23 @@ namespace game.assets.spawners
 
             layerMask = 1 << layer;
 
-            base.Start();
+            base.Spawned();
+            Debug.Log("Fucking hello?");
+            ownership = GetComponent<Ownership>();
         }
 
-        public void Update()
+        public override void FixedUpdateNetwork()
         {
+
+            /*if (showGhost && ghostInstance != null)
+            {
+                ghostInstance.transform.position = ghostPosition;
+            }*/
+
+            if (!Object.HasStateAuthority)
+            {
+                return;
+            }
             if (showGhost && ghostInstance != null)
             {
                 Vector3? point = raycastFromCamera(cam);
@@ -89,7 +106,7 @@ namespace game.assets.spawners
                 Vector3 startSpawnLocation = endSpawnLocation;
                 startSpawnLocation.y += 0.5f;
 
-                GameObject spawnedObject = SpawnIfCanAfford(prefab, startSpawnLocation, Quaternion.identity, player);
+                GameObject spawnedObject = SpawnIfCanAfford(prefab, startSpawnLocation, Quaternion.identity, ownership.owner);
 
                 if (spawnedObject != null)
                 {

@@ -77,10 +77,8 @@ namespace game.assets
 
         private bool isHost;
 
-        Vector3[] spawns;
-
         private NetworkedGameManagerState state;
-        public void InitGame(string mapName, Vector3[] spawnPoints)
+        public void InitGame(string mapName)
         {
             if (_runner == null)
             {
@@ -88,11 +86,9 @@ namespace game.assets
                 var targetScene = SceneManager.LoadScene(mapName, new LoadSceneParameters(LoadSceneMode.Single));
                 StartGame(targetScene, Fusion.GameMode.Host);
             }
-
-            this.spawns = spawnPoints;
         }
 
-        public void JoinGame(string sessionName, string mapName, Vector3[] spawnPoints)
+        public void JoinGame(string sessionName, string mapName)
         {
             if (_runner == null)
             {
@@ -101,10 +97,10 @@ namespace game.assets
             }
         }
 
-        private void InitNetworkGameState(Vector3[] spawnPoints)
+        private void InitNetworkGameState()
         {
             state = _runner.Spawn(_gameManagerState, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<NetworkedGameManagerState>();
-            state.Init(spawnPoints);
+            state.Init();
         }
 
         async void StartGame(Scene scene, Fusion.GameMode mode)
@@ -125,39 +121,35 @@ namespace game.assets
 
         public override Scene Initialize(string mapName, Vector3[] spawnPoints)
         {
-            if (_runner == null)
-            {
-                targetScene = SceneManager.LoadScene(mapName, new LoadSceneParameters(LoadSceneMode.Single));
-                StartGame(targetScene,  networkMode);
-            }
-            this.spawns = spawnPoints;
-            players = new player.Player[spawnPoints.Length];
-            Debug.Log("AA - Initializing. Player length: " + players.Length);
-            return targetScene;
+            throw new NotImplementedException();
         }
 
-        public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+        public void OnPlayerJoined(NetworkRunner runner, PlayerRef networkPlayer)
         {
             if (isHost)
             {
-                Player gamePlayer = state.reserveNewPlayer(player.PlayerId);
+                Player gamePlayer = state.reserveNewPlayer(networkPlayer);
 
-                var playerObj = instantiateNetworkedPlayerStart(runner, player);
-                Debug.Log("Fucking Setting start");
+                var playerObj = instantiateNetworkedPlayerStart(runner, gamePlayer);
                 playerObj.GetComponent<Ownership>().setOwnerRecursively(gamePlayer);
-
             }
         }
 
-        private GameObject instantiateNetworkedPlayerStart(NetworkRunner runner, PlayerRef player)
+        private GameObject instantiateNetworkedPlayerStart(NetworkRunner runner, Player player)
         {
-            Vector3 playerSpawn = randomPointOnUnitCircle(spawns[0], MagicNumbers.PlayerSpawnRadius);
-            NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, playerSpawn + new Vector3(0, 10, 0), Quaternion.identity, player);
-            Debug.Log("AA - Am I right? - " + networkPlayerObject == null);
+            //var go = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            //go.transform.position = player.spawnPoint;
+            //Vector3 playerSpawn = randomPointOnUnitCircle(player.spawnPoint, MagicNumbers.PlayerSpawnRadius);
+            Debug.Log("AB - Spawning at " + player.spawnPoint);
+            NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, player.spawnPoint, Quaternion.identity, player.networkPlayer);
+            Debug.Log("AB - Spawned at " + networkPlayerObject.transform.position);
+            Debug.Log("AB - at " + networkPlayerObject.transform.position);
+            //networkPlayerObject.GetComponent<NetworkCharacterController>().TeleportToPosition(player.spawnPoint);
+            Debug.Log("AB - Spawned at " + networkPlayerObject.transform.position);
             // Keep track of the player avatars so we can remove it when they disconnect
-            _spawnedCharacters.Add(player, networkPlayerObject);
+            _spawnedCharacters.Add(player.networkPlayer, networkPlayerObject);
 
-            GameObject clientSingletonObj = Instantiate(clientSingleton, spawns[0], Quaternion.identity);
+            GameObject clientSingletonObj = Instantiate(clientSingleton, new Vector3(0, 0, 0), Quaternion.identity);
             clientSingletonObj.name = MagicWords.GameObjectNames.ClientSingleton;
 
             return networkPlayerObject.gameObject;
@@ -175,7 +167,6 @@ namespace game.assets
 
         public void OnInput(NetworkRunner runner, NetworkInput input)
         {
-            Debug.Log("Sending input");
             var frameworkInput = new PlayerNetworkInput();
 
             if (Input.GetKey(KeyCode.W))
@@ -303,7 +294,7 @@ namespace game.assets
         {
             if (isHost)
             {
-                InitNetworkGameState(spawns);
+                InitNetworkGameState();
             }
         }
         public void OnSceneLoadStart(NetworkRunner runner) {
@@ -317,18 +308,12 @@ namespace game.assets
                 if (GUI.Button(new Rect(0, 0, 200, 40), "Host"))
                 {
                     networkMode = Fusion.GameMode.Host;
-                    InitGame("TwoPlayer", new Vector3[] {
-                        new Vector3(8.79f, 1f, 11f),
-                                                new Vector3(8.79f, 1f, 11f)
-                    });
+                    InitGame("TwoPlayer");
                 }
                 if (GUI.Button(new Rect(0, 40, 200, 40), "Join"))
                 {
                     networkMode = Fusion.GameMode.Client;
-                    JoinGame("TestRoom", "TwoPlayer", new Vector3[] {
-                        new Vector3(8.79f, 1f, 11f),
-                                                new Vector3(8.79f, 1f, 11f)
-                    });
+                    JoinGame("TestRoom", "TwoPlayer");
                 }
             }
         }

@@ -10,9 +10,42 @@ using static game.assets.utilities.GameUtils;
 public class NetworkedGameManagerState : NetworkBehaviour
 {
 
-    private Player[] players { get; set; }
+    private PlayerSlot[] playerSlots { get; set; }
+    private List<Player> players = new List<Player>();
     [Networked]
     private int playerCount { get; set; } = 0;
+
+    private struct PlayerSlot
+    {
+        public Player player;
+        public Vector3 spawnPoint;
+        public PlayerColour colour;
+        public bool taken; // player == null
+
+        public PlayerSlot(Vector3 spawnpoint, PlayerColour colour)
+        {
+            this.taken = false;
+            this.player = null;
+            this.spawnPoint = spawnpoint;
+            this.colour = colour;
+        }
+
+        public void Clear()
+        {
+            player = null; // Reset Player state for next person to join
+            taken = false;
+        }
+
+        public Player Take(PlayerRef networkPlayer, ResourceSet resources)
+        {
+            player = new Player(colour); // Reset Player state for next person to join
+            this.player.networkPlayer = networkPlayer;
+            this.player.resources = resources;
+            this.player.spawnPoint = this.spawnPoint;
+            taken = true;
+            return this.player;
+        }
+    }
 
     private struct ColourAvailability
     {
@@ -38,15 +71,15 @@ public class NetworkedGameManagerState : NetworkBehaviour
 
     private ResourceSet startingResources = new ResourceSet(200, 200);
 
-    public void Init(Vector3[] spawnPoints) 
+    public void Init() 
     {
-        players = new Player[spawnPoints.Length];
+        var spawnPoints = PlayerSpawner.GetAll();
+        playerSlots = new PlayerSlot[spawnPoints.Length];
 
-        for (int i = 0; i < players.Length; i++)
+        for (int i = 0; i < playerSlots.Length; i++)
         {
             PlayerColour colour = pickFirstAvailableColour();
-            players[i] = new Player();
-            players[i].colour = pickFirstAvailableColour();
+            playerSlots[i] = new PlayerSlot(spawnPoints[i].location(), colour);
         }
     }
 
@@ -63,13 +96,11 @@ public class NetworkedGameManagerState : NetworkBehaviour
         throw new ArgumentException("No available colours found", nameof(availableColours));
     }
 
-    public Player reserveNewPlayer(PlayerRef player)
+    public Player reserveNewPlayer(PlayerRef networkPlayer)
     {
-        Debug.Log("AA - " + playerCount);
+        var player = playerSlots[playerCount].Take(networkPlayer, startingResources);
         playerCount++;
-        players[playerCount - 1].networkPlayer = player;
-        players[playerCount - 1].resources = startingResources;
-        return players[playerCount - 1];
+        return player;
     }
 
     public PlayerColour getPlayerColour(int playerIndex)

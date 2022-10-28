@@ -15,10 +15,18 @@ namespace game.assets.player
         public int maxCount { get; set; }
         public PlayerRef networkPlayer { get; set; }
         public ResourceSet resources = new ResourceSet();
+        public Vector3 spawnPoint;
 
         public Player()
         {
             colour = PlayerColours.Blue;
+            popCount = 0;
+            maxCount = 20;
+        }
+
+        public Player(PlayerColour colour)
+        {
+            this.colour = colour;
             popCount = 0;
             maxCount = 20;
         }

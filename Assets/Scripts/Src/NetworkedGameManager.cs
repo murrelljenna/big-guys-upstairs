@@ -163,6 +163,8 @@ namespace game.assets
                 runner.Despawn(networkObject);
                 _spawnedCharacters.Remove(player);
             }
+
+            state.freePlayerSlot(player);
         }
 
         public void OnInput(NetworkRunner runner, NetworkInput input)

@@ -11,9 +11,9 @@ public class NetworkedGameManagerState : NetworkBehaviour
 {
 
     private PlayerSlot[] playerSlots { get; set; }
-    private List<Player> players = new List<Player>();
+
     [Networked]
-    private int playerCount { get; set; } = 0;
+    private NetworkArray<int> playerColours { get; set; }
 
     private struct PlayerSlot
     {
@@ -98,9 +98,28 @@ public class NetworkedGameManagerState : NetworkBehaviour
 
     public Player reserveNewPlayer(PlayerRef networkPlayer)
     {
-        var player = playerSlots[playerCount].Take(networkPlayer, startingResources);
-        playerCount++;
+        Player player = null;
+        for (int i = 0; i < playerSlots.Length; i++)
+        {
+            var playerSlot = playerSlots[i];
+            if (!playerSlot.taken)
+            {
+                player = playerSlot.Take(networkPlayer, startingResources);
+            }
+        }
         return player;
+    }
+
+    public void freePlayerSlot(PlayerRef networkPlayer)
+    {
+        for (int i = 0; i < playerSlots.Length; i++)
+        {
+            var playerSlot = playerSlots[i];
+            if (playerSlot.player.networkPlayer == networkPlayer)
+            {
+                playerSlot.Clear();
+            }
+        }
     }
 
     public PlayerColour getPlayerColour(int playerIndex)

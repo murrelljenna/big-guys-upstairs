@@ -32,10 +32,10 @@ namespace game.assets.ai
         public UnityEvent onAttackOrdered;
 
         [Tooltip("Invoked when attack is selected")]
-        public UnityEvent onSelect;
+        public UnityEvent onSelect = new UnityEvent();
 
         [Tooltip("Invoked when unit is deselected")]
-        public UnityEvent onDeselect;
+        public UnityEvent onDeselect = new UnityEvent();
 
         [Tooltip("Invoked when enemy is killed")]
         public UnityEvent<Health> enemyKilled = new UnityEvent<Health>();

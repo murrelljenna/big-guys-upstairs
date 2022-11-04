@@ -5,7 +5,6 @@ using UnityEngine.Events;
 
 namespace game.assets
 {
-
     public class TransactionalMethod : MonoBehaviour
     {
         public UnityEvent cannotAfford = new UnityEvent();

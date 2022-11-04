@@ -31,6 +31,7 @@ namespace Tests
         {
             ResourceSet resourceSet = new ResourceSet(25);
             transactionalMethod.price = resourceSet;
+            transactionalMethod.player = player;
 
             player.giveResources(new ResourceSet(26));
 
@@ -44,6 +45,7 @@ namespace Tests
         {
             ResourceSet resourceSet = new ResourceSet(25);
             transactionalMethod.price = resourceSet;
+            transactionalMethod.player = player;
 
             var result = transactionalMethod.Try();
 

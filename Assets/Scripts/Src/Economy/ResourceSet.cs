@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -106,5 +107,46 @@ namespace game.assets.utilities.resources {
             horse = horse - resourceSet.horse;
         }
         public bool canAfford(ResourceSet resourceSet) { return (this >= resourceSet); }
+
+        public static object Deserialize(byte[] data)
+        {
+            var result = new ResourceSet();
+            result.food = BitConverter.ToInt32(data, 0);
+            result.wood = BitConverter.ToInt32(data, 4);
+            result.gold = BitConverter.ToInt32(data, 8);
+            return result;
+        }
+
+        public static byte[] Serialize(object customType)
+        {
+            var c = (ResourceSet)customType;
+            var foodBits = BitConverter.GetBytes(c.food);
+            var woodBits = BitConverter.GetBytes(c.wood);
+            var goldBits = BitConverter.GetBytes(c.gold);
+            var stoneBits = BitConverter.GetBytes(c.stone);
+            var ironBits = BitConverter.GetBytes(c.iron);
+            return new byte[] { 
+                foodBits[0],
+                foodBits[1],
+                foodBits[2],
+                foodBits[3],
+                woodBits[0],
+                woodBits[1],
+                woodBits[2],
+                woodBits[3],
+                goldBits[0],
+                goldBits[1],
+                goldBits[2],
+                goldBits[3],
+                stoneBits[0],
+                stoneBits[1],
+                stoneBits[2],
+                stoneBits[3],
+                                ironBits[0],
+                ironBits[1],
+                ironBits[2],
+                ironBits[3],
+            };
+        }
     }
 }

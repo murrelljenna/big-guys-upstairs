@@ -12,9 +12,6 @@ public class NetworkedGameManagerState : NetworkBehaviour
 
     private PlayerSlot[] playerSlots { get; set; }
 
-    [Networked]
-    private NetworkArray<int> playerColours { get; set; }
-
     private struct PlayerSlot
     {
         public Player player;

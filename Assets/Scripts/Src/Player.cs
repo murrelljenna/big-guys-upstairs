@@ -1,6 +1,7 @@
 ﻿using Fusion;
 using game.assets.ai;
 using game.assets.utilities.resources;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static game.assets.utilities.GameUtils;
@@ -16,6 +17,35 @@ namespace game.assets.player
         public PlayerRef networkPlayer { get; set; }
         public ResourceSet resources = new ResourceSet();
         public Vector3 spawnPoint;
+
+        public static object Deserialize(byte[] data)
+        {
+            var player = new Player();
+
+            player.colour = PlayerColourManager.ColourAtIndex(BitConverter.ToInt32(data, 0));
+
+            var resourceSetArr = new Byte[20];
+            Array.ConstrainedCopy(data, 4, resourceSetArr, 0, 20);
+
+            player.resources = (ResourceSet)ResourceSet.Deserialize(resourceSetArr);
+            return player;
+        }
+
+        public static byte[] Serialize(object customType)
+        {
+
+
+            var c = (Player)customType;
+
+            var serializedResources = ResourceSet.Serialize(c.resources);
+            var serializedColourIndex = BitConverter.GetBytes(PlayerColourManager.IndexOfColour(c.colour));
+
+            var arrConstructor = new List<Byte>();
+
+            arrConstructor.AddRange(serializedColourIndex);
+            arrConstructor.AddRange(serializedResources);
+            return arrConstructor.ToArray();
+        }
 
         public Player()
         {

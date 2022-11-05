@@ -117,6 +117,8 @@ namespace game.assets.utilities.resources {
             return result;
         }
 
+        public const int SIZE_IN_BYTES = 20;
+
         public static byte[] Serialize(object customType)
         {
             var c = (ResourceSet)customType;
@@ -142,7 +144,7 @@ namespace game.assets.utilities.resources {
                 stoneBits[1],
                 stoneBits[2],
                 stoneBits[3],
-                                ironBits[0],
+                ironBits[0],
                 ironBits[1],
                 ironBits[2],
                 ironBits[3],

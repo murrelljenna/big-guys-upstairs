@@ -19,5 +19,15 @@ namespace Tests.Serialization
 
             Assert.AreEqual(deserializedResources, resources);
         }
+
+        [Test]
+        public void TestResourceSetSerializeByteArraySize()
+        {
+            ResourceSet resources = new ResourceSet(50, 50);
+
+            var serialized = ResourceSet.Serialize(resources);
+
+            Assert.AreEqual(serialized.Length, ResourceSet.SIZE_IN_BYTES);
+        }
     }
 }

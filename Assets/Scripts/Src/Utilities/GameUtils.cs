@@ -1,10 +1,8 @@
 ﻿using game.assets.ai;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
 using game.assets.player;
-using UnityEngine.AI;
 using UnityEngine.Events;
 
 namespace game.assets.utilities {

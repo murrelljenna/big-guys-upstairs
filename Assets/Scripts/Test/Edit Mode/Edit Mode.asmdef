@@ -1,10 +1,14 @@
 {
     "name": "EditMode",
+    "rootNamespace": "",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "AssemblyDefinitionFile",
-        "InteractionSystemAssembly"
+        "InteractionSystemAssembly",
+        "Fusion.Addressables",
+        "Unity.Fusion.CodeGen",
+        "Fusion.Editor"
     ],
     "includePlatforms": [
         "Editor"

@@ -592,8 +592,10 @@ MonoBehaviour:
   - {fileID: 5670587663590424035}
   - {fileID: 3643581894541174985}
   - {fileID: 6642740390509252936}
+  - {fileID: 7404373241901479203}
   - {fileID: 2829083539984940797}
   - {fileID: 6076754067389855705}
+  - {fileID: 3875199260221784331}
   - {fileID: 3145881686746321680}
   - {fileID: 659959271925083291}
   SimulationBehaviours:
@@ -720,16 +722,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13cd7f9aed8944143bfa86ce4209aa95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   owned: 0
-  owner:
-    resources:
-      wood: 0
-      food: 0
-      gold: 0
-      stone: 0
-      iron: 0
-      horse: 0
-    spawnPoint: {x: 0, y: 0, z: 0}
   onNewOwner:
     m_PersistentCalls:
       m_Calls: []
@@ -1371,16 +1365,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13cd7f9aed8944143bfa86ce4209aa95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   owned: 0
-  owner:
-    resources:
-      wood: 0
-      food: 0
-      gold: 0
-      stone: 0
-      iron: 0
-      horse: 0
-    spawnPoint: {x: 0, y: 0, z: 0}
   onNewOwner:
     m_PersistentCalls:
       m_Calls: []

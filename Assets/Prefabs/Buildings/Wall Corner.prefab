@@ -105,13 +105,23 @@ PrefabInstance:
     - target: {fileID: 6686482844951219974, guid: 497068c75ad6b1e45a90bc4d327cca51,
         type: 3}
       propertyPath: NetworkedBehaviours.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6686482844951219974, guid: 497068c75ad6b1e45a90bc4d327cca51,
         type: 3}
       propertyPath: NetworkedBehaviours.Array.data[0]
       value: 
+      objectReference: {fileID: 1307466556356262528}
+    - target: {fileID: 6686482844951219974, guid: 497068c75ad6b1e45a90bc4d327cca51,
+        type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[1]
+      value: 
       objectReference: {fileID: 7310799879660048169}
+    - target: {fileID: 6686482844951219974, guid: 497068c75ad6b1e45a90bc4d327cca51,
+        type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[2]
+      value: 
+      objectReference: {fileID: 7136074567650194472}
     - target: {fileID: 6686482844951219974, guid: 497068c75ad6b1e45a90bc4d327cca51,
         type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
@@ -136,6 +146,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2939132940526995780}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1307466556356262528 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4246023848213066692, guid: 497068c75ad6b1e45a90bc4d327cca51,
+    type: 3}
+  m_PrefabInstance: {fileID: 2939132940526995780}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8423032305122098192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13cd7f9aed8944143bfa86ce4209aa95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7310799879660048169 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5601572041021572717, guid: 497068c75ad6b1e45a90bc4d327cca51,
@@ -146,6 +168,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7136074567650194472 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5458797969971084652, guid: 497068c75ad6b1e45a90bc4d327cca51,
+    type: 3}
+  m_PrefabInstance: {fileID: 2939132940526995780}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13cd7f9aed8944143bfa86ce4209aa95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &3907302582671829175

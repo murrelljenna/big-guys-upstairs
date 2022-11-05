@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{10FF2C88-4B97-3C11-160E-D424B2CE433A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -58,17 +57,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Test\Edit Mode\TestResourceSet.cs" />
-    <Compile Include="Assets\Scripts\Test\Edit Mode\TestLocalInstantiator.cs" />
     <Compile Include="Assets\Scripts\Test\Edit Mode\TestAudioController.cs" />
     <Compile Include="Assets\Scripts\Test\Edit Mode\TestResourceSetSerialization.cs" />
     <Compile Include="Assets\Scripts\Test\Edit Mode\TestHealth.cs" />
+    <Compile Include="Assets\Scripts\Test\Edit Mode\TestPlayerSerialization.cs" />
     <Compile Include="Assets\Scripts\Test\Edit Mode\TestTransactionalMethod.cs" />
     <Compile Include="Assets\Scripts\Test\Edit Mode\TestAttackAggregation.cs" />
     <Compile Include="Assets\Scripts\Test\Edit Mode\TestInstantiatorFactory.cs" />
-    <Compile Include="Assets\Scripts\Test\Edit Mode\TestOwnership.cs" />
     <Compile Include="Assets\Scripts\Test\Edit Mode\TestNormalizePrefabName.cs" />
-    <Compile Include="Assets\Scripts\Test\Edit Mode\TestOwnershipOps.cs" />
-    <Compile Include="Assets\Scripts\Test\Edit Mode\TestPlayerSerialization.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\Test\Edit Mode\Edit Mode.asmdef" />
@@ -673,6 +669,18 @@
     <ProjectReference Include="InteractionSystemAssembly.csproj">
       <Project>{138A9661-2661-9562-B3D0-F114B092AA3D}</Project>
       <Name>InteractionSystemAssembly</Name>
+    </ProjectReference>
+    <ProjectReference Include="Fusion.Addressables.csproj">
+      <Project>{B47D2470-F01C-43AE-7A4C-CC9ED7DD3D11}</Project>
+      <Name>Fusion.Addressables</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Fusion.CodeGen.csproj">
+      <Project>{265A9471-83BC-0940-A168-F754A7BA60D2}</Project>
+      <Name>Unity.Fusion.CodeGen</Name>
+    </ProjectReference>
+    <ProjectReference Include="Fusion.Editor.csproj">
+      <Project>{A802BD0A-90FC-CD28-E7CD-25D09982C495}</Project>
+      <Name>Fusion.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{BFA4118D-D662-B8FC-6DE8-29EC3DC3E800}</Project>

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Fusion;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace game.assets.utilities.resources {
     [System.Serializable]
-    public struct ResourceSet {
+    public struct ResourceSet : INetworkStruct {
         public int wood;
         public int food;
         public int gold;

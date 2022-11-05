@@ -11,7 +11,8 @@ public class NetworkedGameManagerState : NetworkBehaviour
 {
 
     private PlayerSlot[] playerSlots { get; set; }
-
+    [Networked]
+    public ResourceSet resources { get; set; }
     private struct PlayerSlot
     {
         public Player player;

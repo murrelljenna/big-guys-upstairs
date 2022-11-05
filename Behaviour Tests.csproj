@@ -660,6 +660,18 @@
       <Project>{430234BD-4D35-B411-8AEA-A1CCB629D226}</Project>
       <Name>AssemblyDefinitionFile</Name>
     </ProjectReference>
+    <ProjectReference Include="Fusion.Addressables.csproj">
+      <Project>{B47D2470-F01C-43AE-7A4C-CC9ED7DD3D11}</Project>
+      <Name>Fusion.Addressables</Name>
+    </ProjectReference>
+    <ProjectReference Include="Fusion.Editor.csproj">
+      <Project>{A802BD0A-90FC-CD28-E7CD-25D09982C495}</Project>
+      <Name>Fusion.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Fusion.CodeGen.csproj">
+      <Project>{265A9471-83BC-0940-A168-F754A7BA60D2}</Project>
+      <Name>Unity.Fusion.CodeGen</Name>
+    </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{BFA4118D-D662-B8FC-6DE8-29EC3DC3E800}</Project>
       <Name>UnityEditor.UI</Name>

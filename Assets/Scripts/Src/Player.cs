@@ -23,11 +23,7 @@ namespace game.assets.player
             var player = new Player();
 
             player.colour = PlayerColourManager.ColourAtIndex(BitConverter.ToInt32(data, 0));
-
-            var resourceSetArr = new Byte[20];
-            Array.ConstrainedCopy(data, 4, resourceSetArr, 0, 20);
-
-            player.resources = (ResourceSet)ResourceSet.Deserialize(resourceSetArr);
+            player.resources = (ResourceSet)ResourceSet.Deserialize(data.Slice(4));
             return player;
         }
 
@@ -44,6 +40,7 @@ namespace game.assets.player
 
             arrConstructor.AddRange(serializedColourIndex);
             arrConstructor.AddRange(serializedResources);
+            Debug.Log(arrConstructor.Count);
             return arrConstructor.ToArray();
         }
 

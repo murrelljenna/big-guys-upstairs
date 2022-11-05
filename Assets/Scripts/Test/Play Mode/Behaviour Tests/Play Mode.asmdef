@@ -1,10 +1,14 @@
 {
     "name": "Behaviour Tests",
+    "rootNamespace": "",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "InteractionSystemAssembly",
-        "AssemblyDefinitionFile"
+        "AssemblyDefinitionFile",
+        "Fusion.Addressables",
+        "Fusion.Editor",
+        "Unity.Fusion.CodeGen"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

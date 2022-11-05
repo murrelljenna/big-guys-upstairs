@@ -1,15 +1,15 @@
-﻿using UnityEngine;
+﻿using Fusion;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace game.assets.player
 {
-    public class Ownership : MonoBehaviour
+    public class Ownership : NetworkBehaviour
     {
         [Tooltip("If owned")]
         public bool owned = false;
 
-        [Tooltip("Player who owns this GameObject")]
-        public Player owner;
+        public Player owner { get; set; }
 
         [Tooltip("Invoke when new owner is set")]
         public UnityEvent<Player> onNewOwner;

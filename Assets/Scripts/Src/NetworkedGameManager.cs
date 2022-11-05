@@ -8,6 +8,7 @@ using game.assets.ai;
 using Fusion;
 using Fusion.Sockets;
 using System.Collections.Generic;
+using ExitGames.Client.Photon;
 
 namespace game.assets
 {
@@ -78,6 +79,14 @@ namespace game.assets
         private bool isHost;
 
         private NetworkedGameManagerState state;
+
+        public void Start()
+        {
+            if (!PhotonPeer.RegisterType(typeof(Player), (byte)2, Player.Serialize, Player.Deserialize))
+            {
+                Debug.LogError("Failed to register Player Serializer with photon peer");
+            }
+        }
         public void InitGame(string mapName)
         {
             if (_runner == null)

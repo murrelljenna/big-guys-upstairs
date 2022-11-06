@@ -13,39 +13,33 @@ public class NetworkedGameManagerState : NetworkBehaviour
     private PlayerSlot[] playerSlots { get; set; }
     [Networked]
     public ResourceSet resources { get; set; }
-    private struct PlayerSlot
+    public struct PlayerSlot
     {
-        public Player player;
         public Vector3 spawnPoint;
         public PlayerColour colour;
-        public bool taken; // player == null
+        public PlayerRef? player;
+        public bool taken;
 
         public PlayerSlot(Vector3 spawnpoint, PlayerColour colour)
         {
             this.taken = false;
-            this.player = null;
             this.spawnPoint = spawnpoint;
             this.colour = colour;
+            player = null;
         }
 
         public void Clear()
         {
-            player = null; // Reset Player state for next person to join
             taken = false;
         }
 
-        public Player Take(PlayerRef networkPlayer, ResourceSet resources)
+        public PlayerSlot Take(PlayerRef player)
         {
-            player = new Player(colour); // Reset Player state for next person to join
-            this.player.networkPlayer = networkPlayer;
-            this.player.resources = resources;
-            this.player.spawnPoint = this.spawnPoint;
             taken = true;
-            return this.player;
+            this.player = player;
+            return this;
         }
     }
-
-    private ResourceSet startingResources = new ResourceSet(200, 200);
 
     public void Init() 
     {
@@ -59,20 +53,18 @@ public class NetworkedGameManagerState : NetworkBehaviour
         }
     }
 
-
-
-    public Player reserveNewPlayer(PlayerRef networkPlayer)
+    public PlayerSlot ReserveNewPlayer(PlayerRef networkPlayer)
     {
-        Player player = null;
         for (int i = 0; i < playerSlots.Length; i++)
         {
             var playerSlot = playerSlots[i];
             if (!playerSlot.taken)
             {
-                player = playerSlot.Take(networkPlayer, startingResources);
+                return playerSlot.Take(networkPlayer);
             }
         }
-        return player;
+
+        throw new Exception("All player slots taken yet we're still trying to request a player");
     }
 
     public void freePlayerSlot(PlayerRef networkPlayer)
@@ -80,7 +72,7 @@ public class NetworkedGameManagerState : NetworkBehaviour
         for (int i = 0; i < playerSlots.Length; i++)
         {
             var playerSlot = playerSlots[i];
-            if (playerSlot.player.networkPlayer == networkPlayer)
+            if (playerSlot.player == networkPlayer)
             {
                 playerSlot.Clear();
             }

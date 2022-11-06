@@ -8,7 +8,7 @@ using game.assets.ai;
 using UnityEngine.TestTools;
 using game.assets;
 using static game.assets.utilities.GameUtils;
-
+using game.assets.player;
 
 namespace Tests
 {
@@ -47,8 +47,8 @@ namespace Tests
 
             LocalGameManager gameManager = GameObject.Find(MagicWords.GameObjectNames.GameManager).GetComponent<LocalGameManager>();
             gameManager.players = new game.assets.player.Player[2] {
-                new game.assets.player.Player(),
-                new game.assets.player.Player()
+                Player.AsDevCube(),
+                Player.AsDevCube()
             };
 
             attackee.gameObject.SetAsPlayer(gameManager.players[1]);

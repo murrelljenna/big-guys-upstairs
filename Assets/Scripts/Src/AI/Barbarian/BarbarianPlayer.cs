@@ -9,13 +9,19 @@ using game.assets.spawners;
 public class BarbarianPlayer : Player
 {
     private List<AIUnitGrouping> squads = new List<AIUnitGrouping>();
-    public BarbarianPlayer()
+
+    public new static BarbarianPlayer AsDevCube()
     {
-        this.colour = PlayerColours.Black;
+        GameObject devCube = new GameObject();
+        BarbarianPlayer player = (BarbarianPlayer)devCube.AddComponent(typeof(BarbarianPlayer));
+        player.colour = PlayerColours.Black;
+
+        return player;
     }
 
     virtual public void Awake()
     {
+        this.colour = PlayerColours.Black;
         Spawner[] spawners = GameObject.FindObjectsOfType<Spawner>();
 
         for (int i = 0; i < spawners.Length; i++)

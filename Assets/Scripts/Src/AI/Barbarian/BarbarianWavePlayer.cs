@@ -29,12 +29,17 @@ public class BarbarianWavePlayer : BarbarianPlayer
 
     public UnityEvent lastBarbarianWaveDefeated = new UnityEvent();
 
+    public new static BarbarianWavePlayer AsDevCube()
+    {
+        GameObject devCube = new GameObject();
+        BarbarianWavePlayer player = (BarbarianWavePlayer)devCube.AddComponent(typeof(BarbarianWavePlayer));
+        player.colour = PlayerColours.Black;
+
+        return player;
+    }
+
     private int wave = 1;
 
-    private BarbarianWavePlayer()
-    {
-        this.colour = PlayerColours.Black;
-    }
     IEnumerator waitToAttack(float delayTime, Spawner spawnPoint, int amt)
     {
         //Wait for the specified delay time before continuing.
@@ -119,7 +124,7 @@ public class BarbarianWavePlayer : BarbarianPlayer
     {
         if (singleton == null)
         {
-            singleton = new BarbarianWavePlayer();
+            singleton = BarbarianWavePlayer.AsDevCube();
         }
 
         return singleton;

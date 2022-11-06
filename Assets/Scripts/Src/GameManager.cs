@@ -51,10 +51,10 @@ namespace game.assets
 
         protected Vector3[] spawnPoints;
 
-        public BarbarianPlayer barbarianPlayer = new BarbarianPlayer();
+        public BarbarianPlayer barbarianPlayer;
 
         // Initialize always with an empty player - this makes testing easier, as the ownership will work.
-        public player.Player[] players = new player.Player[1] { new player.Player() };
+        public player.Player[] players;
 
         public abstract Scene Initialize(string mapName, Vector3[] spawnPoints);
 
@@ -62,6 +62,8 @@ namespace game.assets
         void Start()
         {
             DontDestroyOnLoad(gameObject);
+            //players = new player.Player[1] { Player.AsDevCube() };
+            barbarianPlayer = BarbarianPlayer.AsDevCube();
         }
 
         public virtual player.Player getLocalPlayer()

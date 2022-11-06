@@ -12,6 +12,7 @@ using static game.assets.utilities.GameUtils;
 using game.assets;
 using game.assets.utilities.resources;
 using game.assets.ai;
+using game.assets.player;
 
 namespace Tests
 {
@@ -39,8 +40,8 @@ namespace Tests
 
             LocalGameManager gameManager = GameObject.Find(MagicWords.GameObjectNames.GameManager).GetComponent<LocalGameManager>();
             gameManager.players = new game.assets.player.Player[2] {
-                    new game.assets.player.Player(),
-                    new game.assets.player.Player()
+                    Player.AsDevCube(),
+                    Player.AsDevCube()
                 };
 
             town.SetAsMine();

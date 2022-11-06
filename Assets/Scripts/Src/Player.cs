@@ -9,54 +9,33 @@ using static game.assets.utilities.GameUtils;
 namespace game.assets.player
 {
     [System.Serializable]
-    public class Player
+    public class Player : NetworkBehaviour
     {
         public PlayerColour colour { get; set; }
+
+        [Networked]
+        public int playerColourIndex { get; set; }
+        [Networked]
         public int popCount { get; set; }
+        [Networked]
         public int maxCount { get; set; }
+        [Networked]
         public PlayerRef networkPlayer { get; set; }
         public ResourceSet resources = new ResourceSet();
         public Vector3 spawnPoint;
 
-        public static object Deserialize(byte[] data)
+        public static Player AsDevCube()
         {
-            var player = new Player();
+            GameObject devCube = new GameObject();
+            Player player = (Player)devCube.AddComponent(typeof(Player));
+            player.colour = PlayerColours.Blue;
+            player.popCount = 0;
+            player.maxCount = 20;
 
-            player.colour = PlayerColourManager.ColourAtIndex(BitConverter.ToInt32(data, 0));
-            player.resources = (ResourceSet)ResourceSet.Deserialize(data.Slice(4));
             return player;
         }
 
-        public static byte[] Serialize(object customType)
-        {
 
-
-            var c = (Player)customType;
-
-            var serializedResources = ResourceSet.Serialize(c.resources);
-            var serializedColourIndex = BitConverter.GetBytes(PlayerColourManager.IndexOfColour(c.colour));
-
-            var arrConstructor = new List<Byte>();
-
-            arrConstructor.AddRange(serializedColourIndex);
-            arrConstructor.AddRange(serializedResources);
-            Debug.Log(arrConstructor.Count);
-            return arrConstructor.ToArray();
-        }
-
-        public Player()
-        {
-            colour = PlayerColours.Blue;
-            popCount = 0;
-            maxCount = 20;
-        }
-
-        public Player(PlayerColour colour)
-        {
-            this.colour = colour;
-            popCount = 0;
-            maxCount = 20;
-        }
 
         public Player withResources(int wood = 100, int food = 100)
         {

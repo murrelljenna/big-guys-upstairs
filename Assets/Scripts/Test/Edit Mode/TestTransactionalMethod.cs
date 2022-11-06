@@ -11,15 +11,17 @@ using static Test.TestUtils;
 
 namespace Tests
 {
-    public class TestTransactionalMethod : MonoBehaviour
+    public class TestTransactionalMethod
     {
-        Player player = new Player();
+        Player player;
         TransactionalMethod transactionalMethod;
 
         [SetUp]
         public void SetUp()
         {
             ClearGameObjects();
+
+            player = Player.AsDevCube();
 
             GameObject goWithTransactionalMethod = new GameObject("Whatevs");
 

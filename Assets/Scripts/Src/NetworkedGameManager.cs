@@ -9,6 +9,7 @@ using Fusion;
 using Fusion.Sockets;
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
+using static NetworkedGameManagerState;
 
 namespace game.assets
 {
@@ -73,20 +74,10 @@ namespace game.assets
         private Scene targetScene;
         Fusion.GameMode networkMode;
 
-
-        private Player localPlayer;
-
         private bool isHost;
 
         private NetworkedGameManagerState state;
 
-        public void Start()
-        {
-            if (!PhotonPeer.RegisterType(typeof(Player), (byte)2, Player.Serialize, Player.Deserialize))
-            {
-                Debug.LogError("Failed to register Player Serializer with photon peer");
-            }
-        }
         public void InitGame(string mapName)
         {
             if (_runner == null)
@@ -137,26 +128,27 @@ namespace game.assets
         {
             if (isHost)
             {
-                Player gamePlayer = state.reserveNewPlayer(networkPlayer);
+                PlayerSlot playerDeets = state.ReserveNewPlayer(networkPlayer);
 
-                var playerObj = instantiateNetworkedPlayerStart(runner, gamePlayer);
-                playerObj.GetComponent<Ownership>().setOwnerRecursively(gamePlayer);
+                var playerObj = instantiateNetworkedPlayerStart(runner, playerDeets);
+                Player player = playerObj.GetComponent<Player>();
+                playerObj.GetComponent<Ownership>().setOwnerRecursively(player);
             }
         }
 
-        private GameObject instantiateNetworkedPlayerStart(NetworkRunner runner, Player player)
+        private GameObject instantiateNetworkedPlayerStart(NetworkRunner runner, PlayerSlot playerDeets)
         {
             //var go = GameObject.CreatePrimitive(PrimitiveType.Cube);
             //go.transform.position = player.spawnPoint;
             //Vector3 playerSpawn = randomPointOnUnitCircle(player.spawnPoint, MagicNumbers.PlayerSpawnRadius);
-            Debug.Log("AB - Spawning at " + player.spawnPoint);
-            NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, player.spawnPoint, Quaternion.identity, player.networkPlayer);
+            Debug.Log("AB - Spawning at " + playerDeets.spawnPoint);
+            NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, playerDeets.spawnPoint, Quaternion.identity, playerDeets.player);
             Debug.Log("AB - Spawned at " + networkPlayerObject.transform.position);
             Debug.Log("AB - at " + networkPlayerObject.transform.position);
             //networkPlayerObject.GetComponent<NetworkCharacterController>().TeleportToPosition(player.spawnPoint);
             Debug.Log("AB - Spawned at " + networkPlayerObject.transform.position);
             // Keep track of the player avatars so we can remove it when they disconnect
-            _spawnedCharacters.Add(player.networkPlayer, networkPlayerObject);
+            _spawnedCharacters.Add((PlayerRef)playerDeets.player, networkPlayerObject);
 
             GameObject clientSingletonObj = Instantiate(clientSingleton, new Vector3(0, 0, 0), Quaternion.identity);
             clientSingletonObj.name = MagicWords.GameObjectNames.ClientSingleton;

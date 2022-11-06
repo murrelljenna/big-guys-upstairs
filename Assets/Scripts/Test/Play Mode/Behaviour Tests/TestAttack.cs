@@ -9,6 +9,7 @@ using game.assets.ai;
 using static game.assets.utilities.GameUtils;
 using game.assets;
 using game.assets.ai.units;
+using game.assets.player;
 
 namespace Tests
 {
@@ -55,10 +56,10 @@ namespace Tests
             attackee = GameObject.Find("Attackee").GetComponent<Health>();
 
             LocalGameManager gameManager = GameObject.Find(MagicWords.GameObjectNames.GameManager).GetComponent<LocalGameManager>();
-            gameManager.players = new game.assets.player.Player[2] { 
-                new game.assets.player.Player(),
-                new game.assets.player.Player() 
-            };
+            gameManager.players = new game.assets.player.Player[2] {
+                Player.AsDevCube(),
+                Player.AsDevCube()
+        };
 
             attackee.gameObject.SetAsPlayer(gameManager.players[1]);
             stationaryAttacker.SetAsMine();

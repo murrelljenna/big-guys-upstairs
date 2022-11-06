@@ -29,7 +29,7 @@ namespace game.assets
             for (int i = 0; i < players.Length; i++)
             {
                 PlayerColour colour = pickFirstAvailableColour();
-                players[i] = new player.Player();
+                //players[i] = Player.AsDevCube();
                 players[i].colour = pickFirstAvailableColour();
             }
 

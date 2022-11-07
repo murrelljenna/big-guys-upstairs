@@ -19,12 +19,15 @@ namespace game.assets.ui
         public void SetColourToPlayer(player.Player player)
         {
             List<string> listNames = new List<string>(names);
+            Debug.Log("AC - Player name: " + player.playerName);
             string colorName = player.colour.name;
             Renderer[] renderers = GetComponentsInChildren<Renderer>();
-
+            Debug.Log("AC - Colour name: " + colorName);
             for (int i = 0; i < renderers.Length; i++)
             {
+                Debug.Log("AC - SetColourToPlayer index: " + i);
                 if (listNames.Contains(renderers[i].gameObject.name)) {
+                    Debug.Log("AC - Setting texture");
                     renderers[i].material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Buildings_" + colorName) as Texture));
                 }
             }

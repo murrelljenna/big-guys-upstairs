@@ -12,8 +12,8 @@ public class BarbarianOwnership : MonoBehaviour
 
     void Awake()
     {
-        player = LocalGameManager.Get().barbarianPlayer;
-        gameObject.SetAsPlayer(player);
+        //player = LocalGameManager.Get().barbarianPlayer;
+        //gameObject.SetAsPlayer(player);
     }
 
     public void fortify()

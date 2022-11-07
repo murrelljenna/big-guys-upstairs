@@ -6,10 +6,14 @@ namespace game.assets.player
 {
     public class Ownership : NetworkBehaviour
     {
-        [Tooltip("If owned")]
-        public bool owned = false;
+        [Networked]
+        public bool owned { get; set; } = false;
 
+        [SerializeField]
+        [Networked(OnChanged=nameof(FireNewOwnerEvent))]
         public Player owner { get; set; }
+        [SerializeField]
+        public string playerName;
 
         [Tooltip("Invoke when new owner is set")]
         public UnityEvent<Player> onNewOwner;
@@ -23,6 +27,11 @@ namespace game.assets.player
             return false;
         }
 
+        public static void FireNewOwnerEvent(Changed<Ownership> changed)
+        {
+            changed.Behaviour.onNewOwner.Invoke(changed.Behaviour.owner);
+        }
+
         public void setOwner(Player player)
         {
             owned = true;
@@ -31,6 +40,7 @@ namespace game.assets.player
             {
                 onNewOwner.Invoke(player);
             }
+            playerName = owner.playerName;
         }
 
         public void setOwnerRecursively(Player player)

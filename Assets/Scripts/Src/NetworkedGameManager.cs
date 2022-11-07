@@ -108,6 +108,8 @@ namespace game.assets
             _runner = gameObject.AddComponent<NetworkRunner>();
             _runner.ProvideInput = true;
 
+            this.gameMode = GameMode.Versus;
+
             await _runner.StartGame(new StartGameArgs()
             {
                 GameMode = mode,
@@ -123,7 +125,6 @@ namespace game.assets
         {
             throw new NotImplementedException();
         }
-
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef networkPlayer)
         {
             if (isHost)
@@ -132,6 +133,13 @@ namespace game.assets
 
                 var playerObj = instantiateNetworkedPlayerStart(runner, playerDeets);
                 Player player = playerObj.GetComponent<Player>();
+                player.resources = new utilities.resources.ResourceSet(100, 100);
+                Debug.Log("AC - colour name:" + playerDeets.colour.name);
+                player.playerColourIndex = PlayerColourManager.IndexOfColour(playerDeets.colour);
+                player.colour = playerDeets.colour;
+                Debug.Log("AC - colours index" + player.playerColourIndex);
+                player.networkPlayer = (PlayerRef)playerDeets.player;
+                player.playerName = "Jenna";
                 playerObj.GetComponent<Ownership>().setOwnerRecursively(player);
             }
         }

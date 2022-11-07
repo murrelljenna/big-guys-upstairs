@@ -14,7 +14,8 @@ namespace game.assets
 
         public enum GameMode
         {
-            Wave
+            Wave,
+            Versus
         }
 
         [Tooltip("Fireworks prefab to use when player wins")]
@@ -63,7 +64,7 @@ namespace game.assets
         {
             DontDestroyOnLoad(gameObject);
             //players = new player.Player[1] { Player.AsDevCube() };
-            barbarianPlayer = BarbarianPlayer.AsDevCube();
+            //barbarianPlayer = BarbarianPlayer.AsDevCube();
         }
 
         public virtual player.Player getLocalPlayer()

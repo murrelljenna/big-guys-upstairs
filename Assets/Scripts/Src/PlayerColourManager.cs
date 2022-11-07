@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using static game.assets.utilities.GameUtils;
 
 public static class PlayerColourManager
@@ -36,6 +37,8 @@ public static class PlayerColourManager
         {
             if (availableColours[i].colour.name == colour.name)
             {
+                Debug.Log(" AC - Colour name: " + colour.name);
+                Debug.Log(" AC - Available Colour name: " + availableColours[i].colour.name);
                 return i;
             }
         }
@@ -50,6 +53,7 @@ public static class PlayerColourManager
             if (availableColours[i].available)
             {
                 availableColours[i].available = false;
+                Debug.Log("AC - Assigning colour to player " + availableColours[i].colour.name);
                 return availableColours[i].colour;
             }
         }

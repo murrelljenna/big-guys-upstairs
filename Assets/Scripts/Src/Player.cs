@@ -13,14 +13,16 @@ namespace game.assets.player
     {
         public PlayerColour colour { get; set; }
 
-        [Networked]
-        public int playerColourIndex { get; set; }
+        [Networked(OnChanged = nameof(GetRealColour))]
+        public int playerColourIndex { get; set; } = -1;
         [Networked]
         public int popCount { get; set; }
         [Networked]
         public int maxCount { get; set; }
         [Networked]
         public PlayerRef networkPlayer { get; set; }
+        [SerializeField]
+        public string playerName;
         public ResourceSet resources = new ResourceSet();
         public Vector3 spawnPoint;
 
@@ -35,7 +37,12 @@ namespace game.assets.player
             return player;
         }
 
-
+        public static void GetRealColour(Changed<Player> changed)
+        {
+            Debug.Log("AC - WHAT WHY WONT YOUI PRINT");
+            changed.Behaviour.colour = PlayerColourManager.ColourAtIndex(changed.Behaviour.playerColourIndex);
+            Debug.Log("AC  Colour name : " + PlayerColourManager.ColourAtIndex(changed.Behaviour.playerColourIndex).name);
+        }
 
         public Player withResources(int wood = 100, int food = 100)
         {

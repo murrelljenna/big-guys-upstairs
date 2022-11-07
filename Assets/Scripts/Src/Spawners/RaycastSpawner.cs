@@ -40,7 +40,6 @@ namespace game.assets.spawners
             layerMask = 1 << layer;
 
             base.Spawned();
-            Debug.Log("Fucking hello?");
             ownership = GetComponent<Ownership>();
         }
 
@@ -108,7 +107,7 @@ namespace game.assets.spawners
                 startSpawnLocation.y += 0.5f;
 
                 GameObject spawnedObject = SpawnIfCanAfford(prefab, startSpawnLocation, Quaternion.identity, ownership.owner);
-
+                spawnedObject.SetAsPlayer(ownership.owner);
                 if (spawnedObject != null)
                 {
                     if (ghostInstance != null)

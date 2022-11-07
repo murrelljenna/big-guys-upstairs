@@ -131,7 +131,7 @@ namespace game.assets.utilities {
                 public static string Player = "Player";
                 public static string StartingCity = "Capitol";
                 public static string GameManager = "GameManager";
-                public static string ClientSingleton = "ClientSingleton";
+                public static string UI = "UI";
                 public static string FirstPersonCharacter = "FirstPersonCharacter";
                 public static string BuildingMenu = "BuildingMenu";
                 public static string CommandMenu = "CommandMenu";

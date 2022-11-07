@@ -158,10 +158,13 @@ namespace game.assets
             // Keep track of the player avatars so we can remove it when they disconnect
             _spawnedCharacters.Add((PlayerRef)playerDeets.player, networkPlayerObject);
 
-            GameObject clientSingletonObj = Instantiate(clientSingleton, new Vector3(0, 0, 0), Quaternion.identity);
-            clientSingletonObj.name = MagicWords.GameObjectNames.ClientSingleton;
-
             return networkPlayerObject.gameObject;
+        }
+
+        private void SpawnUI()
+        {
+            GameObject clientSingletonObj = Instantiate(clientSingleton, new Vector3(0, 0, 0), Quaternion.identity);
+            clientSingletonObj.name = MagicWords.GameObjectNames.UI;
         }
 
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
@@ -306,6 +309,7 @@ namespace game.assets
             if (isHost)
             {
                 InitNetworkGameState();
+                SpawnUI();
             }
         }
         public void OnSceneLoadStart(NetworkRunner runner) {

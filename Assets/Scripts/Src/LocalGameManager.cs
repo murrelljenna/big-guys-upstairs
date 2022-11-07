@@ -67,7 +67,7 @@ namespace game.assets
         {
             IInstantiator instantiator = InstantiatorFactory.getInstantiator();
             GameObject clientSingletonObj = instantiator.Instantiate(clientSingleton, spawnPoints[0], Quaternion.identity);
-            clientSingletonObj.name = MagicWords.GameObjectNames.ClientSingleton;
+            clientSingletonObj.name = MagicWords.GameObjectNames.UI;
         }
     }
 }

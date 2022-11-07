@@ -1,4 +1,5 @@
 ﻿using game.assets;
+using game.assets.player;
 using game.assets.utilities.resources;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 public class ResourceUIController : MonoBehaviour
 {
     [Tooltip("Player resources to represent")]
-    public ResourceSet player;
+    public Player player;
 
     private Text foodCount;
     private Text woodCount;
@@ -25,10 +26,15 @@ public class ResourceUIController : MonoBehaviour
 
     void Update()
     {
-        foodCount.text = player.food.ToString();
-        woodCount.text = player.wood.ToString();
-        goldCount.text = player.gold.ToString();
-        stoneCount.text = player.stone.ToString();
-        ironCount.text = player.iron.ToString();
+        foodCount.text = player.resources.food.ToString();
+        woodCount.text = player.resources.wood.ToString();
+        goldCount.text = player.resources.gold.ToString();
+        stoneCount.text = player.resources.stone.ToString();
+        ironCount.text = player.resources.iron.ToString();
+    }
+
+    public static ResourceUIController Get()
+    {
+        return GameObject.Find("ResourcePanel").GetComponent<ResourceUIController>();
     }
 }

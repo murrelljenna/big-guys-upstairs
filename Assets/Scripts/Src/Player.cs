@@ -37,6 +37,14 @@ namespace game.assets.player
             return player;
         }
 
+        public override void Spawned()
+        {
+            if (Object.HasInputAuthority)
+            {
+                ResourceUIController.Get().player = this;
+            }
+        }
+
         public static void GetRealColour(Changed<Player> changed)
         {
             Debug.Log("AC - WHAT WHY WONT YOUI PRINT");

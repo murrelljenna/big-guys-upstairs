@@ -20,6 +20,7 @@ public class CharacterViewHandler : NetworkBehaviour
         {
             maybeLocalCamera = GetComponentInChildren<Camera>();
             isLocal = true;
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 

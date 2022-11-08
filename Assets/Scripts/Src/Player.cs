@@ -44,6 +44,10 @@ namespace game.assets.player
             {
                 ResourceUIController.Get().player = this;
             }
+            else
+            {
+                colour = PlayerColourManager.ColourAtIndex(playerColourIndex);
+            }
         }
 
         public static void GetRealColour(Changed<Player> changed)

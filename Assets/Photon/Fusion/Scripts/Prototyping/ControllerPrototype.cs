@@ -36,15 +36,12 @@ public class ControllerPrototype : Fusion.NetworkBehaviour {
   }
   
   public override void FixedUpdateNetwork() {
-        Debug.Log("Update network");
     if (Runner.Config.PhysicsEngine == NetworkProjectConfig.PhysicsEngines.None) {
       return;
     }
-        Debug.Log("Update network after ");
-        Vector3 direction;
+    Vector3 direction;
     if (GetInput(out PlayerNetworkInput input)) {
       direction = default;
-            Debug.Log("Getting input!");
 
       if (input.IsDown(PlayerNetworkInput.BUTTON_FORWARD)) {
         direction += TransformLocal ? transform.forward : Vector3.forward;

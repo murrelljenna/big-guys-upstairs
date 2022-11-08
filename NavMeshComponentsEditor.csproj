@@ -691,13 +691,13 @@
       <Project>{CD88E856-5D41-8ECD-0219-73CDD2313236}</Project>
       <Name>NavMeshComponents</Name>
     </ProjectReference>
-    <ProjectReference Include="UnityEngine.UI.csproj">
-      <Project>{9B545A0C-58D3-F7CA-DCC3-76148D5D80E8}</Project>
-      <Name>UnityEngine.UI</Name>
-    </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{BFA4118D-D662-B8FC-6DE8-29EC3DC3E800}</Project>
       <Name>UnityEditor.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="UnityEngine.UI.csproj">
+      <Project>{9B545A0C-58D3-F7CA-DCC3-76148D5D80E8}</Project>
+      <Name>UnityEngine.UI</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.TestRunner.csproj">
       <Project>{DCDD411E-1103-33A4-C503-D22F001E817B}</Project>

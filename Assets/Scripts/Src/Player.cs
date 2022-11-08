@@ -46,6 +46,14 @@ namespace game.assets.player
             }
             else
             {
+                tryGetColour();
+            }
+        }
+
+        public void tryGetColour()
+        {
+            if (playerColourIndex >= 0)
+            {
                 colour = PlayerColourManager.ColourAtIndex(playerColourIndex);
             }
         }
@@ -53,7 +61,7 @@ namespace game.assets.player
         public static void GetRealColour(Changed<Player> changed)
         {
             Debug.Log("AC - Player colour has been set to " + changed.Behaviour.playerColourIndex);
-            changed.Behaviour.colour = PlayerColourManager.ColourAtIndex(changed.Behaviour.playerColourIndex);
+            changed.Behaviour.tryGetColour();
             Debug.Log("AC  Colour name : " + PlayerColourManager.ColourAtIndex(changed.Behaviour.playerColourIndex).name);
         }
 

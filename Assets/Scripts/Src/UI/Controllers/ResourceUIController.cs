@@ -26,6 +26,10 @@ public class ResourceUIController : MonoBehaviour
 
     void Update()
     {
+        if (player == null)
+        {
+            return;
+        }
         foodCount.text = player.resources.food.ToString();
         woodCount.text = player.resources.wood.ToString();
         goldCount.text = player.resources.gold.ToString();

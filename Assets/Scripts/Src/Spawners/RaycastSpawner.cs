@@ -14,7 +14,7 @@ namespace game.assets.spawners
         [Tooltip("Numeric value representing layer mask used by raycast")]
         public int layer;
 
-        [Networked]
+        [Networked(OnChanged = nameof(DeleteGhostIfFalse))]
         public NetworkBool showGhost { get; set; }
 
         [Networked]
@@ -43,12 +43,25 @@ namespace game.assets.spawners
             ownership = GetComponent<Ownership>();
         }
 
+        public static void DeleteGhostIfFalse(Changed<RaycastSpawner> changed)
+        {
+            if (!changed.Behaviour.showGhost)
+            {
+                changed.Behaviour.deleteGhost();
+            }
+        }
+
+        public void deleteGhost() {
+            if (ghostInstance != null)
+            {
+                Destroy(ghostInstance);
+            }
+        }
+
         public override void FixedUpdateNetwork()
         {
-            Debug.Log("AA - Updating");
             if (Object.HasInputAuthority && showGhost && ghostInstance != null)
             {
-                Debug.Log("AA - Updating ghost position");
                 ghostInstance.transform.position = ghostPosition;
             }
 
@@ -68,11 +81,9 @@ namespace game.assets.spawners
         public void setGhost(GameObject ghost)
         {
             DestroyImmediate(this.ghostInstance);
-            Debug.Log("AA - Setting ghost");
 
             if (ghost == null)
             {
-                Debug.Log("AA - Ghost is null");
                 return;
             }
 
@@ -113,6 +124,7 @@ namespace game.assets.spawners
                     if (ghostInstance != null)
                     {
                         Destroy(ghostInstance);
+                        showGhost = false;
                     }
                     StartCoroutine(plop(spawnedObject, endSpawnLocation));
                     onPlopped.Invoke();

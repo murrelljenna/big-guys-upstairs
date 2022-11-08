@@ -23,7 +23,8 @@ namespace game.assets.player
         public PlayerRef networkPlayer { get; set; }
         [SerializeField]
         public string playerName;
-        public ResourceSet resources = new ResourceSet();
+        [Networked]
+        public ResourceSet resources { get; set; }
         public Vector3 spawnPoint;
 
         public static Player AsDevCube()
@@ -47,7 +48,7 @@ namespace game.assets.player
 
         public static void GetRealColour(Changed<Player> changed)
         {
-            Debug.Log("AC - WHAT WHY WONT YOUI PRINT");
+            Debug.Log("AC - Player colour has been set to " + changed.Behaviour.playerColourIndex);
             changed.Behaviour.colour = PlayerColourManager.ColourAtIndex(changed.Behaviour.playerColourIndex);
             Debug.Log("AC  Colour name : " + PlayerColourManager.ColourAtIndex(changed.Behaviour.playerColourIndex).name);
         }

@@ -29,7 +29,10 @@ namespace game.assets.player
 
         public static void FireNewOwnerEvent(Changed<Ownership> changed)
         {
-            changed.Behaviour.onNewOwner.Invoke(changed.Behaviour.owner);
+            if (changed.Behaviour.owned)
+            {
+                changed.Behaviour.onNewOwner.Invoke(changed.Behaviour.owner);
+            }
         }
 
         public void setOwner(Player player)

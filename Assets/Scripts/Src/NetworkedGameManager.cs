@@ -176,7 +176,10 @@ namespace game.assets
                 _spawnedCharacters.Remove(player);
             }
 
-            state.freePlayerSlot(player);
+            if (isHost)
+            {
+                state.freePlayerSlot(player);
+            }
         }
 
         public void OnInput(NetworkRunner runner, NetworkInput input)
@@ -309,8 +312,8 @@ namespace game.assets
             if (isHost)
             {
                 InitNetworkGameState();
-                SpawnUI();
             }
+            SpawnUI();
         }
         public void OnSceneLoadStart(NetworkRunner runner) {
 

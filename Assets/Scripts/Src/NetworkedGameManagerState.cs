@@ -73,10 +73,9 @@ public class NetworkedGameManagerState : NetworkBehaviour
     {
         for (int i = 0; i < playerSlots.Length; i++)
         {
-            var playerSlot = playerSlots[i];
-            if (playerSlot.player == networkPlayer)
+            if (playerSlots[i].player == networkPlayer)
             {
-                playerSlot.Clear();
+                playerSlots[i].Clear();
             }
         }
     }

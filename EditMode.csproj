@@ -685,13 +685,13 @@
       <Project>{A802BD0A-90FC-CD28-E7CD-25D09982C495}</Project>
       <Name>Fusion.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="UnityEditor.UI.csproj">
-      <Project>{BFA4118D-D662-B8FC-6DE8-29EC3DC3E800}</Project>
-      <Name>UnityEditor.UI</Name>
-    </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.csproj">
       <Project>{9B545A0C-58D3-F7CA-DCC3-76148D5D80E8}</Project>
       <Name>UnityEngine.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="UnityEditor.UI.csproj">
+      <Project>{BFA4118D-D662-B8FC-6DE8-29EC3DC3E800}</Project>
+      <Name>UnityEditor.UI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

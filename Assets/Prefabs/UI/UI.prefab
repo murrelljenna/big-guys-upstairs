@@ -1998,7 +1998,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6055606578754775593
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12752,13 +12752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68b64700015ad4246ae90b4401c66e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player:
-    wood: 0
-    food: 0
-    gold: 0
-    stone: 0
-    iron: 0
-    horse: 0
+  player: {fileID: 0}
 --- !u!114 &7307328389837819901
 MonoBehaviour:
   m_ObjectHideFlags: 0

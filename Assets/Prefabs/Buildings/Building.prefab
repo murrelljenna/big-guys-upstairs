@@ -7133,7 +7133,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  owned: 0
+  _owned: 0
+  _owner: {fileID: 0}
+  playerName: 
   onNewOwner:
     m_PersistentCalls:
       m_Calls:
@@ -7161,6 +7163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 507fdde6f5bf19c428f6e29592faf50c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
 --- !u!114 &2796874934670888133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7239,6 +7242,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 4584360897601484519}
+  - {fileID: 9210190332770586156}
   - {fileID: 5246354730614014798}
   SimulationBehaviours: []
 --- !u!1 &8004544480195751366

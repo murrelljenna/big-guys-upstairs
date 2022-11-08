@@ -1,4 +1,5 @@
-﻿using game.assets.player;
+﻿using Fusion;
+using game.assets.player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ using static game.assets.utilities.GameUtils;
 
 namespace game.assets.ui
 {
-    public class BuildingColourController : MonoBehaviour, IColourController
+    public class BuildingColourController : NetworkBehaviour, IColourController
     {
         private string[] names = new string[] {
             "Model",
@@ -18,6 +19,10 @@ namespace game.assets.ui
 
         public void SetColourToPlayer(player.Player player)
         {
+            if (player == null)
+            {
+                return;
+            }
             List<string> listNames = new List<string>(names);
             Debug.Log("AC - Player name: " + player.playerName);
             string colorName = player.colour.name;
@@ -30,6 +35,16 @@ namespace game.assets.ui
                     Debug.Log("AC - Setting texture");
                     renderers[i].material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Buildings_" + colorName) as Texture));
                 }
+            }
+        }
+
+        public override void Spawned()
+        {
+            var ownership = GetComponent<Ownership>();
+
+            if (ownership != null && ownership.owned)
+            {
+                //SetColourToPlayer(ownership.owner);
             }
         }
     }

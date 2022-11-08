@@ -848,7 +848,7 @@ PrefabInstance:
     - target: {fileID: 6465246549917436453, guid: e01155afa7ed6364380770c2b17018ef,
         type: 3}
       propertyPath: NetworkedBehaviours.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6465246549917436453, guid: e01155afa7ed6364380770c2b17018ef,
         type: 3}
@@ -859,10 +859,15 @@ PrefabInstance:
         type: 3}
       propertyPath: NetworkedBehaviours.Array.data[1]
       value: 
-      objectReference: {fileID: 5601572041021572717}
+      objectReference: {fileID: 8836951476961970959}
     - target: {fileID: 6465246549917436453, guid: e01155afa7ed6364380770c2b17018ef,
         type: 3}
       propertyPath: NetworkedBehaviours.Array.data[2]
+      value: 
+      objectReference: {fileID: 5601572041021572717}
+    - target: {fileID: 6465246549917436453, guid: e01155afa7ed6364380770c2b17018ef,
+        type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[3]
       value: 
       objectReference: {fileID: 5458797969971084652}
     - target: {fileID: 6465246549917436453, guid: e01155afa7ed6364380770c2b17018ef,
@@ -926,6 +931,18 @@ MonoBehaviour:
   m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8836951476961970959 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9210190332770586156, guid: e01155afa7ed6364380770c2b17018ef,
+    type: 3}
+  m_PrefabInstance: {fileID: 392380253775430947}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6642099815703639380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 507fdde6f5bf19c428f6e29592faf50c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4246023848213066692 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4584360897601484519, guid: e01155afa7ed6364380770c2b17018ef,
@@ -987,15 +1004,7 @@ MonoBehaviour:
     stone: 0
     iron: 0
     horse: 0
-  player:
-    resources:
-      wood: 0
-      food: 0
-      gold: 0
-      stone: 0
-      iron: 0
-      horse: 0
-    spawnPoint: {x: 0, y: 0, z: 0}
+  player: {fileID: 0}
 --- !u!114 &7025837748608330887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1035,7 +1044,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  owned: 0
+  _owned: 0
+  _owner: {fileID: 0}
+  playerName: 
   onNewOwner:
     m_PersistentCalls:
       m_Calls: []

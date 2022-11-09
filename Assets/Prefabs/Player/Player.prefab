@@ -91,6 +91,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1311195324686195549}
   - component: {fileID: 769148283958465084}
+  - component: {fileID: 9156367647462618627}
   m_Layer: 0
   m_Name: PlayerRigFacade
   m_TagString: Untagged
@@ -157,6 +158,25 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &9156367647462618627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 647160506272810700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb70c522553f9b4aa13b388c5124c02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onObserve:
+    m_PersistentCalls:
+      m_Calls: []
+  onBreakObserve:
+    m_PersistentCalls:
+      m_Calls: []
+  owner: {fileID: 7404373241901479203}
 --- !u!1 &2413494044340963630
 GameObject:
   m_ObjectHideFlags: 0
@@ -725,7 +745,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  owned: 0
+  _owned: 0
+  _owner: {fileID: 0}
+  playerName: 
   onNewOwner:
     m_PersistentCalls:
       m_Calls: []
@@ -742,7 +764,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  resources:
+  _playerColourIndex: -1
+  _popCount: 0
+  _maxCount: 0
+  playerName: 
+  _resources:
     wood: 0
     food: 0
     gold: 0
@@ -1389,7 +1415,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  owned: 0
+  _owned: 0
+  _owner: {fileID: 0}
+  playerName: 
   onNewOwner:
     m_PersistentCalls:
       m_Calls: []

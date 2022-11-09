@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using game.assets.player;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -21,6 +22,8 @@ namespace game.assets.interaction
         [Tooltip("Invoked once when agent breaks observation with another object.")]
         public UnityEvent onBreakObserve;
 
+        public Ownership owner;
+
         private Camera cam;
 
         private ObservationEvents lastObserved;
@@ -28,6 +31,21 @@ namespace game.assets.interaction
         private void Start()
         {
             cam = GetComponent<Camera>();
+        }
+
+        private bool canView(Ownership targetOwnership)
+        {
+            if (targetOwnership == null || owner == null)
+            {
+                return true;
+            }
+            
+            if (owner.owner == targetOwnership.owner)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         #region ICameraRaycastObserver implementation
@@ -57,7 +75,7 @@ namespace game.assets.interaction
                     onBreakObserve.Invoke();
                 }
 
-                if (nextObserved != null)
+                if (nextObserved != null && canView(nextObserved.GetComponent<Ownership>()))
                 {
                     onObserve.Invoke();
                     nextObserved.observe();

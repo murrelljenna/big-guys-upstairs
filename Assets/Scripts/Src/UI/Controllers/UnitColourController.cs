@@ -1,12 +1,10 @@
-﻿using UnityEngine;
+﻿using Fusion;
+using game.assets.player;
+using UnityEngine;
 
 namespace game.assets.ui
 {
-    public interface IColourController
-    {
-        void SetColourToPlayer(player.Player player);
-    }
-    public class UnitColourController : MonoBehaviour, IColourController
+    public class UnitColourController : NetworkBehaviour
     {
         public void SetColourToPlayer(player.Player player)
         {
@@ -16,6 +14,16 @@ namespace game.assets.ui
             for (int i = 0; i < renderers.Length; i++)
             {
                 renderers[i].material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Units_" + colorName) as Texture));
+            }
+        }
+
+        public override void Spawned()
+        {
+            var ownership = GetComponent<Ownership>();
+
+            if (ownership != null && ownership.owned)
+            {
+                SetColourToPlayer(ownership.owner);
             }
         }
     }

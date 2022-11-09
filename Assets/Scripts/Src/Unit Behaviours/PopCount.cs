@@ -1,31 +1,49 @@
-﻿using game.assets.player;
+﻿using Fusion;
+using game.assets.player;
 using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Ownership))]
-public class PopCount : MonoBehaviour
+public class PopCount : NetworkBehaviour
 {
     private Ownership ownership;
     Text popCount;
-    void Start()
+    public override void Spawned()
     {
         ownership = GetComponent<Ownership>();
-        ownership.owner.popCount++;
         popCount = GameObject.Find("Pop_Count").GetComponent<Text>();
-
-        updateUI();
     }
 
-    private void OnDestroy()
+    public void Start()
     {
-        ownership.owner.popCount--;
+        if (Object.HasInputAuthority)
+        {
+            updateUI();
+        }
 
-        updateUI();
+        if (Object.HasStateAuthority)
+        {
+            ownership.owner.popCount++;
+        }
+    }
+
+    public override void Despawned(NetworkRunner runner, bool hasState)
+    {
+        if (Object.HasStateAuthority)
+        {
+            ownership.owner.popCount--;
+        }
+
+        if (Object.HasInputAuthority)
+        {
+            updateUI();
+        }
     }
 
     private void updateUI()
     {
-        if (this.IsMine() && popCount != null)
+        Debug.Log("Ownership is " + (ownership.owner == null).ToString());
+        if (Object.HasInputAuthority && popCount != null)
         {
             popCount.text = ownership.owner.popCount.ToString();
         }

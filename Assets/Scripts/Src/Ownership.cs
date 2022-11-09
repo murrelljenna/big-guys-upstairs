@@ -48,13 +48,9 @@ namespace game.assets.player
 
         public void setOwnerRecursively(Player player)
         {
-            owned = true;
-            owner = player;
-            if (onNewOwner != null)
-            {
-                onNewOwner.Invoke(player);
-            }
-
+            Debug.Log("AD - SetOwnerRecursively");
+            setOwner(player);
+            
             foreach (Ownership ownership in transform.GetComponentsInChildren<Ownership>())
             {
                 ownership.setOwner(player);

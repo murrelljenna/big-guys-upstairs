@@ -7,7 +7,7 @@ using static game.assets.utilities.GameUtils;
 
 namespace game.assets.ui
 {
-    public class BuildingColourController : NetworkBehaviour, IColourController
+    public class BuildingColourController : NetworkBehaviour
     {
         private string[] names = new string[] {
             "Model",
@@ -24,15 +24,11 @@ namespace game.assets.ui
                 return;
             }
             List<string> listNames = new List<string>(names);
-            Debug.Log("AC - Player name: " + player.playerName);
             string colorName = player.colour.name;
             Renderer[] renderers = GetComponentsInChildren<Renderer>();
-            Debug.Log("AC - Colour name: " + colorName);
             for (int i = 0; i < renderers.Length; i++)
             {
-                Debug.Log("AC - SetColourToPlayer index: " + i);
                 if (listNames.Contains(renderers[i].gameObject.name)) {
-                    Debug.Log("AC - Setting texture");
                     renderers[i].material.SetTexture("_MainTex", (Resources.Load("TT_RTS_Buildings_" + colorName) as Texture));
                 }
             }
@@ -44,7 +40,7 @@ namespace game.assets.ui
 
             if (ownership != null && ownership.owned)
             {
-                //SetColourToPlayer(ownership.owner);
+                SetColourToPlayer(ownership.owner);
             }
         }
     }

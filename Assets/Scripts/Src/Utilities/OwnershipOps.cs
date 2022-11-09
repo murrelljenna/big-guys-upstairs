@@ -118,13 +118,16 @@ public static class OwnershipOps
         return behaviour.BelongsTo(LocalGameManager.Get().barbarianPlayer);
     }
 
-    public static void SetAsPlayer(this GameObject gameObj, game.assets.player.Player player)
+    public static GameObject SetAsPlayer(this GameObject gameObj, game.assets.player.Player player)
     {
+        Debug.Log("AD - Set as player");
         Ownership ownership = gameObj.GetComponent<Ownership>();
         if (ownership == null)
         {
             ownership = gameObj.AddComponent(typeof(Ownership)) as Ownership;
         }
-        ownership.setOwner(player);
+        ownership.setOwnerRecursively(player);
+
+        return gameObj;
     }
 }

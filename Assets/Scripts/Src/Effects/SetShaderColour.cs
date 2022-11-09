@@ -1,4 +1,5 @@
 ﻿using game.assets;
+using game.assets.player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,10 +7,15 @@ using UnityEngine;
 [RequireComponent(typeof(Projector))]
 public class SetShaderColour : MonoBehaviour
 {
+    public Ownership ownership;
     public void Start()
     {
+        if (ownership == null)
+        {
+            return;
+        }
         var projector = GetComponent<Projector>();
-        var color = LocalGameManager.Get().getLocalPlayer().colour.color;
+        var color = ownership.owner.colour.color;
         projector.material.SetColor("_Color", color);
     }
 }

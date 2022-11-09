@@ -34,8 +34,12 @@ namespace game.assets.spawners
         {
             if (!Object.HasStateAuthority || ownership.owner.maxPop() || !prefab.IsValid)
             {
+                Debug.Log("AD - Object has state authority: " + Object.HasStateAuthority);
+                Debug.Log("AD - Object has maxPop: " + ownership.owner.maxPop());
+                Debug.Log("AD - Object has prefab.IsValid: " + prefab.IsValid);
                 return null;
             }
+            Debug.Log("AD - Hey there");
             Vector3 spawnLocation = getSpawnLocation(transform.position);
             return SpawnIfCanAfford(prefab, spawnLocation, Quaternion.identity, ownership.owner);
         }
@@ -45,7 +49,11 @@ namespace game.assets.spawners
             if (player.canAfford(price))
             {
                 player.takeResources(price);
-                return Spawn(prefab, spawnLocation, Quaternion.identity, player.networkPlayer);
+                Debug.Log("AD - Spawning shit");
+                GameObject whatthefuckingfuck = Spawn(prefab, spawnLocation, Quaternion.identity, player.networkPlayer);
+                whatthefuckingfuck.SetAsPlayer(player);
+                Debug.Log("WHAT THE FUCK");
+                return whatthefuckingfuck;
             }
             else
             {

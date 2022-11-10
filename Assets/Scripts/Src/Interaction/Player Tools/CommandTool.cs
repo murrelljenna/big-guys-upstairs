@@ -7,6 +7,7 @@ using game.assets.ai;
 using static game.assets.utilities.GameUtils;
 using game.assets.economy;
 using UnityEngine.AI;
+using game.assets.player;
 
 namespace game.assets.interaction
 {
@@ -26,6 +27,8 @@ namespace game.assets.interaction
         public AttackAggregation attackAggregation = new AttackAggregation();
 
         private CommandUIController uiController;
+
+        public Ownership ownership;
 
         private void OnDisable()
         {
@@ -64,6 +67,11 @@ namespace game.assets.interaction
             mouseEvents.rightClick.AddListener(orderAttackOrMoveIfCan);
         }
 
+        private void Start()
+        {
+            getUIController();
+        }
+
         private void selectUnitIfCan()
         {
             RaycastHit hit;
@@ -71,7 +79,7 @@ namespace game.assets.interaction
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Unit))
             {
                 Attack attacker = hit.collider.gameObject.GetComponent<Attack>();
-                if (attacker != null && attacker.IsMine())
+                if (attacker != null && attacker.BelongsTo(ownership.owner))
                 {
                     if (attackAggregation.contains(attacker))
                     {
@@ -119,7 +127,7 @@ namespace game.assets.interaction
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Attackable))
             {
                 Attack attacker = hit.collider.gameObject.GetComponent<Attack>();
-                if (attacker != null && attacker.IsMine())
+                if (attacker != null && attacker.BelongsTo(ownership.owner))
                 {
                     if (isActiveWorker(attacker))
                         selectWorkersInRadius(hit.transform.position);
@@ -135,7 +143,7 @@ namespace game.assets.interaction
                     resource.workers.ForEach((Worker worker) =>
                     {
                         var atk = worker.GetComponent<Attack>();
-                        if (worker.IsMine() && atk != null) {
+                        if (worker.BelongsTo(ownership.owner) && atk != null) {
                             addUnit(atk);
                         }
                     });
@@ -157,7 +165,7 @@ namespace game.assets.interaction
             {
                 Attack unit = hitColliders[i].GetComponent<Attack>();
 
-                if (unit != null && unit.IsMine() && !attackAggregation.contains(unit) && !isActiveWorker(unit))
+                if (unit != null && unit.BelongsTo(ownership.owner) && !attackAggregation.contains(unit) && !isActiveWorker(unit))
                 {
                     addUnit(unit);
                 }
@@ -173,7 +181,7 @@ namespace game.assets.interaction
 
                 bool isWorking = isActiveWorker(unit);
 
-                if (unit != null && unit.IsMine() && !attackAggregation.contains(unit) && isWorking)
+                if (unit != null && unit.BelongsTo(ownership.owner) && !attackAggregation.contains(unit) && isWorking)
                 {
                     attackAggregation.add(unit);
                     if (useUi)
@@ -209,7 +217,7 @@ namespace game.assets.interaction
 
                 Construction construction = hit.collider.GetComponent<Construction>();
 
-                if (construction != null && construction.IsMine())
+                if (construction != null && construction.BelongsTo(ownership.owner))
                 {
                     List<Worker> workers = attackAggregation.unitsThatCanWork();
 

@@ -246,6 +246,11 @@ namespace game.assets
                 frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_FIRE;
             }
 
+            if (Input.GetMouseButton(1))
+            {
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_FIRE_ALT;
+            }
+
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA1;

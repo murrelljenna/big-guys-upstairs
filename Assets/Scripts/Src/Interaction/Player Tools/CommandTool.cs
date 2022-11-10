@@ -196,7 +196,7 @@ namespace game.assets.interaction
         {
             RaycastHit hit;
             Ray ray = cam.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
-
+            Debug.Log("AE - orderAttackOrMoveIfCan");
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.All)) {
                 Health health = hit.collider.GetComponent<Health>();
                 if (health != null && health.IsEnemy())
@@ -228,10 +228,12 @@ namespace game.assets.interaction
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Terrain))
             {
+                Debug.Log("AE - raycasted terrain");
                 NavMeshHit navMeshHit;
                 bool isOnMesh = NavMesh.SamplePosition(hit.point, out navMeshHit, 0.2f, NavMesh.AllAreas);
                 if (isOnMesh)
                 {
+                    Debug.Log("AE - is on mesh");
                     attackAggregation.unitsThatCanMove().goTo(hit.point);
                 }
                 return;

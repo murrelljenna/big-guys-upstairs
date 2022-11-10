@@ -29,7 +29,7 @@ public class PopCount : NetworkBehaviour
 
     public override void Despawned(NetworkRunner runner, bool hasState)
     {
-        if (Object.HasStateAuthority)
+        if (Object.HasStateAuthority && ownership?.owner != null)
         {
             ownership.owner.popCount--;
         }

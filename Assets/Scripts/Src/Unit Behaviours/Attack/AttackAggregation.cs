@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
-public class AttackAggregation : IAttack
+public class AttackAggregation
 {
     public List<Attack> units;
     public UnityEvent<Attack> unitDead;

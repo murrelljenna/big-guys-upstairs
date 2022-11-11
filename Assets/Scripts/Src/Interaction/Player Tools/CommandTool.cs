@@ -199,7 +199,7 @@ namespace game.assets.interaction
             Debug.Log("AE - orderAttackOrMoveIfCan");
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.All)) {
                 Health health = hit.collider.GetComponent<Health>();
-                if (health != null && health.IsEnemy())
+                if (health != null && !health.BelongsTo(ownership.owner))
                 {
                     attackAggregation.attack(health);
                     return;

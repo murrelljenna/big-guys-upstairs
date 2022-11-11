@@ -6,12 +6,7 @@ using game.assets.ai.units;
 
 namespace game.assets.ai
 {
-    public interface IAttack
-    {
-        void attack(Health attackee);
-    }
-
-    public class Attack : MonoBehaviour, IAttack
+    public class Attack : MonoBehaviour
     {
         [Tooltip("Damage per attack")]
         public int attackPower;

@@ -26,6 +26,8 @@ namespace game.assets.interaction
         [Tooltip("Invoked when Esc key is pressed.")]
         public UnityEvent escOnPressed;
 
+
+
         public override void FixedUpdateNetwork()
         {
             if (GetInput(out PlayerNetworkInput input))

@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d82a74ce4e8eeac499d63466dc9751dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   attackPower: 1
   attackRate: 1
   attackRange: 1
@@ -236,6 +237,7 @@ MonoBehaviour:
           m_StringArgument: SelectionSounds
           m_BoolArgument: 0
         m_CallState: 2
+  _speed: 0
 --- !u!114 &3407638207687962992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -453,6 +455,7 @@ MonoBehaviour:
     RawGuidValue: dacf0adaab418dd43a5ea0b119fa06a6
   NestedObjects: []
   NetworkedBehaviours:
+  - {fileID: 3300823746633853468}
   - {fileID: 3300823746633853470}
   - {fileID: 7738296988493884405}
   - {fileID: 8034361885205570884}

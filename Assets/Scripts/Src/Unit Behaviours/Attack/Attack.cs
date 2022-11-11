@@ -3,10 +3,11 @@ using UnityEngine;
 using UnityEngine.Events;
 using game.assets.utilities;
 using game.assets.ai.units;
+using Fusion;
 
 namespace game.assets.ai
 {
-    public class Attack : MonoBehaviour
+    public class Attack : NetworkBehaviour
     {
         [Tooltip("Damage per attack")]
         public int attackPower;
@@ -53,8 +54,12 @@ namespace game.assets.ai
         private int lastNoEnemies = 0;
         private int frameCount = 0;
 
-        void Start()
+        public override void Spawned()
         {
+            if (!Object.HasStateAuthority)
+            {
+                return;
+            }
             movement = gameObject.GetComponent<Movement>();
             canMove = (movement != null);
 
@@ -74,8 +79,13 @@ namespace game.assets.ai
             return isAttacking;
         }
 
-        void Update()
+        public override void FixedUpdateNetwork()
         {
+            if (!Object.HasStateAuthority)
+            {
+                return;
+            }
+
             if (updateTargetLive && frameCount % 40 == 0)
             {
                 if (attackee != null && canMove)
@@ -88,6 +98,10 @@ namespace game.assets.ai
 
         public void attackRandom(Health[] units)
         {
+            if (!Object.HasStateAuthority)
+            {
+                return;
+            }
             if (units.Length > 0)
             {
                 attack(units.RandomElem());
@@ -162,6 +176,11 @@ namespace game.assets.ai
 
         public void attack(Health attackee)
         {
+            if (!Object.HasStateAuthority)
+            {
+                return;
+            }
+
             if (attackee == null || !attackee.IsEnemyOf(this))
             {
                 return;
@@ -280,6 +299,11 @@ namespace game.assets.ai
 
         public void cancelOrders()
         {
+            if (!Object.HasStateAuthority)
+            {
+                return;
+            }
+
             if (attackee != null)
             {
                 attackee.onZeroHP.RemoveListener(reportEnemyDead);

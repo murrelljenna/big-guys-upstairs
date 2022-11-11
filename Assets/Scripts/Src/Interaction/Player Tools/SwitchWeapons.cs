@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using Fusion;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace game.assets.player
 {
-    public class SwitchWeapons : MonoBehaviour
+    public class SwitchWeapons : NetworkBehaviour
     {
 
         public uint selectedTool = 0u;
@@ -14,33 +15,36 @@ namespace game.assets.player
             selectWeapons();
         }
 
-        public void Update()
+        public override void FixedUpdateNetwork()
         {
-            if (Input.GetAxis("Mouse ScrollWheel") > 0f || Input.GetKeyDown(KeyCode.Q))
+            if (GetInput(out PlayerNetworkInput input))
             {
-                if (selectedTool >= transform.childCount - 1)
+                if (input.MOUSE_SCROLLWHEEL > 0f)
                 {
-                    selectedTool = 0u;
-                }
-                else
-                {
-                    selectedTool++;
-                }
+                    if (selectedTool >= transform.childCount - 1)
+                    {
+                        selectedTool = 0u;
+                    }
+                    else
+                    {
+                        selectedTool++;
+                    }
 
-                selectWeapons();
-            }
-            else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
-            {
-                if (selectedTool <= 0u)
-                {
-                    selectedTool = (uint)transform.childCount - 1;
+                    selectWeapons();
                 }
-                else
+                else if (input.MOUSE_SCROLLWHEEL < 0f)
                 {
-                    selectedTool--;
-                }
+                    if (selectedTool <= 0u)
+                    {
+                        selectedTool = (uint)transform.childCount - 1;
+                    }
+                    else
+                    {
+                        selectedTool--;
+                    }
 
-                selectWeapons();
+                    selectWeapons();
+                }
             }
         }
 

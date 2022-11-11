@@ -41,6 +41,7 @@ namespace game.assets
         public const uint BUTTON_ALPHA8 = 1 << 22;
         public const uint BUTTON_ALPHA9 = 1 << 23;
         public const uint BUTTON_ALPHA0 = 1 << 24;
+        public float MOUSE_SCROLLWHEEL;
 
         public float cameraRotationX;
         public float cameraRotationY;
@@ -298,6 +299,8 @@ namespace game.assets
                 frameworkInput.cameraRotationX = localView.getXRotation();
                 frameworkInput.cameraRotationY = localView.getYRotation();
             }
+
+            frameworkInput.MOUSE_SCROLLWHEEL = Input.GetAxis("Mouse ScrollWheel");
 
             input.Set(frameworkInput);
         }

@@ -213,7 +213,7 @@ namespace game.assets
                 frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_JUMP;
             }
 
-            if (Input.GetKey(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ACTION1;
             }

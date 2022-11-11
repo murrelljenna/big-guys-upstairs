@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Fusion;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,7 +13,7 @@ using UnityEngine.Events;
 
 namespace game.assets.interaction
 {
-    public class KeyDownEvents : MonoBehaviour
+    public class KeyDownEvents : NetworkBehaviour
     {
         [Tooltip("Invoked when E key is pressed.")]
         public UnityEvent eOnPressed;
@@ -25,27 +26,14 @@ namespace game.assets.interaction
         [Tooltip("Invoked when Esc key is pressed.")]
         public UnityEvent escOnPressed;
 
-        void Update()
+        public override void FixedUpdateNetwork()
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (GetInput(out PlayerNetworkInput input))
             {
-                eOnPressed.Invoke();
-            }
-            else if (Input.GetKeyDown(KeyCode.U))
-            {
-                uOnPressed.Invoke();
-            }
-            else if (Input.GetKeyDown(KeyCode.X))
-            {
-                xOnPressed.Invoke();
-            }
-            else if (Input.GetKeyDown(KeyCode.R))
-            {
-                rOnPressed.Invoke();
-            }
-            else if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                escOnPressed.Invoke();
+                if (input.IsDown(PlayerNetworkInput.BUTTON_ACTION1))
+                {
+                    eOnPressed.Invoke();
+                }
             }
         }
     }

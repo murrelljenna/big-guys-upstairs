@@ -6,16 +6,8 @@ using UnityEngine.Events;
 
 namespace game.assets.interaction
 {
-    /* 
-     * Carries our Unity API calls to be mocked for testing.
-     */
-    interface ICameraRaycastObserver
-    {
-        ObservationEvents RaycastToObservable(Camera cam);
-    }
-
     [RequireComponent(typeof(Camera))]
-    public class ObservationAgent : MonoBehaviour, ICameraRaycastObserver
+    public class ObservationAgent : MonoBehaviour
     {
         [Tooltip("Invoked once when agent observes another object.")]
         public UnityEvent onObserve;

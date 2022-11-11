@@ -71,6 +71,8 @@ namespace game.assets.ai
         void Start()
         {
             navAgent = this.GetComponent<UnityEngine.AI.NavMeshAgent>();
+
+            navAgent.Warp(transform.position);
         }
 
 

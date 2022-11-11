@@ -60,6 +60,9 @@ namespace game.assets.ai
 
         private DestinationWatcher currentWatcher;
 
+        [Networked]
+        public float speed { get; set; }
+
         void Start()
         {
             navAgent = this.GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -137,9 +140,11 @@ namespace game.assets.ai
             return dist;
         }
 
-        public float speed()
+        public override void FixedUpdateNetwork()
         {
-            return GetComponent<NavMeshAgent>().velocity.magnitude;
+            if (Object.HasStateAuthority) {
+                speed = GetComponent<NavMeshAgent>().velocity.magnitude;
+            }
         }
 
         public void OnDestroy()

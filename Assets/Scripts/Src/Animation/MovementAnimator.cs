@@ -22,7 +22,7 @@ namespace game.assets.animation
         {
             if (animator != null)
             {
-                animator.SetFloat("speed", movement.speed());
+                animator.SetFloat("speed", movement.speed);
             }
         }
     }

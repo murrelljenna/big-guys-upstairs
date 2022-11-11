@@ -19,6 +19,10 @@ public class MouseEvents : NetworkBehaviour
     private float lastClickTime;
     private const float DOUBLE_CLICK_TIME = 0.2f;
 
+
+    private float lastRightClickTime;
+    private const float RIGHT_CLICK_BUFFER = 0.5f;
+
     public override void FixedUpdateNetwork()
     {
         if (GetInput(out PlayerNetworkInput input))
@@ -39,7 +43,12 @@ public class MouseEvents : NetworkBehaviour
             }
             else if (input.IsDown(PlayerNetworkInput.BUTTON_FIRE_ALT))
             {
-                rightClick.Invoke();
+                float lastClick = Time.time - lastRightClickTime;
+                if (lastClick > RIGHT_CLICK_BUFFER)
+                {
+                    rightClick.Invoke();
+                }
+                lastRightClickTime = Time.time;
             }
         }
 

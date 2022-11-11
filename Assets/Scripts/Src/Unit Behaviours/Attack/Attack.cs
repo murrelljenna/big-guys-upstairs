@@ -299,6 +299,7 @@ namespace game.assets.ai
             }
             isAttacking = false;
             attackee = null;
+            Debug.Log("Cancelling orders!");
             CancelInvoke("reportIdle");
             Invoke("reportIdle", 3f);
         }

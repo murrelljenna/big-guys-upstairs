@@ -39,7 +39,6 @@ public class MouseEvents : NetworkBehaviour
             }
             else if (input.IsDown(PlayerNetworkInput.BUTTON_FIRE_ALT))
             {
-                Debug.Log("AF - Firing alt");
                 rightClick.Invoke();
             }
         }

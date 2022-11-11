@@ -242,12 +242,12 @@ namespace game.assets
                 frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ACTION4;
             }
 
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButtonDown(0))
             {
                 frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_FIRE;
             }
 
-            if (Input.GetMouseButton(1))
+            if (Input.GetMouseButtonDown(1))
             {
                 frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_FIRE_ALT;
             }

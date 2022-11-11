@@ -42,8 +42,7 @@ public class PopCount : NetworkBehaviour
 
     private void updateUI()
     {
-        Debug.Log("Ownership is " + (ownership.owner == null).ToString());
-        if (Object.HasInputAuthority && popCount != null)
+        if (popCount != null && ownership?.owner != null)
         {
             popCount.text = ownership.owner.popCount.ToString();
         }

@@ -433,26 +433,31 @@ PrefabInstance:
     - target: {fileID: -7527134046687949101, guid: dacf0adaab418dd43a5ea0b119fa06a6,
         type: 3}
       propertyPath: NetworkedBehaviours.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -7527134046687949101, guid: dacf0adaab418dd43a5ea0b119fa06a6,
         type: 3}
       propertyPath: NetworkedBehaviours.Array.data[0]
       value: 
-      objectReference: {fileID: 7567814283971104770}
+      objectReference: {fileID: 3434930777481433577}
     - target: {fileID: -7527134046687949101, guid: dacf0adaab418dd43a5ea0b119fa06a6,
         type: 3}
       propertyPath: NetworkedBehaviours.Array.data[1]
       value: 
-      objectReference: {fileID: 7861731834504355507}
+      objectReference: {fileID: 7567814283971104770}
     - target: {fileID: -7527134046687949101, guid: dacf0adaab418dd43a5ea0b119fa06a6,
         type: 3}
       propertyPath: NetworkedBehaviours.Array.data[2]
       value: 
-      objectReference: {fileID: 6385875029693103422}
+      objectReference: {fileID: 7861731834504355507}
     - target: {fileID: -7527134046687949101, guid: dacf0adaab418dd43a5ea0b119fa06a6,
         type: 3}
       propertyPath: NetworkedBehaviours.Array.data[3]
+      value: 
+      objectReference: {fileID: 6385875029693103422}
+    - target: {fileID: -7527134046687949101, guid: dacf0adaab418dd43a5ea0b119fa06a6,
+        type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[4]
       value: 
       objectReference: {fileID: 9101179894898103501}
     - target: {fileID: -7527134046687949101, guid: dacf0adaab418dd43a5ea0b119fa06a6,
@@ -626,6 +631,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 172740845926005751}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3434930777481433577 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3300823746633853470, guid: dacf0adaab418dd43a5ea0b119fa06a6,
+    type: 3}
+  m_PrefabInstance: {fileID: 172740845926005751}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3434930777481433582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b23759decddca404883ed095af252f18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7567814283971104770 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7738296988493884405, guid: dacf0adaab418dd43a5ea0b119fa06a6,

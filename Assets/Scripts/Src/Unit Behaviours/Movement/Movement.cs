@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
-using System;
 using game.assets.utilities;
+using Fusion;
 
 namespace game.assets.ai
 
@@ -45,7 +43,7 @@ namespace game.assets.ai
     }
 
     [RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
-    public class Movement : MonoBehaviour
+    public class Movement : NetworkBehaviour
     {
         private UnityEngine.AI.NavMeshAgent navAgent;
 
@@ -111,8 +109,12 @@ namespace game.assets.ai
 
         public void goTo(Vector3 destination)
         {
-
             newMoveOrdered.Invoke();
+            if (!Object.HasStateAuthority)
+            {
+                return;
+            }
+            
             goToSilently(destination);
         }
         public void faceTowards(Vector3 target)

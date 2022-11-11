@@ -201,6 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b23759decddca404883ed095af252f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   moveOrdered: 0
   reachedDestination:
     m_PersistentCalls:
@@ -452,6 +453,7 @@ MonoBehaviour:
     RawGuidValue: dacf0adaab418dd43a5ea0b119fa06a6
   NestedObjects: []
   NetworkedBehaviours:
+  - {fileID: 3300823746633853470}
   - {fileID: 7738296988493884405}
   - {fileID: 8034361885205570884}
   - {fileID: 6555725256713717449}

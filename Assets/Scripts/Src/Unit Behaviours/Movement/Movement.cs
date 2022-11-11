@@ -9,12 +9,6 @@ using game.assets.utilities;
 namespace game.assets.ai
 
 {
-    public interface IMovement
-    {
-        void goTo(Vector3 destination);
-        void stop();
-    }
-
     public class DestinationWatcher : MonoBehaviour
     {
         private Movement ourMovement;
@@ -51,7 +45,7 @@ namespace game.assets.ai
     }
 
     [RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
-    public class Movement : MonoBehaviour, IMovement
+    public class Movement : MonoBehaviour
     {
         private UnityEngine.AI.NavMeshAgent navAgent;
 
@@ -117,6 +111,7 @@ namespace game.assets.ai
 
         public void goTo(Vector3 destination)
         {
+
             newMoveOrdered.Invoke();
             goToSilently(destination);
         }

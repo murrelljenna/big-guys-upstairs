@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
-public class MovementAggregation : IMovement
+public class MovementAggregation
 {
     public List<Movement> units = new List<Movement>();
 

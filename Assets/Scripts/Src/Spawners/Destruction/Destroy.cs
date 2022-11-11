@@ -1,21 +1,23 @@
-﻿using game.assets;
+﻿using Fusion;
+using game.assets;
 using game.assets.player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Destroy : MonoBehaviour
+public class Destroy : NetworkBehaviour
 {
-    public GameObject leaveBehind;
+    public NetworkPrefabRef leaveBehind;
     public void destroy()
     {
-        if (leaveBehind != null)
+        if (!Object.HasStateAuthority) return;
+
+        if (leaveBehind != null && leaveBehind.IsValid)
         {
-            game.assets.player.Player player = GetComponent<Ownership>().owner;
-            GameObject go = InstantiatorFactory.getInstantiator(false).InstantiateAsPlayer(leaveBehind, transform.position, transform.rotation, player);
+            var go = Runner.Spawn(leaveBehind, transform.position, transform.rotation);
             go.GetComponent<Destroy>().destroyAfterAMinute(); // Clean yoself up
         }
-        Destroy(gameObject);
+        Runner.Despawn(GetComponent<NetworkObject>());
     }
 
     public void destroyAfterAMinute()

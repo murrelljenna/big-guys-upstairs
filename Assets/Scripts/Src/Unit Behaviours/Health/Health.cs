@@ -1,22 +1,15 @@
-﻿using System.Collections;
+﻿using Fusion;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace game.assets.ai
 {
-    public interface IHealth
+    public class Health : NetworkBehaviour
     {
-        void lowerHP(int amt, Attack atker = null);
-        void raiseHP(int amt);
-        bool maxed();
-        bool zero();
-    }
-
-    public class Health : MonoBehaviour, IHealth
-    {
-        [Tooltip("Starting health")]
-        public int HP;
+        [Networked]
+        public int HP { get; set; }
 
         [Tooltip("Maximum health reachable")]
         public int maxHP;
@@ -41,7 +34,7 @@ namespace game.assets.ai
         [Tooltip("Invoked when HP is over half")]
         public UnityEvent onOverHalfHP;
 
-        void Start()
+        public override void Spawned()
         {
             onRaiseHP.Invoke(HP, maxHP);
         }

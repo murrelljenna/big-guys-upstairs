@@ -6990,7 +6990,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 397c6e4f7b6e4d44f98cf2bbeeb0e2f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 200
+  _interpolationDataSource: 0
+  _HP: 0
   maxHP: 200
   onZeroHP:
     m_PersistentCalls:
@@ -7177,6 +7178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8d7b7a84798bc2419f45f089e03b262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   leaveBehind: {fileID: 0}
 --- !u!208 &1018513290252694774
 NavMeshObstacle:
@@ -7242,8 +7244,10 @@ MonoBehaviour:
     RawGuidValue: e01155afa7ed6364380770c2b17018ef
   NestedObjects: []
   NetworkedBehaviours:
+  - {fileID: 1992698477826989192}
   - {fileID: 4584360897601484519}
   - {fileID: 9210190332770586156}
+  - {fileID: 2796874934670888133}
   - {fileID: 5246354730614014798}
   - {fileID: 4095936580188733067}
   SimulationBehaviours: []

@@ -37,6 +37,11 @@ namespace game.assets.player
 
         public void setOwner(Player player)
         {
+            if (!Object.HasStateAuthority)
+            {
+                return;
+            }
+
             owned = true;
             owner = player;
             if (onNewOwner != null)
@@ -48,7 +53,6 @@ namespace game.assets.player
 
         public void setOwnerRecursively(Player player)
         {
-            Debug.Log("AD - SetOwnerRecursively");
             setOwner(player);
             
             foreach (Ownership ownership in transform.GetComponentsInChildren<Ownership>())
@@ -59,6 +63,10 @@ namespace game.assets.player
 
         public void clearOwner()
         {
+            if (!Object.HasStateAuthority)
+            {
+                return;
+            }
             owned = false;
             owner = null;
         }

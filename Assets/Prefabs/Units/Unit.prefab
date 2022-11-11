@@ -250,7 +250,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 397c6e4f7b6e4d44f98cf2bbeeb0e2f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 10
+  _interpolationDataSource: 0
+  _HP: 0
   maxHP: 10
   onZeroHP:
     m_PersistentCalls:
@@ -419,6 +420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8d7b7a84798bc2419f45f089e03b262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   leaveBehind: {fileID: 0}
 --- !u!114 &6555725256713717449
 MonoBehaviour:
@@ -457,8 +459,10 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 3300823746633853468}
   - {fileID: 3300823746633853470}
+  - {fileID: 3407638207687962992}
   - {fileID: 7738296988493884405}
   - {fileID: 8034361885205570884}
+  - {fileID: 7868128585400040480}
   - {fileID: 6555725256713717449}
   - {fileID: 8946488649286594362}
   SimulationBehaviours: []

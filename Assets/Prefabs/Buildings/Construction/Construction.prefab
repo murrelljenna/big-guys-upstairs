@@ -5348,7 +5348,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 397c6e4f7b6e4d44f98cf2bbeeb0e2f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 0
+  _interpolationDataSource: 0
+  _HP: 0
   maxHP: 0
   onZeroHP:
     m_PersistentCalls:
@@ -5463,6 +5464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8d7b7a84798bc2419f45f089e03b262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   leaveBehind: {fileID: 0}
 --- !u!114 &111853910329055160
 MonoBehaviour:
@@ -5486,6 +5488,8 @@ MonoBehaviour:
     RawGuidValue: 8b37944ca0563344ca71a7a1fab958cc
   NestedObjects: []
   NetworkedBehaviours:
+  - {fileID: 5830384261404423352}
+  - {fileID: 1056461143861969023}
   - {fileID: -5231328476908697120}
   SimulationBehaviours: []
 --- !u!114 &-5231328476908697120

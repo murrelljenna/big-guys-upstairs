@@ -19,7 +19,7 @@ namespace game.assets.player
         {
             if (GetInput(out PlayerNetworkInput input))
             {
-                if (input.MOUSE_SCROLLWHEEL > 0f)
+                if (input.IsDown(PlayerNetworkInput.BUTTON_ACTION2))
                 {
                     if (selectedTool >= transform.childCount - 1)
                     {
@@ -32,7 +32,7 @@ namespace game.assets.player
 
                     selectWeapons();
                 }
-                else if (input.MOUSE_SCROLLWHEEL < 0f)
+                /*else if (input.MOUSE_SCROLLWHEEL < 0f)
                 {
                     if (selectedTool <= 0u)
                     {
@@ -44,7 +44,7 @@ namespace game.assets.player
                     }
 
                     selectWeapons();
-                }
+                }*/
             }
         }
 

@@ -26,7 +26,9 @@ namespace game.assets.interaction
         [Tooltip("Invoked when Esc key is pressed.")]
         public UnityEvent escOnPressed;
 
+        private float eLastPressed;
 
+        private const float BUFFER_BETWEEN_PRESSES = 0.2f;
 
         public override void FixedUpdateNetwork()
         {
@@ -34,9 +36,21 @@ namespace game.assets.interaction
             {
                 if (input.IsDown(PlayerNetworkInput.BUTTON_ACTION1))
                 {
-                    eOnPressed.Invoke();
+                    fireWithinMeter(ref eLastPressed, eOnPressed);
                 }
             }
         }
+
+        private void fireWithinMeter(ref float lastPressed, UnityEvent eventToFire)
+        {
+            float lastPress = Time.time - lastPressed;
+
+            if (lastPress > BUFFER_BETWEEN_PRESSES) {
+                eventToFire.Invoke();
+                lastPressed = Time.time;
+            }
+        }
     }
+
+
 }

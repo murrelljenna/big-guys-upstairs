@@ -227,12 +227,12 @@ namespace game.assets
                 frameworkInput.ePressed = false;
             }
 
-            if (Input.GetKey(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
                 frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ACTION2;
             }
 
-            if (Input.GetKey(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ACTION3;
             }

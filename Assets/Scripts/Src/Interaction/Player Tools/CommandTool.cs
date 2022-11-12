@@ -8,11 +8,12 @@ using static game.assets.utilities.GameUtils;
 using game.assets.economy;
 using UnityEngine.AI;
 using game.assets.player;
+using Fusion;
 
 namespace game.assets.interaction
 {
     [RequireComponent(typeof(MouseEvents))]
-    public class CommandTool : MonoBehaviour
+    public class CommandTool : NetworkBehaviour
     {
         [Tooltip("Camera Used By Command Tool")]
         public Camera cam;
@@ -49,7 +50,14 @@ namespace game.assets.interaction
 
         private void getUIController()
         {
-            uiController = GameObject.Find(MagicWords.GameObjectNames.CommandMenu)?.GetComponent<CommandUIController>();
+            if (Object.HasInputAuthority)
+            {
+                uiController = GameObject.Find(MagicWords.GameObjectNames.CommandMenu)?.GetComponent<CommandUIController>();
+            }
+            else
+            {
+                useUi = false;
+            }
         }
 
         private void Awake()

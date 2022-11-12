@@ -466,7 +466,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  selectedTool: 0
+  _selectedTool: 0
 --- !u!1 &5670587663590423811
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,6 +622,7 @@ MonoBehaviour:
   - {fileID: 3875199260221784331}
   - {fileID: 3145881686746321680}
   - {fileID: 659959271925083291}
+  - {fileID: 652319809668547922}
   - {fileID: 2681686551078783308}
   SimulationBehaviours:
   - {fileID: 8379337852045708003}
@@ -1662,6 +1663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09adc06dfa303fd45b20fda069f66751, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   cam: {fileID: 769148283958465084}
   useUi: 1
   ownership: {fileID: 7404373241901479203}

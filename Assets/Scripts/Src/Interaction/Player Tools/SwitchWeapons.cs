@@ -7,20 +7,21 @@ namespace game.assets.player
 {
     public class SwitchWeapons : NetworkBehaviour
     {
+        [Networked(OnChanged=nameof(SelectWeaponsCallback))]
+        public uint selectedTool { get; set; } = 0u;
 
-        public uint selectedTool = 0u;
-
-        public void Start()
+        public override void Spawned()
         {
             selectWeapons();
         }
 
         public override void FixedUpdateNetwork()
         {
-            if (GetInput(out PlayerNetworkInput input))
+            if (Object.HasStateAuthority && GetInput(out PlayerNetworkInput input))
             {
                 if (input.IsDown(PlayerNetworkInput.BUTTON_ACTION2))
                 {
+                    Debug.Log("Is down!");
                     if (selectedTool >= transform.childCount - 1)
                     {
                         selectedTool = 0u;
@@ -29,8 +30,6 @@ namespace game.assets.player
                     {
                         selectedTool++;
                     }
-
-                    selectWeapons();
                 }
                 /*else if (input.MOUSE_SCROLLWHEEL < 0f)
                 {
@@ -48,7 +47,12 @@ namespace game.assets.player
             }
         }
 
-        private void selectWeapons()
+        private static void SelectWeaponsCallback(Changed<SwitchWeapons> sw)
+        {
+            sw.Behaviour.selectWeapons();
+        }
+
+        public void selectWeapons()
         {
             uint i = 0u;
             foreach (Transform tool in transform)

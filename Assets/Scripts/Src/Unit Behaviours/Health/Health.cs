@@ -39,15 +39,10 @@ namespace game.assets.ai
             onRaiseHP.Invoke(HP, maxHP);
         }
 
-        public void lowerHP(int amt, Attack attacker = null)
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        public void RPC_FireLowerHPEvents()
         {
-            HP = HP - amt;
             onLowerHP.Invoke(HP, maxHP);
-
-            if (attacker)
-            {
-                onAttacked.Invoke(attacker);
-            }
 
             if (zero())
             {
@@ -59,6 +54,23 @@ namespace game.assets.ai
             {
                 onUnderHalfHP.Invoke();
             }
+        }
+
+        public void lowerHP(int amt, Attack attacker = null)
+        {
+            if (!Object.HasStateAuthority)
+            {
+                return;
+            }
+
+            HP = HP - amt;
+
+            if (attacker)
+            {
+                onAttacked.Invoke(attacker);
+            }
+
+            RPC_FireLowerHPEvents();
         }
 
         public void raiseHP(int amt)

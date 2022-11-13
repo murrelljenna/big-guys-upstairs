@@ -174,6 +174,12 @@ namespace game.assets.ai
             //Invoke("checkEnemiesInRange", 0.05f);
         }
 
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        public void RPC_FireAttackEvents()
+        {
+            onAttackOrdered.Invoke();
+        }
+
         public void attack(Health attackee)
         {
             if (!Object.HasStateAuthority)
@@ -191,7 +197,7 @@ namespace game.assets.ai
             cancelOrders();
             idle = false;
             attackee.onZeroHP.AddListener(cancelOrders);
-            onAttackOrdered.Invoke();
+            RPC_FireAttackEvents();
             attackee.onZeroHP.AddListener(reportEnemyDead);
             if (canMove)
             {
@@ -271,9 +277,15 @@ namespace game.assets.ai
             }
         }
 
-        protected virtual void doDamage()
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        public void RPC_FireDamageEvents()
         {
             onAttack.Invoke();
+        }
+
+        protected virtual void doDamage()
+        {
+            RPC_FireDamageEvents();
             faceTarget(attackee.transform.position);
             this.attackee.lowerHP(attackPower, this);
         }

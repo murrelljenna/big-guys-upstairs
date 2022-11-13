@@ -9119,6 +9119,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 1.659
       objectReference: {fileID: 0}
+    - target: {fileID: 1992698477826989192, guid: e01155afa7ed6364380770c2b17018ef,
+        type: 3}
+      propertyPath: _HP
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 2421241944636815811, guid: e01155afa7ed6364380770c2b17018ef,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -9460,42 +9465,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2835369735988119758}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &337729124881104421
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9081007910819821753}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.564961, y: 0.7181695, z: 0.5550765}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0.06, y: 0.6, z: -0.05}
-  m_TimeToStationary: 0.5
---- !u!114 &7047767959032133628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9081007910819821753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb6a1004fa03e237ba0cd73d02bca097, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isFinal: 1
-  store:
-    wood: 0
-    food: 0
-    gold: 0
-    stone: 0
-    iron: 0
-    horse: 0
 --- !u!114 &1581442339150912341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9540,6 +9509,42 @@ MonoBehaviour:
   networked: 0
   spawnRadius: 1.2
   ownership: {fileID: 0}
+--- !u!208 &337729124881104421
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9081007910819821753}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.564961, y: 0.7181695, z: 0.5550765}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.06, y: 0.6, z: -0.05}
+  m_TimeToStationary: 0.5
+--- !u!114 &7047767959032133628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9081007910819821753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6a1004fa03e237ba0cd73d02bca097, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFinal: 1
+  store:
+    wood: 0
+    food: 0
+    gold: 0
+    stone: 0
+    iron: 0
+    horse: 0
 --- !u!1001 &3141575179347960903
 PrefabInstance:
   m_ObjectHideFlags: 0

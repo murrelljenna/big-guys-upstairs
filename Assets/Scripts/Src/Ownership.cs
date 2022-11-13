@@ -70,5 +70,10 @@ namespace game.assets.player
             owned = false;
             owner = null;
         }
+
+        public bool isOwnedByOrNeutral(Player player)
+        {
+            return (owned == false || isOwnedBy(player));
+        }
     }
 }

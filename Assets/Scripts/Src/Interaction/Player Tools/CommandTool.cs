@@ -206,6 +206,7 @@ namespace game.assets.interaction
             Ray ray = cam.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
             Debug.Log("AE - orderAttackOrMoveIfCan");
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.All)) {
+                Debug.Log("AE - Inside raycast");
                 Health health = hit.collider.GetComponent<Health>();
                 if (health != null && !health.BelongsTo(ownership.owner))
                 {
@@ -215,8 +216,9 @@ namespace game.assets.interaction
 
                 Resource resource = hit.collider.GetComponent<Resource>();
 
-                if (resource != null && !noWorkers(attackAggregation.units) && resource.workers.Count < resource.maxWorkers)
+                if (resource != null && resource.GetComponent<Ownership>().isOwnedByOrNeutral(ownership.owner) && !noWorkers(attackAggregation.units) && resource.workers.Count < resource.maxWorkers)
                 {
+                    Debug.Log("AR - Adding workers");
                     List<Worker> workers = attackAggregation.unitsThatCanWork();
 
                     StartCoroutine(assignWorkersToResource(resource, workers));

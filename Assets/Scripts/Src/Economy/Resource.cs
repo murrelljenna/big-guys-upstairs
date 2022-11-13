@@ -5,16 +5,21 @@ using game.assets.utilities.resources;
 using game.assets.utilities;
 using UnityEngine.Events;
 using game.assets.ai;
+using game.assets.player;
+using Fusion;
 
 namespace game.assets.economy {
     [RequireComponent(typeof(GameObjectSearcher))]
-    public class Resource : MonoBehaviour
+    [RequireComponent(typeof(Ownership))]
+    public class Resource : NetworkBehaviour
     {
         [Tooltip("Maximum workers assignable to resource")]
         public int maxWorkers = 3;
 
         [Tooltip("Yield for workers when extracting")]
         public ResourceSet yield;
+
+        public Ownership ownership;
 
         public List<Worker> workers = new List<Worker>();
 
@@ -27,10 +32,22 @@ namespace game.assets.economy {
         private void Start()
         {
             searcher = GetComponent<GameObjectSearcher>();
+            ownership = GetComponent<Ownership>();
         }
 
         public bool addWorker(Worker worker)
         {
+            if (!Object.HasStateAuthority)
+            {
+                return false;
+            }
+
+            if (!ownership.isOwnedByOrNeutral(worker.GetComponent<Ownership>().owner)) {
+                return false;
+            }
+
+            setOwner(worker);
+
             upstream = closestDepositor();
 
             if (workers.Count < maxWorkers)
@@ -47,10 +64,23 @@ namespace game.assets.economy {
             return false;
         }
 
+        private void setOwner(Worker worker)
+        {
+            var workerOwnership = worker.GetComponent<Ownership>();
+
+            ownership.setOwner(workerOwnership.owner);
+            
+        }
+
         public void removeWorker(Worker worker)
         {
             workers.Remove(worker);
             workerCountChanged.Invoke(workers.Count);
+
+            if (workers.Count == 0)
+            {
+                ownership.clearOwner();
+            }
         }
 
         public virtual GameObject getNode()
@@ -77,7 +107,7 @@ namespace game.assets.economy {
             Vector3 currentPos = transform.position;
             foreach (Depositor depositor in depositors)
             {
-                if (depositor.IsMine())
+                if (depositor.BelongsTo(ownership.owner))
                 {
                     float dist = Vector3.Distance(depositor.transform.position, currentPos);
                     if (dist < minDist)

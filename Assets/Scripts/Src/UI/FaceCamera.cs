@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using game.assets.player;
+using game.assets.utilities;
 
 namespace game.assets.ui
 {
@@ -15,7 +16,7 @@ namespace game.assets.ui
             }
             else
             {
-                playerCamera = LocalPlayer.getPlayerCamera();
+                playerCamera = GameUtils.GetLocalPlayerCamera();
             }
         }
     }

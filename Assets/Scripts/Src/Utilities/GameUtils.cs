@@ -137,7 +137,13 @@ namespace game.assets.utilities {
                 public static string CommandMenu = "CommandMenu";
                 public static string Effects = "Effects";
                 public static string Audio = "Audio";
+                public const string PlayerRig = "PlayerRig(Clone)";
             }
+        }
+
+        public static Camera GetLocalPlayerCamera()
+        {
+            return GameObject.Find(MagicWords.GameObjectNames.PlayerRig)?.GetComponent<Camera>();
         }
 
         public static T[] GetComponents<T>(this Collider[] colliders) where T : MonoBehaviour {

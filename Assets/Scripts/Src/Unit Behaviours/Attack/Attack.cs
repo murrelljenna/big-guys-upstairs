@@ -187,11 +187,8 @@ namespace game.assets.ai
                 return;
             }
 
-            Debug.Log("AR - We have state authority, trying to attack");
-
             if (attackee == null || !attackee.IsEnemyOf(this))
             {
-                Debug.Log("AR - Done fucked, up, attackee is null or not an enemy");
                 return;
             }
             cancelOrders();
@@ -201,7 +198,6 @@ namespace game.assets.ai
             attackee.onZeroHP.AddListener(reportEnemyDead);
             if (canMove)
             {
-                Debug.Log("AR - All clear, trying to attack!");
                 StartCoroutine(moveUntilInRangeAndAttack(attackee));
             }
             else
@@ -339,7 +335,6 @@ namespace game.assets.ai
             }
             isAttacking = false;
             attackee = null;
-            Debug.Log("Cancelling orders!");
             CancelInvoke("reportIdle");
             Invoke("reportIdle", 3f);
         }

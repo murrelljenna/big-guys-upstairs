@@ -43,19 +43,6 @@ namespace game.assets.player
                         selectedTool++;
                     }
                 }
-                /*else if (input.MOUSE_SCROLLWHEEL < 0f)
-                {
-                    if (selectedTool <= 0u)
-                    {
-                        selectedTool = (uint)transform.childCount - 1;
-                    }
-                    else
-                    {
-                        selectedTool--;
-                    }
-
-                    selectWeapons();
-                }*/
             }
         }
 

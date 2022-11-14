@@ -35,6 +35,12 @@ namespace game.assets.economy {
             ownership = GetComponent<Ownership>();
         }
 
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        public void RPC_FireWorkerEvents(int count)
+        {
+            workerCountChanged.Invoke(count);
+        }
+
         public bool addWorker(Worker worker)
         {
             if (!Object.HasStateAuthority)
@@ -56,7 +62,7 @@ namespace game.assets.economy {
                 workers.Add(worker);
                 worker.assignResourceTile(this);
                 worker.startCollectingResources(getNode(), yield);
-                workerCountChanged.Invoke(workers.Count);
+                RPC_FireWorkerEvents(workers.Count);
 
                 upstream?.GetComponent<Health>()?.onZeroHP.AddListener((Health _) => worker.cancelOrders());
                 return true;
@@ -75,7 +81,7 @@ namespace game.assets.economy {
         public void removeWorker(Worker worker)
         {
             workers.Remove(worker);
-            workerCountChanged.Invoke(workers.Count);
+            RPC_FireWorkerEvents(workers.Count);
 
             if (workers.Count == 0)
             {

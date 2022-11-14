@@ -32,7 +32,7 @@ namespace game.assets.interaction
                 return true;
             }
             
-            if (owner.owner == targetOwnership.owner)
+            if (targetOwnership.isOwnedByOrNeutral(owner.owner))
             {
                 return true;
             }

@@ -5299,6 +5299,7 @@ GameObject:
   - component: {fileID: 1056461143861969023}
   - component: {fileID: 111853910329055160}
   - component: {fileID: -5231328476908697120}
+  - component: {fileID: 6471027212665900563}
   m_Layer: 0
   m_Name: Construction
   m_TagString: Untagged
@@ -5491,6 +5492,7 @@ MonoBehaviour:
   - {fileID: 5830384261404423352}
   - {fileID: 1056461143861969023}
   - {fileID: -5231328476908697120}
+  - {fileID: 6471027212665900563}
   SimulationBehaviours: []
 --- !u!114 &-5231328476908697120
 MonoBehaviour:
@@ -5518,6 +5520,25 @@ MonoBehaviour:
     RotBlendStart: 0.1
     RotBlendEnd: 0.5
     RotTeleportRadians: 1.5
+--- !u!114 &6471027212665900563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5555884027245738489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13cd7f9aed8944143bfa86ce4209aa95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  _owned: 0
+  _owner: {fileID: 0}
+  playerName: 
+  onNewOwner:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &4183030724561632518
 PrefabInstance:
   m_ObjectHideFlags: 0

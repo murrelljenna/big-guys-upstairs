@@ -147,7 +147,6 @@ namespace game.assets.interaction
             } else if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Resource))
             {
                 Resource resource = hit.collider.gameObject.GetComponent<Resource>();
-                Debug.Log("Hit a resource");
                 if (resource != null)
                 {
                     resource.workers.ForEach((Worker worker) =>

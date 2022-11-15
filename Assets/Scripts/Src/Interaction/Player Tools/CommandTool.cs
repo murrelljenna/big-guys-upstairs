@@ -60,7 +60,7 @@ namespace game.assets.interaction
             }
         }
 
-        private void Awake()
+        public override void Spawned()
         {
             
             if (cam == null)
@@ -82,6 +82,10 @@ namespace game.assets.interaction
 
         private void selectUnitIfCan()
         {
+            if (!Object.HasStateAuthority)
+            {
+                return;
+            }
             RaycastHit hit;
             Ray ray = cam.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Unit))
@@ -110,25 +114,23 @@ namespace game.assets.interaction
 
             unit.select();
             attackAggregation.add(unit);
-            if (useUi)
-            {
-                uiController.addCard(unit.GetComponent<Health>());
-            }
+            RPC_AddCard(unit.GetComponent<Health>());
         }
 
         private void removeUnit(Attack attacker)
         {
             attackAggregation.remove(attacker);
-            if (useUi)
-            {
-                uiController.removeCard(attacker.GetComponent<Health>());
-            }
+            RPC_RemoveCard(attacker.GetComponent<Health>());
 
             attacker.deselect();
         }
 
         private void selectUnitsInRadiusIfCan()
         {
+            if (!Object.HasStateAuthority)
+            {
+                return;
+            }
             RaycastHit hit;
             Ray ray = cam.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
 
@@ -202,6 +204,10 @@ namespace game.assets.interaction
 
         private void orderAttackOrMoveIfCan()
         {
+            if (!Object.HasStateAuthority)
+            {
+                return;
+            }
             RaycastHit hit;
             Ray ray = cam.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
             Debug.Log("AE - orderAttackOrMoveIfCan");
@@ -276,7 +282,37 @@ namespace game.assets.interaction
         }
 
         public void clearSelection() {
+            if (!Object.HasStateAuthority)
+            {
+                return;
+            }
+
             attackAggregation.clear();
+
+            RPC_ClearUICards();
+        }
+
+        [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
+        public void RPC_AddCard(Health unit)
+        {
+            if (useUi)
+            {
+                uiController.addCard(unit);
+            }
+        }
+
+        [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
+        public void RPC_RemoveCard(Health unit)
+        {
+            if (useUi)
+            {
+                uiController.removeCard(unit);
+            }
+        }
+
+        [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
+        public void RPC_ClearUICards()
+        {
             if (useUi && uiController != null)
             {
                 uiController.clearCards();

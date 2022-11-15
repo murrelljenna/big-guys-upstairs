@@ -118,9 +118,10 @@ namespace game.assets.spawners
                 startSpawnLocation.y += 0.5f;
 
                 GameObject spawnedObject = SpawnIfCanAfford(prefab, startSpawnLocation, Quaternion.identity, ownership.owner);
-                spawnedObject.SetAsPlayer(ownership.owner);
+
                 if (spawnedObject != null)
                 {
+                    spawnedObject.SetAsPlayer(ownership.owner);
                     if (ghostInstance != null)
                     {
                         Destroy(ghostInstance);

@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 6377535869419778237}
   - component: {fileID: 6377078009340451147}
   - component: {fileID: 4512251820573197430}
+  - component: {fileID: 993906447695602626}
+  - component: {fileID: 7064578904021604197}
+  - component: {fileID: 6184425289685594025}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -76,7 +79,79 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a69e15f5d994d1d42904cca3cdd4f506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   onCollision:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &993906447695602626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3874602849681840064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: f4f7f09bbccb14e4d81364c9c4a73449
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 4512251820573197430}
+  - {fileID: 7064578904021604197}
+  - {fileID: 6184425289685594025}
+  SimulationBehaviours: []
+--- !u!114 &7064578904021604197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3874602849681840064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  InterpolationSpace: 0
+  InterpolationTarget: {fileID: 0}
+  InterpolateErrorCorrection: 1
+  InterpolatedErrorCorrectionSettings:
+    MinRate: 3.3
+    MaxRate: 10
+    PosBlendStart: 0.25
+    PosBlendEnd: 1
+    PosMinCorrection: 0.025
+    PosTeleportDistance: 2
+    RotBlendStart: 0.1
+    RotBlendEnd: 0.5
+    RotTeleportRadians: 1.5
+--- !u!114 &6184425289685594025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3874602849681840064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13cd7f9aed8944143bfa86ce4209aa95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  _owned: 0
+  _owner: {fileID: 0}
+  playerName: 
+  onNewOwner:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &3978003118027907243

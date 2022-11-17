@@ -2,10 +2,11 @@
 
 using game.assets.ai;
 using UnityEngine.Events;
+using Fusion;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
-public class Projectile : MonoBehaviour
+public class Projectile : NetworkBehaviour
 {
     private int dmg;
     [Tooltip("Invoked when projectile hits an enemy")]
@@ -15,6 +16,11 @@ public class Projectile : MonoBehaviour
 
     public void OnTriggerEnter(Collider collision)
     {
+        if (!Object.HasStateAuthority)
+        {
+            return;
+        }
+
         Health collidingEnemy = collision.gameObject.GetComponent<Health>();
         if (collidingEnemy != null && collidingEnemy.IsEnemyOf(this))
         {
@@ -22,7 +28,7 @@ public class Projectile : MonoBehaviour
 
             collidingEnemy.lowerHP(dmg, owner);
 
-            Destroy(gameObject, 0.2f);
+            Runner.Despawn(GetComponent<NetworkObject>());
         }
     }
 

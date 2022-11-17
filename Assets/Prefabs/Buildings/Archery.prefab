@@ -2779,6 +2779,11 @@ PrefabInstance:
       objectReference: {fileID: 4945841003443802165}
     - target: {fileID: 6465246549917436453, guid: e01155afa7ed6364380770c2b17018ef,
         type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[8]
+      value: 
+      objectReference: {fileID: 4945841003443802165}
+    - target: {fileID: 6465246549917436453, guid: e01155afa7ed6364380770c2b17018ef,
+        type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
       value: -1996169913592643092
       objectReference: {fileID: 0}
@@ -2912,7 +2917,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   prefab:
-    RawGuidValue: 00000000000000000000000000000000
+    RawGuidValue: 1dc2570a15071d743a8ab95a6881ea4b
   price:
     wood: 5
     food: 7
@@ -2922,4 +2927,4 @@ MonoBehaviour:
     horse: 0
   networked: 0
   spawnRadius: 1.2
-  ownership: {fileID: 0}
+  ownership: {fileID: 7517529734477206092}

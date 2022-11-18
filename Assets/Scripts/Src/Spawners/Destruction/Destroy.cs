@@ -15,11 +15,16 @@ public class Destroy : NetworkBehaviour
 
     public void destroy()
     {
+        if (Object == null)
+        {
+            return;
+        }
         player = GetComponent<Ownership>()?.owner;
         if (!Object.HasStateAuthority) return;
         RPC_SpawnLocalGameObject(transform.position, transform.rotation);
-        this.transform.position = Vector3.zero;
-        Invoke("addToDeletePool", 10f);
+        this.transform.position = new Vector3(420, -1337, 6969);
+        Invoke("addToDeletePool", 1f);
+        this.gameObject.SetActive(false);
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]

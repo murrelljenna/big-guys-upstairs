@@ -14,6 +14,13 @@ public class Projectile : NetworkBehaviour
 
     private Attack owner;
 
+    Vector3 direction;
+
+    public override void Spawned()
+    {
+        GetComponent<Rigidbody>().AddForce(direction);
+    }
+
     public void OnTriggerEnter(Collider collision)
     {
         if (Object == null || !Object.HasStateAuthority)
@@ -40,5 +47,10 @@ public class Projectile : NetworkBehaviour
     public void setOwner(Attack attacker)
     {
         owner = attacker;
+    }
+
+    public void setDirection(Vector3 direction)
+    {
+        this.direction = direction;
     }
 }

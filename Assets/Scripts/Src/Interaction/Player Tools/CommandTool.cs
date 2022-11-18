@@ -281,7 +281,7 @@ namespace game.assets.interaction
         }
 
         public void clearSelection() {
-            if (!Object.HasStateAuthority)
+            if (Object == null || !Object.HasStateAuthority)
             {
                 return;
             }

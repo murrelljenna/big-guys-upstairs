@@ -16,7 +16,7 @@ public class Projectile : NetworkBehaviour
 
     public void OnTriggerEnter(Collider collision)
     {
-        if (!Object.HasStateAuthority)
+        if (Object == null || !Object.HasStateAuthority)
         {
             return;
         }

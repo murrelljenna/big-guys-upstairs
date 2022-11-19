@@ -5,9 +5,10 @@ using game.assets.utilities.resources;
 using game.assets;
 using game.assets.player;
 using game.assets.ai.units;
+using Fusion;
 
 [RequireComponent(typeof(LineRenderer))]
-public class PlaceWalls : MonoBehaviour
+public class PlaceWalls : NetworkBehaviour
 {
     private bool firstPointPlaced = false;
     private bool firstPointSnapped = false;
@@ -17,15 +18,21 @@ public class PlaceWalls : MonoBehaviour
     private Transform currentBuilding;
     private LineRenderer lineRen;
     public Camera cam;
-    private Player player;
+    public Ownership ownership;
     public GameObject ghostPrefab;
     private Color previousColor;
 
     public GameObject wallPrefab;
     public GameObject cornerPrefab;
 
-    void Start()
+    private RaycastHit hit;
+
+    public override void Spawned()
     {
+        if (ownership == null)
+        {
+            Debug.LogError("PlaceWalls.cs is missing a reference to an Ownership script.");
+        }
         lineRen = this.GetComponent<LineRenderer>();
     }
 
@@ -43,22 +50,70 @@ public class PlaceWalls : MonoBehaviour
         setBuilding(ghostPrefab);
     }
 
-    void Update()
+    public void Reset()
     {
-        RaycastHit hit;
+        firstPointPlaced = false;
+        lastPointSnapped = false;
+        firstPointSnapped = false;
+        lineRen.positionCount = 0;
+    }
 
+    public void PlaceWall()
+    {
+        if (firstPointPlaced)
+        {
+            lastPoint = hit.point;
+            float wallUnitLength = currentBuilding.transform.Find("Model").GetComponent<MeshFilter>().mesh.bounds.size.z / 3f * currentBuilding.transform.Find("Model").localScale.z;
+            float pointDistance = Vector3.Distance(firstPoint, lastPoint);
+
+            float noWalls = pointDistance / wallUnitLength;
+            int mapLayer = ~(1 << 11);
+            int wood = 1;
+
+            if (ownership.owner.canAfford(new ResourceSet(wood = (wood * (int)noWalls))))
+            {
+                RaycastHit info;
+                if ((!Physics.Linecast(firstPoint, lastPoint, out info, mapLayer) || info.collider.gameObject.GetComponent<DoNotAutoAttack>() != null))
+                {
+                    if (System.Math.Abs(firstPoint.y) - System.Math.Abs(lastPoint.y) < 0.5f && System.Math.Abs(firstPoint.y) - System.Math.Abs(lastPoint.y) > -0.5f)
+                    {
+                        if (Object.HasStateAuthority)
+                        {
+                            ownership.owner.takeResources(new ResourceSet(wood = (wood * (int)noWalls)));
+                            StartCoroutine(placeWalls(noWalls, firstPointSnapped, lastPointSnapped));
+                        }
+
+                        firstPointPlaced = false;
+                        lastPointSnapped = false;
+                        firstPointSnapped = false;
+                    }
+                }
+                else
+                {
+                    StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
+                    StartCoroutine(flashRed(info.collider.gameObject, 0.2f));
+                }
+            }
+            else
+            {
+                StopAllCoroutines();
+                StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
+            }
+
+        }
+        else
+        {
+            firstPoint = hit.point;
+            firstPointPlaced = true;
+        }
+    }
+
+    public override void FixedUpdateNetwork()
+    {
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, game.assets.utilities.GameUtils.LayerMask.Terrain))
         {
-            if (Input.GetMouseButtonDown(1))
-            {
-                firstPointPlaced = false;
-                lastPointSnapped = false;
-                firstPointSnapped = false;
-                lineRen.positionCount = 0;
-            }
-
             if (wallInRange(hit.point, 0.5f))
             {
                 hit.point = snapWallInRange(hit.point, 0.5f);
@@ -98,54 +153,6 @@ public class PlaceWalls : MonoBehaviour
                 lineRen.SetPositions(positions);
 
                 currentBuilding.rotation = Quaternion.LookRotation(hit.point - firstPoint);
-            }
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (firstPointPlaced)
-                {
-                    lastPoint = hit.point;
-                    float wallUnitLength = currentBuilding.transform.Find("Model").GetComponent<MeshFilter>().mesh.bounds.size.z / 3f * currentBuilding.transform.Find("Model").localScale.z;
-                    float pointDistance = Vector3.Distance(firstPoint, lastPoint);
-
-                    float noWalls = pointDistance / wallUnitLength;
-                    int mapLayer = ~(1 << 11);
-                    int wood = 1;
-
-                    if (player.canAfford(new ResourceSet(wood = (wood * (int)noWalls))))
-                    {
-                        RaycastHit info;
-                        if ((!Physics.Linecast(firstPoint, lastPoint, out info, mapLayer) || info.collider.gameObject.GetComponent<DoNotAutoAttack>() != null))
-                        {
-                            if (System.Math.Abs(firstPoint.y) - System.Math.Abs(lastPoint.y) < 0.5f && System.Math.Abs(firstPoint.y) - System.Math.Abs(lastPoint.y) > -0.5f)
-                            {
-                                player.takeResources(new ResourceSet(wood = (wood * (int)noWalls)));
-                                StartCoroutine(placeWalls(noWalls, firstPointSnapped, lastPointSnapped));
-
-                                firstPointPlaced = false;
-                                lastPointSnapped = false;
-                                firstPointSnapped = false;
-                            }
-                        }
-                        else
-                        {
-                            StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
-                            StartCoroutine(flashRed(info.collider.gameObject, 0.2f));
-                        }
-                    }
-                    else
-                    {
-                        StopAllCoroutines();
-                        StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
-                    }
-
-                }
-                else
-                {
-                    firstPoint = hit.point;
-                    firstPointPlaced = true;
-                }
-
             }
         }
     }
@@ -201,11 +208,28 @@ public class PlaceWalls : MonoBehaviour
             GameObject placedBuilding = null;
             if ((i == 0 && !firstPointSnapped) || (i == (int)noWalls && !lastPointSnapped))
             {
-                placedBuilding = InstantiatorFactory.getInstantiator(false).InstantiateAsMine(cornerPrefab, destination, Quaternion.LookRotation(lastPoint - destination));
+                placedBuilding = //InstantiatorFactory.getInstantiator(false).InstantiateAsMine(cornerPrefab, destination, Quaternion.LookRotation(lastPoint - destination));
+                Runner.Spawn(
+                cornerPrefab, destination,
+                Quaternion.LookRotation(lastPoint - destination),
+                null,
+                (runner, o) =>
+                {
+                    o.SetAsPlayer(ownership.owner);
+                }
+                ).gameObject;
             }
             else
             {
-                placedBuilding = InstantiatorFactory.getInstantiator(false).InstantiateAsMine(wallPrefab, destination, Quaternion.LookRotation(lastPoint - destination));
+                placedBuilding = Runner.Spawn(
+                wallPrefab, destination,
+                Quaternion.LookRotation(lastPoint - destination),
+                null,
+                (runner, o) =>
+                {
+                    o.SetAsPlayer(ownership.owner);
+                }
+                ).gameObject;
             }
 
             yield return null;

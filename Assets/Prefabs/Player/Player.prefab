@@ -619,6 +619,7 @@ MonoBehaviour:
   - {fileID: 957534064180425719}
   - {fileID: 2829083539984940797}
   - {fileID: 6076754067389855705}
+  - {fileID: 8465529425572939591}
   - {fileID: 3875199260221784331}
   - {fileID: 3145881686746321680}
   - {fileID: 659959271925083291}
@@ -1271,12 +1272,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 8465529425572939591}
+        m_TargetAssemblyTypeName: PlaceWalls, AssemblyDefinitionFile
+        m_MethodName: PlaceWall
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   leftDoubleClick:
     m_PersistentCalls:
       m_Calls: []
   rightClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8465529425572939591}
+        m_TargetAssemblyTypeName: PlaceWalls, AssemblyDefinitionFile
+        m_MethodName: Reset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2032364686250974162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1399,7 +1424,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e68903947897d9459ab87f650ce5ed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   cam: {fileID: 769148283958465084}
+  ownership: {fileID: 7404373241901479203}
   ghostPrefab: {fileID: 1700238087218601460, guid: ba389b2ced82c714baf7c64af9ff1203,
     type: 3}
   wallPrefab: {fileID: 2593019825936339539, guid: eb0347f7affbbcb46ad52898921fcf81,

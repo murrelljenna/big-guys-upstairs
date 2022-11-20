@@ -38,10 +38,7 @@ public class PlaceWalls : NetworkBehaviour
 
     void OnDisable()
     {
-        firstPointPlaced = false;
-        lastPointSnapped = false;
-        firstPointSnapped = false;
-        lineRen.positionCount = 0;
+        Reset();
         DestroyImmediate(currentBuilding.gameObject);
     }
 
@@ -73,7 +70,7 @@ public class PlaceWalls : NetworkBehaviour
                 int mapLayer = ~(1 << 11);
                 int wood = 1;
 
-                if (ownership.owner.canAfford(new ResourceSet(wood = (wood * (int)noWalls))))
+                if (ownership.owner.canAfford(new ResourceSet(wood * (int)noWalls)))
                 {
                     RaycastHit info;
                     if ((!Physics.Linecast(firstPoint, lastPoint, out info, mapLayer) || info.collider.gameObject.GetComponent<DoNotAutoAttack>() != null))
@@ -82,7 +79,7 @@ public class PlaceWalls : NetworkBehaviour
                         {
                             if (Object.HasStateAuthority)
                             {
-                                ownership.owner.takeResources(new ResourceSet(wood = (wood * (int)noWalls)));
+                                ownership.owner.takeResources(new ResourceSet(wood * (int)noWalls));
                                 StartCoroutine(placeWalls(noWalls, firstPointSnapped, lastPointSnapped));
                             }
 

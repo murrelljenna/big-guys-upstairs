@@ -23,17 +23,15 @@ public class Destroy : NetworkBehaviour
         if (!Object.HasStateAuthority) return;
         RPC_SpawnLocalGameObject(transform.position, transform.rotation);
         this.transform.position = new Vector3(420, -1337, 6969);
-        Invoke("addToDeletePool", 1f);
+        Invoke("addToDeletePool", 0.5f);
         this.gameObject.SetActive(false);
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     public void RPC_SpawnLocalGameObject(Vector3 pos, Quaternion rot)
     {
-        Debug.Log("AA - RPC");
         if (leaveBehind != null)
         {
-            Debug.Log("AA - Instantiating?");
             var go = GameObject.Instantiate(leaveBehind, pos, rot);
             go.GetComponent<UnitColourController>().SetColourToPlayer(player);
             go.GetComponent<Destroy>().destroyAfterAMinute(); // Clean yoself up

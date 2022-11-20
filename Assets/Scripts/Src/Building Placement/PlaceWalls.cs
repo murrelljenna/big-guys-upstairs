@@ -177,7 +177,7 @@ public class PlaceWalls : NetworkBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(location, range);
         for (int i = 0; i < hitColliders.Length; i++)
         {
-            if (hitColliders[i].gameObject.GetComponent<WallCorner>() != null)
+            if (hitColliders[i].gameObject.BelongsTo(ownership.owner) && hitColliders[i].gameObject.GetComponent<WallCorner>() != null)
             {
                 return true;
             }

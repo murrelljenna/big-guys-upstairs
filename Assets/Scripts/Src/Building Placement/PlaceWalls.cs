@@ -60,51 +60,55 @@ public class PlaceWalls : NetworkBehaviour
 
     public void PlaceWall()
     {
-        if (firstPointPlaced)
+        Ray ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, game.assets.utilities.GameUtils.LayerMask.Terrain))
         {
-            lastPoint = hit.point;
-            float wallUnitLength = currentBuilding.transform.Find("Model").GetComponent<MeshFilter>().mesh.bounds.size.z / 3f * currentBuilding.transform.Find("Model").localScale.z;
-            float pointDistance = Vector3.Distance(firstPoint, lastPoint);
-
-            float noWalls = pointDistance / wallUnitLength;
-            int mapLayer = ~(1 << 11);
-            int wood = 1;
-
-            if (ownership.owner.canAfford(new ResourceSet(wood = (wood * (int)noWalls))))
+            if (firstPointPlaced)
             {
-                RaycastHit info;
-                if ((!Physics.Linecast(firstPoint, lastPoint, out info, mapLayer) || info.collider.gameObject.GetComponent<DoNotAutoAttack>() != null))
-                {
-                    if (System.Math.Abs(firstPoint.y) - System.Math.Abs(lastPoint.y) < 0.5f && System.Math.Abs(firstPoint.y) - System.Math.Abs(lastPoint.y) > -0.5f)
-                    {
-                        if (Object.HasStateAuthority)
-                        {
-                            ownership.owner.takeResources(new ResourceSet(wood = (wood * (int)noWalls)));
-                            StartCoroutine(placeWalls(noWalls, firstPointSnapped, lastPointSnapped));
-                        }
+                lastPoint = hit.point;
+                float wallUnitLength = currentBuilding.transform.Find("Model").GetComponent<MeshFilter>().mesh.bounds.size.z / 3f * currentBuilding.transform.Find("Model").localScale.z;
+                float pointDistance = Vector3.Distance(firstPoint, lastPoint);
 
-                        firstPointPlaced = false;
-                        lastPointSnapped = false;
-                        firstPointSnapped = false;
+                float noWalls = pointDistance / wallUnitLength;
+                int mapLayer = ~(1 << 11);
+                int wood = 1;
+
+                if (ownership.owner.canAfford(new ResourceSet(wood = (wood * (int)noWalls))))
+                {
+                    RaycastHit info;
+                    if ((!Physics.Linecast(firstPoint, lastPoint, out info, mapLayer) || info.collider.gameObject.GetComponent<DoNotAutoAttack>() != null))
+                    {
+                        if (System.Math.Abs(firstPoint.y) - System.Math.Abs(lastPoint.y) < 0.5f && System.Math.Abs(firstPoint.y) - System.Math.Abs(lastPoint.y) > -0.5f)
+                        {
+                            if (Object.HasStateAuthority)
+                            {
+                                ownership.owner.takeResources(new ResourceSet(wood = (wood * (int)noWalls)));
+                                StartCoroutine(placeWalls(noWalls, firstPointSnapped, lastPointSnapped));
+                            }
+
+                            firstPointPlaced = false;
+                            lastPointSnapped = false;
+                            firstPointSnapped = false;
+                        }
+                    }
+                    else
+                    {
+                        StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
+                        StartCoroutine(flashRed(info.collider.gameObject, 0.2f));
                     }
                 }
                 else
                 {
+                    StopAllCoroutines();
                     StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
-                    StartCoroutine(flashRed(info.collider.gameObject, 0.2f));
                 }
+
             }
             else
             {
-                StopAllCoroutines();
-                StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
+                firstPoint = hit.point;
+                firstPointPlaced = true;
             }
-
-        }
-        else
-        {
-            firstPoint = hit.point;
-            firstPointPlaced = true;
         }
     }
 
@@ -114,10 +118,10 @@ public class PlaceWalls : NetworkBehaviour
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, game.assets.utilities.GameUtils.LayerMask.Terrain))
         {
-            if (wallInRange(hit.point, 0.5f))
+            if (wallInRange(hit.point, 0.2f))
             {
                 hit.point = snapWallInRange(hit.point, 0.5f);
-                currentBuilding.gameObject.SetActive(false);
+                currentBuilding.Find("Model").GetComponent<Renderer>().enabled = false;
 
                 if (firstPointPlaced)
                 {
@@ -130,6 +134,7 @@ public class PlaceWalls : NetworkBehaviour
             }
             else
             {
+                currentBuilding.Find("Model").GetComponent<Renderer>().enabled = true;
                 if (firstPointPlaced)
                 {
                     lastPointSnapped = false;

@@ -5421,7 +5421,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 452eb448aa7ac4249a61e630d477f905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onceBuilt: {fileID: 0}
+  _interpolationDataSource: 0
+  onceBuilt:
+    RawGuidValue: 00000000000000000000000000000000
   built:
     m_PersistentCalls:
       m_Calls:
@@ -5490,6 +5492,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 5830384261404423352}
+  - {fileID: 7049787846328111527}
   - {fileID: 1056461143861969023}
   - {fileID: -5231328476908697120}
   - {fileID: 6471027212665900563}

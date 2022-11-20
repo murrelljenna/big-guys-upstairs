@@ -6,10 +6,11 @@ using game.assets.ai;
 using game.assets.utilities;
 using UnityEngine.Events;
 using static game.assets.utilities.GameUtils;
+using Fusion;
 
 namespace game.assets.economy {
     [RequireComponent(typeof(Movement))]
-    public class Worker : MonoBehaviour
+    public class Worker : NetworkBehaviour
     {
         [Tooltip("Invoked each time worker grabs resources from a resource node")]
         public UnityEvent getFromResource;
@@ -134,6 +135,9 @@ namespace game.assets.economy {
         }
 
         public void setBuildingTarget(Construction construction) {
+            if (!Object.HasStateAuthority){
+                return;
+            }
             cancelOrders();
             currentlyBuilding = true;
             StartCoroutine(orderToBuild(construction));
@@ -175,7 +179,7 @@ namespace game.assets.economy {
 
         private void buildNearestBuilding()
         {
-            if (resource != null || currentlyBuilding)
+            if (resource != null || currentlyBuilding || !Object.HasStateAuthority)
             {
                 return;
             }

@@ -2025,7 +2025,7 @@ PrefabInstance:
     - target: {fileID: -7527134046687949101, guid: dacf0adaab418dd43a5ea0b119fa06a6,
         type: 3}
       propertyPath: NetworkedBehaviours.Array.size
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: -7527134046687949101, guid: dacf0adaab418dd43a5ea0b119fa06a6,
         type: 3}
@@ -2067,6 +2067,11 @@ PrefabInstance:
       propertyPath: NetworkedBehaviours.Array.data[7]
       value: 
       objectReference: {fileID: 251947658554240418}
+    - target: {fileID: -7527134046687949101, guid: dacf0adaab418dd43a5ea0b119fa06a6,
+        type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[8]
+      value: 
+      objectReference: {fileID: 3276732802625282678}
     - target: {fileID: -7527134046687949101, guid: dacf0adaab418dd43a5ea0b119fa06a6,
         type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
@@ -2408,6 +2413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12670c05a61cc41ff811051d27f856fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   getFromResource:
     m_PersistentCalls:
       m_Calls:

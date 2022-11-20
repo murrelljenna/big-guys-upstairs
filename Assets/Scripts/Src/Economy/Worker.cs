@@ -83,7 +83,7 @@ namespace game.assets.economy {
 
         private void getResource() {
             movement.faceTowards(node.transform.position);
-            getFromResource.Invoke();
+            RPC_InvokeGetFromResourceUnityEvent();
 
             this.inventory = this.inventory + yield;
 
@@ -102,7 +102,7 @@ namespace game.assets.economy {
 
             yield return new WaitUntil (() => gameObject.isInRangeOf(destination, DEPOSIT_RANGE));
 
-            dropOffResource.Invoke();
+            RPC_InvokeDropOffResourceUnityEvent();
             depot.deposit(inventory);
             inventory.setEmpty();
             startCollectingResources(node, resource.yield);
@@ -156,7 +156,7 @@ namespace game.assets.economy {
             if (construction != null)
             {
                 construction.build(BUILD_AMT);
-                buildTick.Invoke();
+                RPC_InvokeBuildTickUnityEvent();
             }
             else
             {
@@ -201,6 +201,24 @@ namespace game.assets.economy {
         private void OnDestroy()
         {
             clearAssignment();
+        }
+
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        public void RPC_InvokeBuildTickUnityEvent()
+        {
+            buildTick.Invoke();
+        }
+
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        public void RPC_InvokeDropOffResourceUnityEvent()
+        {
+            dropOffResource.Invoke();
+        }
+
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        public void RPC_InvokeGetFromResourceUnityEvent()
+        {
+            getFromResource.Invoke();
         }
     }
 }

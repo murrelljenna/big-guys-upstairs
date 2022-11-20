@@ -41,7 +41,7 @@ public class Construction : NetworkBehaviour
             worker.setBuildingTarget(this);
         }
 
-        setToFirstModel();
+        RPC_SetToFirstModel();
     }
 
     public void build(int amt)
@@ -50,7 +50,7 @@ public class Construction : NetworkBehaviour
 
         if (health.HP > (health.maxHP / 2))
         {
-            setToSecondModel();
+            RPC_SetToSecondModel();
         }
     }
 
@@ -58,6 +58,18 @@ public class Construction : NetworkBehaviour
         Runner.Spawn(onceBuilt, transform.position, transform.rotation, null, (runner, o) => o.SetAsPlayer(GetComponent<Ownership>().owner));
         built.Invoke();
         Destroy(this);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_SetToFirstModel()
+    {
+        setToFirstModel();
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_SetToSecondModel()
+    {
+        setToSecondModel();
     }
 
     private void setToFirstModel()

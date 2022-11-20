@@ -57,6 +57,10 @@ public class PlaceWalls : NetworkBehaviour
 
     public void PlaceWall()
     {
+        if (enabled == false)
+        {
+            return;
+        }
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, game.assets.utilities.GameUtils.LayerMask.Terrain))
         {

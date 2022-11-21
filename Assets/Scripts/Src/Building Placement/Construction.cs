@@ -20,7 +20,7 @@ public class Construction : NetworkBehaviour
     public UnityEvent built;
 
     private Health health;
-    void Start()
+    public override void Spawned()
     {
         health = GetComponent<Health>();
         health.onMaxHP.AddListener(finish);
@@ -40,8 +40,8 @@ public class Construction : NetworkBehaviour
 
             worker.setBuildingTarget(this);
         }
-
-        RPC_SetToFirstModel();
+        if (Object.HasStateAuthority)
+            RPC_SetToFirstModel();
     }
 
     public void build(int amt)
@@ -50,7 +50,8 @@ public class Construction : NetworkBehaviour
 
         if (health.HP > (health.maxHP / 2))
         {
-            RPC_SetToSecondModel();
+            if (Object.HasStateAuthority)
+                RPC_SetToSecondModel();
         }
     }
 

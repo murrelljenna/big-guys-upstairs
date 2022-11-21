@@ -99,6 +99,7 @@
     <Compile Include="Assets\Photon\Fusion\Scripts\Prototyping\NetworkSceneManagerBase.cs" />
     <Compile Include="Assets\Photon\Fusion\Scripts\Prototyping\NetworkCharacterControllerPrototype.cs" />
     <Compile Include="Assets\Photon\Fusion\Scripts\FusionStats\FusionStatsBillboard.cs" />
+    <Compile Include="Assets\Scripts\Src\Networking\NetworkingUtils.cs" />
     <Compile Include="Assets\ButtonAnimationController.cs" />
     <Compile Include="Assets\Standard Assets\Environment\Water\Water\Scripts\Displace.cs" />
     <Compile Include="Assets\Low Poly Modular Terrain Pack\Bonus_Assets\Scripts\ModularTerrainCameraControl.cs" />
@@ -278,7 +279,7 @@
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Triangles.cs" />
     <Compile Include="Assets\Standard Assets\Utility\FPSCounter.cs" />
     <Compile Include="Assets\Standard Assets\Utility\SimpleActivatorMenu.cs" />
-    <Compile Include="Assets\Scripts\Src\Networking\NetworkingUtils.cs" />
+    <Compile Include="Assets\Scripts\Src\Utilities\DisableIfNotMine.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />

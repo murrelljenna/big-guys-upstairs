@@ -230,7 +230,7 @@ public class PlaceWalls : NetworkBehaviour
                 placedBuilding = Runner.Spawn(
                 wallPrefab, destination,
                 Quaternion.LookRotation(lastPoint - destination),
-                null,
+                ownership.owner.networkPlayer,
                 (runner, o) =>
                 {
                     o.SetAsPlayer(ownership.owner);

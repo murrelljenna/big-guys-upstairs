@@ -71,6 +71,9 @@ namespace game.assets
         [SerializeField] private NetworkPrefabRef _gameManagerState;
 
         private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
+
+        private Dictionary<PlayerRef, List<NetworkObject>> _spawnedEntities = new Dictionary<PlayerRef, List<NetworkObject>>();
+
         [SerializeField]
         private Scene targetScene;
         Fusion.GameMode networkMode;
@@ -131,17 +134,14 @@ namespace game.assets
             if (isHost)
             {
                 PlayerSlot playerDeets = state.ReserveNewPlayer(networkPlayer);
-
+                _spawnedEntities.Add(networkPlayer, new List<NetworkObject>());
                 var playerObj = instantiateNetworkedPlayerStart(runner, playerDeets);
                 Player player = playerObj.GetComponent<Player>();
                 player.resources = new utilities.resources.ResourceSet(100, 100);
                 player.maxCount = 20;
-                Debug.Log("AC - colour name:" + playerDeets.colour.name);
                 player.playerColourIndex = PlayerColourManager.IndexOfColour(playerDeets.colour);
                 player.colour = playerDeets.colour;
-                Debug.Log("AC - colours index" + player.playerColourIndex);
                 player.networkPlayer = (PlayerRef)playerDeets.player;
-                player.playerName = "Jenna";
                 playerObj.GetComponent<Ownership>().setOwnerRecursively(player);
             }
         }
@@ -176,6 +176,16 @@ namespace game.assets
             {
                 runner.Despawn(networkObject);
                 _spawnedCharacters.Remove(player);
+            }
+
+            if (_spawnedEntities.TryGetValue(player, out List<NetworkObject> networkObjects))
+            {
+                for (int i = 0; i < networkObjects.Count; i++)
+                {
+                    runner.Despawn(networkObjects[i]);
+                }
+
+                networkObjects.Clear();
             }
 
             if (isHost)
@@ -343,6 +353,22 @@ namespace game.assets
                     JoinGame("TestRoom", "TwoPlayer");
                 }
             }
+        }
+
+        public void registerNetworkObject(Player player, NetworkObject obj) {
+            if (_spawnedEntities.TryGetValue(player.networkPlayer, out var objects))
+            {
+                objects.Add(obj);
+            }
+            else
+            {
+                Debug.LogError("No spawned entities listed for player " + player);
+            }
+        }
+
+        public new static NetworkedGameManager Get()
+        {
+            return GameObject.Find(MagicWords.GameObjectNames.GameManager)?.GetComponent<NetworkedGameManager>();
         }
     }
 }

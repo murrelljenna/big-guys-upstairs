@@ -214,8 +214,7 @@ public class PlaceWalls : NetworkBehaviour
             GameObject placedBuilding = null;
             if ((i == 0 && !firstPointSnapped) || (i == (int)noWalls && !lastPointSnapped))
             {
-                placedBuilding = //InstantiatorFactory.getInstantiator(false).InstantiateAsMine(cornerPrefab, destination, Quaternion.LookRotation(lastPoint - destination));
-                Runner.Spawn(
+                NetworkObject netObj = Runner.Spawn(
                 cornerPrefab, destination,
                 Quaternion.LookRotation(lastPoint - destination),
                 null,
@@ -223,19 +222,27 @@ public class PlaceWalls : NetworkBehaviour
                 {
                     o.SetAsPlayer(ownership.owner);
                 }
-                ).gameObject;
+                );
+
+                NetworkedGameManager.Get().registerNetworkObject(ownership.owner, netObj);
+
+                placedBuilding = netObj.gameObject;
             }
             else
             {
-                placedBuilding = Runner.Spawn(
-                wallPrefab, destination,
-                Quaternion.LookRotation(lastPoint - destination),
-                ownership.owner.networkPlayer,
-                (runner, o) =>
-                {
-                    o.SetAsPlayer(ownership.owner);
-                }
-                ).gameObject;
+                var netObj = Runner.Spawn(
+                    wallPrefab, destination,
+                    Quaternion.LookRotation(lastPoint - destination),
+                    ownership.owner.networkPlayer,
+                    (runner, o) =>
+                    {
+                        o.SetAsPlayer(ownership.owner);
+                    }
+                );
+
+                NetworkedGameManager.Get().registerNetworkObject(ownership.owner, netObj);
+
+                placedBuilding = netObj.gameObject;
             }
 
             yield return null;

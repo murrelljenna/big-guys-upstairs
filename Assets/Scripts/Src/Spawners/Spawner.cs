@@ -34,12 +34,8 @@ namespace game.assets.spawners
         {
             if (!Object.HasStateAuthority || ownership.owner.maxPop() || !prefab.IsValid)
             {
-                Debug.Log("AD - Object has state authority: " + Object.HasStateAuthority);
-                Debug.Log("AD - Object has maxPop: " + ownership.owner.maxPop());
-                Debug.Log("AD - Object has prefab.IsValid: " + prefab.IsValid);
                 return null;
             }
-            Debug.Log("AD - Hey there");
             Vector3 spawnLocation = getSpawnLocation(transform.position);
             return SpawnIfCanAfford(prefab, spawnLocation, Quaternion.identity, ownership.owner);
         }
@@ -49,11 +45,10 @@ namespace game.assets.spawners
             if (player.canAfford(price))
             {
                 player.takeResources(price);
-                Debug.Log("AD - Spawning shit");
-                GameObject whatthefuckingfuck = Spawn(prefab, spawnLocation, Quaternion.identity, player.networkPlayer);
+                NetworkObject whatthefuckingfuck = Spawn(prefab, spawnLocation, Quaternion.identity, player.networkPlayer);
+                NetworkedGameManager.Get().registerNetworkObject(player, whatthefuckingfuck);
                 whatthefuckingfuck.SetAsPlayer(player);
-                Debug.Log("WHAT THE FUCK");
-                return whatthefuckingfuck;
+                return whatthefuckingfuck.gameObject;
             }
             else
             {
@@ -62,9 +57,9 @@ namespace game.assets.spawners
             }
         }
 
-        protected GameObject Spawn(NetworkPrefabRef prefab, Vector3 spawnLocation, Quaternion rotation, PlayerRef playerInput)
+        protected NetworkObject Spawn(NetworkPrefabRef prefab, Vector3 spawnLocation, Quaternion rotation, PlayerRef playerInput)
         {
-            return Runner.Spawn(prefab, spawnLocation, Quaternion.identity, ownership.owner.networkPlayer).gameObject;
+            return Runner.Spawn(prefab, spawnLocation, Quaternion.identity, ownership.owner.networkPlayer);
         }
 
         private Vector3 getSpawnLocation(Vector3 spawnCenter)

@@ -10,6 +10,7 @@ using Fusion.Sockets;
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using static NetworkedGameManagerState;
+using game.assets.utilities;
 
 namespace game.assets
 {
@@ -68,6 +69,7 @@ namespace game.assets
         private NetworkRunner _runner;
 
         [SerializeField] private NetworkPrefabRef _playerPrefab;
+        [SerializeField] private NetworkPrefabRef _startingCity;
         [SerializeField] private NetworkPrefabRef _gameManagerState;
 
         private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
@@ -149,9 +151,22 @@ namespace game.assets
 
         private GameObject instantiateNetworkedPlayerStart(NetworkRunner runner, PlayerSlot playerDeets)
         {
-            NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, playerDeets.spawnPoint, Quaternion.identity, playerDeets.player);
+            Vector3 playerSpawn = randomPointOnUnitCircle(playerDeets.spawnPoint, MagicNumbers.PlayerSpawnRadius);
+            NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, new Vector3(playerSpawn.x, playerDeets.spawnPoint.y, playerSpawn.z), Quaternion.identity, playerDeets.player);
             _spawnedCharacters.Add((PlayerRef)playerDeets.player, networkPlayerObject);
             playerObj = networkPlayerObject.gameObject;
+
+            NetworkObject startingCity = runner.Spawn(
+                _startingCity,
+                GameUtils.fixHeight(playerDeets.spawnPoint),
+                Quaternion.identity,
+                playerDeets.player,
+            (runner, obj) =>
+                {
+                    obj.SetAsPlayer(playerObj.GetComponent<Player>());
+                }
+            );
+
             lockPlayer();
 
             Invoke("unlockPlayer", 0.2f);
@@ -161,15 +176,15 @@ namespace game.assets
         private void lockPlayer()
         {
             playerObj.GetComponent<CharacterController>().enabled = false;
-            playerObj.GetComponent<NetworkCharacterController>().enabled = false;
-            playerObj.GetComponent<CharacterViewHandler>().enabled = false;
+            //playerObj.GetComponent<NetworkCharacterController>().enabled = false;
+            //playerObj.GetComponent<CharacterViewHandler>().enabled = false;
         }
 
         private void unlockPlayer()
         {
             playerObj.GetComponent<CharacterController>().enabled = true;
-            playerObj.GetComponent<NetworkCharacterController>().enabled = true;
-            playerObj.GetComponent<CharacterViewHandler>().enabled = true;
+            //playerObj.GetComponent<NetworkCharacterController>().enabled = true;
+            //playerObj.GetComponent<CharacterViewHandler>().enabled = true;
         }
 
         private void SpawnUI()

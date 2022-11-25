@@ -77,6 +77,7 @@ namespace game.assets
         [SerializeField]
         private Scene targetScene;
         Fusion.GameMode networkMode;
+        private GameObject playerObj;
 
         private bool isHost;
 
@@ -148,19 +149,27 @@ namespace game.assets
 
         private GameObject instantiateNetworkedPlayerStart(NetworkRunner runner, PlayerSlot playerDeets)
         {
-            //var go = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            //go.transform.position = player.spawnPoint;
-            //Vector3 playerSpawn = randomPointOnUnitCircle(player.spawnPoint, MagicNumbers.PlayerSpawnRadius);
-            Debug.Log("AB - Spawning at " + playerDeets.spawnPoint);
             NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, playerDeets.spawnPoint, Quaternion.identity, playerDeets.player);
-            Debug.Log("AB - Spawned at " + networkPlayerObject.transform.position);
-            Debug.Log("AB - at " + networkPlayerObject.transform.position);
-            //networkPlayerObject.GetComponent<NetworkCharacterController>().TeleportToPosition(player.spawnPoint);
-            Debug.Log("AB - Spawned at " + networkPlayerObject.transform.position);
-            // Keep track of the player avatars so we can remove it when they disconnect
             _spawnedCharacters.Add((PlayerRef)playerDeets.player, networkPlayerObject);
+            playerObj = networkPlayerObject.gameObject;
+            lockPlayer();
 
-            return networkPlayerObject.gameObject;
+            Invoke("unlockPlayer", 0.2f);
+            return playerObj;
+        }
+
+        private void lockPlayer()
+        {
+            playerObj.GetComponent<CharacterController>().enabled = false;
+            playerObj.GetComponent<NetworkCharacterController>().enabled = false;
+            playerObj.GetComponent<CharacterViewHandler>().enabled = false;
+        }
+
+        private void unlockPlayer()
+        {
+            playerObj.GetComponent<CharacterController>().enabled = true;
+            playerObj.GetComponent<NetworkCharacterController>().enabled = true;
+            playerObj.GetComponent<CharacterViewHandler>().enabled = true;
         }
 
         private void SpawnUI()

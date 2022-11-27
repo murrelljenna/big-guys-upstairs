@@ -16,14 +16,14 @@ public class PopCount : NetworkBehaviour
 
     public void Start()
     {
-        if (Object.HasInputAuthority)
-        {
-            updateUI();
-        }
-
         if (Object.HasStateAuthority)
         {
             ownership.owner.popCount++;
+        }
+
+        if (Object.HasInputAuthority)
+        {
+            updateUI();
         }
     }
 

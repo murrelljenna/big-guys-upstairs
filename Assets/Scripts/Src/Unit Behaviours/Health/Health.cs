@@ -56,6 +56,23 @@ namespace game.assets.ai
             }
         }
 
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        public void RPC_FireRaiseHPEvents()
+        {
+            onRaiseHP.Invoke(HP, maxHP);
+
+            if (maxed())
+            {
+                HP = maxHP;
+                onMaxHP.Invoke();
+            }
+
+            if (overHalf())
+            {
+                onOverHalfHP.Invoke();
+            }
+        }
+
         public void lowerHP(int amt, Attack attacker = null)
         {
             if (!Object.HasStateAuthority)
@@ -77,18 +94,7 @@ namespace game.assets.ai
         {
             HP = HP + amt;
 
-            onRaiseHP.Invoke(HP, maxHP);
-
-            if (maxed())
-            {
-                HP = maxHP;
-                onMaxHP.Invoke();
-            }
-
-            if (overHalf())
-            {
-                onOverHalfHP.Invoke();
-            }
+            RPC_FireRaiseHPEvents();
         }
 
         public bool maxed()

@@ -143,6 +143,7 @@ namespace game.assets
                 player.resources = new utilities.resources.ResourceSet(100, 100);
                 player.playerColourIndex = PlayerColourManager.IndexOfColour(playerDeets.colour);
                 player.colour = playerDeets.colour;
+                player.maxCount = 10;
                 player.networkPlayer = (PlayerRef)playerDeets.player;
                 playerObj.GetComponent<Ownership>().setOwnerRecursively(player);
             }

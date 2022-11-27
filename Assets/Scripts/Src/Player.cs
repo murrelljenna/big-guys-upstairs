@@ -19,7 +19,7 @@ namespace game.assets.player
         [Networked(OnChanged = nameof(updateUIOnChange))]
         public int popCount { get; set; } = 0;
         [Networked(OnChanged = nameof(updateUIOnChange))]
-        public int maxCount { get; set; } = 10;
+        public int maxCount { get; set; }
         [Networked]
         public PlayerRef networkPlayer { get; set; }
         [SerializeField]
@@ -33,7 +33,7 @@ namespace game.assets.player
             GameObject devCube = new GameObject();
             Player player = (Player)devCube.AddComponent(typeof(Player));
             player.colour = PlayerColours.Blue;
-
+            player.maxCount = 10;
             return player;
         }
 

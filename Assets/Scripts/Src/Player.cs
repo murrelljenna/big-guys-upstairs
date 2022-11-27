@@ -4,6 +4,7 @@ using game.assets.utilities.resources;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static game.assets.utilities.GameUtils;
 
 namespace game.assets.player
@@ -15,9 +16,9 @@ namespace game.assets.player
 
         [Networked(OnChanged = nameof(GetRealColour))]
         public int playerColourIndex { get; set; } = -1;
-        [Networked]
+        [Networked(OnChanged = nameof(updateUIOnChange))]
         public int popCount { get; set; } = 0;
-        [Networked]
+        [Networked(OnChanged = nameof(updateUIOnChange))]
         public int maxCount { get; set; } = 10;
         [Networked]
         public PlayerRef networkPlayer { get; set; }
@@ -115,5 +116,37 @@ namespace game.assets.player
             resources = resources - resourceSet;
         }
         public bool canAfford(ResourceSet resourceSet) { return (resources >= resourceSet); }
+
+        private void updateMaxUI()
+        {
+            if (!Object.HasInputAuthority)
+            {
+                return;
+            }
+            var maxText = GameObject.Find(MagicWords.GameObjectNames.MaxPopUI).GetComponent<Text>();
+            if (maxText != null)
+            {
+                maxText.text = maxCount.ToString();
+            }
+        }
+
+        private void updatePopUI()
+        {
+            if (!Object.HasInputAuthority)
+            {
+                return;
+            }
+            var popText = GameObject.Find(MagicWords.GameObjectNames.CurrentPopUI).GetComponent<Text>();
+            if (popText != null)
+            {
+                popText.text = popCount.ToString();
+            }
+        }
+
+        public static void updateUIOnChange(Changed<Player> player)
+        {
+            player.Behaviour.updateMaxUI();
+            player.Behaviour.updatePopUI();
+        }
     }
 }

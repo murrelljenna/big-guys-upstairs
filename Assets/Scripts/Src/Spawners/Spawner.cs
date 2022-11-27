@@ -42,7 +42,7 @@ namespace game.assets.spawners
 
         protected GameObject SpawnIfCanAfford(NetworkPrefabRef prefab, Vector3 spawnLocation, Quaternion rotation, Player player)
         {
-            if (player.canAfford(price) && !player.maxPop())
+            if (player.canAfford(price))
             {
                 player.takeResources(price);
                 NetworkObject whatthefuckingfuck = Spawn(prefab, spawnLocation, Quaternion.identity, player.networkPlayer);

@@ -138,6 +138,8 @@ namespace game.assets.utilities {
                 public static string Effects = "Effects";
                 public static string Audio = "Audio";
                 public const string PlayerRig = "PlayerRig(Clone)";
+                public const string MaxPopUI = "Pop_Max";
+                public const string CurrentPopUI = "Pop_Count";
             }
         }
 

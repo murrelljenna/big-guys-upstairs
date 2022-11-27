@@ -10,14 +10,12 @@ public class IncreaseMaxPopCount : MonoBehaviour
     private Text maxText;
     void Start()
     {
-        maxText = GameObject.Find("Pop_Max").GetComponent<Text>();
         Ownership ownership = GetComponent<Ownership>();
         if (ownership.Object == null)
         {
             return;
         }
         ownership.owner.maxCount += increaseBy;
-        updateUI(ownership.owner.maxCount);
     }
 
     void OnDestroy()
@@ -28,14 +26,7 @@ public class IncreaseMaxPopCount : MonoBehaviour
             return;
         }
         ownership.owner.maxCount -= increaseBy;
-        updateUI(ownership.owner.maxCount);
     }
 
-    private void updateUI(int max)
-    {
-        if (maxText != null)
-        {
-            maxText.text = max.ToString();
-        }
-    }
+
 }

@@ -7,11 +7,9 @@ using UnityEngine.UI;
 public class PopCount : NetworkBehaviour
 {
     private Ownership ownership;
-    Text popCount;
     public override void Spawned()
     {
         ownership = GetComponent<Ownership>();
-        popCount = GameObject.Find("Pop_Count").GetComponent<Text>();
     }
 
     public void Start()
@@ -20,11 +18,6 @@ public class PopCount : NetworkBehaviour
         {
             ownership.owner.popCount++;
         }
-
-        if (Object.HasInputAuthority)
-        {
-            updateUI();
-        }
     }
 
     public override void Despawned(NetworkRunner runner, bool hasState)
@@ -32,19 +25,6 @@ public class PopCount : NetworkBehaviour
         if (Object.HasStateAuthority && ownership?.owner != null)
         {
             ownership.owner.popCount--;
-        }
-
-        if (Object.HasInputAuthority)
-        {
-            updateUI();
-        }
-    }
-
-    private void updateUI()
-    {
-        if (popCount != null && ownership?.owner != null)
-        {
-            popCount.text = ownership.owner.popCount.ToString();
         }
     }
 }

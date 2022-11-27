@@ -316,7 +316,7 @@ namespace game.assets.ai
 
         public void cancelOrders()
         {
-            if (!Object.HasStateAuthority)
+            if (Object == null || !Object.HasStateAuthority)
             {
                 return;
             }

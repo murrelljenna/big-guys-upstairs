@@ -16,9 +16,9 @@ namespace game.assets.player
         [Networked(OnChanged = nameof(GetRealColour))]
         public int playerColourIndex { get; set; } = -1;
         [Networked]
-        public int popCount { get; set; }
+        public int popCount { get; set; } = 0;
         [Networked]
-        public int maxCount { get; set; }
+        public int maxCount { get; set; } = 10;
         [Networked]
         public PlayerRef networkPlayer { get; set; }
         [SerializeField]
@@ -32,8 +32,6 @@ namespace game.assets.player
             GameObject devCube = new GameObject();
             Player player = (Player)devCube.AddComponent(typeof(Player));
             player.colour = PlayerColours.Blue;
-            player.popCount = 0;
-            player.maxCount = 20;
 
             return player;
         }
@@ -60,9 +58,7 @@ namespace game.assets.player
 
         public static void GetRealColour(Changed<Player> changed)
         {
-            Debug.Log("AC - Player colour has been set to " + changed.Behaviour.playerColourIndex);
             changed.Behaviour.tryGetColour();
-            Debug.Log("AC  Colour name : " + PlayerColourManager.ColourAtIndex(changed.Behaviour.playerColourIndex).name);
         }
 
         public Player withResources(int wood = 100, int food = 100)

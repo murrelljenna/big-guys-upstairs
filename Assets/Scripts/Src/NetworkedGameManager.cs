@@ -141,7 +141,6 @@ namespace game.assets
                 var playerObj = instantiateNetworkedPlayerStart(runner, playerDeets);
                 Player player = playerObj.GetComponent<Player>();
                 player.resources = new utilities.resources.ResourceSet(100, 100);
-                player.maxCount = 20;
                 player.playerColourIndex = PlayerColourManager.IndexOfColour(playerDeets.colour);
                 player.colour = playerDeets.colour;
                 player.networkPlayer = (PlayerRef)playerDeets.player;

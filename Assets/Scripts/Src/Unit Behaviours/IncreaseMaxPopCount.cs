@@ -17,7 +17,6 @@ public class IncreaseMaxPopCount : MonoBehaviour
             return;
         }
         ownership.owner.maxCount += increaseBy;
-        Debug.Log(ownership.owner.maxCount);
         updateUI(ownership.owner.maxCount);
     }
 

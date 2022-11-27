@@ -33,7 +33,7 @@ public class Destroy : NetworkBehaviour
         if (leaveBehind != null)
         {
             var go = GameObject.Instantiate(leaveBehind, pos, rot);
-            go.GetComponent<UnitColourController>().SetColourToPlayer(player);
+            go?.GetComponent<UnitColourController>()?.SetColourToPlayer(player); // Hack so that unit deaths are all coloured correctly
             go.GetComponent<Destroy>().destroyAfterAMinute(); // Clean yoself up
         }
     }

@@ -58,11 +58,11 @@ namespace game.assets.player
             {
                 if (selectedTool == i)
                 {
-                    tool.gameObject.SetActive(true);
+                    tool?.gameObject?.SetActive(true);
                 }
                 else
                 {
-                    tool.gameObject.SetActive(false);
+                    tool?.gameObject?.SetActive(false);
                 }
                 i++;
             }

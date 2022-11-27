@@ -208,7 +208,7 @@ namespace game.assets.ai
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (!Object.HasStateAuthority)
+            if (Object == null || !Object.HasStateAuthority)
             {
                 return;
             }

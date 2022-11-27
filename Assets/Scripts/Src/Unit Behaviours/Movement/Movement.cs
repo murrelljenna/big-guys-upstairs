@@ -107,9 +107,7 @@ namespace game.assets.ai
                 currentWatcher = null;
             }
             currentWatcher = DestinationWatcher.Create(destination, col.radius, this);
-            var x = navAgent.SetDestination(destination);
-
-            Debug.Log("AF - NavAgent  set destination? : " + x.ToString());
+            navAgent.SetDestination(destination);
         }
 
         public void goTo(Vector3 destination)

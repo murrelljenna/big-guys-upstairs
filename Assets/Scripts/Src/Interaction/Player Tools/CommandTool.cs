@@ -209,9 +209,7 @@ namespace game.assets.interaction
             }
             RaycastHit hit;
             Ray ray = cam.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
-            Debug.Log("AE - orderAttackOrMoveIfCan");
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.All)) {
-                Debug.Log("AE - Inside raycast");
                 Health health = hit.collider.GetComponent<Health>();
                 if (health != null && !health.BelongsTo(ownership.owner))
                 {
@@ -223,7 +221,6 @@ namespace game.assets.interaction
 
                 if (resource != null && resource.GetComponent<Ownership>().isOwnedByOrNeutral(ownership.owner) && !noWorkers(attackAggregation.units) && resource.workers.Count < resource.maxWorkers)
                 {
-                    Debug.Log("AR - Adding workers");
                     List<Worker> workers = attackAggregation.unitsThatCanWork();
 
                     StartCoroutine(assignWorkersToResource(resource, workers));
@@ -243,12 +240,10 @@ namespace game.assets.interaction
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Terrain))
             {
-                Debug.Log("AE - raycasted terrain");
                 NavMeshHit navMeshHit;
                 bool isOnMesh = NavMesh.SamplePosition(hit.point, out navMeshHit, 0.2f, NavMesh.AllAreas);
                 if (isOnMesh)
                 {
-                    Debug.Log("AE - is on mesh");
                     attackAggregation.unitsThatCanMove().goTo(hit.point);
                 }
                 return;

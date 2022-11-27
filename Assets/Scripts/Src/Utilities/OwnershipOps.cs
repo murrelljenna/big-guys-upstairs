@@ -120,7 +120,6 @@ public static class OwnershipOps
 
     public static GameObject SetAsPlayer(this GameObject gameObj, game.assets.player.Player player)
     {
-        Debug.Log("AD - Set as player");
         Ownership ownership = gameObj.GetComponent<Ownership>();
         if (ownership == null)
         {

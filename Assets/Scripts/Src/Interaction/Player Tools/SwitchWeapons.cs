@@ -33,7 +33,6 @@ namespace game.assets.player
                     }
 
                     lastPressed = Time.time;
-                    Debug.Log("Is down!");
                     if (selectedTool >= transform.childCount - 1)
                     {
                         selectedTool = 0u;

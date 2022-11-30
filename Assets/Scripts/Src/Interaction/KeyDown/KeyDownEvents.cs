@@ -1,4 +1,5 @@
 ﻿using Fusion;
+using game.assets.player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,29 +31,37 @@ namespace game.assets.interaction
 
         private const float BUFFER_BETWEEN_PRESSES = 0.2f;
 
-        private bool isLeader = false;
-        private static KeyDownEvents leader;
-
-        public override void Spawned()
-        {
-            if (isLeader == false && leader != null)
-            {
-                isLeader = false;
-                var leaderToFollow = GetLeader();
-
-                leader.eOnPressed.AddListener(() => eOnPressed.Invoke());
-            }
-        }
+        private bool isFollower = false;
+        private static Dictionary<PlayerRef, KeyDownEvents> leaders = new Dictionary<PlayerRef, KeyDownEvents>();
 
         public override void FixedUpdateNetwork()
         {
+            if (isFollower)
+            {
+                Debug.Log("Is follower");
+                return;
+            }
+
             if (GetInput(out PlayerNetworkInput input))
             {
-                isLeader = true;
-                leader = this;
+                if (!leaders.ContainsKey(Object.InputAuthority))
+                {
+                    Debug.Log("Setting leader");
+                    leaders.Add(Object.InputAuthority, this);
+                }
                 if (input.IsDown(PlayerNetworkInput.BUTTON_ACTION1))
                 {
                     fireWithinMeter(ref eLastPressed, eOnPressed);
+                }
+            }
+            else
+            {
+                Debug.Log("We are: " + gameObject.transform.parent.name + ", " + Object.InputAuthority.ToString());
+                if (leaders.TryGetValue(GetComponent<Ownership>().owner.networkPlayer, out KeyDownEvents eventLeader))
+                {
+                    Debug.Log("Found a leader, following");
+                    isFollower = true;
+                    eventLeader.eOnPressed.AddListener(() => eOnPressed.Invoke());
                 }
             }
         }
@@ -61,15 +70,11 @@ namespace game.assets.interaction
         {
             float lastPress = Time.time - lastPressed;
 
-            if (lastPress > BUFFER_BETWEEN_PRESSES) {
+            if (lastPress > BUFFER_BETWEEN_PRESSES)
+            {
                 eventToFire.Invoke();
                 lastPressed = Time.time;
             }
-        }
-
-        public static KeyDownEvents GetLeader()
-        {
-            return leader;
         }
     }
 

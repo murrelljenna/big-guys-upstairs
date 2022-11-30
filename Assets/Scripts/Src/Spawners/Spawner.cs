@@ -64,7 +64,8 @@ namespace game.assets.spawners
 
         protected NetworkObject Spawn(NetworkPrefabRef prefab, Vector3 spawnLocation, Quaternion rotation, PlayerRef playerInput)
         {
-            return Runner.Spawn(prefab, spawnLocation, Quaternion.identity, ownership.owner.networkPlayer);
+            Debug.Log("AA - Spawning shit");
+            return Runner.Spawn(prefab, spawnLocation, Quaternion.identity, Object.InputAuthority);
         }
 
         private Vector3 getSpawnLocation(Vector3 spawnCenter)

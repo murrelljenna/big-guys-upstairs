@@ -50,7 +50,7 @@ public class Destroy : NetworkBehaviour
 
     private void addToDeletePool()
     {
-        if (Object.HasStateAuthority)
+        if (Object != null && Object.HasStateAuthority)
         {
             Runner.Despawn(GetComponent<NetworkObject>());
         }

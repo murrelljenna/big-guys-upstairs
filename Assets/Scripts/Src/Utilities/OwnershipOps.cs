@@ -60,6 +60,7 @@ public static class OwnershipOps
         Ownership ownership = gameObject.GetComponent<Ownership>();
         Ownership otherOwnership = otherGameObject.GetComponent<Ownership>();
         if (
+            ownership.Object != null &&
             (ownership != null && ownership.owned) &&
             (otherOwnership != null && otherOwnership.owned)
             && (ownership.owner != otherOwnership.owner)

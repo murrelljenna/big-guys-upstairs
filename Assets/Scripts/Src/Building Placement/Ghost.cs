@@ -31,10 +31,6 @@ public class Ghost : MonoBehaviour
             {
                 ren.material.color = Color.red;
             }
-            else
-            {
-                Debug.LogError("This ghost has a model, but that model doesn't have a ren, wtf are you doing?");
-            }
         }
         else
         {
@@ -43,22 +39,16 @@ public class Ghost : MonoBehaviour
             {
                 ren.material.color = previousColor;
             }
-            else
-            {
-                Debug.LogError("This ghost has a model, but that model doesn't have a ren, wtf are you doing?");
-            }
         }
     }
 
     public void OnTriggerExit(Collider other)
     {
-        Debug.Log("Exiting collision");
         setColliding(false);
     }
 
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Entering collision");
         if (!other.isTrigger)
         {
             setColliding(true);

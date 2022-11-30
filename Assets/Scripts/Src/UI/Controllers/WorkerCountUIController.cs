@@ -17,6 +17,7 @@ namespace game.assets.interaction
         {
             resource = GetComponent<Resource>();
             resource.workerCountChanged.AddListener(updateUI);
+            updateUI(resource.workers.Count);
         }
 
         private void updateUI(int count)

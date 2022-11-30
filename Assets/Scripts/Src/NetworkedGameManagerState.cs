@@ -49,7 +49,6 @@ public class NetworkedGameManagerState : NetworkBehaviour
         for (int i = 0; i < playerSlots.Length; i++)
         {
             PlayerColour colour = PlayerColourManager.PickFirstAvailableColour();
-            Debug.Log("AC - Creating player slots. Colour is " + colour.name);
             playerSlots[i] = new PlayerSlot(spawnPoints[i].location(), colour);
         }
     }
@@ -58,10 +57,8 @@ public class NetworkedGameManagerState : NetworkBehaviour
     {
         for (int i = 0; i < playerSlots.Length; i++)
         {
-            Debug.Log("AC - Checking slot : " + i);
             if (!playerSlots[i].taken)
             {
-                Debug.Log("AC - Taking slot : " + i);
                 return playerSlots[i].Take(networkPlayer);
             }
         }

@@ -32,10 +32,14 @@ namespace game.assets.spawners
 
         public virtual GameObject Spawn()
         {
+            Debug.Log("We're trying to spawn, checking pop");
+            Debug.Log("Is valid" + prefab.IsValid.ToString());
             if (!Object.HasStateAuthority || ownership.owner.maxPop() || !prefab.IsValid)
             {
+                Debug.Log(":(");
                 return null;
             }
+            Debug.Log("Ok were host so we can try to spawn!");
             Vector3 spawnLocation = getSpawnLocation(transform.position);
             return SpawnIfCanAfford(prefab, spawnLocation, Quaternion.identity, ownership.owner);
         }
@@ -48,6 +52,7 @@ namespace game.assets.spawners
                 NetworkObject whatthefuckingfuck = Spawn(prefab, spawnLocation, Quaternion.identity, player.networkPlayer);
                 NetworkedGameManager.Get().registerNetworkObject(player, whatthefuckingfuck);
                 whatthefuckingfuck.SetAsPlayer(player);
+                Debug.Log("Spawning!");
                 return whatthefuckingfuck.gameObject;
             }
             else

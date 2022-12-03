@@ -72,11 +72,13 @@ namespace game.assets.tools
         public void resetSpawner() {
             if (placeWalls != null) 
                 placeWalls.enabled = false;
-
-            spawner.enabled = false;
-            spawner.price = new ResourceSet();
-            spawner.setGhost(null);
-            spawner.showGhost = false;
+            if (spawner != null)
+            {
+                spawner.enabled = false;
+                spawner.price = new ResourceSet();
+                spawner.setGhost(null);
+                spawner.showGhost = false;
+            }
 
             placingBuilding = false;
         }

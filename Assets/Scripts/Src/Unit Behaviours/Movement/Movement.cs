@@ -36,7 +36,7 @@ namespace game.assets.ai
         {
             var otherMovementMaybe = other.gameObject.GetComponent<Movement>();
             if (otherMovementMaybe != null && otherMovementMaybe == ourMovement) {
-                ourMovement.reachedDestination.Invoke();
+                otherMovementMaybe.RPC_FireReachedDestinationEvents();
                 Destroy();
             }
         }
@@ -63,6 +63,24 @@ namespace game.assets.ai
         [Networked]
         public float speed { get; set; }
 
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        public void RPC_FireMoveOrderedEvents()
+        {
+            newMoveOrdered.Invoke();
+        }
+
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        public void RPC_FireHaltedEvents()
+        {
+            halted.Invoke();
+        }
+
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        public void RPC_FireReachedDestinationEvents()
+        {
+            reachedDestination.Invoke();
+        }
+
         void Start()
         {
             navAgent = this.GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -73,7 +91,7 @@ namespace game.assets.ai
 
         private void halt()
         {
-            halted.Invoke();
+            RPC_FireHaltedEvents();
         }
 
         public void stop()
@@ -112,7 +130,7 @@ namespace game.assets.ai
 
         public void goTo(Vector3 destination)
         {
-            newMoveOrdered.Invoke();
+            RPC_FireMoveOrderedEvents();
             if (!Object.HasStateAuthority)
             {
                 return;

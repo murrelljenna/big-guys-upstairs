@@ -53,7 +53,7 @@ namespace game.assets.ui
                 }
             }
 
-            card.transform.Find(normalizePrefabName(unit.gameObject.name)).gameObject.SetActive(true);
+            card.transform.Find(normalizePrefabName(unit.gameObject.name))?.gameObject?.SetActive(true);
         }
 
         public void removeCard(Health unit)

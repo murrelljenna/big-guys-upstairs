@@ -31,6 +31,9 @@ namespace game.assets.interaction
 
         public Ownership ownership;
 
+        [Networked]
+        public bool leftClickEnabled { get; set; } = true;
+
         private void OnDisable()
         {
             if (useUi == true && uiController != null)
@@ -82,7 +85,7 @@ namespace game.assets.interaction
 
         private void selectUnitIfCan()
         {
-            if (!Object.HasStateAuthority)
+            if (!Object.HasStateAuthority || !leftClickEnabled)
             {
                 return;
             }
@@ -127,7 +130,7 @@ namespace game.assets.interaction
 
         private void selectUnitsInRadiusIfCan()
         {
-            if (!Object.HasStateAuthority)
+            if (!Object.HasStateAuthority || !leftClickEnabled)
             {
                 return;
             }

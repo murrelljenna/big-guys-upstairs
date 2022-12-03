@@ -27,6 +27,9 @@ namespace game.assets.tools
         private PlaceWalls placeWalls;
         private RaycastSpawner spawner;
 
+        [Networked]
+        public bool placingBuilding { get; set; } = false;
+
         private void Start()
         {
             spawner = GetComponent<RaycastSpawner>();
@@ -43,12 +46,15 @@ namespace game.assets.tools
         public void setPrefab(int index)
         {
             index--;
+
             if (index == 5)
             {
+                placingBuilding = true;
                 placeWalls.enabled = true;
                 spawner.enabled = false;
             } else if (index < buildableItems.Length)
             {
+                placingBuilding = true;
                 placeWalls.enabled = false;
                 spawner.enabled = true;
                 spawner.prefab = buildableItems[index].prefab;
@@ -57,13 +63,15 @@ namespace game.assets.tools
             }
         }
 
-        private void resetSpawner() {
+        public void resetSpawner() {
             if (placeWalls != null) 
                 placeWalls.enabled = false;
 
             spawner.enabled = false;
             spawner.price = new ResourceSet();
             spawner.setGhost(null);
+
+            placingBuilding = false;
         }
     }
 }

@@ -466,7 +466,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  _selectedTool: 0
+  builderTool: {fileID: 1080595379869000905}
+  commandTool: {fileID: 652319809668547922}
 --- !u!1 &5670587663590423811
 GameObject:
   m_ObjectHideFlags: 0
@@ -610,7 +611,8 @@ MonoBehaviour:
   Flags: 2305
   NetworkGuid:
     RawGuidValue: 851f6a307d7dc284d8c27c38bf0d476c
-  NestedObjects: []
+  NestedObjects:
+  - {fileID: 1509769610393269770}
   NetworkedBehaviours:
   - {fileID: 5670587663590424035}
   - {fileID: 3643581894541174985}
@@ -619,11 +621,6 @@ MonoBehaviour:
   - {fileID: -6821695262042633688}
   - {fileID: 4341343391392932564}
   - {fileID: 957534064180425719}
-  - {fileID: 2829083539984940797}
-  - {fileID: 6076754067389855705}
-  - {fileID: 8465529425572939591}
-  - {fileID: 3875199260221784331}
-  - {fileID: 3145881686746321680}
   - {fileID: 659959271925083291}
   - {fileID: 652319809668547922}
   - {fileID: 2681686551078783308}
@@ -1141,6 +1138,7 @@ GameObject:
   - component: {fileID: 8465529425572939591}
   - component: {fileID: 3875199260221784331}
   - component: {fileID: 3145881686746321680}
+  - component: {fileID: 1509769610393269770}
   m_Layer: 13
   m_Name: Building Tool
   m_TagString: Untagged
@@ -1496,6 +1494,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1509769610393269770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6117592963094080387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 3073
+  NetworkGuid:
+    RawGuidValue: 00000000000000000000000000000000
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 2829083539984940797}
+  - {fileID: 6076754067389855705}
+  - {fileID: 8465529425572939591}
+  - {fileID: 3875199260221784331}
+  - {fileID: 3145881686746321680}
+  SimulationBehaviours: []
 --- !u!1 &7200904596753611407
 GameObject:
   m_ObjectHideFlags: 0
@@ -1710,6 +1736,7 @@ MonoBehaviour:
   cam: {fileID: 769148283958465084}
   useUi: 1
   ownership: {fileID: 7404373241901479203}
+  _leftClickEnabled: 1
 --- !u!114 &6679255677259771527
 MonoBehaviour:
   m_ObjectHideFlags: 0

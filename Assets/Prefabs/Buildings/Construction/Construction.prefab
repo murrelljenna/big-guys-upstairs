@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4893923929500166629}
   - component: {fileID: 6892178309988224518}
   - component: {fileID: 95680265814677119}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: PlopEffects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4884,7 +4884,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7309010779865672826}
   - component: {fileID: 5501836941289674444}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4930,7 +4930,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6520426522553684152}
   - component: {fileID: 938905159742920204}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Effects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4976,7 +4976,7 @@ GameObject:
   - component: {fileID: 8996032218697743046}
   - component: {fileID: 3296659425556220808}
   - component: {fileID: 5423420093046324467}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: PlopSounds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5303,7 +5303,7 @@ GameObject:
   - component: {fileID: -5231328476908697120}
   - component: {fileID: 6471027212665900563}
   - component: {fileID: 129219689204156136}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Construction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5353,7 +5353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  _HP: 0
+  _HP: 1
   maxHP: 0
   onZeroHP:
     m_PersistentCalls:
@@ -6953,17 +6953,22 @@ PrefabInstance:
     - target: {fileID: 5512006293938087309, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
         type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 5512006293938179049, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
         type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 5840929741215055898, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
         type: 3}
       propertyPath: m_Name
       value: Healthbar
+      objectReference: {fileID: 0}
+    - target: {fileID: 5840929741215055898, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 5840929741215055898, guid: e9ba4d61878ca1e4a85c0eb0fd6c56bb,
         type: 3}

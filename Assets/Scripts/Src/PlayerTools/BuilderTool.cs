@@ -63,6 +63,12 @@ namespace game.assets.tools
             }
         }
 
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        public void RPC_ResetSpawner()
+        {
+            resetSpawner();
+        }
+
         public void resetSpawner() {
             if (placeWalls != null) 
                 placeWalls.enabled = false;
@@ -70,6 +76,7 @@ namespace game.assets.tools
             spawner.enabled = false;
             spawner.price = new ResourceSet();
             spawner.setGhost(null);
+            spawner.showGhost = false;
 
             placingBuilding = false;
         }

@@ -5,9 +5,10 @@ using UnityEngine;
 using game.assets.utilities.resources; 
 using game.assets.utilities;
 using game.assets.player;
+using Fusion;
 
 [RequireComponent(typeof(Ownership))]
-public class Depositor : MonoBehaviour {
+public class Depositor : NetworkBehaviour {
     [Tooltip("When checked, all deposits to this depositor are immediately forwarded to the player")]
     public bool isFinal;
 
@@ -16,7 +17,7 @@ public class Depositor : MonoBehaviour {
     private Depositor upstream;
     private Player player;
 
-    public void Start()
+    public override void Spawned()
     {
         player = GetComponent<Ownership>().owner;
     }

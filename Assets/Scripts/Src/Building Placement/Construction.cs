@@ -11,6 +11,7 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Health))]
+[RequireComponent(typeof(Ownership))]
 public class Construction : NetworkBehaviour
 {
     [Tooltip("Prefab created when construction finished")]
@@ -19,10 +20,13 @@ public class Construction : NetworkBehaviour
     [Tooltip("Invoked when construction finished")]
     public UnityEvent built;
 
+    private Ownership ownership;
+
     private Health health;
     public override void Spawned()
     {
         health = GetComponent<Health>();
+        ownership = GetComponent<Ownership>();
 
         if (!Object.HasStateAuthority)
         {
@@ -39,7 +43,7 @@ public class Construction : NetworkBehaviour
         for (int i = 0; i < workers.Length; i++)
         {
             var worker = workers[i];
-            if (worker.currentlyBuilding || worker.resource != null || worker.IsEnemyOf(this))
+            if (worker.currentlyBuilding || worker.resource != null || !worker.BelongsTo(ownership.owner))
             {
                 continue;
             }

@@ -63,7 +63,7 @@ public static class OwnershipOps
             ownership.Object != null &&
             (ownership != null && ownership.owned) &&
             (otherOwnership != null && otherOwnership.owned)
-            && (ownership.owner != otherOwnership.owner)
+            && (!ownership.BelongsTo(otherOwnership.owner))
             )
         {
             return true;

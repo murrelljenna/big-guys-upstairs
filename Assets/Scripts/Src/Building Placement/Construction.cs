@@ -23,6 +23,12 @@ public class Construction : NetworkBehaviour
     public override void Spawned()
     {
         health = GetComponent<Health>();
+
+        if (!Object.HasStateAuthority)
+        {
+            return;
+        }
+
         health.onMaxHP.AddListener(finish);
 
         // Fetch all nearby workers and have them build me if they're not doing anything important
@@ -33,15 +39,15 @@ public class Construction : NetworkBehaviour
         for (int i = 0; i < workers.Length; i++)
         {
             var worker = workers[i];
-            if (worker.currentlyBuilding || worker.resource != null || workers[i].IsEnemyOf(this))
+            if (worker.currentlyBuilding || worker.resource != null || worker.IsEnemyOf(this))
             {
                 continue;
             }
 
             worker.setBuildingTarget(this);
         }
-        if (Object.HasStateAuthority)
-            RPC_SetToFirstModel();
+
+        RPC_SetToFirstModel();
     }
 
     public void build(int amt)

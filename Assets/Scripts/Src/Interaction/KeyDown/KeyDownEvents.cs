@@ -25,9 +25,10 @@ namespace game.assets.interaction
         [Tooltip("Invoked when R key is pressed.")]
         public UnityEvent rOnPressed;
         [Tooltip("Invoked when Esc key is pressed.")]
-        public UnityEvent escOnPressed;
+        public UnityEvent escOnPressed = new UnityEvent();
 
         private float eLastPressed;
+        private float escLastPressed;
 
         private const float BUFFER_BETWEEN_PRESSES = 0.2f;
 
@@ -38,6 +39,11 @@ namespace game.assets.interaction
                 if (input.IsDown(PlayerNetworkInput.BUTTON_ACTION1))
                 {
                     fireWithinMeter(ref eLastPressed, eOnPressed);
+                }
+
+                if (input.IsDown(PlayerNetworkInput.BUTTON_ESC))
+                {
+                    fireWithinMeter(ref escLastPressed, escOnPressed);
                 }
             }
         }

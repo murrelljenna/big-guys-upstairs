@@ -567,6 +567,8 @@ GameObject:
   - component: {fileID: 6642740390509252936}
   - component: {fileID: 7404373241901479203}
   - component: {fileID: -6821695262042633688}
+  - component: {fileID: 142972793393521465}
+  - component: {fileID: 8041083239785120020}
   m_Layer: 13
   m_Name: Player
   m_TagString: Untagged
@@ -618,6 +620,7 @@ MonoBehaviour:
   - {fileID: 6642740390509252936}
   - {fileID: 7404373241901479203}
   - {fileID: -6821695262042633688}
+  - {fileID: 8041083239785120020}
   - {fileID: 957534064180425719}
   - {fileID: 659959271925083291}
   - {fileID: 652319809668547922}
@@ -778,6 +781,58 @@ MonoBehaviour:
     iron: 0
     horse: 0
   spawnPoint: {x: 0, y: 0, z: 0}
+--- !u!114 &142972793393521465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5670587663590423814}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8a4ebb57356fd6469aebe36ab57c0ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8041083239785120020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5670587663590423814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 330de188410816e4a9f02d2d6662aff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  eOnPressed:
+    m_PersistentCalls:
+      m_Calls: []
+  xOnPressed:
+    m_PersistentCalls:
+      m_Calls: []
+  uOnPressed:
+    m_PersistentCalls:
+      m_Calls: []
+  rOnPressed:
+    m_PersistentCalls:
+      m_Calls: []
+  escOnPressed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 142972793393521465}
+        m_TargetAssemblyTypeName: PauseMenu, AssemblyDefinitionFile
+        m_MethodName: toggleEnable
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5670587663590423831
 GameObject:
   m_ObjectHideFlags: 0

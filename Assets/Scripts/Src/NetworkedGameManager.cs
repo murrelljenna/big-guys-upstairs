@@ -42,6 +42,7 @@ namespace game.assets
         public const uint BUTTON_ALPHA8 = 1 << 22;
         public const uint BUTTON_ALPHA9 = 1 << 23;
         public const uint BUTTON_ALPHA0 = 1 << 24;
+        public const uint BUTTON_ESC = 1 << 25;
         public float MOUSE_SCROLLWHEEL;
 
         public float cameraRotationX;
@@ -274,6 +275,11 @@ namespace game.assets
             if (Input.GetKey(KeyCode.G))
             {
                 frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ACTION4;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ESC;
             }
 
             if (Input.GetMouseButtonDown(0))

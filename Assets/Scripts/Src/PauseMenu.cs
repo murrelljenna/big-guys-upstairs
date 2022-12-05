@@ -4,9 +4,36 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
+    private Vector3 frozenPosition;
+    private Quaternion frozenRotation;
     public void toggleEnable()
     {
         enabled = !enabled;
+
+        if (enabled)
+        {
+            frozenPosition = transform.position;
+            frozenRotation = transform.rotation;
+            Cursor.lockState = CursorLockMode.None;
+
+            GetComponent<CharacterController>().enabled = false;
+            GetComponent<CharacterViewHandler>().isActive = false;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            GetComponent<CharacterController>().enabled = true;
+            GetComponent<CharacterViewHandler>().isActive = true;
+        }
+    }
+
+    private void Update()
+    {
+        if (enabled)
+        {
+            transform.position = frozenPosition;
+            transform.rotation = frozenRotation;
+        }
     }
 
     private void OnGUI()

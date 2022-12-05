@@ -14,6 +14,8 @@ public class CharacterViewHandler : NetworkBehaviour
 
     public bool isLocal = false;
 
+    public bool isActive = true;
+
     public override void Spawned()
     {
         if (Object.HasInputAuthority)
@@ -26,7 +28,7 @@ public class CharacterViewHandler : NetworkBehaviour
 
     private void Update()
     {
-        if (Object.HasInputAuthority)
+        if (isActive && Object.HasInputAuthority)
         {
             if (maybeLocalCamera != null)
             {
@@ -45,7 +47,7 @@ public class CharacterViewHandler : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        if (GetInput(out PlayerNetworkInput input))
+        if (isActive && GetInput(out PlayerNetworkInput input))
         {
             transform.localRotation = Quaternion.Euler(-input.cameraRotationY, input.cameraRotationX, 0f);
         }

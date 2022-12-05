@@ -107,8 +107,25 @@ namespace game.assets
 
         private void InitNetworkGameState()
         {
+            if (state != null)
+            {
+                DestroyNetworkGameState();
+            }
+
+            if (!_runner.IsRunning)
+            {
+                return;
+            }
             state = _runner.Spawn(_gameManagerState, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<NetworkedGameManagerState>();
             state.Init();
+        }
+
+        private void DestroyNetworkGameState()
+        {
+            if (state != null)
+            {
+                _runner.Despawn(state.GetComponent<NetworkObject>());
+            }
         }
 
         async void StartGame(Scene scene, Fusion.GameMode mode, string roomName)
@@ -177,15 +194,11 @@ namespace game.assets
         private void lockPlayer()
         {
             playerObj.GetComponent<CharacterController>().enabled = false;
-            //playerObj.GetComponent<NetworkCharacterController>().enabled = false;
-            //playerObj.GetComponent<CharacterViewHandler>().enabled = false;
         }
 
         private void unlockPlayer()
         {
             playerObj.GetComponent<CharacterController>().enabled = true;
-            //playerObj.GetComponent<NetworkCharacterController>().enabled = true;
-            //playerObj.GetComponent<CharacterViewHandler>().enabled = true;
         }
 
         private void SpawnUI()
@@ -368,6 +381,20 @@ namespace game.assets
 
         }
 
+        private void ExitNetworkGame()
+        {
+            if (isHost)
+            {
+                _runner.Shutdown();
+            }
+            else
+            {
+                _runner.Disconnect(_runner.LocalPlayer);
+            }
+
+            DestroyNetworkGameState();
+        }
+
         private void OnGUI()
         {
             if (_runner == null)
@@ -409,6 +436,20 @@ namespace game.assets
         public new static NetworkedGameManager Get()
         {
             return GameObject.Find(MagicWords.GameObjectNames.GameManager)?.GetComponent<NetworkedGameManager>();
+        }
+
+        public void QuitToMainMenu()
+        {
+            ExitNetworkGame();
+            SceneManager.LoadScene(0);
+            SceneManager.sceneLoaded += (scene, mode) => { Cursor.lockState = CursorLockMode.None; };
+        }
+
+        public void Quit()
+        {
+            ExitNetworkGame();
+            Application.Quit();
+            UnityEditor.EditorApplication.isPlaying = false;
         }
     }
 }

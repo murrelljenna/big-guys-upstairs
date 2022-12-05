@@ -1,30 +1,36 @@
+using game.assets;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
     private Vector3 frozenPosition;
     private Quaternion frozenRotation;
+
+    public Scene mainMenuScene; 
+
     public void toggleEnable()
     {
         enabled = !enabled;
+    }
 
-        if (enabled)
-        {
-            frozenPosition = transform.position;
-            frozenRotation = transform.rotation;
-            Cursor.lockState = CursorLockMode.None;
+    private void OnDisable()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        GetComponent<CharacterController>().enabled = true;
+        GetComponent<CharacterViewHandler>().isActive = true;
+    }
 
-            GetComponent<CharacterController>().enabled = false;
-            GetComponent<CharacterViewHandler>().isActive = false;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            GetComponent<CharacterController>().enabled = true;
-            GetComponent<CharacterViewHandler>().isActive = true;
-        }
+    private void OnEnable()
+    {
+        frozenPosition = transform.position;
+        frozenRotation = transform.rotation;
+        Cursor.lockState = CursorLockMode.None;
+
+        GetComponent<CharacterController>().enabled = false;
+        GetComponent<CharacterViewHandler>().isActive = false;
     }
 
     private void Update()
@@ -52,15 +58,16 @@ public class PauseMenu : MonoBehaviour
 
             if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight - padding - buttonHeight / 2 - buttonHeight - padding, buttonWidth, buttonHeight), "Resume"))
             {
-                //
+                enabled = false;
             }
             if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight - padding - buttonHeight / 2, buttonWidth, buttonHeight), "Return to Main Menu"))
             {
-                //
+                NetworkedGameManager.Get().QuitToMainMenu();   
+
             }
             if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight / 2, buttonWidth, buttonHeight), "Exit Game"))
             {
-                //
+                NetworkedGameManager.Get().Quit();
             }
             /*
             GUI.Label(new Rect(xCenter - buttonWidth / 2 + 40, yCenter - buttonHeight / 2 + buttonHeight + padding, buttonWidth, buttonHeight), new GUIContent("Enter a room to join:"));

@@ -41,6 +41,8 @@ public class NetworkedGameManagerState : NetworkBehaviour
         }
     }
 
+    private PlayerColourManager colourManager = new PlayerColourManager();
+
     public void Init() 
     {
         var spawnPoints = PlayerSpawner.GetAll();
@@ -48,7 +50,7 @@ public class NetworkedGameManagerState : NetworkBehaviour
 
         for (int i = 0; i < playerSlots.Length; i++)
         {
-            PlayerColour colour = PlayerColourManager.PickFirstAvailableColour();
+            PlayerColour colour = colourManager.PickFirstAvailableColour();
             playerSlots[i] = new PlayerSlot(spawnPoints[i].location(), colour);
         }
     }

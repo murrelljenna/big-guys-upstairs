@@ -383,6 +383,13 @@ namespace game.assets
 
         private void ExitNetworkGame()
         {
+            DestroyNetworkGameState();
+
+            if (_runner == null)
+            {
+                return;
+            }
+
             if (isHost)
             {
                 _runner.Shutdown();
@@ -391,8 +398,6 @@ namespace game.assets
             {
                 _runner.Disconnect(_runner.LocalPlayer);
             }
-
-            DestroyNetworkGameState();
         }
 
         private void OnGUI()
@@ -407,7 +412,7 @@ namespace game.assets
                 var textStyle = new GUIStyle();
                 textStyle.alignment = (TextAnchor)TextAlignment.Center;
                 var oldColor = GUI.backgroundColor;
-                GUI.Box(new Rect(xCenter - buttonWidth / 2 - padding, yCenter - buttonHeight - buttonHeight / 2 - padding * 2, buttonWidth + 2 * padding, buttonHeight * 3 + padding * 4 + 5), "");
+                GUI.Box(new Rect(xCenter - buttonWidth / 2 - padding, yCenter - buttonHeight - buttonHeight / 2 - padding * 2, buttonWidth + 2 * padding, buttonHeight * 4 + padding * 4 + 7), "");
 
                 if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight - padding - buttonHeight / 2, buttonWidth, buttonHeight), "Host"))
                 {
@@ -416,6 +421,10 @@ namespace game.assets
                 if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight / 2, buttonWidth, buttonHeight), "Join"))
                 {
                     JoinGame(enteredSessionName, "TwoPlayer");
+                }
+                if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter + buttonHeight * 2, buttonWidth, buttonHeight), "Quit Game"))
+                {
+                    Quit();
                 }
                 GUI.Label(new Rect(xCenter - buttonWidth / 2 + 40, yCenter - buttonHeight / 2 + buttonHeight + padding, buttonWidth, buttonHeight), new GUIContent("Enter a room to join:"));
                 enteredSessionName = GUI.TextField(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight / 2 + buttonHeight + padding * 3.5f, buttonWidth, buttonHeight), enteredSessionName, 64, textStyle);

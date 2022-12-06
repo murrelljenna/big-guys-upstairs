@@ -45,8 +45,6 @@ public class PlayerColourManager
         {
             if (Colours[i].colour.name == colour.name)
             {
-                Debug.Log(" AC - Colour name: " + colour.name);
-                Debug.Log(" AC - Available Colour name: " + Colours[i].colour.name);
                 return i;
             }
         }

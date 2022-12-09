@@ -5,5 +5,5 @@ using UnityEngine;
 public class CloudSpawner : MonoBehaviour
 {
     public CloudEndpoint endpoint;
-    public int lastSpawn = -200;
+    public int lastSpawn = -400;
 }

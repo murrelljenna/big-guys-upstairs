@@ -46,21 +46,32 @@ public class CloudManager : MonoBehaviour
 
         for (int i = 0; i < cloudSpawners.Length; i++)
         {
-            cloudSpawners[i].lastSpawn = -400;
+            cloudSpawners[i].lastSpawn = -500;
         }
 
-        InvokeRepeating("spawnCloud", 0f, 0.5f);
+        startRandomCloudsMidPath();
+
+        InvokeRepeating("spawnCloudMetered", 0f, 1.5f);
     }
 
-    private void spawnCloud()
+    private CloudAndEndpointPair spawnCloudMetered()
     {
-        var spawner = cloudSpawners.RandomElem();
+        CloudSpawner spawner = cloudSpawners.RandomElem();
 
-        if (totalElapsedFrames - spawner.lastSpawn < 400)
+        if (totalElapsedFrames - spawner.lastSpawn < 500)
         {
-            return;
+            return null;
         }
 
+        var cloudPair = spawnCloud(spawner);
+
+        cloudPair.startingPoint.lastSpawn = totalElapsedFrames;
+
+        return cloudPair;
+    }
+
+    private CloudAndEndpointPair spawnCloud(CloudSpawner spawner)
+    {
         var cloudPair = new CloudAndEndpointPair(
                 Instantiate(cloudPrefabs.RandomElem(), spawner.transform.position, Quaternion.identity),
                 spawner.endpoint,
@@ -75,23 +86,44 @@ public class CloudManager : MonoBehaviour
             kindaRandomSize
         );
 
-        var oldCloudPos = cloudPair.startingPointPosition;
-        float newPosX = oldCloudPos.x + Random.Range(-10f, 10f);
-        float newPosY = oldCloudPos.y + Random.Range(-10f, 10f);
-        float newPosZ = oldCloudPos.z + Random.Range(-10f, 10f);
+        float randomX = Random.Range(-10f, 10f);
+        float randomY = Random.Range(-0f, 20f);
+        float randomZ = Random.Range(-10f, 10f);
         cloudPair.startingPointPosition = new Vector3(
-            newPosX,
-            newPosY,
-            newPosZ
+            cloudPair.startingPointPosition.x + randomX,
+            cloudPair.startingPointPosition.y + randomY,
+            cloudPair.startingPointPosition.z + randomZ
         );
 
         cloudPair.endpointPosition = new Vector3(
-            newPosX,
-            newPosY,
-            newPosZ
+            cloudPair.endpointPosition.x + randomX,
+            cloudPair.endpointPosition.y + randomY,
+            cloudPair.endpointPosition.z + randomZ
         );
 
-        cloudPair.startingPoint.lastSpawn = totalElapsedFrames;
+        return cloudPair;
+    }
+
+    private void startRandomCloudsMidPath()
+    {
+        var randomNumberOfClouds = Random.Range(10, 30);
+
+        for (int i = 0; i < randomNumberOfClouds; i++) {
+
+            CloudSpawner spawner = cloudSpawners.RandomElem();
+            var cloudPair = spawnCloud(spawner);
+
+            float randomElapsedFrames = Random.Range(0f, cloudSpeed);
+
+            Vector3 midwaySpawnLocation = Vector3.Lerp(
+                cloudPair.startingPointPosition,
+                cloudPair.endpointPosition,
+                randomElapsedFrames / cloudSpeed
+                );
+
+            cloudPair.startingPointPosition = midwaySpawnLocation;
+        }
+        
     }
 
     private void FixedUpdate()
@@ -104,6 +136,7 @@ public class CloudManager : MonoBehaviour
             float interpolationRatio = (float)pair.elapsedFrames / cloudSpeed;
 
             var anyFinishedClouds = pair.endpoint.AnyFinishedClouds();
+
             if (anyFinishedClouds.Contains(pair.cloud))
             {
                 anyFinishedClouds.RemoveAt(i);

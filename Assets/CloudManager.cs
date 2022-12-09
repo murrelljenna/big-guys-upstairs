@@ -28,6 +28,7 @@ public class CloudManager : MonoBehaviour
     public CloudSpawner[] cloudSpawners;
 
     private const int cloudSpeed = 8000;
+    private int totalElapsedFrames = 0;
 
     public void Start()
     {
@@ -38,23 +39,44 @@ public class CloudManager : MonoBehaviour
             return;
         }
 
-        InvokeRepeating("spawnCloud", 0f, 2f);
+        for (int i = 0; i < cloudSpawners.Length; i++)
+        {
+            cloudSpawners[i].lastSpawn = -200;
+        }
+
+        InvokeRepeating("spawnCloud", 0f, 0.5f);
     }
 
     private void spawnCloud()
     {
         var spawner = cloudSpawners.RandomElem();
-        activeClouds.Add(
-            new CloudAndEndpointPair(
-                Instantiate(cloudPrefabs.RandomElem(), spawner.transform.position, Quaternion.identity), 
-                spawner.endpoint, 
+
+        if (totalElapsedFrames - spawner.lastSpawn < 200)
+        {
+            Debug.Log(":( last spawn: " + spawner.lastSpawn);
+            Debug.Log(":( total elapsed frames: " + totalElapsedFrames);
+            Debug.Log(":( really sad: " + (spawner.lastSpawn - totalElapsedFrames));
+            return;
+        }
+
+        var cloudPair = new CloudAndEndpointPair(
+                Instantiate(cloudPrefabs.RandomElem(), spawner.transform.position, Quaternion.identity),
+                spawner.endpoint,
                 spawner
-                )
-            );
+                );
+        activeClouds.Add(cloudPair);
+        var kindaRandomSize = Random.Range(0.1f, 1.25f);
+        cloudPair.cloud.transform.localScale = new Vector3(
+            kindaRandomSize,
+            kindaRandomSize,
+            kindaRandomSize
+        );
+        cloudPair.startingPoint.lastSpawn = totalElapsedFrames;
     }
 
     private void FixedUpdate()
     {
+        totalElapsedFrames = (totalElapsedFrames + 1) % (cloudSpeed + 1);
         for (int i = 0; i < activeClouds.Count; i++)
         {
             var pair = activeClouds[i];

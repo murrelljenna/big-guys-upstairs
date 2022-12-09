@@ -107,6 +107,7 @@
     <Compile Include="Assets\Scripts\Src\Routines\UnitGroupingMovementJob.cs" />
     <Compile Include="Assets\Scripts\Src\Spawners\FixHeight.cs" />
     <Compile Include="Assets\Scripts\Src\Utilities\DisableIfNotMine.cs" />
+    <Compile Include="Assets\CloudManager.cs" />
     <Compile Include="Assets\Standard Assets\Utility\SmoothFollow.cs" />
     <Compile Include="Assets\Scripts\Src\UI\Controllers\CommandUIController.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\PostEffectsHelper.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Assets\Photon\Fusion\Scripts\BurstDeltaCompressor.cs" />
     <Compile Include="Assets\Scripts\Src\AI\Barbarian\BarbarianOwnership.cs" />
     <Compile Include="Assets\Scripts\Src\Building Placement\Ghost.cs" />
+    <Compile Include="Assets\Scripts\Src\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\Src\Unit Behaviours\Movement\MovementAggregation.cs" />
     <Compile Include="Assets\Standard Assets\Environment\Water\Water\Scripts\WaterBase.cs" />
     <Compile Include="Assets\Scripts\Src\AI\Barbarian\BarbarianWavePlayerUIController.cs" />
@@ -229,7 +231,7 @@
     <Compile Include="Assets\Photon\Fusion\Scripts\Prototyping\NetworkSceneManagerDefault.cs" />
     <Compile Include="Assets\Scripts\Src\Spawners\Instantiation\InstantiatorFactory.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\ContrastStretch.cs" />
-    <Compile Include="Assets\PlayerSpawner.cs" />
+    <Compile Include="Assets\Scripts\Src\Effects\Clouds\PlayerSpawner.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Quads.cs" />
     <Compile Include="Assets\Scripts\Player\CharacterViewHandler.cs" />
     <Compile Include="Assets\Scripts\Src\Spawners\Instantiation\LocalInstantiator.cs" />
@@ -241,6 +243,7 @@
     <Compile Include="Assets\Models and Textures\TinyFire VFX\LightControl.cs" />
     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\CrossPlatformInputManager.cs" />
     <Compile Include="Assets\Scripts\Src\Routines\InterruptibleJob.cs" />
+    <Compile Include="Assets\Scripts\Src\Effects\Clouds\CloudSpawner.cs" />
     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\InputAxisScrollbar.cs" />
     <Compile Include="Assets\Standard Assets\Utility\EventSystemChecker.cs" />
     <Compile Include="Assets\Scripts\Src\AI\AIUnitGrouping.cs" />
@@ -281,7 +284,7 @@
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Triangles.cs" />
     <Compile Include="Assets\Standard Assets\Utility\FPSCounter.cs" />
     <Compile Include="Assets\Standard Assets\Utility\SimpleActivatorMenu.cs" />
-    <Compile Include="Assets\Scripts\Src\PauseMenu.cs" />
+    <Compile Include="Assets\Scripts\Src\Effects\Clouds\CloudEndpoint.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />

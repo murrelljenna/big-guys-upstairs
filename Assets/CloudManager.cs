@@ -46,19 +46,19 @@ public class CloudManager : MonoBehaviour
 
         for (int i = 0; i < cloudSpawners.Length; i++)
         {
-            cloudSpawners[i].lastSpawn = -500;
+            cloudSpawners[i].lastSpawn = -1500;
         }
 
         startRandomCloudsMidPath();
 
-        InvokeRepeating("spawnCloudMetered", 0f, 1.5f);
+        InvokeRepeating("spawnCloudMetered", 0f, 4f);
     }
 
     private CloudAndEndpointPair spawnCloudMetered()
     {
         CloudSpawner spawner = cloudSpawners.RandomElem();
 
-        if (totalElapsedFrames - spawner.lastSpawn < 500)
+        if (totalElapsedFrames - spawner.lastSpawn < 1500)
         {
             return null;
         }
@@ -78,7 +78,7 @@ public class CloudManager : MonoBehaviour
                 spawner
                 );
         activeClouds.Add(cloudPair);
-        var kindaRandomSize = Random.Range(0.1f, 1.25f);
+        var kindaRandomSize = Random.Range(0.4f, 1.25f);
 
         cloudPair.cloud.transform.localScale = new Vector3(
             kindaRandomSize,

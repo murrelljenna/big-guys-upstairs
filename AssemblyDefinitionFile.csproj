@@ -73,11 +73,11 @@
     <Compile Include="Assets\Scripts\Src\Routines\UnitPlacementJob.cs" />
     <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\Explosive.cs" />
     <Compile Include="Assets\Scripts\Src\Unit Behaviours\Attack\AttackAggregation.cs" />
+    <Compile Include="Assets\Scripts\Src\Effects\Clouds\CloudEndpoint.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\ImageEffects.cs" />
     <Compile Include="Assets\Scripts\Src\Utilities\OwnershipOps.cs" />
     <Compile Include="Assets\Standard Assets\Utility\DynamicShadowSettings.cs" />
     <Compile Include="Assets\Photon\PhotonLibs\WebSocket\SocketWebTcp.cs" />
-    <Compile Include="Assets\Standard Assets\Utility\SimpleMouseRotator.cs" />
     <Compile Include="Assets\Scripts\Src\Utilities\LocalPlayer.cs" />
     <Compile Include="Assets\Scripts\Src\Spawners\Spawner.cs" />
     <Compile Include="Assets\Scripts\Src\Economy\ResourceSet.cs" />
@@ -275,7 +275,6 @@
     <Compile Include="Assets\Scripts\Src\UI\PlayerNameInputField.cs" />
     <Compile Include="Assets\Scripts\Src\Routines\ManyAttackManyJob.cs" />
     <Compile Include="Assets\Scripts\Src\LocalGameManager.cs" />
-    <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\Hose.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Grayscale.cs" />
     <Compile Include="Assets\Photon\Fusion\Scripts\FusionGraph.cs" />
     <Compile Include="Assets\Scripts\Src\Unit Behaviours\Idle.cs" />
@@ -284,7 +283,6 @@
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Triangles.cs" />
     <Compile Include="Assets\Standard Assets\Utility\FPSCounter.cs" />
     <Compile Include="Assets\Standard Assets\Utility\SimpleActivatorMenu.cs" />
-    <Compile Include="Assets\Scripts\Src\Effects\Clouds\CloudEndpoint.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />

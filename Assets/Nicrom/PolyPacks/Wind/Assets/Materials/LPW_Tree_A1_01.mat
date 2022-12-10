@@ -72,13 +72,13 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _MBAmplitude: 2
-    - _MBAmplitudeOffset: 2
+    - _MBAmplitude: 1.2
+    - _MBAmplitudeOffset: 1
     - _MBDefaultBending: 0
-    - _MBFrequency: 0.3
-    - _MBFrequencyOffset: 0.3
+    - _MBFrequency: 0.5
+    - _MBFrequencyOffset: 0.1
     - _MBMaxHeight: 6.5
-    - _MBPhase: 3
+    - _MBPhase: 2
     - _MBWindBlend: 0
     - _MBWindDir: 90
     - _MBWindDirOffset: 89
@@ -98,3 +98,4 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _NoisePannerSpeed: {r: 0.08, g: 0.04, b: 0, a: 0}
     - _NoiseTextureTilling: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []

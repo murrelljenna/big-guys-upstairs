@@ -263,7 +263,6 @@ namespace game.assets
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                Debug.Log("INS - Sending keydown event");
                 frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ACTION1;
             }
 

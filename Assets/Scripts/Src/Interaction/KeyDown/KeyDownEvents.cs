@@ -55,10 +55,8 @@ namespace game.assets.interaction
         private void fireWithinMeter(ref float lastPressed, UnityEvent eventToFire)
         {
             float lastPress = Time.time - lastPressed;
-            Debug.Log("INS - Trying to invoke. ");
             if (lastPress > BUFFER_BETWEEN_PRESSES)
             {
-                Debug.Log("INS - INVOKING");
                 eventToFire.Invoke();
                 lastPressed = Time.time;
             }

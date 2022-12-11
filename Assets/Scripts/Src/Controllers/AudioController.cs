@@ -26,5 +26,12 @@ namespace game.assets.audio {
             AudioSource audio = potentialAudio[Random.Range(0, potentialAudio.Length)];
             AudioSource.PlayClipAtPoint(audio.clip, transform.position);
         }
+
+        public void PlayRandomAudioSource(string name)
+        {
+            AudioSource[] potentialAudio = Get(name);
+            AudioSource audio = potentialAudio[Random.Range(0, potentialAudio.Length)];
+            audio.PlayOneShot(audio.clip);
+        }
     }
 }

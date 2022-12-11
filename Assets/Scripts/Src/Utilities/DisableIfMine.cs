@@ -1,13 +1,13 @@
 using Fusion;
 using UnityEngine;
 
-public class DisableIfNotMine : NetworkBehaviour
+public class DisableIfMine : NetworkBehaviour
 {
     public GameObject gameObjectToDisable;
 
     public override void Spawned()
     {
-        if (!Object.HasInputAuthority)
+        if (Object.HasInputAuthority)
         {
             gameObjectToDisable.SetActive(false);
         }

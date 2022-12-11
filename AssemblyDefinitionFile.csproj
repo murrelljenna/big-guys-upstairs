@@ -283,7 +283,8 @@
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Triangles.cs" />
     <Compile Include="Assets\Standard Assets\Utility\FPSCounter.cs" />
     <Compile Include="Assets\Standard Assets\Utility\SimpleActivatorMenu.cs" />
-    <Compile Include="Assets\Nicrom\PolyPacks\Wind\Assets\Scripts\Editor\LPVegetation_MaterialInspector.cs" />
+    <Compile Include="Assets\CloudTrail.cs" />
+    <Compile Include="Assets\Scripts\Src\Utilities\DisableIfMine.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />
@@ -402,7 +403,6 @@
     <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
     <None Include="Assets\Standard Assets\ParticleSystems\Shaders\PriorityParticleAlpha.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\EdgeDetectNormals.shader" />
-    <None Include="Assets\Nicrom\PolyPacks\Wind\Assets\Scripts\Editor\GoFuckYourself.asmdef" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
     <None Include="Assets\Photon\Fusion\build_info.txt" />
     <None Include="Assets\Photon\Fusion\Assemblies\Fusion.Realtime.dll" />

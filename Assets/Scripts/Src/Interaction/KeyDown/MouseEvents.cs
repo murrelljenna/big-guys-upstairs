@@ -21,7 +21,6 @@ public class MouseEvents : NetworkBehaviour
 
 
     private float lastRightClickTime;
-    private const float RIGHT_CLICK_BUFFER = 0.5f;
 
     private const float BUFFER_BETWEEN_PRESSES = 0.05f;
 
@@ -51,7 +50,7 @@ public class MouseEvents : NetworkBehaviour
             else if (input.IsDown(PlayerNetworkInput.BUTTON_FIRE_ALT))
             {
                 float lastClick = Time.time - lastRightClickTime;
-                if (lastClick > RIGHT_CLICK_BUFFER)
+                if (lastClick > BUFFER_BETWEEN_PRESSES)
                 {
                     rightClick.Invoke();
                 }

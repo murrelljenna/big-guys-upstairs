@@ -30,10 +30,14 @@ namespace game.assets.interaction
         private float eLastPressed;
         private float escLastPressed;
 
-        private const float BUFFER_BETWEEN_PRESSES = 0.2f;
+        private const float BUFFER_BETWEEN_PRESSES = 0.05f;
 
         public override void FixedUpdateNetwork()
         {
+            if (!Object.HasStateAuthority)
+            {
+                return;
+            }
             if (GetInput(out PlayerNetworkInput input))
             {
                 if (input.IsDown(PlayerNetworkInput.BUTTON_ACTION1))
@@ -51,9 +55,10 @@ namespace game.assets.interaction
         private void fireWithinMeter(ref float lastPressed, UnityEvent eventToFire)
         {
             float lastPress = Time.time - lastPressed;
-
+            Debug.Log("INS - Trying to invoke. ");
             if (lastPress > BUFFER_BETWEEN_PRESSES)
             {
+                Debug.Log("INS - INVOKING");
                 eventToFire.Invoke();
                 lastPressed = Time.time;
             }

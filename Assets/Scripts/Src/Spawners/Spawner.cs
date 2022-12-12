@@ -59,8 +59,11 @@ namespace game.assets.spawners
 
         protected NetworkObject Spawn(NetworkPrefabRef prefab, Vector3 spawnLocation, Quaternion rotation, PlayerRef playerInput)
         {
-            Debug.Log("AA - Spawning shit" + ownership.owner.networkPlayer.ToString());
-            return Runner.Spawn(prefab, spawnLocation, rotation, ownership.owner.networkPlayer, (runner, obj) => obj.AssignInputAuthority(ownership.owner.networkPlayer));
+            return Runner.Spawn(prefab, spawnLocation, rotation, ownership.owner.networkPlayer, (runner, obj) => {
+                obj.AssignInputAuthority(ownership.owner.networkPlayer);
+                obj.GetComponent<Ownership>()?.setOwner(ownership.owner);
+                }
+            );
         }
 
         private Vector3 getSpawnLocation(Vector3 spawnCenter)

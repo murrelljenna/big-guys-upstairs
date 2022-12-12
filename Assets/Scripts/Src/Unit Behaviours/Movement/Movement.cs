@@ -36,6 +36,7 @@ namespace game.assets.ai
         {
             var otherMovementMaybe = other.gameObject.GetComponent<Movement>();
             if (otherMovementMaybe != null && otherMovementMaybe == ourMovement) {
+                otherMovementMaybe.stop();
                 otherMovementMaybe.RPC_FireReachedDestinationEvents();
                 Destroy();
             }

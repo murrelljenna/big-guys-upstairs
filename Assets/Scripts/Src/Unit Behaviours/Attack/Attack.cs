@@ -70,6 +70,7 @@ namespace game.assets.ai
 
             if (!this.IsBarbarian())
             {
+                Debug.Log("Checking enemies in range");
                 InvokeRepeating("checkEnemiesInRange", 2f, 2f);
             }
         }
@@ -110,13 +111,16 @@ namespace game.assets.ai
 
         private void checkEnemiesInRange()
         {
+            Debug.Log("CER - Checking enemies in range");
             if (isAttacking || (canMove && movement.moveOrdered)) {
+                Debug.Log("CER - Move ordered, not attacking");
                 return;
             }
 
             Health[] units = GameUtils.findEnemyUnitsInRange(GetComponent<Collider>().bounds.center, responseRange);
             if (units.Length == lastNoEnemies)
             {
+                Debug.Log("CER - no new enemies in range");
                 return;
             }
 
@@ -133,6 +137,7 @@ namespace game.assets.ai
 
             if (candidateEnemy != null && candidateEnemy.GetComponent<DoNotAutoAttack>() == null)
             {
+                Debug.Log("CER - Attacking!");
                 attack(candidateEnemy);
             }
         }
@@ -158,9 +163,11 @@ namespace game.assets.ai
             {
                 if (units[i].IsEnemyOf(this) && units[i].HP > 0)
                 {
+                    Debug.Log("CER - unit " + units[i].gameObject.name + " is enemy");
                     float dist = movement.pathLength(units[i].GetComponent<Transform>().position);
                     if (isInRange(units[i]) || dist < 3f)
                     {
+                        Debug.Log("CER - unit " + units[i].gameObject.name + " is in range");
                         return units[i];
                     }
                 }

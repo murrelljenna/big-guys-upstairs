@@ -10,7 +10,7 @@ namespace game.assets
 {
     public abstract class GameManager : MonoBehaviour
     {
-        public const string version = "0.1.1-alpha";
+        public const string version = "0.2.0-alpha";
 
         public enum GameMode
         {

@@ -7,7 +7,7 @@ using static game.assets.utilities.GameUtils;
 
 namespace game.assets.ui
 {
-    public class BuildingColourController : NetworkBehaviour
+    public class BuildingColourController : MonoBehaviour
     {
         private string[] names = new string[] {
             "Model",
@@ -34,11 +34,11 @@ namespace game.assets.ui
             }
         }
 
-        public override void Spawned()
+        private void Start()
         {
             var ownership = GetComponent<Ownership>();
 
-            if (ownership != null && ownership.owned)
+            if (ownership != null && ownership.Object != null && ownership.owned)
             {
                 SetColourToPlayer(ownership.owner);
             }

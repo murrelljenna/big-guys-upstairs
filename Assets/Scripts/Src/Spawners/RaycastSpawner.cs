@@ -1,6 +1,7 @@
 ﻿using Fusion;
 using game.assets.audio;
 using game.assets.player;
+using game.assets.ui;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -90,6 +91,7 @@ namespace game.assets.spawners
             showGhost = true;
 
             this.ghostInstance = ((GameObject)Instantiate(ghost));
+            this.ghostInstance.GetComponent<BuildingColourController>()?.SetColourToPlayer(ownership.owner);
         }
 
         public override GameObject Spawn()

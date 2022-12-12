@@ -73,6 +73,8 @@ namespace game.assets.ai
                 Debug.Log("Checking enemies in range");
                 InvokeRepeating("checkEnemiesInRange", 2f, 2f);
             }
+
+            movement?.reachedDestination.AddListener(checkEnemiesInRange);
         }
 
         public bool isCurrentlyAttacking()
@@ -196,6 +198,7 @@ namespace game.assets.ai
 
             if (attackee == null || !attackee.IsEnemyOf(this))
             {
+                checkEnemiesInRange();
                 return;
             }
             cancelOrders();
@@ -235,8 +238,10 @@ namespace game.assets.ai
 
         private IEnumerator moveUntilInRangeAndAttack(Health attackee)
         {
-             if (attackee.HP > 0) {
-                if (attackee.GetComponent<Movement>() != null) {
+            if (attackee.HP > 0)
+            {
+                if (attackee.GetComponent<Movement>() != null)
+                {
                     updateTargetLive = true;
                 }
 
@@ -244,24 +249,25 @@ namespace game.assets.ai
                 isAttacking = true;
 
                 movement.goToSilently(attackee.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
-                yield return new WaitUntil (() => isInRange(attackee));
+                yield return new WaitUntil(() => isInRange(attackee));
                 movement.stop();
 
                 InvokeRepeating("doDamageIfShould", 0f, this.attackRate);
             }
-
         }
 
         private IEnumerator waitUntilInRangeAndAttack(Health attackee) {
-            if (attackee.HP > 0) {
-                if (attackee.GetComponent<Movement>() != null) {
+            if (attackee.HP > 0)
+            {
+                if (attackee.GetComponent<Movement>() != null)
+                {
                     updateTargetLive = true;
                 }
 
                 this.attackee = attackee;
                 isAttacking = true;
 
-                yield return new WaitUntil (() => isInRange(attackee));
+                yield return new WaitUntil(() => isInRange(attackee));
 
                 inFight = true;
                 InvokeRepeating("doDamageIfShould", 0f, this.attackRate);
@@ -277,8 +283,11 @@ namespace game.assets.ai
             else
             {
                 cancelOrders();
+                checkEnemiesInRange();
             }
         }
+
+        pr
 
         [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
         public void RPC_FireDamageEvents()

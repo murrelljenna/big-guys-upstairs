@@ -14,7 +14,7 @@ using UnityEngine.Events;
 
 namespace game.assets.interaction
 {
-    public class KeyDownEvents : NetworkBehaviour
+    public class NetworkKeyDownEvents : NetworkBehaviour
     {
         [Tooltip("Invoked when E key is pressed.")]
         public UnityEvent eOnPressed = new UnityEvent();

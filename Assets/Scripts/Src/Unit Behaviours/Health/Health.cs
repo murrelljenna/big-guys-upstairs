@@ -15,7 +15,7 @@ namespace game.assets.ai
         public int maxHP;
 
         [Tooltip("Invoked when HP reaches zero")]
-        public UnityEvent<Health> onZeroHP;
+        public UnityEvent<Health> onZeroHP = new UnityEvent<Health>();
 
         [Tooltip("Invoked when HP reaches max")]
         public UnityEvent onMaxHP;

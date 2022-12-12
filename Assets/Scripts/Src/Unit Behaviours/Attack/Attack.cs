@@ -114,7 +114,7 @@ namespace game.assets.ai
         private void checkEnemiesInRange()
         {
             Debug.Log("CER - Checking enemies in range");
-            if (isAttacking || (canMove && movement.moveOrdered)) {
+            if (isAttacking || (this.IsBarbarian() && canMove && movement.moveOrdered)) {
                 Debug.Log("CER - Move ordered, not attacking");
                 return;
             }
@@ -180,7 +180,6 @@ namespace game.assets.ai
 
         private void reportEnemyDead(Health h) {
             enemyKilled.Invoke(h);
-            //Invoke("checkEnemiesInRange", 0.05f);
         }
 
         [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
@@ -204,6 +203,7 @@ namespace game.assets.ai
             cancelOrders();
             idle = false;
             attackee.onZeroHP.AddListener(cancelOrders);
+            attackee.onZeroHP.AddListener(goToUnit);
             RPC_FireAttackEvents();
             attackee.onZeroHP.AddListener(reportEnemyDead);
             if (canMove)
@@ -214,6 +214,10 @@ namespace game.assets.ai
             {
                 StartCoroutine(waitUntilInRangeAndAttack(attackee));
             }
+        }
+
+        private void goToUnit(Health unit) {
+            if (canMove) movement.goTo(unit.transform.position);
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -245,7 +249,7 @@ namespace game.assets.ai
                     updateTargetLive = true;
                 }
 
-                this.attackee = attackee;
+                setAttackee(attackee);
                 isAttacking = true;
 
                 movement.goToSilently(attackee.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
@@ -256,6 +260,14 @@ namespace game.assets.ai
             }
         }
 
+        private void setAttackee(Health newAttackee)
+        {
+            attackee?.onZeroHP?.RemoveListener(cancelOrders);
+            attackee?.onZeroHP?.RemoveListener(goToUnit);
+
+            attackee = newAttackee;
+        }
+
         private IEnumerator waitUntilInRangeAndAttack(Health attackee) {
             if (attackee.HP > 0)
             {
@@ -264,7 +276,7 @@ namespace game.assets.ai
                     updateTargetLive = true;
                 }
 
-                this.attackee = attackee;
+                setAttackee(attackee);
                 isAttacking = true;
 
                 yield return new WaitUntil(() => isInRange(attackee));
@@ -286,8 +298,6 @@ namespace game.assets.ai
                 checkEnemiesInRange();
             }
         }
-
-        pr
 
         [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
         public void RPC_FireDamageEvents()
@@ -350,7 +360,7 @@ namespace game.assets.ai
                 movement.stop();
             }
             isAttacking = false;
-            attackee = null;
+            setAttackee(null);
             CancelInvoke("reportIdle");
             Invoke("reportIdle", 3f);
         }

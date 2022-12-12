@@ -389,15 +389,7 @@ namespace game.assets
             {
                 return;
             }
-
-            if (isHost)
-            {
-                _runner.Shutdown();
-            }
-            else
-            {
-                _runner.Disconnect(_runner.LocalPlayer);
-            }
+            _runner.Shutdown();
         }
 
         private void OnGUI()

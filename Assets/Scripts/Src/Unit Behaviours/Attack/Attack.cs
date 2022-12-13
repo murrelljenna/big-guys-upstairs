@@ -39,6 +39,8 @@ namespace game.assets.ai
         [Tooltip("Invoked when unit has not done anything for several seconds")]
         public UnityEvent idled = new UnityEvent();
 
+        public SetShaderColour unitRadius;
+
         public bool idle = false;
 
         protected Health attackee;
@@ -84,6 +86,10 @@ namespace game.assets.ai
 
         public override void FixedUpdateNetwork()
         {
+            if (Object.HasInputAuthority)
+            {
+                setRadiusColorFromState();
+            }
             if (!Object.HasStateAuthority)
             {
                 return;
@@ -96,7 +102,29 @@ namespace game.assets.ai
                     movement.goToSilently(attackee.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
                 }
             }
+
             frameCount++;
+        }
+
+        private void setRadiusColorFromState()
+        {
+            if (!Object.HasInputAuthority || unitRadius == null)
+            {
+                return;
+            }
+
+            if (isAttacking)
+            {
+                unitRadius.SetColour(Color.red);
+            }
+            else if (movement != null && movement.moveOrdered)
+            {
+                unitRadius.SetColour(Color.blue);
+            }
+            else
+            {
+                unitRadius.SetColour(Color.green);
+            }
         }
 
         public void attackRandom(Health[] units)
@@ -376,10 +404,22 @@ namespace game.assets.ai
 
         public void select()
         {
-            onSelect.Invoke();
+            RPC_fireSelectEvents();
         }
 
         public void deselect()
+        {
+            RPC_fireDeselectEvents();
+        }
+
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        public void RPC_fireSelectEvents()
+        {
+            onSelect.Invoke();
+        }
+
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        public void RPC_fireDeselectEvents()
         {
             onDeselect.Invoke();
         }

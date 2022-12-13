@@ -18,4 +18,9 @@ public class SetShaderColour : MonoBehaviour
         var color = ownership.owner.colour.color;
         projector.material.SetColor("_Color", color);
     }
+
+    public void SetColour(Color color)
+    {
+        GetComponent<Projector>().material.SetColor("_Color", color);
+    }
 }

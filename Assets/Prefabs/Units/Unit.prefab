@@ -167,6 +167,7 @@ MonoBehaviour:
   idled:
     m_PersistentCalls:
       m_Calls: []
+  unitRadius: {fileID: 1000117540774568202}
   idle: 0
 --- !u!195 &3300823746633853471
 NavMeshAgent:
@@ -421,8 +422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  leaveBehind:
-    RawGuidValue: 00000000000000000000000000000000
+  leaveBehind: {fileID: 0}
 --- !u!114 &6555725256713717449
 MonoBehaviour:
   m_ObjectHideFlags: 0

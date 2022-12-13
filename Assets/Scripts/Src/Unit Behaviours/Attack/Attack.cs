@@ -56,6 +56,8 @@ namespace game.assets.ai
         private int lastNoEnemies = 0;
         private int frameCount = 0;
 
+        private const bool DEBUG_ATTACKING = false;
+
         public override void Spawned()
         {
             if (!Object.HasStateAuthority)
@@ -72,7 +74,6 @@ namespace game.assets.ai
 
             if (!this.IsBarbarian())
             {
-                Debug.Log("Checking enemies in range");
                 InvokeRepeating("checkEnemiesInRange", 2f, 2f);
             }
 
@@ -141,16 +142,16 @@ namespace game.assets.ai
 
         private void checkEnemiesInRange()
         {
-            Debug.Log("CER - Checking enemies in range");
+            if (DEBUG_ATTACKING) Debug.Log("ATK - Checking enemies in range");
             if (isAttacking || (this.IsBarbarian() && canMove && movement.moveOrdered)) {
-                Debug.Log("CER - Move ordered, not attacking");
+                Debug.Log("ATK - Move ordered, not attacking");
                 return;
             }
 
             Health[] units = GameUtils.findEnemyUnitsInRange(GetComponent<Collider>().bounds.center, responseRange);
             if (units.Length == lastNoEnemies)
             {
-                Debug.Log("CER - no new enemies in range");
+                if (DEBUG_ATTACKING) Debug.Log("ATK - no new enemies in range");
                 return;
             }
 
@@ -167,7 +168,7 @@ namespace game.assets.ai
 
             if (candidateEnemy != null && candidateEnemy.GetComponent<DoNotAutoAttack>() == null)
             {
-                Debug.Log("CER - Attacking!");
+                if (DEBUG_ATTACKING) Debug.Log("ATK - Attacking!");
                 attack(candidateEnemy);
             }
         }
@@ -193,11 +194,11 @@ namespace game.assets.ai
             {
                 if (units[i].IsEnemyOf(this) && units[i].HP > 0)
                 {
-                    Debug.Log("CER - unit " + units[i].gameObject.name + " is enemy");
+                    if (DEBUG_ATTACKING) Debug.Log("ATK - unit " + units[i].gameObject.name + " is enemy");
                     float dist = movement.pathLength(units[i].GetComponent<Transform>().position);
                     if (isInRange(units[i]) || dist < 3f)
                     {
-                        Debug.Log("CER - unit " + units[i].gameObject.name + " is in range");
+                        if (DEBUG_ATTACKING) Debug.Log("ATK - unit " + units[i].gameObject.name + " is in range");
                         return units[i];
                     }
                 }
@@ -225,7 +226,6 @@ namespace game.assets.ai
 
             if (attackee == null || !attackee.IsEnemyOf(this))
             {
-                checkEnemiesInRange();
                 return;
             }
             cancelOrders();
@@ -245,6 +245,7 @@ namespace game.assets.ai
         }
 
         private void goToUnit(Health unit) {
+            if (DEBUG_ATTACKING) Debug.Log("ATK - Just going to unit now");
             if (canMove) movement.goTo(unit.transform.position);
         }
 
@@ -263,6 +264,7 @@ namespace game.assets.ai
                 && collidingUnit.GetComponent<DoNotAutoAttack>() == null
                 )
             {
+                if (DEBUG_ATTACKING) Debug.Log("ATK - Colliding with enemy, attacking");
                 cancelOrders();
                 attack(collidingUnit);
             }
@@ -279,9 +281,11 @@ namespace game.assets.ai
 
                 setAttackee(attackee);
                 isAttacking = true;
+                if (DEBUG_ATTACKING) Debug.Log("ATK - Moving to get in range");
 
                 movement.goToSilently(attackee.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position));
                 yield return new WaitUntil(() => isInRange(attackee));
+                if (DEBUG_ATTACKING) Debug.Log("ATK - In range, attacking now");
                 movement.stop();
 
                 InvokeRepeating("doDamageIfShould", 0f, this.attackRate);
@@ -322,6 +326,7 @@ namespace game.assets.ai
             }
             else
             {
+                if (DEBUG_ATTACKING) Debug.Log("ATK - Ok this guy I'm attacking isn't attackable so I'm switching up");
                 cancelOrders();
                 checkEnemiesInRange();
             }

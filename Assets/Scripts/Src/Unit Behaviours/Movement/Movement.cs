@@ -125,7 +125,7 @@ namespace game.assets.ai
                 currentWatcher.Destroy();
                 currentWatcher = null;
             }
-            currentWatcher = DestinationWatcher.Create(destination, col.radius, this);
+            currentWatcher = DestinationWatcher.Create(destination, col.radius / 4, this);
             navAgent.SetDestination(destination);
         }
 

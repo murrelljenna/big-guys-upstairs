@@ -144,7 +144,7 @@ namespace game.assets.ai
         {
             if (DEBUG_ATTACKING) Debug.Log("ATK - Checking enemies in range");
             if (isAttacking || (this.IsBarbarian() && canMove && movement.moveOrdered)) {
-                Debug.Log("ATK - Move ordered, not attacking");
+                if (DEBUG_ATTACKING) Debug.Log("ATK - Move ordered, not attacking");
                 return;
             }
 
@@ -171,6 +171,36 @@ namespace game.assets.ai
                 if (DEBUG_ATTACKING) Debug.Log("ATK - Attacking!");
                 attack(candidateEnemy);
             }
+        }
+
+        private bool checkEnemiesInRange(Vector3 point)
+        {
+            if (DEBUG_ATTACKING) Debug.Log("ATK - Checking enemies in range");
+            if (isAttacking || (this.IsBarbarian() && canMove && movement.moveOrdered))
+            {
+                if (DEBUG_ATTACKING) Debug.Log("ATK - Move ordered, not attacking");
+                return false;
+            }
+
+            Health[] units = GameUtils.findEnemyUnitsInRange(point, responseRange);
+            if (units.Length == lastNoEnemies)
+            {
+                if (DEBUG_ATTACKING) Debug.Log("ATK - no new enemies in range");
+                return false;
+            }
+
+            lastNoEnemies = units.Length;
+            Health candidateEnemy;
+            candidateEnemy = firstEnemy(units);
+
+            if (candidateEnemy != null && candidateEnemy.GetComponent<DoNotAutoAttack>() == null)
+            {
+                if (DEBUG_ATTACKING) Debug.Log("ATK - Attacking!");
+                attack(candidateEnemy);
+                return true;
+            }
+
+            return false;
         }
 
         private Health firstEnemy(Health[] units)
@@ -231,7 +261,7 @@ namespace game.assets.ai
             cancelOrders();
             idle = false;
             attackee.onZeroHP.AddListener(cancelOrders);
-            attackee.onZeroHP.AddListener(goToUnit);
+            //attackee.onZeroHP.AddListener(goToUnit);
             RPC_FireAttackEvents();
             attackee.onZeroHP.AddListener(reportEnemyDead);
             if (canMove)
@@ -245,8 +275,12 @@ namespace game.assets.ai
         }
 
         private void goToUnit(Health unit) {
-            if (DEBUG_ATTACKING) Debug.Log("ATK - Just going to unit now");
-            if (canMove) movement.goTo(unit.transform.position);
+
+            if (canMove)
+            {
+                Debug.Log("ATK - Just going to unit now");
+                movement.goTo(unit.transform.position);
+            }
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -370,7 +404,7 @@ namespace game.assets.ai
 
         public void cancelOrders(Health health)
         {
-            cancelOrders();
+            cancelOrdersIgnoringMovement();
         }
 
         public void cancelOrders()
@@ -392,6 +426,27 @@ namespace game.assets.ai
             {
                 movement.stop();
             }
+            isAttacking = false;
+            setAttackee(null);
+            CancelInvoke("reportIdle");
+            Invoke("reportIdle", 3f);
+        }
+
+        private void cancelOrdersIgnoringMovement()
+        {
+            if (Object == null || !Object.HasStateAuthority)
+            {
+                return;
+            }
+
+            if (attackee != null)
+            {
+                attackee.onZeroHP.RemoveListener(reportEnemyDead);
+            }
+            StopAllCoroutines();
+            updateTargetLive = false;
+            inFight = false;
+            CancelInvoke("doDamageIfShould");
             isAttacking = false;
             setAttackee(null);
             CancelInvoke("reportIdle");

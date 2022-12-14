@@ -6,6 +6,7 @@ using game.assets;
 using game.assets.player;
 using game.assets.ai.units;
 using Fusion;
+using game.assets.utilities;
 
 [RequireComponent(typeof(LineRenderer))]
 public class PlaceWalls : NetworkBehaviour
@@ -71,13 +72,12 @@ public class PlaceWalls : NetworkBehaviour
                 float pointDistance = Vector3.Distance(firstPoint, lastPoint);
 
                 float noWalls = pointDistance / wallUnitLength;
-                int mapLayer = ~(1 << 11);
                 int wood = 1;
-
+                Vector3 slightlyOffGround = new Vector3(0, 0.2f);
                 if (ownership.owner.canAfford(new ResourceSet(wood * (int)noWalls)))
                 {
                     RaycastHit info;
-                    if ((!Physics.Linecast(firstPoint, lastPoint, out info, mapLayer) || info.collider.gameObject.GetComponent<DoNotAutoAttack>() != null))
+                    if ((!Physics.Linecast(firstPoint + slightlyOffGround, lastPoint + slightlyOffGround, out info, GameUtils.LayerMask.Terrain) || info.collider.gameObject.GetComponent<DoNotAutoAttack>() != null))
                     {
                         if (System.Math.Abs(firstPoint.y) - System.Math.Abs(lastPoint.y) < 0.5f && System.Math.Abs(firstPoint.y) - System.Math.Abs(lastPoint.y) > -0.5f)
                         {
@@ -94,6 +94,11 @@ public class PlaceWalls : NetworkBehaviour
                     }
                     else
                     {
+                        if (info.collider != null)
+                        {
+                            Debug.Log("WAL - Couldn't place walls because gameobject " + info.collider.gameObject.name + " was detected between start and end wall");
+                            StartCoroutine(flashRed(info.collider.gameObject, 0.2f));
+                        }
                         StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
                         StartCoroutine(flashRed(info.collider.gameObject, 0.2f));
                     }
@@ -251,7 +256,17 @@ public class PlaceWalls : NetworkBehaviour
 
     private IEnumerator flashRed(GameObject building, float offset = 0.2f)
     {
-        Renderer renderer = building.transform.Find("Model").gameObject.GetComponent<MeshRenderer>();
+        Renderer renderer = building.transform.Find("Model")?.gameObject?.GetComponent<Renderer>();
+
+        if (renderer == null)
+        {
+            renderer = building.GetComponentInChildren<Renderer>();
+        }
+
+        if (renderer == null)
+        {
+            yield break;
+        }
 
         renderer.material.color = Color.red;
 

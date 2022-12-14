@@ -332,6 +332,15 @@ namespace game.assets.utilities {
             ev.AddListener(oneTimeAction);
         }
 
+        public static bool ColliderBetween(Vector3 pos1, Vector3 pos2)
+        {
+            float distance = Vector3.Distance(pos1, pos2);
+            Vector3 slightlyOffGround = new Vector3(0, 1);
+            
+
+            return Physics.Raycast(pos1 + slightlyOffGround, (pos1 - pos2).normalized, out RaycastHit hit, distance, GameUtils.LayerMask.Terrain);
+        }
+
         public static void debugPrintPlans(this Stack<IArmyPlan> plans)
         {
             var list = new List<IArmyPlan>(plans);

@@ -45,7 +45,8 @@ namespace game.assets.ai
 
         protected Health attackee;
 
-        private bool isAttacking = false;
+        [Networked]
+        private bool isAttacking { get; set; } = false;
         
         private Movement movement;
         private bool canMove;

@@ -2,6 +2,7 @@
 using game.assets.audio;
 using game.assets.player;
 using game.assets.ui;
+using game.assets.utilities;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -73,6 +74,7 @@ namespace game.assets.spawners
                 if (point.HasValue)
                 {
                     Vector3 position = point.Value;
+                    position = GameUtils.SnapToWalkableArea(position);
                     position.y += 0.5f;
                     ghostPosition = position;
                 }
@@ -115,7 +117,7 @@ namespace game.assets.spawners
 
             if (raycastHit != null)
             {
-                Vector3 endSpawnLocation = (Vector3)raycastHit;
+                Vector3 endSpawnLocation = GameUtils.SnapToWalkableArea((Vector3)raycastHit);
                 Vector3 startSpawnLocation = endSpawnLocation;
                 startSpawnLocation.y += 0.5f;
 

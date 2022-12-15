@@ -32,9 +32,11 @@ namespace game.assets.interaction
 
         private const float BUFFER_BETWEEN_PRESSES = 0.05f;
 
+        public bool isEnabled = true; // Annoying fucking variable to add because unity editor won't let me touch enabled
+
         public override void FixedUpdateNetwork()
         {
-            if (!Object.HasStateAuthority)
+            if (!Object.HasStateAuthority || !enabled || !isEnabled)
             {
                 return;
             }
@@ -60,6 +62,11 @@ namespace game.assets.interaction
                 eventToFire.Invoke();
                 lastPressed = Time.time;
             }
+        }
+
+        public void setIsEnabled(bool isEnabled)
+        {
+            this.isEnabled = isEnabled;
         }
     }
 

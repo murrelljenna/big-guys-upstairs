@@ -56,6 +56,7 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Src\Interaction\KeyDown\KeyDownEvents.cs" />
     <Compile Include="Assets\Scripts\Src\Interaction\SquareSelection.cs" />
     <Compile Include="Assets\Scripts\Src\Interaction\KeyDown\NumericKeyDownEvents.cs" />
     <Compile Include="Assets\Scripts\Src\Interaction\Player Tools\CommandTool.cs" />
@@ -65,7 +66,6 @@
     <Compile Include="Assets\Scripts\Src\Interaction\KeyDown\MouseEvents.cs" />
     <Compile Include="Assets\Scripts\Src\Interaction\KeyDown\NetworkKeyDownEvents.cs" />
     <Compile Include="Assets\Scripts\Src\Interaction\KeyDown\NetworkNumericKeyDownEvents.cs" />
-    <Compile Include="Assets\Scripts\Src\Interaction\KeyDown\KeyDownEvents.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\Src\Interaction\InteractionSystemAssembly.asmdef" />

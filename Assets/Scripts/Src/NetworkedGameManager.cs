@@ -454,5 +454,10 @@ namespace game.assets
             UnityEditor.EditorApplication.isPlaying = false;
             #endif
         }
+
+        public void Despawn(NetworkObject obj)
+        {
+            _runner.Despawn(obj);
+        }
     }
 }

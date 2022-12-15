@@ -123,6 +123,7 @@
     <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\ExplosionPhysicsForce.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\DepthOfFieldDeprecated.cs" />
     <Compile Include="Assets\Standard Assets\Environment\Water\Water\Scripts\PlanarReflection.cs" />
+    <Compile Include="Assets\CloudTrail.cs" />
     <Compile Include="Assets\Scripts\Environment\Sun.cs" />
     <Compile Include="Assets\Standard Assets\Utility\TimedObjectActivator.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerRigSpawner.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="Assets\Low Poly Modular Terrain Pack\Bonus_Assets\Scripts\ModularTerrainCloudsControl.cs" />
     <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\FireLight.cs" />
     <Compile Include="Assets\Fantasy Skybox FREE\Demo\Scripts\GE_FantasySkyboxFREE_Demo.cs" />
+    <Compile Include="Assets\RandomParticleDelay.cs" />
     <Compile Include="Assets\Scripts\Src\Building Placement\UpgradeWallToGate.cs" />
     <Compile Include="Assets\Scripts\Src\PlayerColourManager.cs" />
     <Compile Include="Assets\Photon\Fusion\Scripts\BurstDeltaCompressor.cs" />
@@ -194,6 +196,7 @@
     <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\ExtinguishableParticleSystem.cs" />
     <Compile Include="Assets\Photon\Fusion\Scripts\FusionStats\FusionStatsUtilities.cs" />
     <Compile Include="Assets\Scripts\Src\Building Placement\Construction.cs" />
+    <Compile Include="Assets\Scripts\Src\Utilities\DisableIfMine.cs" />
     <Compile Include="Assets\Scripts\Src\NetworkedGameManagerState.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Antialiasing.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\NoiseAndScratches.cs" />
@@ -252,6 +255,7 @@
     <Compile Include="Assets\Simple Health Bar\Scripts\SimpleHealthBar.cs" />
     <Compile Include="Assets\Scripts\Src\Networking\DisableScriptIfNotMine.cs" />
     <Compile Include="Assets\Fantasy Skybox FREE\Demo\Scripts\GE_FantasySkyboxFREE_UIs.cs" />
+    <Compile Include="Assets\Scripts\Src\Utilities\RandomlyDisable.cs" />
     <Compile Include="Assets\Scripts\Src\Unit Behaviours\Movement\Movement.cs" />
     <Compile Include="Assets\Photon\Fusion\Scripts\Prototyping\Editor\NetworkDebugStartEditor.cs" />
     <Compile Include="Assets\Standard Assets\Utility\ActivateTrigger.cs" />
@@ -283,10 +287,7 @@
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Triangles.cs" />
     <Compile Include="Assets\Standard Assets\Utility\FPSCounter.cs" />
     <Compile Include="Assets\Standard Assets\Utility\SimpleActivatorMenu.cs" />
-    <Compile Include="Assets\CloudTrail.cs" />
-    <Compile Include="Assets\Scripts\Src\Utilities\DisableIfMine.cs" />
-    <Compile Include="Assets\Scripts\Src\Utilities\RandomlyDisable.cs" />
-    <Compile Include="Assets\RandomParticleDelay.cs" />
+    <Compile Include="Assets\Scripts\Src\Networking\DelayedDespawn.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />

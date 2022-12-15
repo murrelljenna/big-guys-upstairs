@@ -30,7 +30,13 @@ public static class OwnershipOps
 
     public static bool IsFriendOf(this GameObject gameObject, GameObject otherGameObject)
     {
-        Player player = gameObject.GetComponent<Ownership>().owner;
+        Player player = gameObject.GetComponent<Ownership>()?.owner;
+
+        if (player == null)
+        {
+            return false;
+        }
+
         return otherGameObject.BelongsTo(player);
     }
 

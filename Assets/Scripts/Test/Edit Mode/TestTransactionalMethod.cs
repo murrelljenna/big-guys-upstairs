@@ -13,7 +13,7 @@ namespace Tests
 {
     public class TestTransactionalMethod
     {
-        Player player;
+        Ownership ownership;
         TransactionalMethod transactionalMethod;
 
         [SetUp]
@@ -21,7 +21,7 @@ namespace Tests
         {
             ClearGameObjects();
 
-            player = Player.AsDevCube();
+            ownership.setOwner(Player.AsDevCube());
 
             GameObject goWithTransactionalMethod = new GameObject("Whatevs");
 
@@ -33,9 +33,9 @@ namespace Tests
         {
             ResourceSet resourceSet = new ResourceSet(25);
             transactionalMethod.price = resourceSet;
-            transactionalMethod.player = player;
+            transactionalMethod.ownership = ownership;
 
-            player.giveResources(new ResourceSet(26));
+            ownership.owner.giveResources(new ResourceSet(26));
 
             var result = transactionalMethod.Try();
 
@@ -47,7 +47,7 @@ namespace Tests
         {
             ResourceSet resourceSet = new ResourceSet(25);
             transactionalMethod.price = resourceSet;
-            transactionalMethod.player = player;
+            transactionalMethod.ownership = ownership;
 
             var result = transactionalMethod.Try();
 

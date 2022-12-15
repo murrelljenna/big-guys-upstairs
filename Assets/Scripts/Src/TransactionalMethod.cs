@@ -1,23 +1,34 @@
-﻿using game.assets.player;
+﻿using Fusion;
+using game.assets.player;
 using game.assets.utilities.resources;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace game.assets
 {
-    public class TransactionalMethod : MonoBehaviour
+    [RequireComponent(typeof(Ownership))]
+    public class TransactionalMethod : NetworkBehaviour
     {
         public UnityEvent cannotAfford = new UnityEvent();
         public UnityEvent canAfford = new UnityEvent();
         public ResourceSet price;
-        public Player player; 
+        public Ownership ownership;
+        public bool isEnabled = true;
+
+        public override void Spawned()
+        {
+            ownership = GetComponent<Ownership>();
+        }
 
         public bool Try()
         {
-            if (player.canAfford(price))
+            if (ownership.owner.canAfford(price))
             {
-                player.takeResources(price);
-                canAfford.Invoke();
+                if (Object.HasStateAuthority)
+                {
+                    ownership.owner.takeResources(price);
+                    canAfford.Invoke();
+                }
                 return true;
             }
             else
@@ -25,6 +36,11 @@ namespace game.assets
                 cannotAfford.Invoke();
                 return false;
             }
+        }
+
+        public void InvokeTry()
+        {
+            Try();
         }
     }
 }

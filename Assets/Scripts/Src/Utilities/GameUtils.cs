@@ -32,6 +32,7 @@ namespace game.assets.utilities {
             public static int Resource = (1 << 9);
             public static int IgnoreRaycast = (1 << 2);
             public static int Attackable = (1 << 10) | (1 << 12) | (1 << 14) | (1 << 16) | (1 << 18);
+            public static int InvisibleWalls = (1 << 21);
             public static int All = Terrain | Resource | Default | (1 << 10) | (1 << 12) | (1 << 14) | (1 << 16) | (1 << 18);
         }
 

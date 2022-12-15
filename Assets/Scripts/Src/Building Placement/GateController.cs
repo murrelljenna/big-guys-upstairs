@@ -7,12 +7,13 @@ using UnityEngine.Events;
 using game.assets.ai;
 using game.assets.player;
 using game.assets.utilities;
+using Fusion;
 
 namespace game.assets
 {
 	[RequireComponent(typeof(NavMeshObstacle))]
 	[RequireComponent(typeof(Ownership))]
-	public class GateController : MonoBehaviour
+	public class GateController : NetworkBehaviour
 	{
 		private int noOfUnitsNearby = 0;
 		private int noOfEnemiesNearby = 0;
@@ -20,6 +21,8 @@ namespace game.assets
 		private NavMeshObstacle obstacle;
 		public bool locked = false;
 		private AudioSource[] sources = new AudioSource[2];
+
+		public Text lockUI;
 
 		private player.Player player;
 
@@ -101,11 +104,11 @@ namespace game.assets
 		{
 			if (locked)
 			{
-				unlockGate();
+				RPC_UnlockGate();
 			}
 			else
 			{
-				lockGate();
+				RPC_LockGate();
 			}
 		}
 
@@ -117,7 +120,7 @@ namespace game.assets
 			obstacle.carving = true;
 
 			locked = true;
-			transform.parent.Find("Info").Find("Lock selector").Find("Text").gameObject.GetComponent<Text>().text = "Locked";
+			lockUI.text = "Locked";
 		}
 
 		private void unlockGate()
@@ -136,7 +139,19 @@ namespace game.assets
 			obstacle.carving = false;
 			locked = false;
 
-			transform.parent.Find("Info").Find("Lock selector").Find("Text").gameObject.GetComponent<Text>().text = "Unlocked";
+			lockUI.text = "Unlocked";
+		}
+
+		[Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+		public void RPC_LockGate()
+		{
+			lockGate();
+		}
+
+		[Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+		public void RPC_UnlockGate()
+		{
+			unlockGate();
 		}
 	}
 }

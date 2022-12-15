@@ -279,6 +279,7 @@
     <Compile Include="Assets\Scripts\Src\UI\PlayerNameInputField.cs" />
     <Compile Include="Assets\Scripts\Src\Routines\ManyAttackManyJob.cs" />
     <Compile Include="Assets\Scripts\Src\LocalGameManager.cs" />
+    <Compile Include="Assets\Scripts\Src\Networking\DelayedDespawn.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Grayscale.cs" />
     <Compile Include="Assets\Photon\Fusion\Scripts\FusionGraph.cs" />
     <Compile Include="Assets\Scripts\Src\Unit Behaviours\Idle.cs" />
@@ -287,7 +288,6 @@
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Triangles.cs" />
     <Compile Include="Assets\Standard Assets\Utility\FPSCounter.cs" />
     <Compile Include="Assets\Standard Assets\Utility\SimpleActivatorMenu.cs" />
-    <Compile Include="Assets\Scripts\Src\Networking\DelayedDespawn.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />

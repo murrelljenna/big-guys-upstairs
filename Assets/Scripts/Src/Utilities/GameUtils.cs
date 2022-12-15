@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Text.RegularExpressions;
 using game.assets.player;
 using UnityEngine.Events;
+using UnityEngine.AI;
 
 namespace game.assets.utilities {
     public static class GameUtils
@@ -345,6 +346,26 @@ namespace game.assets.utilities {
         {
             var list = new List<IArmyPlan>(plans);
             list.ForEach((IArmyPlan plan) => Debug.Log(" AA " + plan.name()));
+        }
+
+        public static Vector3 SnapToWalkableArea(Vector3 pos)
+        {
+            if (NavMesh.SamplePosition(pos, out NavMeshHit navMeshHit, 2f, GameUtils.LayerMask.All))
+            {
+                return navMeshHit.position;
+            }
+            else
+            {
+                if (NavMesh.FindClosestEdge(pos, out NavMeshHit nearestNavMeshPos, GameUtils.LayerMask.Terrain))
+                {
+                    return nearestNavMeshPos.position;
+                }
+                else
+                {
+                    Debug.LogWarning("No position on nav mesh found for position " + pos + ". Not good");
+                    return new Vector3();
+                }
+            }
         }
     }
 }

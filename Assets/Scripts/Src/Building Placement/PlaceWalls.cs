@@ -7,6 +7,7 @@ using game.assets.player;
 using game.assets.ai.units;
 using Fusion;
 using game.assets.utilities;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(LineRenderer))]
 public class PlaceWalls : NetworkBehaviour
@@ -70,13 +71,14 @@ public class PlaceWalls : NetworkBehaviour
         {
             if (firstPointPlaced)
             {
-                lastPoint = hit.point;
+                lastPoint = GameUtils.SnapToWalkableArea(hit.point);
                 float wallUnitLength = currentBuilding.transform.Find("Model").GetComponent<MeshFilter>().mesh.bounds.size.z / 3f * currentBuilding.transform.Find("Model").localScale.z;
                 float pointDistance = Vector3.Distance(firstPoint, lastPoint);
 
                 float noWalls = pointDistance / wallUnitLength;
                 int wood = 1;
                 Vector3 slightlyOffGround = new Vector3(0, 0.2f);
+
                 if (ownership.owner.canAfford(new ResourceSet(wood * (int)noWalls)))
                 {
                     RaycastHit info;
@@ -154,8 +156,10 @@ public class PlaceWalls : NetworkBehaviour
                 }
             }
 
-            Vector3 position = hit.point;
+            Vector3 position = GameUtils.SnapToWalkableArea(hit.point);
+
             position.y += 0.5f;
+
             currentBuilding.transform.position = position;
 
             if (firstPointPlaced)

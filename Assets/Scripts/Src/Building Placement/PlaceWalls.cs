@@ -40,7 +40,10 @@ public class PlaceWalls : NetworkBehaviour
     void OnDisable()
     {
         Reset();
-        DestroyImmediate(currentBuilding.gameObject);
+        if (currentBuilding != null)
+        {
+            DestroyImmediate(currentBuilding.gameObject);
+        }
     }
 
     private void OnEnable()
@@ -77,7 +80,7 @@ public class PlaceWalls : NetworkBehaviour
                 if (ownership.owner.canAfford(new ResourceSet(wood * (int)noWalls)))
                 {
                     RaycastHit info;
-                    if ((!Physics.Linecast(firstPoint + slightlyOffGround, lastPoint + slightlyOffGround, out info, GameUtils.LayerMask.Terrain) || info.collider.gameObject.GetComponent<DoNotAutoAttack>() != null))
+                    if ((!Physics.Linecast(firstPoint + slightlyOffGround, lastPoint + slightlyOffGround, out info, GameUtils.LayerMask.All) || info.collider.gameObject.GetComponent<DoNotAutoAttack>() != null))
                     {
                         if (System.Math.Abs(firstPoint.y) - System.Math.Abs(lastPoint.y) < 0.5f && System.Math.Abs(firstPoint.y) - System.Math.Abs(lastPoint.y) > -0.5f)
                         {

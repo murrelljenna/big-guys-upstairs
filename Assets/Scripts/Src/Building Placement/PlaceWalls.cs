@@ -80,7 +80,7 @@ public class PlaceWalls : NetworkBehaviour
                 if (ownership.owner.canAfford(new ResourceSet(wood * (int)noWalls)))
                 {
                     RaycastHit info;
-                    if ((!Physics.Linecast(firstPoint + slightlyOffGround, lastPoint + slightlyOffGround, out info, GameUtils.LayerMask.All) || info.collider.gameObject.GetComponent<DoNotAutoAttack>() != null))
+                    if ((!Physics.Linecast(firstPoint + slightlyOffGround, lastPoint + slightlyOffGround, out info, GameUtils.LayerMask.All) || info.collider.gameObject.GetComponent<DoNotAutoAttack>() != null || info.collider.isTrigger))
                     {
                         if (System.Math.Abs(firstPoint.y) - System.Math.Abs(lastPoint.y) < 0.5f && System.Math.Abs(firstPoint.y) - System.Math.Abs(lastPoint.y) > -0.5f)
                         {
@@ -219,11 +219,13 @@ public class PlaceWalls : NetworkBehaviour
         for (int i = 0; i <= (int)noWalls; i++)
         {
             Vector3 destination = Vector3.Lerp(firstPoint, lastPoint, (float)i * (1f / noWalls));
+            float terrainHeight = GameUtils.getTerrainHeight(destination);
+            Vector3 destinationAdjustedForTerrain = new Vector3(destination.x, terrainHeight, destination.z);
             GameObject placedBuilding = null;
             if ((i == 0 && !firstPointSnapped) || (i == (int)noWalls && !lastPointSnapped))
             {
                 NetworkObject netObj = Runner.Spawn(
-                cornerPrefab, destination,
+                cornerPrefab, destinationAdjustedForTerrain,
                 Quaternion.LookRotation(lastPoint - destination),
                 null,
                 (runner, o) =>
@@ -239,7 +241,7 @@ public class PlaceWalls : NetworkBehaviour
             else
             {
                 var netObj = Runner.Spawn(
-                    wallPrefab, destination,
+                    wallPrefab, destinationAdjustedForTerrain,
                     Quaternion.LookRotation(lastPoint - destination),
                     ownership.owner.networkPlayer,
                     (runner, o) =>

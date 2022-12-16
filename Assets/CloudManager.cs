@@ -27,12 +27,20 @@ public class CloudManager : MonoBehaviour
 
     public GameObject[] cloudPrefabs;
 
+    [Tooltip("Higher means slower clouds")]
+    public int cloudSpeed = 8000;
+    [Tooltip("Amount of seconds between a cloud spawn")]
+    public float cloudSpawnFrequency = 4f;
+    [Tooltip("Maximum number of clouds initially spawned on level loaded. Actual number is randomly chosen between min and max")]
+    public int maxCloudsInitially = 30;
+    [Tooltip("Minimum number of clouds initially spawned on level loaded. Actual number is randomly chosen between min and max")]
+    public int minCloudsInitially = 10;
+
     private List<CloudAndEndpointPair> activeClouds = new List<CloudAndEndpointPair>();
 
     [SerializeField]
     public CloudSpawner[] cloudSpawners;
 
-    private const int cloudSpeed = 8000;
     private int totalElapsedFrames = 0;
 
     public void Start()
@@ -51,7 +59,7 @@ public class CloudManager : MonoBehaviour
 
         startRandomCloudsMidPath();
 
-        InvokeRepeating("spawnCloudMetered", 0f, 4f);
+        InvokeRepeating("spawnCloudMetered", 0f, cloudSpawnFrequency);
     }
 
     private CloudAndEndpointPair spawnCloudMetered()
@@ -106,7 +114,7 @@ public class CloudManager : MonoBehaviour
 
     private void startRandomCloudsMidPath()
     {
-        var randomNumberOfClouds = Random.Range(10, 30);
+        var randomNumberOfClouds = Random.Range(minCloudsInitially, maxCloudsInitially);
 
         for (int i = 0; i < randomNumberOfClouds; i++) {
 

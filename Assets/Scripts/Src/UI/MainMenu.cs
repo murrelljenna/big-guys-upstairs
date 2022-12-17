@@ -61,6 +61,11 @@ public class MainMenu : MonoBehaviour
                 {
                     OpenJoinGameMenu();
                 }
+
+                if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter + buttonHeight * 3 + padding * 1.5f, buttonWidth / 4, buttonHeight), "Back"))
+                {
+                    OpenMainMenu();
+                }
             }
             else if (pageState == PageState.JoinGame)
             {
@@ -72,6 +77,11 @@ public class MainMenu : MonoBehaviour
                 {
                     gameManager.JoinGame(enteredSessionName, "FourPlayer");
                 }
+
+                if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter + buttonHeight * 3 + padding * 1.5f, buttonWidth / 4, buttonHeight), "Back"))
+                {
+                    OpenMultiplayerMenu();
+                }
             }
             else if (pageState == PageState.HostGame)
             {
@@ -81,6 +91,11 @@ public class MainMenu : MonoBehaviour
                 if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter + buttonHeight * 2, buttonWidth, buttonHeight), "Start Server"))
                 {
                     gameManager.InitGame("FourPlayer", enteredSessionName);
+                }
+
+                if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter + buttonHeight * 3 + padding * 1.5f, buttonWidth / 4, buttonHeight), "Back"))
+                {
+                    OpenMultiplayerMenu();
                 }
             }
         }

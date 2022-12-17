@@ -1,4 +1,5 @@
 using game.assets;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -52,34 +53,44 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    public GameMap[] AllMaps;
+
+    private string[] AllMapNames()
+    {
+        string[] mapNames = new string[AllMaps.Length];
+
+        for (int i = 0; i < AllMaps.Length; i++)
+        {
+            mapNames[i] = AllMaps[i].sceneName;
+        }
+
+        return mapNames;
+    }
+
+    private Texture[] AllMapTextures()
+    {
+        Texture[] textures = new Texture[AllMaps.Length];
+
+        for (int i = 0; i < AllMaps.Length; i++)
+        {
+            textures[i] = AllMaps[i].icon;
+        }
+
+        return textures;
+    }
+
+
+    [Serializable]
     public class GameMap
     {
         public string sceneName;
         public int maxPlayers;
+        public Texture icon;
 
-        public GameMap(string sceneName, int maxPlayers) {
+        public GameMap(string sceneName, int maxPlayers, Texture icon) {
             this.sceneName = sceneName;
             this.maxPlayers = maxPlayers;
-        }
-
-        public static GameMap[] AllMaps()
-        {
-            return new GameMap[] {
-                new GameMap("FourPlayer", 4),
-                new GameMap("TwoPlayer", 2)
-            };
-        }
-
-        public static string[] AllMapNames()
-        {
-            string[] mapNames = new string[AllMaps().Length];
-
-            for (int i = 0; i < AllMaps().Length; i++)
-            {
-                mapNames[i] = AllMaps()[i].sceneName;
-            }
-
-            return mapNames;
+            this.icon = icon;
         }
     }
 
@@ -147,15 +158,15 @@ public class MainMenu : MonoBehaviour
             {
                 selectedScene = GUI.SelectionGrid(
                     new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight - buttonHeight / 2 - padding, buttonWidth, buttonHeight * 2 + padding),
-                    selectedScene, 
-                    GameMap.AllMapNames(),
+                    selectedScene,
+                    AllMapNames(),
                     1);
                 GUI.Box(new Rect(xCenter - buttonWidth / 2 - padding, yCenter - buttonHeight - buttonHeight / 2 - padding * 2, buttonWidth + 2 * padding, buttonHeight * 4 + padding * 4 + 7), "");
                 GUI.Label(new Rect(xCenter - buttonWidth / 2 + 40, yCenter - buttonHeight / 2 + buttonHeight + padding, buttonWidth, buttonHeight), new GUIContent("Enter server name:"));
                 enteredSessionName = GUI.TextField(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight / 2 + buttonHeight + padding * 3.5f, buttonWidth, buttonHeight), enteredSessionName, 64, textStyle);
                 if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter + buttonHeight * 2, buttonWidth, buttonHeight), "Start Server"))
                 {
-                    gameManager.InitGame(GameMap.AllMaps()[selectedScene].sceneName, enteredSessionName);
+                    gameManager.InitGame(AllMaps[selectedScene].sceneName, enteredSessionName);
                 }
 
                 if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter + buttonHeight * 3 + padding * 1.5f, buttonWidth / 4, buttonHeight), "Back"))

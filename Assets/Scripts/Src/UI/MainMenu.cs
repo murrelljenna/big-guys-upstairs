@@ -25,6 +25,33 @@ public class MainMenu : MonoBehaviour
         gameManager = GetComponent<NetworkedGameManager>();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            goBack();
+        }
+    }
+
+    private void goBack() {
+        if (pageState == PageState.Main)
+        {
+            gameManager.Quit();
+        }
+        else if (pageState == PageState.Multiplayer)
+        {
+            OpenMainMenu();
+        }
+        else if (pageState == PageState.HostGame)
+        {
+            OpenMultiplayerMenu();
+        }
+        else if (pageState == PageState.JoinGame)
+        {
+            OpenMultiplayerMenu();
+        }
+    }
+
     private void OnGUI()
     {
         if (gameManager._runner == null)
@@ -64,7 +91,7 @@ public class MainMenu : MonoBehaviour
 
                 if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter + buttonHeight * 3 + padding * 1.5f, buttonWidth / 4, buttonHeight), "Back"))
                 {
-                    OpenMainMenu();
+                    goBack();
                 }
             }
             else if (pageState == PageState.JoinGame)
@@ -80,7 +107,7 @@ public class MainMenu : MonoBehaviour
 
                 if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter + buttonHeight * 3 + padding * 1.5f, buttonWidth / 4, buttonHeight), "Back"))
                 {
-                    OpenMultiplayerMenu();
+                    goBack();
                 }
             }
             else if (pageState == PageState.HostGame)
@@ -95,7 +122,7 @@ public class MainMenu : MonoBehaviour
 
                 if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter + buttonHeight * 3 + padding * 1.5f, buttonWidth / 4, buttonHeight), "Back"))
                 {
-                    OpenMultiplayerMenu();
+                    goBack();
                 }
             }
         }

@@ -408,11 +408,11 @@ namespace game.assets
 
                 if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight - padding - buttonHeight / 2, buttonWidth, buttonHeight), "Host"))
                 {
-                    InitGame("TwoPlayer", enteredSessionName);
+                    InitGame("FourPlayer", enteredSessionName);
                 }
                 if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight / 2, buttonWidth, buttonHeight), "Join"))
                 {
-                    JoinGame(enteredSessionName, "TwoPlayer");
+                    JoinGame(enteredSessionName, "FourPlayer");
                 }
                 if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter + buttonHeight * 2, buttonWidth, buttonHeight), "Quit Game"))
                 {

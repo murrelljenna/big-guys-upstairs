@@ -37,12 +37,11 @@ public class MainMenu : MonoBehaviour
             var textStyle = new GUIStyle();
             textStyle.alignment = (TextAnchor)TextAlignment.Center;
             var oldColor = GUI.backgroundColor;
-            GUI.Box(new Rect(xCenter - buttonWidth / 2 - padding, yCenter - buttonHeight - buttonHeight / 2 - padding * 2, buttonWidth + 2 * padding, buttonHeight * 4 + padding * 4 + 7), "");
-
 
             if (pageState == PageState.Main)
             {
-                if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight / 2, buttonWidth, buttonHeight), "Multiplayer"))
+                GUI.Box(new Rect(xCenter - buttonWidth / 2 - padding, yCenter - buttonHeight / 2 + buttonHeight, buttonWidth + 2 * padding, buttonHeight * 2 + padding * 3), "");
+                if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight / 2 + buttonHeight + padding, buttonWidth, buttonHeight), "Multiplayer"))
                 {
                     OpenMultiplayerMenu();
                 }

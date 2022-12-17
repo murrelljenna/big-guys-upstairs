@@ -179,8 +179,8 @@
     <Compile Include="Assets\Scripts\Src\PlayerColourManager.cs" />
     <Compile Include="Assets\Photon\Fusion\Scripts\BurstDeltaCompressor.cs" />
     <Compile Include="Assets\Scripts\Src\AI\Barbarian\BarbarianOwnership.cs" />
-    <Compile Include="Assets\Scripts\Src\Building Placement\Ghost.cs" />
     <Compile Include="Assets\Scripts\Src\PauseMenu.cs" />
+    <Compile Include="Assets\Scripts\Src\Building Placement\Ghost.cs" />
     <Compile Include="Assets\Scripts\Src\Unit Behaviours\Movement\MovementAggregation.cs" />
     <Compile Include="Assets\Standard Assets\Environment\Water\Water\Scripts\WaterBase.cs" />
     <Compile Include="Assets\Scripts\Src\AI\Barbarian\BarbarianWavePlayerUIController.cs" />
@@ -228,8 +228,8 @@
     <Compile Include="Assets\Scripts\Src\UI\Controllers\CommandUICardController.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Twirl.cs" />
     <Compile Include="Assets\Scripts\Src\Spawners\Destruction\Destroy.cs" />
-    <Compile Include="Assets\Scripts\Src\Utilities\SetOwnershipToPlayer.cs" />
     <Compile Include="Assets\Photon\Fusion\Scripts\Utilities\BoundsTools.cs" />
+    <Compile Include="Assets\Scripts\Src\Utilities\SetOwnershipToPlayer.cs" />
     <Compile Include="Assets\Scripts\Src\Building Placement\PlaceWalls.cs" />
     <Compile Include="Assets\Photon\Fusion\Scripts\Prototyping\NetworkSceneManagerDefault.cs" />
     <Compile Include="Assets\Scripts\Src\Spawners\Instantiation\InstantiatorFactory.cs" />
@@ -288,6 +288,7 @@
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Triangles.cs" />
     <Compile Include="Assets\Standard Assets\Utility\FPSCounter.cs" />
     <Compile Include="Assets\Standard Assets\Utility\SimpleActivatorMenu.cs" />
+    <Compile Include="Assets\Scripts\Src\UI\MainMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />

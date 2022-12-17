@@ -67,7 +67,7 @@ namespace game.assets
 
     public class NetworkedGameManager : GameManager, INetworkRunnerCallbacks
     {
-        private NetworkRunner _runner;
+        public NetworkRunner _runner;
 
         [SerializeField] private NetworkPrefabRef _playerPrefab;
         [SerializeField] private NetworkPrefabRef _startingCity;
@@ -76,10 +76,9 @@ namespace game.assets
         private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
 
         private Dictionary<PlayerRef, List<NetworkObject>> _spawnedEntities = new Dictionary<PlayerRef, List<NetworkObject>>();
-        private string enteredSessionName = "TestRoom";
+
         [SerializeField]
         private Scene targetScene;
-        Fusion.GameMode networkMode;
         private GameObject playerObj;
 
         private bool isHost;
@@ -392,36 +391,7 @@ namespace game.assets
             _runner.Shutdown();
         }
 
-        private void OnGUI()
-        {
-            if (_runner == null)
-            {
-                int xCenter = Screen.width / 2;
-                int yCenter = Screen.height / 2;
-                int buttonWidth = 200;
-                int buttonHeight = 40;
-                int padding = 10;
-                var textStyle = new GUIStyle();
-                textStyle.alignment = (TextAnchor)TextAlignment.Center;
-                var oldColor = GUI.backgroundColor;
-                GUI.Box(new Rect(xCenter - buttonWidth / 2 - padding, yCenter - buttonHeight - buttonHeight / 2 - padding * 2, buttonWidth + 2 * padding, buttonHeight * 4 + padding * 4 + 7), "");
 
-                if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight - padding - buttonHeight / 2, buttonWidth, buttonHeight), "Host"))
-                {
-                    InitGame("FourPlayer", enteredSessionName);
-                }
-                if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight / 2, buttonWidth, buttonHeight), "Join"))
-                {
-                    JoinGame(enteredSessionName, "FourPlayer");
-                }
-                if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter + buttonHeight * 2, buttonWidth, buttonHeight), "Quit Game"))
-                {
-                    Quit();
-                }
-                GUI.Label(new Rect(xCenter - buttonWidth / 2 + 40, yCenter - buttonHeight / 2 + buttonHeight + padding, buttonWidth, buttonHeight), new GUIContent("Enter a room to join:"));
-                enteredSessionName = GUI.TextField(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight / 2 + buttonHeight + padding * 3.5f, buttonWidth, buttonHeight), enteredSessionName, 64, textStyle);
-            }
-        }
 
         public void registerNetworkObject(Player player, NetworkObject obj) {
             if (_spawnedEntities.TryGetValue(player.networkPlayer, out var objects))

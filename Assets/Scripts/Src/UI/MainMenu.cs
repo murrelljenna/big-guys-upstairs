@@ -13,6 +13,9 @@ public class MainMenu : MonoBehaviour
 
     private PageState pageState = PageState.Main;
 
+    public Texture backgroundBoxTexture;
+    public Texture buttonTexture;
+
     private enum PageState
     {
         Main,
@@ -109,9 +112,18 @@ public class MainMenu : MonoBehaviour
             textStyle.alignment = (TextAnchor)TextAlignment.Center;
             var oldColor = GUI.backgroundColor;
 
+            GUIStyle style = new GUIStyle();
+            style.stretchHeight = true;
+            style.stretchWidth = true;
+
+            Rect boxR = new Rect(xCenter - buttonWidth / 2 - padding, yCenter - buttonHeight / 2 + buttonHeight, buttonWidth + 2 * padding, buttonHeight * 2 + padding * 3);
+            GUI.DrawTexture(boxR, backgroundBoxTexture, ScaleMode.StretchToFill);
+
+            
+
             if (pageState == PageState.Main)
             {
-                GUI.Box(new Rect(xCenter - buttonWidth / 2 - padding, yCenter - buttonHeight / 2 + buttonHeight, buttonWidth + 2 * padding, buttonHeight * 2 + padding * 3), "");
+                GUI.Box(boxR, "", style);
                 if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight / 2 + buttonHeight + padding, buttonWidth, buttonHeight), "Multiplayer"))
                 {
                     OpenMultiplayerMenu();
@@ -123,7 +135,7 @@ public class MainMenu : MonoBehaviour
             }
             else if (pageState == PageState.Multiplayer)
             {
-                GUI.Box(new Rect(xCenter - buttonWidth / 2 - padding, yCenter - buttonHeight / 2 + buttonHeight, buttonWidth + 2 * padding, buttonHeight * 2 + padding * 3), "");
+                GUI.Box(boxR, "", style);
                 if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight / 2 + buttonHeight + padding, buttonWidth, buttonHeight), "Host New Game"))
                 {
                     OpenHostGameMenu();
@@ -140,7 +152,7 @@ public class MainMenu : MonoBehaviour
             }
             else if (pageState == PageState.JoinGame)
             {
-                GUI.Box(new Rect(xCenter - buttonWidth / 2 - padding, yCenter - buttonHeight / 2 + buttonHeight, buttonWidth + 2 * padding, buttonHeight * 2 + padding * 3), "");
+                GUI.Box(boxR, "", style);
                 GUI.Label(new Rect(xCenter - buttonWidth / 2 + 27, yCenter - buttonHeight / 2 + buttonHeight + padding, buttonWidth, buttonHeight), new GUIContent("Enter server name to join:"));
                 enteredSessionName = GUI.TextField(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight / 2 + buttonHeight + padding * 3.5f, buttonWidth, buttonHeight), enteredSessionName, 64, textStyle);
 
@@ -156,12 +168,14 @@ public class MainMenu : MonoBehaviour
             }
             else if (pageState == PageState.HostGame)
             {
+                Rect largeBoxR = new Rect(xCenter - buttonWidth / 2 - padding, yCenter - buttonHeight - buttonHeight / 2 - padding * 2, buttonWidth + 2 * padding, buttonHeight * 4 + padding * 4 + 7);
+                GUI.DrawTexture(largeBoxR, backgroundBoxTexture, ScaleMode.StretchToFill);
                 selectedScene = GUI.SelectionGrid(
-                    new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight - buttonHeight / 2 - padding, buttonWidth, buttonHeight * 2 + padding),
+                    new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight - buttonHeight / 2 - padding / 4, buttonWidth, buttonHeight * 2 + padding),
                     selectedScene,
                     AllMapNames(),
                     1);
-                GUI.Box(new Rect(xCenter - buttonWidth / 2 - padding, yCenter - buttonHeight - buttonHeight / 2 - padding * 2, buttonWidth + 2 * padding, buttonHeight * 4 + padding * 4 + 7), "");
+                GUI.Box(largeBoxR, "", style);
                 GUI.Label(new Rect(xCenter - buttonWidth / 2 + 40, yCenter - buttonHeight / 2 + buttonHeight + padding, buttonWidth, buttonHeight), new GUIContent("Enter server name:"));
                 enteredSessionName = GUI.TextField(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight / 2 + buttonHeight + padding * 3.5f, buttonWidth, buttonHeight), enteredSessionName, 64, textStyle);
                 if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter + buttonHeight * 2, buttonWidth, buttonHeight), "Start Server"))

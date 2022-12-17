@@ -1445,9 +1445,19 @@ PrefabInstance:
       objectReference: {fileID: 2800000, guid: 5c4a163912e49fa4eaee2ccb4c5dd4af, type: 3}
     - target: {fileID: 2064214549609032723, guid: 01130435b9e0e304c8eec9498d7741ed,
         type: 3}
+      propertyPath: buttonTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: efee20b64d1e73942a29ba61ce3379c3, type: 3}
+    - target: {fileID: 2064214549609032723, guid: 01130435b9e0e304c8eec9498d7741ed,
+        type: 3}
       propertyPath: AllMaps.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2064214549609032723, guid: 01130435b9e0e304c8eec9498d7741ed,
+        type: 3}
+      propertyPath: backgroundBoxTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: cf1462bc694c3c249831ad8ac5293aa2, type: 3}
     - target: {fileID: 2064214549609032723, guid: 01130435b9e0e304c8eec9498d7741ed,
         type: 3}
       propertyPath: AllMaps.Array.data[0].icon

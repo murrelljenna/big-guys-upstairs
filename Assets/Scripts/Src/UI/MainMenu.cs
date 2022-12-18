@@ -228,11 +228,17 @@ public class MainMenu : MonoBehaviour
 
                     GUI.DrawTexture(mapSelectionBackground, backgroundBoxTextureAlt, ScaleMode.StretchToFill);
 
-                    selectedScene = GUI.SelectionGrid(
+                    int newSelectedScene = GUI.SelectionGrid(
                         mapSelectionRect,
                         selectedScene,
                         AllMapNames(),
                         1);
+
+                    if (newSelectedScene != selectedScene)
+                    {
+                        selectedScene = newSelectedScene;
+                        selectingMap = false;
+                    }
                 }
             }
         }

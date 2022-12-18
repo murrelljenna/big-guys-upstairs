@@ -119,16 +119,21 @@ public class MainMenu : MonoBehaviour
             Rect boxR = new Rect(xCenter - buttonWidth / 2 - padding, yCenter - buttonHeight / 2 + buttonHeight, buttonWidth + 2 * padding, buttonHeight * 2 + padding * 3);
             GUI.DrawTexture(boxR, backgroundBoxTexture, ScaleMode.StretchToFill);
 
-            
+            Rect buttonRect1 = new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight / 2 + buttonHeight + padding, buttonWidth, buttonHeight);
+            Rect buttonRect2 = new Rect(xCenter - buttonWidth / 2, yCenter + buttonHeight * 2, buttonWidth, buttonHeight);
+            Rect backButtonRect = new Rect(xCenter - buttonWidth / 2, yCenter + buttonHeight * 3 + padding * 1.5f, buttonWidth / 4, buttonHeight);
 
             if (pageState == PageState.Main)
             {
                 GUI.Box(boxR, "", style);
-                if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight / 2 + buttonHeight + padding, buttonWidth, buttonHeight), "Multiplayer"))
+
+                GUI.DrawTexture(buttonRect1, buttonTexture, ScaleMode.StretchToFill);
+                GUI.DrawTexture(buttonRect2, buttonTexture, ScaleMode.StretchToFill);
+                if (GUI.Button(buttonRect1, "Multiplayer"))
                 {
                     OpenMultiplayerMenu();
                 }
-                if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter + buttonHeight * 2, buttonWidth, buttonHeight), "Quit Game"))
+                if (GUI.Button(buttonRect2, "Quit Game"))
                 {
                     gameManager.Quit();
                 }
@@ -136,16 +141,19 @@ public class MainMenu : MonoBehaviour
             else if (pageState == PageState.Multiplayer)
             {
                 GUI.Box(boxR, "", style);
-                if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight / 2 + buttonHeight + padding, buttonWidth, buttonHeight), "Host New Game"))
+                GUI.DrawTexture(buttonRect1, buttonTexture, ScaleMode.StretchToFill);
+                GUI.DrawTexture(buttonRect2, buttonTexture, ScaleMode.StretchToFill);
+                GUI.DrawTexture(backButtonRect, buttonTexture, ScaleMode.StretchToFill);
+                if (GUI.Button(buttonRect1, "Host New Game"))
                 {
                     OpenHostGameMenu();
                 }
-                if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter + buttonHeight * 2, buttonWidth, buttonHeight), "Join a Game"))
+                if (GUI.Button(buttonRect2, "Join a Game"))
                 {
                     OpenJoinGameMenu();
                 }
 
-                if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter + buttonHeight * 3 + padding * 1.5f, buttonWidth / 4, buttonHeight), "Back"))
+                if (GUI.Button(backButtonRect, "Back"))
                 {
                     goBack();
                 }
@@ -156,7 +164,10 @@ public class MainMenu : MonoBehaviour
                 GUI.Label(new Rect(xCenter - buttonWidth / 2 + 27, yCenter - buttonHeight / 2 + buttonHeight + padding, buttonWidth, buttonHeight), new GUIContent("Enter server name to join:"));
                 enteredSessionName = GUI.TextField(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight / 2 + buttonHeight + padding * 3.5f, buttonWidth, buttonHeight), enteredSessionName, 64, textStyle);
 
-                if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter + buttonHeight * 2, buttonWidth, buttonHeight), "Join"))
+                GUI.DrawTexture(buttonRect2, buttonTexture, ScaleMode.StretchToFill);
+                GUI.DrawTexture(backButtonRect, buttonTexture, ScaleMode.StretchToFill);
+
+                if (GUI.Button(buttonRect2, "Join"))
                 {
                     gameManager.JoinGame(enteredSessionName, "FourPlayer");
                 }
@@ -176,14 +187,15 @@ public class MainMenu : MonoBehaviour
                     AllMapNames(),
                     1);
                 GUI.Box(largeBoxR, "", style);
+                GUI.DrawTexture(buttonRect2, buttonTexture, ScaleMode.StretchToFill);
                 GUI.Label(new Rect(xCenter - buttonWidth / 2 + 40, yCenter - buttonHeight / 2 + buttonHeight + padding, buttonWidth, buttonHeight), new GUIContent("Enter server name:"));
                 enteredSessionName = GUI.TextField(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight / 2 + buttonHeight + padding * 3.5f, buttonWidth, buttonHeight), enteredSessionName, 64, textStyle);
                 if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter + buttonHeight * 2, buttonWidth, buttonHeight), "Start Server"))
                 {
                     gameManager.InitGame(AllMaps[selectedScene].sceneName, enteredSessionName);
                 }
-
-                if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter + buttonHeight * 3 + padding * 1.5f, buttonWidth / 4, buttonHeight), "Back"))
+                GUI.DrawTexture(backButtonRect, buttonTexture, ScaleMode.StretchToFill);
+                if (GUI.Button(backButtonRect, "Back"))
                 {
                     goBack();
                 }

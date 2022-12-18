@@ -14,7 +14,9 @@ public class MainMenu : MonoBehaviour
     private PageState pageState = PageState.Main;
 
     public Texture backgroundBoxTexture;
+    public Texture backgroundBoxTextureAlt;
     public Texture buttonTexture;
+    public Texture buttonTexturePressed;
 
     private enum PageState
     {
@@ -86,6 +88,9 @@ public class MainMenu : MonoBehaviour
 
     private void OnGUI()
     {
+        /* 
+         * Brace yourself. This is about to get ugly
+         */
         if (gameManager._runner == null)
         {
             int xCenter = Screen.width / 2;
@@ -166,9 +171,24 @@ public class MainMenu : MonoBehaviour
             {
                 Rect largeBoxR = new Rect(xCenter - buttonWidth / 2 - padding, yCenter - buttonHeight - buttonHeight / 2 - padding * 4, buttonWidth + 2 * padding, buttonHeight * 4 + padding * 7 + 7);
                 GUI.DrawTexture(largeBoxR, backgroundBoxTexture, ScaleMode.StretchToFill);
-                GUI.Label(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight - buttonHeight / 2 - padding * 2.5f, buttonWidth, buttonHeight * 2 + padding), new GUIContent("Map Selection"));
+
+                Rect mapSelectionRect = new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight - buttonHeight / 2 - padding / 4, buttonWidth, buttonHeight * 2 + padding);
+
+                Rect mapSelectionBackground = mapSelectionRect;
+                mapSelectionBackground.x = mapSelectionRect.x - padding / 2;
+                mapSelectionBackground.width = mapSelectionRect.width + (padding);
+                mapSelectionBackground.y = mapSelectionRect.y - padding * 2.5f;
+                mapSelectionBackground.height = mapSelectionRect.height + padding * 3;
+
+
+
+
+
+
+                GUI.DrawTexture(mapSelectionBackground, backgroundBoxTextureAlt, ScaleMode.StretchToFill);
+                GUI.Label(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight - buttonHeight / 2 - padding * 2.25f, buttonWidth / 2, buttonHeight * 2 + padding), new GUIContent("Map:"));
                 selectedScene = GUI.SelectionGrid(
-                    new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight - buttonHeight / 2 - padding / 4, buttonWidth, buttonHeight * 2 + padding),
+                    mapSelectionRect,
                     selectedScene,
                     AllMapNames(),
                     1);
@@ -177,8 +197,18 @@ public class MainMenu : MonoBehaviour
 
                 GUI.Box(largeBoxR, "", style);
                 GUI.DrawTexture(buttonRect2, buttonTexture, ScaleMode.StretchToFill);
-                GUI.Label(new Rect(xCenter - buttonWidth / 2 + 40, yCenter - buttonHeight / 2 + buttonHeight + padding, buttonWidth, buttonHeight), new GUIContent("Enter server name:"));
-                enteredSessionName = GUI.TextField(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight / 2 + buttonHeight + padding * 3.5f, buttonWidth, buttonHeight), enteredSessionName, 64, textStyle);
+
+                var labelStyle = new GUIStyle();
+                labelStyle.normal.textColor = Color.black;
+
+                GUI.Label(new Rect(xCenter - buttonWidth / 2 + 5, yCenter - buttonHeight / 2 + buttonHeight + padding * 3.5f, buttonWidth / 2, buttonHeight), new GUIContent("Server Name:"), labelStyle);
+                Rect sessionNameRect = new Rect(xCenter - 5, yCenter - buttonHeight / 2 + buttonHeight + padding * 3.5f - 2, buttonWidth / 2, buttonHeight / 2);
+
+                GUI.DrawTexture(sessionNameRect, buttonTexturePressed, ScaleMode.StretchToFill);
+
+                sessionNameRect.y = sessionNameRect.y + 3;
+                enteredSessionName = GUI.TextField(sessionNameRect, enteredSessionName, 15, textStyle);
+
                 if (GUI.Button(new Rect(xCenter - buttonWidth / 2, yCenter + buttonHeight * 2, buttonWidth, buttonHeight), "Start Server"))
                 {
                     gameManager.InitGame(AllMaps[selectedScene], enteredSessionName);

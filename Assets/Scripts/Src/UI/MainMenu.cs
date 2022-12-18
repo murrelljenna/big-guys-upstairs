@@ -199,7 +199,9 @@ public class MainMenu : MonoBehaviour
                 sessionNameRect.y = sessionNameRect.y + 3;
                 labelStyle.alignment = TextAnchor.UpperCenter;
 
-                if (GUI.Button(mapNameRect, new GUIContent("Valley"), labelStyle)) {
+                string sceneName = AllMaps[selectedScene].sceneName;
+
+                if (GUI.Button(mapNameRect, new GUIContent(sceneName), labelStyle)) {
                     selectingMap = !selectingMap;
                 }
                 enteredSessionName = GUI.TextField(sessionNameRect, enteredSessionName, 15, textStyle);

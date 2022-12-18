@@ -228,6 +228,8 @@ public class MainMenu : MonoBehaviour
 
                     GUI.DrawTexture(mapSelectionBackground, backgroundBoxTextureAlt, ScaleMode.StretchToFill);
 
+                    GUI.DrawTexture(new Rect(xCenter + buttonWidth / 2 + padding * 2, yCenter + buttonHeight * 2 - 4, buttonWidth, buttonHeight + 6), buttonTexture, ScaleMode.StretchToFill);
+                    GUI.DrawTexture(new Rect(xCenter + buttonWidth / 2 + padding * 2, yCenter + buttonHeight - 10, buttonWidth, buttonHeight + 6), buttonTexture, ScaleMode.StretchToFill);
                     int newSelectedScene = GUI.SelectionGrid(
                         mapSelectionRect,
                         selectedScene,

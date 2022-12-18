@@ -68,7 +68,7 @@ public class MainMenu : MonoBehaviour
 
         for (int i = 0; i < AllMaps.Length; i++)
         {
-            mapNames[i] = AllMaps[i].sceneName;
+            mapNames[i] = AllMaps[i].sceneName + " (" + AllMaps[i].maxPlayers + " players)";
         }
 
         return mapNames;

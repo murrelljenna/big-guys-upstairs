@@ -164,8 +164,9 @@ public class MainMenu : MonoBehaviour
             }
             else if (pageState == PageState.HostGame)
             {
-                Rect largeBoxR = new Rect(xCenter - buttonWidth / 2 - padding, yCenter - buttonHeight - buttonHeight / 2 - padding * 2, buttonWidth + 2 * padding, buttonHeight * 4 + padding * 4 + 7);
+                Rect largeBoxR = new Rect(xCenter - buttonWidth / 2 - padding, yCenter - buttonHeight - buttonHeight / 2 - padding * 4, buttonWidth + 2 * padding, buttonHeight * 4 + padding * 7 + 7);
                 GUI.DrawTexture(largeBoxR, backgroundBoxTexture, ScaleMode.StretchToFill);
+                GUI.Label(new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight - buttonHeight / 2 - padding * 2.5f, buttonWidth, buttonHeight * 2 + padding), new GUIContent("Map Selection"));
                 selectedScene = GUI.SelectionGrid(
                     new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight - buttonHeight / 2 - padding / 4, buttonWidth, buttonHeight * 2 + padding),
                     selectedScene,

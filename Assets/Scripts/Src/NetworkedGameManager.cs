@@ -85,13 +85,12 @@ namespace game.assets
 
         private NetworkedGameManagerState state;
 
-        public void InitGame(string mapName, string roomName)
+        public void InitGame(GameMap map, string roomName)
         {
             if (_runner == null)
             {
                 isHost = true;
-                var targetScene = SceneManager.LoadScene(mapName, new LoadSceneParameters(LoadSceneMode.Single));
-                StartGame(targetScene, Fusion.GameMode.Host, roomName);
+                StartGame(map, Fusion.GameMode.Host, roomName);
             }
         }
 
@@ -99,8 +98,7 @@ namespace game.assets
         {
             if (_runner == null)
             {
-                var targetScene = SceneManager.LoadScene(mapName, new LoadSceneParameters(LoadSceneMode.Single));
-                StartGame(targetScene, Fusion.GameMode.Client, sessionName);
+                JoinExistingGame(sessionName);
             }
         }
 
@@ -127,7 +125,26 @@ namespace game.assets
             }
         }
 
-        async void StartGame(Scene scene, Fusion.GameMode mode, string roomName)
+        async void StartGame(GameMap map, Fusion.GameMode mode, string roomName)
+        {
+            _runner = gameObject.AddComponent<NetworkRunner>();
+            _runner.ProvideInput = true;
+
+            var targetScene = SceneManager.LoadScene(map.sceneName, new LoadSceneParameters(LoadSceneMode.Single));
+
+            this.gameMode = GameMode.Versus;
+
+            await _runner.StartGame(new StartGameArgs()
+            {
+                GameMode = mode,
+                SessionName = roomName,
+                Scene = targetScene.buildIndex,
+                SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>(),
+                PlayerCount = map.maxPlayers
+            });
+        }
+
+        async void JoinExistingGame(string roomName)
         {
             _runner = gameObject.AddComponent<NetworkRunner>();
             _runner.ProvideInput = true;
@@ -136,10 +153,9 @@ namespace game.assets
 
             await _runner.StartGame(new StartGameArgs()
             {
-                GameMode = mode,
+                GameMode = Fusion.GameMode.Client,
                 SessionName = roomName,
-                Scene = scene.buildIndex,
-                SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
+                SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>(),
             });
         }
 
@@ -359,7 +375,7 @@ namespace game.assets
 
         public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
         public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
-        public void OnConnectedToServer(NetworkRunner runner) { }
+        public void OnConnectedToServer(NetworkRunner runner) {}
         public void OnDisconnectedFromServer(NetworkRunner runner) { }
         public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token) { }
         public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason) { }

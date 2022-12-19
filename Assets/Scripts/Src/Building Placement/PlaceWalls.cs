@@ -79,7 +79,7 @@ public class PlaceWalls : NetworkBehaviour
 
                 float noWalls = pointDistance / wallUnitLength;
                 int wood = 1;
-                Vector3 slightlyOffGround = new Vector3(0, 0.2f);
+                Vector3 slightlyOffGround = new Vector3(0, 0.4f);
 
                 if (ownership.owner.canAfford(new ResourceSet(wood * (int)noWalls)))
                 {

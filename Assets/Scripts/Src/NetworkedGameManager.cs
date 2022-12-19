@@ -222,6 +222,8 @@ namespace game.assets
 
             lockPlayer();
 
+            _spawnedEntities[(PlayerRef)playerDeets.player].Add(startingCity);
+
             Invoke("unlockPlayer", 0.2f);
             return playerObj;
         }

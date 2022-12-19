@@ -29,6 +29,8 @@ public class PlaceWalls : NetworkBehaviour
 
     private RaycastHit hit;
 
+    private bool activeWallCoroutine = false;
+
     public override void Spawned()
     {
         if (ownership == null)
@@ -62,7 +64,7 @@ public class PlaceWalls : NetworkBehaviour
 
     public void PlaceWall()
     {
-        if (enabled == false)
+        if (enabled == false || activeWallCoroutine)
         {
             return;
         }
@@ -220,6 +222,7 @@ public class PlaceWalls : NetworkBehaviour
 
     private IEnumerator placeWalls(float noWalls, bool firstPointSnapped, bool lastPointSnapped)
     {
+        activeWallCoroutine = true;
         for (int i = 0; i <= (int)noWalls; i++)
         {
             Vector3 destination = Vector3.Lerp(firstPoint, lastPoint, (float)i * (1f / noWalls));
@@ -261,6 +264,7 @@ public class PlaceWalls : NetworkBehaviour
 
             yield return null;
         }
+        activeWallCoroutine = false;
     }
 
     private IEnumerator flashRed(GameObject building, float offset = 0.2f)

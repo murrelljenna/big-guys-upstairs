@@ -66,7 +66,7 @@ public class Construction : NetworkBehaviour
     }
 
     private void finish() {
-        Runner.Spawn(onceBuilt, transform.position, transform.rotation, Object.InputAuthority, (runner, o) => o.SetAsPlayer(GetComponent<Ownership>().owner));
+        Instantiation.SpawnNetwork(Runner, onceBuilt, transform.position, transform.rotation, GetComponent<Ownership>().owner);
         built.Invoke();
         Destroy(this);
     }

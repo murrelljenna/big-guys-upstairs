@@ -45,25 +45,13 @@ namespace game.assets.spawners
             if (player.canAfford(price))
             {
                 player.takeResources(price);
-                NetworkObject whatthefuckingfuck = Spawn(prefab, spawnLocation, Quaternion.identity, player.networkPlayer);
-                NetworkedGameManager.Get().registerNetworkObject(player, whatthefuckingfuck);
-                whatthefuckingfuck.SetAsPlayer(player);
-                return whatthefuckingfuck.gameObject;
+                return Instantiation.SpawnNetwork(Runner, prefab, spawnLocation, rotation, player).gameObject;
             }
             else
             {
                 getFlasher()?.flashRelevant(player.resources, price);
                 return null;
             }
-        }
-
-        protected NetworkObject Spawn(NetworkPrefabRef prefab, Vector3 spawnLocation, Quaternion rotation, PlayerRef playerInput)
-        {
-            return Runner.Spawn(prefab, spawnLocation, rotation, ownership.owner.networkPlayer, (runner, obj) => {
-                obj.AssignInputAuthority(ownership.owner.networkPlayer);
-                obj.GetComponent<Ownership>()?.setOwner(ownership.owner);
-                }
-            );
         }
 
         private Vector3 getSpawnLocation(Vector3 spawnCenter)

@@ -15,6 +15,11 @@ using System.Threading.Tasks;
 
 namespace game.assets
 {
+    public enum ConnectionError
+    {
+        None,
+        NoServerFound
+    }
     public struct PlayerNetworkInput : INetworkInput
     {
         public const uint BUTTON_USE = 1 << 0;
@@ -170,7 +175,7 @@ namespace game.assets
             }
             else
             {
-                QuitToMainMenu();
+                QuitToMainMenuWithError(ConnectionError.NoServerFound);
             }
         }
 
@@ -449,6 +454,16 @@ namespace game.assets
             ExitNetworkGame();
             SceneManager.LoadScene(0);
             SceneManager.sceneLoaded += (scene, mode) => { Cursor.lockState = CursorLockMode.None; };
+        }
+
+        public void QuitToMainMenuWithError(ConnectionError error)
+        {
+            ExitNetworkGame();
+            SceneManager.LoadScene(0);
+            SceneManager.sceneLoaded += (scene, mode) => { 
+                Cursor.lockState = CursorLockMode.None;
+                GameObject.Find(GameUtils.MagicWords.GameObjectNames.GameManager).GetComponent<MainMenu>().DisplayErrorMessage(error);
+            };
         }
 
         public void Quit()

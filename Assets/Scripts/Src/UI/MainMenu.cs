@@ -88,6 +88,15 @@ public class MainMenu : MonoBehaviour
 
     private int selectedScene = 0;
 
+    public bool connectionError = false;
+    public ConnectionError connectionErrorType = ConnectionError.None;
+
+    public void resetError()
+    {
+        connectionError = false;
+        connectionErrorType = ConnectionError.None;
+    }
+
     private void OnGUI()
     {
         /* 
@@ -107,6 +116,9 @@ public class MainMenu : MonoBehaviour
             GUIStyle style = new GUIStyle();
             style.stretchHeight = true;
             style.stretchWidth = true;
+
+            var labelStyle = new GUIStyle();
+            labelStyle.normal.textColor = Color.black;
 
             Rect boxR = new Rect(xCenter - buttonWidth / 2 - padding, yCenter - buttonHeight / 2 + buttonHeight, buttonWidth + 2 * padding, buttonHeight * 2 + padding * 3);
             GUI.DrawTexture(boxR, backgroundBoxTexture, ScaleMode.StretchToFill);
@@ -128,6 +140,16 @@ public class MainMenu : MonoBehaviour
                 if (GUI.Button(buttonRect2, "Quit Game"))
                 {
                     gameManager.Quit();
+                }
+
+                if (connectionError)
+                {
+                    GUI.DrawTexture(new Rect(xCenter - buttonWidth / 1.5f, yCenter - buttonHeight, buttonWidth * 1.4f, buttonHeight / 2), buttonTexturePressed, ScaleMode.StretchToFill);
+                    if (connectionErrorType == ConnectionError.NoServerFound)
+                    {
+                        labelStyle.alignment = TextAnchor.MiddleLeft;
+                        GUI.Label(new Rect(xCenter - buttonWidth / 1.5f + 20, yCenter - buttonHeight, buttonWidth * 1.4f, buttonHeight / 2), new GUIContent("No server with corresponding name found"), labelStyle);
+                    }
                 }
             }
             else if (pageState == PageState.Multiplayer)
@@ -183,9 +205,6 @@ public class MainMenu : MonoBehaviour
                 Rect sceneBox1 = new Rect(xCenter - buttonWidth / 2, yCenter - buttonHeight - buttonHeight / 2 - padding / 4, buttonWidth, buttonHeight * 2 + padding);
 
                 GUI.DrawTexture(buttonRect2, buttonTexture, ScaleMode.StretchToFill);
-
-                var labelStyle = new GUIStyle();
-                labelStyle.normal.textColor = Color.black;
                 GUI.Label(new Rect(xCenter - buttonWidth / 2 + 5, yCenter + padding * 3.5f - 2, buttonWidth / 2, buttonHeight / 2), new GUIContent("Map:"), labelStyle);
                 GUI.Label(new Rect(xCenter - buttonWidth / 2 + 5, yCenter - buttonHeight / 2 + buttonHeight + padding * 3.5f, buttonWidth / 2, buttonHeight), new GUIContent("Server Name:"), labelStyle);
                 Rect sessionNameRect = new Rect(xCenter - 5, yCenter - buttonHeight / 2 + buttonHeight + padding * 3.5f - 2, buttonWidth / 2, buttonHeight / 2);
@@ -269,5 +288,13 @@ public class MainMenu : MonoBehaviour
     private void OpenJoinGameMenu()
     {
         pageState = PageState.JoinGame;
+    }
+
+    public void DisplayErrorMessage(ConnectionError error)
+    {
+        connectionError = true;
+        connectionErrorType = error;
+
+        Invoke("resetError", 5f);
     }
 }

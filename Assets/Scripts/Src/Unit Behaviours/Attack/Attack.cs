@@ -4,7 +4,7 @@ using UnityEngine.Events;
 using game.assets.utilities;
 using game.assets.ai.units;
 using Fusion;
-
+#pragma warning disable 0162
 namespace game.assets.ai
 {
     public class Attack : NetworkBehaviour
@@ -496,3 +496,4 @@ namespace game.assets.ai
         }
     }
 }
+#pragma warning restore 0162

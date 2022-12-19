@@ -31,7 +31,7 @@ namespace game.assets.economy {
         public Resource resource;
         private GameObject node;
         private ResourceSet yield;
-        private bool assigned = false;
+        public bool assigned = false;
 
         private const float COLLECT_RANGE = 0.3f;
         private const float DEPOSIT_RANGE = 0.6f;

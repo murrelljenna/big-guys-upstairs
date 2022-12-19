@@ -191,8 +191,10 @@ namespace game.assets.ai
             {
                 lineRenderer = gameObject.AddComponent<LineRenderer>();
             }
-            lineRenderer.SetWidth(0.05f, 0.05f);
-            lineRenderer.SetColors(Color.red, Color.red);
+            lineRenderer.startWidth = 0.05f;
+            lineRenderer.endWidth = 0.05f;
+            lineRenderer.startColor = Color.red;
+            lineRenderer.endColor = Color.red;
             lineRenderer.material = new Material(Shader.Find("Sprites/Default")) { color = Color.yellow };
             lineRenderer.positionCount = points.Length;
             lineRenderer.SetPositions(points);

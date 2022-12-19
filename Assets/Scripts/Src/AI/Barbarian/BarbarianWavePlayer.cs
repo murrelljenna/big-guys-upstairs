@@ -65,7 +65,7 @@ public class BarbarianWavePlayer : BarbarianPlayer
         }
         Spawner[] spawners = GameObject.FindObjectsOfType<Spawner>().filterFor<BarbarianOwnership, Spawner>();
 
-        int index = Random.RandomRange(0, spawners.Length);
+        int index = Random.Range(0, spawners.Length);
         Spawner spawnPoint = spawners[index];
 
         if (spawnPoint.GetComponent<BarbarianOwnership>())

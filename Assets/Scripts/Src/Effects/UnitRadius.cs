@@ -24,9 +24,11 @@ public class UnitRadius : MonoBehaviour
         LineRenderer lineRenderer = gameObject.GetComponent<LineRenderer>();
         Color c1 = new Color(0.5f, 0.5f, 0.5f, 1);
         //lineRenderer.material = new Material(shader);
-        lineRenderer.SetColors(c1, c1);
-        lineRenderer.SetWidth(0.5f, 0.5f);
-        lineRenderer.SetVertexCount(numSegments + 1);
+        lineRenderer.startColor = c1;
+        lineRenderer.endColor = c1;
+        lineRenderer.startWidth = 0.5f;
+        lineRenderer.endWidth = 0.5f;
+        lineRenderer.positionCount = (numSegments + 1);
         lineRenderer.useWorldSpace = true;
 
         float deltaTheta = (float)(2.0 * Mathf.PI) / numSegments;

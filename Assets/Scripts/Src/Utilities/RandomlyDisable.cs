@@ -8,7 +8,7 @@ public class RandomlyDisable : MonoBehaviour
 
     public void Start()
     {
-        if (gameObjectToDisable == null && Random.RandomRange(1, 10) < 4)
+        if (gameObjectToDisable == null && Random.Range(1, 10) < 4)
         {
             return;
         }

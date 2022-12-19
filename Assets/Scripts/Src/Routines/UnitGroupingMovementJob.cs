@@ -94,8 +94,10 @@ namespace game.assets.routines
             {
                 lineRenderer = LocalGameManager.Get().gameObject.AddComponent<LineRenderer>();
             }
-            lineRenderer.SetWidth(0.2f, 0.2f);
-            lineRenderer.SetColors(Color.yellow, Color.yellow);
+            lineRenderer.startWidth = 0.2f;
+            lineRenderer.endWidth = 0.2f;
+            lineRenderer.startColor = Color.yellow;
+            lineRenderer.endColor = Color.yellow;
             lineRenderer.material = new Material(Shader.Find("Sprites/Default")) { color = Color.yellow };
             lineRenderer.positionCount = points.Length;
             lineRenderer.SetPositions(points);

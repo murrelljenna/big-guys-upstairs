@@ -11,7 +11,6 @@ namespace game.assets.ai {
     {
         public player.Player player;
         private int maxUnits;
-        private int recruitRateInSeconds;
 
         public AttackAggregation units = new AttackAggregation();
         private AIUnitRecruiter recruiter;
@@ -26,7 +25,6 @@ namespace game.assets.ai {
         private Coroutine replenishment;
 
         public UnityEvent<Vector3> reachedDestination = new UnityEvent<Vector3>();
-        private bool destinationHasBeenReached = false;
 
         private Stack<IArmyPlan> orders = new Stack<IArmyPlan>();
         public UnityEvent<IArmyPlan> newOrder = new UnityEvent<IArmyPlan>();
@@ -38,7 +36,6 @@ namespace game.assets.ai {
             onMaxUnits = new UnityEvent();
             onNoUnits = new UnityEvent();
             this.maxUnits = maxUnits;
-            this.recruitRateInSeconds = recruitRateInSeconds;
             this.player = player;
             this.location = startingLocation;
             recruiter = new AIUnitRecruiter(player);

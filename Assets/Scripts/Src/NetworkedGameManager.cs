@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using static NetworkedGameManagerState;
 using game.assets.utilities;
+using System.Threading.Tasks;
 
 namespace game.assets
 {
@@ -134,7 +135,7 @@ namespace game.assets
 
             this.gameMode = GameMode.Versus;
 
-            await _runner.StartGame(new StartGameArgs()
+            var result = await _runner.StartGame(new StartGameArgs()
             {
                 GameMode = mode,
                 SessionName = roomName,
@@ -142,6 +143,11 @@ namespace game.assets
                 SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>(),
                 PlayerCount = map.maxPlayers
             });
+
+            if (!result.Ok)
+            {
+                QuitToMainMenu();
+            }
         }
 
         async void JoinExistingGame(string roomName)
@@ -151,12 +157,21 @@ namespace game.assets
 
             this.gameMode = GameMode.Versus;
 
-            await _runner.StartGame(new StartGameArgs()
+            var joinTask = _runner.StartGame(new StartGameArgs()
             {
                 GameMode = Fusion.GameMode.Client,
                 SessionName = roomName,
                 SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>(),
             });
+
+            if (await Task.WhenAny(joinTask, Task.Delay(6000)) == joinTask)
+            {
+                
+            }
+            else
+            {
+                QuitToMainMenu();
+            }
         }
 
 
@@ -375,10 +390,14 @@ namespace game.assets
 
         public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
         public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
-        public void OnConnectedToServer(NetworkRunner runner) {}
+        public void OnConnectedToServer(NetworkRunner runner) {
+            Debug.Log("Hey there");
+        }
         public void OnDisconnectedFromServer(NetworkRunner runner) { }
         public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token) { }
-        public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason) { }
+        public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason) {
+            Debug.Log("Failed");
+        }
         public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) { }
         public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) { }
         public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data) { }

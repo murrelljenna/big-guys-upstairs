@@ -129,6 +129,7 @@
     <Compile Include="Assets\Scripts\Player\PlayerRigSpawner.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\CameraMotionBlur.cs" />
     <Compile Include="Assets\Standard Assets\Environment\Water (Basic)\Scripts\WaterBasic.cs" />
+    <Compile Include="Assets\Scripts\Src\UI\MainMenu.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\GlobalFog.cs" />
     <Compile Include="Assets\Standard Assets\Utility\WaypointCircuit.cs" />
     <Compile Include="Assets\Standard Assets\Utility\CameraRefocus.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\BlurOptimized.cs" />
     <Compile Include="Assets\Low Poly Modular Terrain Pack\Bonus_Assets\Scripts\ModularTerrainCloudsControl.cs" />
     <Compile Include="Assets\Standard Assets\ParticleSystems\Scripts\FireLight.cs" />
+    <Compile Include="Assets\DisableOtherFuckingAudioListeners.cs" />
     <Compile Include="Assets\Fantasy Skybox FREE\Demo\Scripts\GE_FantasySkyboxFREE_Demo.cs" />
     <Compile Include="Assets\RandomParticleDelay.cs" />
     <Compile Include="Assets\Scripts\Src\Building Placement\UpgradeWallToGate.cs" />
@@ -190,6 +192,7 @@
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\BloomOptimized.cs" />
     <Compile Include="Assets\Standard Assets\Utility\FollowTarget.cs" />
     <Compile Include="Assets\Scripts\Src\Controllers\AudioController.cs" />
+    <Compile Include="Assets\Scripts\Src\GameMap.cs" />
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\DepthOfField.cs" />
     <Compile Include="Assets\Scripts\Src\Player.cs" />
     <Compile Include="Assets\Standard Assets\Characters\FirstPersonCharacter\Scripts\MouseLook.cs" />
@@ -288,9 +291,6 @@
     <Compile Include="Assets\Standard Assets\Effects\ImageEffects\Scripts\Triangles.cs" />
     <Compile Include="Assets\Standard Assets\Utility\FPSCounter.cs" />
     <Compile Include="Assets\Standard Assets\Utility\SimpleActivatorMenu.cs" />
-    <Compile Include="Assets\Scripts\Src\UI\MainMenu.cs" />
-    <Compile Include="Assets\DisableOtherFuckingAudioListeners.cs" />
-    <Compile Include="Assets\Scripts\Src\GameMap.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />

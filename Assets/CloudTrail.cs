@@ -30,4 +30,9 @@ public class CloudTrail : MonoBehaviour
                     interpolationRatio
                     );
     }
+
+    private void OnDestroy()
+    {
+        Destroy(cloudInstance);
+    }
 }

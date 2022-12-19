@@ -51,7 +51,10 @@ namespace game.assets
             CacheController();
 
             // Caveat: this is needed to initialize the Controller's state and avoid unwanted spikes in its perceived velocity
-            Controller.Move(transform.position);
+            if (Controller.enabled)
+            {
+                Controller.Move(transform.position);
+            }
         }
 
         private void CacheController()
@@ -127,7 +130,10 @@ namespace game.assets
             moveVelocity.x = horizontalVel.x;
             moveVelocity.z = horizontalVel.z;
 
-            Controller.Move(moveVelocity * deltaTime);
+            if (Controller.enabled)
+            {
+                Controller.Move(moveVelocity * deltaTime);
+            }
 
             Velocity = (transform.position - previousPos) * Runner.Simulation.Config.TickRate;
             IsGrounded = Controller.isGrounded;

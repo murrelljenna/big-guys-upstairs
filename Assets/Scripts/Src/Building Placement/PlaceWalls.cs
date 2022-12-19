@@ -31,6 +31,8 @@ public class PlaceWalls : NetworkBehaviour
 
     private bool activeWallCoroutine = false;
 
+    private bool snappedToExistingWall = false;
+
     public override void Spawned()
     {
         if (ownership == null)
@@ -147,6 +149,7 @@ public class PlaceWalls : NetworkBehaviour
             }
             else
             {
+                snappedToExistingWall = false;
                 currentBuilding.Find("Model").GetComponent<Renderer>().enabled = true;
                 if (firstPointPlaced)
                 {
@@ -158,7 +161,7 @@ public class PlaceWalls : NetworkBehaviour
                 }
             }
 
-            Vector3 position = GameUtils.SnapToWalkableArea(hit.point);
+            Vector3 position = snappedToExistingWall ? hit.point : GameUtils.SnapToWalkableArea(hit.point);
 
             position.y += 0.5f;
 
@@ -213,6 +216,7 @@ public class PlaceWalls : NetworkBehaviour
         {
             if (hitColliders[i].gameObject.GetComponent<WallCorner>() != null)
             {
+                snappedToExistingWall = true;
                 return hitColliders[i].transform.position;
             }
         }

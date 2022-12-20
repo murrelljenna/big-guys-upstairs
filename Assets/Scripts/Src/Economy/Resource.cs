@@ -123,6 +123,7 @@ namespace game.assets.economy {
                     }
                 }
             }
+            Debug.Log("RES - " + tMin.gameObject.name);
             return tMin?.GetComponent<Depositor>();
         }
     }

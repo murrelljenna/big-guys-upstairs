@@ -7,7 +7,7 @@ using game.assets.utilities;
 using UnityEngine.Events;
 using static game.assets.utilities.GameUtils;
 using Fusion;
-
+#pragma warning disable 0162
 namespace game.assets.economy {
     [RequireComponent(typeof(Movement))]
     public class Worker : NetworkBehaviour
@@ -41,6 +41,8 @@ namespace game.assets.economy {
 
         private bool collectingResources = false;
         public bool currentlyBuilding = false;
+
+        private const bool DEBUG_RESOURCE_GATHERING = true;
 
         private void Start() {
             movement = GetComponent<Movement>();
@@ -94,7 +96,7 @@ namespace game.assets.economy {
         }
 
         private IEnumerator returnToDeposit() {
-
+            if (DEBUG_RESOURCE_GATHERING) Debug.Log("WRK - " + gameObject.name + " is returning to deposit");
             Vector3 destination = resource.getUpstream().GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position);
             Depositor depot = resource.getUpstream().GetComponent<Depositor>();        
 
@@ -221,4 +223,5 @@ namespace game.assets.economy {
             getFromResource.Invoke();
         }
     }
+#pragma warning restore 0162
 }

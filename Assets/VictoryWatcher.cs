@@ -56,6 +56,7 @@ namespace game.assets {
         {
             PlayAudio.PlayRandomSourceOnGameobject(obj.transform?.Find("Audio")?.Find("CheerSounds").gameObject);
             Instantiate(fireworksPrefab, obj.transform);
+            Invoke("QuitToMainMenu", 10f);
         }
 
         protected void playerWins(Player player)
@@ -65,6 +66,11 @@ namespace game.assets {
                 var city = towns[i];
                 RPC_FireworksAtCity(city.GetComponent<NetworkObject>());
             }
+        }
+
+        private void QuitToMainMenu()
+        {
+            NetworkedGameManager.Get().QuitToMainMenu();
         }
     }
 }

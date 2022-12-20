@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8758888183435907163}
   - component: {fileID: 8758888183434908315}
   - component: {fileID: -4808909201852290194}
+  - component: {fileID: 3558564210041467453}
   m_Layer: 0
   m_Name: LPW_Tree_A1_6.5m_01
   m_TagString: unitResourceNode
@@ -95,6 +96,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f55b375930044441bada6a711236765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!205 &3558564210041467453
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8758888183437167707}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: -0.018004179, y: 3.0930738, z: 0}
+  m_Size: 6.786148
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.10672892
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 8758888183434908315}
+  - screenRelativeHeight: 0.10672892
+    fadeTransitionWidth: 0
+    renderers: []
+  - screenRelativeHeight: 0.047778655
+    fadeTransitionWidth: 0
+    renderers: []
+  m_Enabled: 1
 --- !u!1001 &118475550423680739
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -106,6 +132,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FallingLeaves
+      objectReference: {fileID: 0}
+    - target: {fileID: 58930760905604980, guid: 413dc1353e4eae94f9206b100787ca5a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3094118435068128413, guid: 413dc1353e4eae94f9206b100787ca5a,
         type: 3}

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DisableEveryOtherCamera : MonoBehaviour
 {
+    private List<Camera> disabledCameras = new List<Camera>();
     public void Start()
     {
         Camera theOnlyCameraWeNeed = GetComponent<Camera>();
@@ -16,7 +17,13 @@ public class DisableEveryOtherCamera : MonoBehaviour
             if (datTriCount != theOnlyCameraWeNeed)
             {
                 datTriCount.enabled = false;
+                disabledCameras.Add(datTriCount);
             }
         }
+    }
+
+    public void OnDestroy()
+    {
+        disabledCameras.ForEach(cam => { if (cam != null) cam.enabled = true; } );
     }
 }

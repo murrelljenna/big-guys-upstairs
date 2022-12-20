@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 6708746170872158254}
   - component: {fileID: 6313995666338287280}
   - component: {fileID: 5521363200484494187}
+  - component: {fileID: 6387278269259169324}
+  - component: {fileID: 3317460885087893290}
   m_Layer: 0
   m_Name: PlayerRig
   m_TagString: MainCamera
@@ -118,3 +120,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77c736f35e5898c4495e14bd8bf476d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6387278269259169324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6113973318045424944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd84d6f7bb878024da962c82e68789df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eOnPressed:
+    m_PersistentCalls:
+      m_Calls: []
+  xOnPressed:
+    m_PersistentCalls:
+      m_Calls: []
+  uOnPressed:
+    m_PersistentCalls:
+      m_Calls: []
+  rOnPressed:
+    m_PersistentCalls:
+      m_Calls: []
+  escOnPressed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3317460885087893290}
+        m_TargetAssemblyTypeName: PauseMenu, AssemblyDefinitionFile
+        m_MethodName: toggleEnable
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3317460885087893290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6113973318045424944}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8a4ebb57356fd6469aebe36ab57c0ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainMenuScene:
+    m_Handle: 0

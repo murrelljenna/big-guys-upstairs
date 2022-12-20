@@ -19,8 +19,8 @@ public class PauseMenu : MonoBehaviour
     private void OnDisable()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        GetComponent<CharacterController>().enabled = true;
-        GetComponent<CharacterViewHandler>().isActive = true;
+        transform.parent.GetComponent<CharacterController>().enabled = true;
+        transform.parent.GetComponent<CharacterViewHandler>().isActive = true;
     }
 
     private void OnEnable()
@@ -29,16 +29,16 @@ public class PauseMenu : MonoBehaviour
         frozenRotation = transform.rotation;
         Cursor.lockState = CursorLockMode.None;
 
-        GetComponent<CharacterController>().enabled = false;
-        GetComponent<CharacterViewHandler>().isActive = false;
+        transform.parent.GetComponent<CharacterController>().enabled = false;
+        transform.parent.GetComponent<CharacterViewHandler>().isActive = false;
     }
 
     private void Update()
     {
         if (enabled)
         {
-            transform.position = frozenPosition;
-            transform.rotation = frozenRotation;
+            transform.parent.position = new Vector3(frozenPosition.x, transform.parent.position.y, frozenPosition.z);
+            transform.parent.rotation = frozenRotation;
         }
     }
 

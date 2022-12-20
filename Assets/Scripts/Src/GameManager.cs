@@ -18,8 +18,7 @@ namespace game.assets
             Versus
         }
 
-        [Tooltip("Fireworks prefab to use when player wins")]
-        public GameObject fireworksPrefab;
+
         private struct ColourAvailability
         {
             public PlayerColour colour;
@@ -90,11 +89,6 @@ namespace game.assets
             return GameObject.Find(MagicWords.GameObjectNames.GameManager)?.GetComponent<GameManager>();
         }
 
-        protected void localPlayerWins()
-        {
-            playerWins(players[0]);
-        }
-
         protected void localPlayerLoses(Health health)
         {
             playerLoses(getLocalPlayer());
@@ -114,22 +108,6 @@ namespace game.assets
                 thingsToDie[i].kill();
                 yield return null;
             }
-        }
-
-        protected void playerWins(Player player)
-        {
-            var cities = player.getCities();
-            for (int i = 0; i < cities.Length; i++)
-            {
-                var city = cities[i];
-                PlayAudio.PlayRandomSourceOnGameobject(city.transform?.Find("Audio")?.Find("CheerSounds").gameObject);
-                fireworksAtCity(city);
-            }
-        }
-
-        private void fireworksAtCity(GameObject go)
-        {
-            Instantiate(fireworksPrefab, go.transform);
         }
     }
 }

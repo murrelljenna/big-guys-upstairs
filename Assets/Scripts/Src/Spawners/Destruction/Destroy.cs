@@ -52,7 +52,7 @@ public class Destroy : NetworkBehaviour
     {
         if (Object != null && Object.HasStateAuthority)
         {
-            Runner.Despawn(GetComponent<NetworkObject>());
+            Instantiation.Despawn(Runner, GetComponent<NetworkObject>());
         }
     }
 }

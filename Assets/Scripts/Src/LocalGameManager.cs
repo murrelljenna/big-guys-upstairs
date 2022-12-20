@@ -19,7 +19,7 @@ namespace game.assets
             if (gameMode == GameMode.Wave)
             {
                 var wavePlayer = BarbarianWavePlayer.Get();
-                wavePlayer.lastBarbarianWaveDefeated.AddListener(localPlayerWins); // Note, if we have multiplayer wave games we cannot do this
+                //wavePlayer.lastBarbarianWaveDefeated.AddListener(localPlayerWins); // Note, if we have multiplayer wave games we cannot do this
                 barbarianPlayer = wavePlayer;
             }
             this.spawnPoints = spawnPoints;

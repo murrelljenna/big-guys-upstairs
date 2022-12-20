@@ -287,6 +287,20 @@ namespace game.assets.utilities {
             }).ToArray();
         }
 
+
+        /*public static T WithBehaviour<T, T2>(this T behaviour, Func<T2, T2> f) where T : MonoBehaviour
+        {
+            T2 b2 = behaviour.GetComponent<T2>();
+
+            if (b2 == null) {
+                return null;
+            }
+
+            _ = f(b2);
+
+            return behaviour;
+        }*/
+
         /*public static GameObject[] filterFor<T>(this GameObject[] gos) where T: MonoBehaviour
         {
             var filteredGos = new List<GameObject>(gos);

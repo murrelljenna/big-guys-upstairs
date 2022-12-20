@@ -78,6 +78,7 @@ namespace game.assets
         [SerializeField] private NetworkPrefabRef _playerPrefab;
         [SerializeField] private NetworkPrefabRef _startingCity;
         [SerializeField] private NetworkPrefabRef _gameManagerState;
+        [SerializeField] private NetworkPrefabRef _victoryManager;
 
         private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
 
@@ -197,7 +198,6 @@ namespace game.assets
                 player.playerColourIndex = PlayerColourManager.IndexOfColour(playerDeets.colour);
                 player.colour = playerDeets.colour;
                 player.maxCount = 10;
-                player.networkPlayer = (PlayerRef)playerDeets.player;
                 playerObj.GetComponent<Ownership>().setOwnerRecursively(player);
             }
         }
@@ -206,23 +206,19 @@ namespace game.assets
         {
             Vector3 playerSpawn = randomPointOnUnitCircle(playerDeets.spawnPoint, MagicNumbers.PlayerSpawnRadius);
             NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, new Vector3(playerSpawn.x, playerDeets.spawnPoint.y, playerSpawn.z), Quaternion.identity, playerDeets.player);
+            networkPlayerObject.GetComponent<Player>().networkPlayer = (PlayerRef)playerDeets.player;
             _spawnedCharacters.Add((PlayerRef)playerDeets.player, networkPlayerObject);
             playerObj = networkPlayerObject.gameObject;
 
-            NetworkObject startingCity = runner.Spawn(
+            Instantiation.SpawnNetwork(
+                runner,
                 _startingCity,
                 GameUtils.fixHeight(playerDeets.spawnPoint),
                 Quaternion.identity,
-                playerDeets.player,
-            (runner, obj) =>
-                {
-                    obj.SetAsPlayer(playerObj.GetComponent<Player>());
-                }
+                playerObj.GetComponent<Player>()
             );
 
             lockPlayer();
-
-            _spawnedEntities[(PlayerRef)playerDeets.player].Add(startingCity);
 
             Invoke("unlockPlayer", 0.2f);
             return playerObj;
@@ -414,6 +410,7 @@ namespace game.assets
         {
             if (isHost)
             {
+                runner.Spawn(_victoryManager);
                 InitNetworkGameState();
             }
             SpawnUI();

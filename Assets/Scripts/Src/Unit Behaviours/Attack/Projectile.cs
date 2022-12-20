@@ -3,6 +3,7 @@
 using game.assets.ai;
 using UnityEngine.Events;
 using Fusion;
+using game.assets;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
@@ -35,7 +36,7 @@ public class Projectile : NetworkBehaviour
 
             collidingEnemy.lowerHP(dmg, owner);
 
-            Runner.Despawn(GetComponent<NetworkObject>());
+            Instantiation.Despawn(Runner, GetComponent<NetworkObject>());
         }
     }
 

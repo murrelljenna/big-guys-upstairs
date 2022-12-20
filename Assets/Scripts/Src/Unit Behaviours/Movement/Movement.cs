@@ -132,7 +132,6 @@ namespace game.assets.ai
             {
                 Debug.LogError("NavMeshAgent failed to find path on " + name);
             }
-            debugNavMeshPath(navAgent.path.corners);
         }
 
         public void goTo(Vector3 destination)

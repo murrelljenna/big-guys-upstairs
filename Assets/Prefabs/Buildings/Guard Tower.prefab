@@ -2610,6 +2610,26 @@ PrefabInstance:
       propertyPath: MaxDistance
       value: 55.125
       objectReference: {fileID: 0}
+    - target: {fileID: 1595816302066229726, guid: e01155afa7ed6364380770c2b17018ef,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1595816302066229726, guid: e01155afa7ed6364380770c2b17018ef,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1595816302066229726, guid: e01155afa7ed6364380770c2b17018ef,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1595816302066229726, guid: e01155afa7ed6364380770c2b17018ef,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.26
+      objectReference: {fileID: 0}
     - target: {fileID: 1717705718140444528, guid: e01155afa7ed6364380770c2b17018ef,
         type: 3}
       propertyPath: Pan2D
@@ -2645,6 +2665,11 @@ PrefabInstance:
       propertyPath: maxHP
       value: 150
       objectReference: {fileID: 0}
+    - target: {fileID: 2319077614789812673, guid: e01155afa7ed6364380770c2b17018ef,
+        type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2421241944636815811, guid: e01155afa7ed6364380770c2b17018ef,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2659,6 +2684,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6054323758106097578, guid: e01155afa7ed6364380770c2b17018ef,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6439999395031838839, guid: e01155afa7ed6364380770c2b17018ef,
         type: 3}
@@ -2991,4 +3021,5 @@ MonoBehaviour:
   idled:
     m_PersistentCalls:
       m_Calls: []
+  unitRadius: {fileID: 0}
   idle: 0

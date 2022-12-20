@@ -52,6 +52,8 @@ GameObject:
   - component: {fileID: 6555725256713717449}
   - component: {fileID: -7527134046687949101}
   - component: {fileID: 8946488649286594362}
+  - component: {fileID: 2390160206883172048}
+  - component: {fileID: 6591670338768020416}
   m_Layer: 12
   m_Name: Unit
   m_TagString: Untagged
@@ -493,6 +495,61 @@ MonoBehaviour:
     RotBlendStart: 0.1
     RotBlendEnd: 0.5
     RotTeleportRadians: 1.5
+--- !u!114 &2390160206883172048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3300823746633853465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 091b32c7bf4a1e742aa4e9be8485f80c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0.7075472, g: 0.7042097, b: 0.7042097, a: 1}
+--- !u!114 &6591670338768020416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3300823746633853465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a5193c7e9efa8e438f5d7d9d09de965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onObserve:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2390160206883172048}
+        m_TargetAssemblyTypeName: Highlight, AssemblyDefinitionFile
+        m_MethodName: ToggleHighlight
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  onBreakObserve:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2390160206883172048}
+        m_TargetAssemblyTypeName: Highlight, AssemblyDefinitionFile
+        m_MethodName: ToggleHighlight
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3329832552944423281
 GameObject:
   m_ObjectHideFlags: 0

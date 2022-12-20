@@ -6805,6 +6805,7 @@ GameObject:
   - component: {fileID: 3314977132909253114}
   - component: {fileID: 800286683531065009}
   - component: {fileID: 7634497406298743434}
+  - component: {fileID: 4572436991242372082}
   m_Layer: 14
   m_Name: Building
   m_TagString: Untagged
@@ -7196,6 +7197,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 4572436991242372082}
+        m_TargetAssemblyTypeName: Highlight, AssemblyDefinitionFile
+        m_MethodName: ToggleHighlight
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   onBreakObserve:
     m_PersistentCalls:
       m_Calls:
@@ -7214,6 +7227,18 @@ MonoBehaviour:
       - m_Target: {fileID: 101081969241279111}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4572436991242372082}
+        m_TargetAssemblyTypeName: Highlight, AssemblyDefinitionFile
+        m_MethodName: ToggleHighlight
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7262,6 +7287,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   gameObjectToDisable: {fileID: 49565734928414254}
+--- !u!114 &4572436991242372082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6439999395031838839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 091b32c7bf4a1e742aa4e9be8485f80c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 1}
 --- !u!1 &8004544480195751366
 GameObject:
   m_ObjectHideFlags: 0
@@ -12125,15 +12163,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4cc2bcf001dff1841ab60befad39294b, type: 3}
---- !u!4 &140629697853160386 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 435832, guid: 4cc2bcf001dff1841ab60befad39294b,
-    type: 3}
-  m_PrefabInstance: {fileID: 140629697853578682}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &140629697833795570 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 19800648, guid: 4cc2bcf001dff1841ab60befad39294b,
+    type: 3}
+  m_PrefabInstance: {fileID: 140629697853578682}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &140629697853160386 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 435832, guid: 4cc2bcf001dff1841ab60befad39294b,
     type: 3}
   m_PrefabInstance: {fileID: 140629697853578682}
   m_PrefabAsset: {fileID: 0}

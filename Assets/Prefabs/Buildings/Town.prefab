@@ -9132,12 +9132,17 @@ PrefabInstance:
     - target: {fileID: 1595816302066229726, guid: e01155afa7ed6364380770c2b17018ef,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.659
+      value: 1.54
       objectReference: {fileID: 0}
     - target: {fileID: 1992698477826989192, guid: e01155afa7ed6364380770c2b17018ef,
         type: 3}
       propertyPath: _HP
       value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319077614789812673, guid: e01155afa7ed6364380770c2b17018ef,
+        type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2421241944636815811, guid: e01155afa7ed6364380770c2b17018ef,
         type: 3}
@@ -9379,6 +9384,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Center.z
       value: -0.05507642
+      objectReference: {fileID: 0}
+    - target: {fileID: 7211970768348458052, guid: e01155afa7ed6364380770c2b17018ef,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.42
       objectReference: {fileID: 0}
     - target: {fileID: 8087933493479306184, guid: e01155afa7ed6364380770c2b17018ef,
         type: 3}

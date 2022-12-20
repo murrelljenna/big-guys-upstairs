@@ -114,6 +114,7 @@ namespace game.assets.ai
 
         public void goToSilently(Vector3 destination)
         {
+            Vector3 validDestination = GameUtils.SnapToWalkableArea(destination);
             moveOrdered = true;
             CapsuleCollider col = GetComponent<CapsuleCollider>();
             if (col == null)
@@ -125,8 +126,13 @@ namespace game.assets.ai
                 currentWatcher.Destroy();
                 currentWatcher = null;
             }
-            currentWatcher = DestinationWatcher.Create(destination, col.radius / 4, this);
-            navAgent.SetDestination(destination);
+            currentWatcher = DestinationWatcher.Create(validDestination, col.radius / 4, this);
+            bool successfulPath = navAgent.SetDestination(validDestination);
+            if (!successfulPath)
+            {
+                Debug.LogError("NavMeshAgent failed to find path on " + name);
+            }
+            debugNavMeshPath(navAgent.path.corners);
         }
 
         public void goTo(Vector3 destination)

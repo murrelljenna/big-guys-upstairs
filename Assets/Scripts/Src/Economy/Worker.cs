@@ -42,7 +42,7 @@ namespace game.assets.economy {
         private bool collectingResources = false;
         public bool currentlyBuilding = false;
 
-        private const bool DEBUG_RESOURCE_GATHERING = true;
+        private const bool DEBUG_RESOURCE_GATHERING = false;
 
         private void Start() {
             movement = GetComponent<Movement>();
@@ -90,6 +90,7 @@ namespace game.assets.economy {
             this.inventory = this.inventory + yield;
 
             if (this.inventory.anyValOver(maxInventory)) {
+                if (DEBUG_RESOURCE_GATHERING) Debug.Log("WRK - " + gameObject.name + "'s inventory is full");
                 CancelInvoke("getResource");
                 StartCoroutine(returnToDeposit());
             }
@@ -97,8 +98,10 @@ namespace game.assets.economy {
 
         private IEnumerator returnToDeposit() {
             if (DEBUG_RESOURCE_GATHERING) Debug.Log("WRK - " + gameObject.name + " is returning to deposit");
-            Vector3 destination = resource.getUpstream().GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position);
-            Depositor depot = resource.getUpstream().GetComponent<Depositor>();        
+            Depositor depot = resource.getUpstream().GetComponent<Depositor>();
+            Vector3 destination = depot.GetComponent<Collider>().ClosestPointOnBounds(this.gameObject.transform.position);
+
+            if (DEBUG_RESOURCE_GATHERING) Debug.Log("WRK - " + gameObject.name + " is returning to deposit at " + depot.name + " at " + depot.transform.position);
 
             movement.goToSilently(destination);
 

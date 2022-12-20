@@ -56,7 +56,7 @@ namespace game.assets {
         {
             PlayAudio.PlayRandomSourceOnGameobject(obj.transform?.Find("Audio")?.Find("CheerSounds").gameObject);
             Instantiate(fireworksPrefab, obj.transform);
-            Invoke("QuitToMainMenu", 10f);
+            Invoke("QuitToMainMenu", 20f);
         }
 
         protected void playerWins(Player player)

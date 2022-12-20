@@ -257,6 +257,8 @@ namespace game.assets
                 }
 
                 networkObjects.Clear();
+
+                _spawnedEntities.Remove(player);
             }
 
             if (isHost)

@@ -363,9 +363,14 @@ namespace game.assets.utilities {
             list.ForEach((IArmyPlan plan) => Debug.Log(" AA " + plan.name()));
         }
 
+        public class SnapToNavMeshException : System.Exception
+        {
+
+        }
+
         public static Vector3 SnapToWalkableArea(Vector3 pos)
         {
-            if (NavMesh.SamplePosition(pos, out NavMeshHit navMeshHit, 2f, GameUtils.LayerMask.All))
+            if (NavMesh.SamplePosition(pos, out NavMeshHit navMeshHit, 5f, GameUtils.LayerMask.All))
             {
                 return navMeshHit.position;
             }
@@ -378,7 +383,7 @@ namespace game.assets.utilities {
                 else
                 {
                     Debug.LogWarning("No position on nav mesh found for position " + pos + ". Not good");
-                    return new Vector3();
+                    throw new SnapToNavMeshException();
                 }
             }
         }

@@ -8,6 +8,7 @@ using game.assets.ai.units;
 using Fusion;
 using game.assets.utilities;
 using UnityEngine.AI;
+using static game.assets.utilities.GameUtils;
 
 [RequireComponent(typeof(LineRenderer))]
 public class PlaceWalls : NetworkBehaviour
@@ -75,7 +76,16 @@ public class PlaceWalls : NetworkBehaviour
         {
             if (firstPointPlaced)
             {
-                lastPoint = GameUtils.SnapToWalkableArea(hit.point);
+                try
+                {
+                    lastPoint = GameUtils.SnapToWalkableArea(hit.point);
+                }
+                catch (SnapToNavMeshException)
+                {
+                    StopAllCoroutines();
+                    StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
+                    return;
+                }
                 float wallUnitLength = currentBuilding.transform.Find("Model").GetComponent<MeshFilter>().mesh.bounds.size.z / 3f * currentBuilding.transform.Find("Model").localScale.z;
                 float pointDistance = Vector3.Distance(firstPoint, lastPoint);
 
@@ -121,8 +131,17 @@ public class PlaceWalls : NetworkBehaviour
             }
             else
             {
-                firstPoint = hit.point;
-                firstPointPlaced = true;
+                try
+                {
+                    firstPoint = GameUtils.SnapToWalkableArea(hit.point);
+                    firstPointPlaced = true;
+                }
+                catch (SnapToNavMeshException)
+                {
+                    StopAllCoroutines();
+                    StartCoroutine(flashRed(currentBuilding.gameObject, 0.2f));
+                    return;
+                }
             }
         }
     }
@@ -161,7 +180,13 @@ public class PlaceWalls : NetworkBehaviour
                 }
             }
 
-            Vector3 position = snappedToExistingWall ? hit.point : GameUtils.SnapToWalkableArea(hit.point);
+            Vector3 position = Vector3.zero;
+
+            try {
+            position = snappedToExistingWall ? hit.point :
+                GameUtils.SnapToWalkableArea(hit.point);
+            }
+            catch (SnapToNavMeshException) { };
 
             position.y += 0.5f;
 

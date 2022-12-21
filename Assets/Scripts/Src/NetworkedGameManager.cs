@@ -84,6 +84,8 @@ namespace game.assets
 
         private Dictionary<PlayerRef, List<NetworkObject>> _spawnedEntities = new Dictionary<PlayerRef, List<NetworkObject>>();
 
+        public bool playerCharacterFrozen = false;
+
         [SerializeField]
         private Scene targetScene;
         private GameObject playerObj;
@@ -270,115 +272,117 @@ namespace game.assets
         public void OnInput(NetworkRunner runner, NetworkInput input)
         {
             var frameworkInput = new PlayerNetworkInput();
+            if (!playerCharacterFrozen)
+            {
+                if (Input.GetKey(KeyCode.W))
+                {
+                    frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_FORWARD;
+                }
 
-            if (Input.GetKey(KeyCode.W))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_FORWARD;
-            }
+                if (Input.GetKey(KeyCode.S))
+                {
+                    frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_BACKWARD;
+                }
 
-            if (Input.GetKey(KeyCode.S))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_BACKWARD;
-            }
+                if (Input.GetKey(KeyCode.A))
+                {
+                    frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_LEFT;
+                }
 
-            if (Input.GetKey(KeyCode.A))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_LEFT;
-            }
+                if (Input.GetKey(KeyCode.D))
+                {
+                    frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_RIGHT;
+                }
 
-            if (Input.GetKey(KeyCode.D))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_RIGHT;
-            }
+                if (Input.GetKey(KeyCode.Space))
+                {
+                    frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_JUMP;
+                }
 
-            if (Input.GetKey(KeyCode.Space))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_JUMP;
-            }
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ACTION1;
+                }
 
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ACTION1;
-            }
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    frameworkInput.ePressed = true;
+                }
+                else
+                {
+                    frameworkInput.ePressed = false;
+                }
 
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                frameworkInput.ePressed = true;
-            }
-            else
-            {
-                frameworkInput.ePressed = false;
-            }
+                if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ACTION2;
+                }
 
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ACTION2;
-            }
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ACTION3;
+                }
 
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ACTION3;
-            }
+                if (Input.GetKey(KeyCode.G))
+                {
+                    frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ACTION4;
+                }
 
-            if (Input.GetKey(KeyCode.G))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ACTION4;
-            }
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ESC;
+                }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ESC;
-            }
+                if (Input.GetMouseButtonDown(0))
+                {
+                    frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_FIRE;
+                }
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_FIRE;
-            }
+                if (Input.GetMouseButtonDown(1))
+                {
+                    frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_FIRE_ALT;
+                }
 
-            if (Input.GetMouseButtonDown(1))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_FIRE_ALT;
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA1;
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA2;
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA3;
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA4;
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha5))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA5;
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha6))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA6;
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha7))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA7;
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha8))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA8;
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha9))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA9;
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha0))
-            {
-                frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA0;
+                if (Input.GetKeyDown(KeyCode.Alpha1))
+                {
+                    frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA1;
+                }
+                if (Input.GetKeyDown(KeyCode.Alpha2))
+                {
+                    frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA2;
+                }
+                if (Input.GetKeyDown(KeyCode.Alpha3))
+                {
+                    frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA3;
+                }
+                if (Input.GetKeyDown(KeyCode.Alpha4))
+                {
+                    frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA4;
+                }
+                if (Input.GetKeyDown(KeyCode.Alpha5))
+                {
+                    frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA5;
+                }
+                if (Input.GetKeyDown(KeyCode.Alpha6))
+                {
+                    frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA6;
+                }
+                if (Input.GetKeyDown(KeyCode.Alpha7))
+                {
+                    frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA7;
+                }
+                if (Input.GetKeyDown(KeyCode.Alpha8))
+                {
+                    frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA8;
+                }
+                if (Input.GetKeyDown(KeyCode.Alpha9))
+                {
+                    frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA9;
+                }
+                if (Input.GetKeyDown(KeyCode.Alpha0))
+                {
+                    frameworkInput.Buttons |= PlayerNetworkInput.BUTTON_ALPHA0;
+                }
             }
 
             var localView = LocalPlayer.getView();

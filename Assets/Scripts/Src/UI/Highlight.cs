@@ -28,7 +28,6 @@ public class Highlight : MonoBehaviour
 
     public void ToggleHighlight(bool val)
     {
-        Debug.Log(materials.Count);
         if (val)
         {
             foreach (var material in materials)

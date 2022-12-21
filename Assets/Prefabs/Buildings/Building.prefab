@@ -6930,7 +6930,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1970009193088520468}
         m_TargetAssemblyTypeName: game.assets.audio.AudioController, AssemblyDefinitionFile
-        m_MethodName: PlayRandom
+        m_MethodName: PlayRandomAudioSource
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7300,6 +7300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 1}
+  isEnabled: 1
 --- !u!1 &8004544480195751366
 GameObject:
   m_ObjectHideFlags: 0

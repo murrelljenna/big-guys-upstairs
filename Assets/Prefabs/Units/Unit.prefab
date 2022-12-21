@@ -109,9 +109,9 @@ MonoBehaviour:
   onAttackOrdered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7239757219224656331}
+      - m_Target: {fileID: 6418020467460036418}
         m_TargetAssemblyTypeName: game.assets.audio.AudioController, AssemblyDefinitionFile
-        m_MethodName: PlayRandom
+        m_MethodName: PlayRandomAudioSource
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -124,9 +124,9 @@ MonoBehaviour:
   onSelect:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7239757219224656331}
+      - m_Target: {fileID: 6418020467460036418}
         m_TargetAssemblyTypeName: game.assets.audio.AudioController, AssemblyDefinitionFile
-        m_MethodName: PlayRandom
+        m_MethodName: PlayRandomAudioSource
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -508,6 +508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: {r: 0.7075472, g: 0.7042097, b: 0.7042097, a: 1}
+  isEnabled: 1
 --- !u!114 &6591670338768020416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -773,6 +774,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1057373058558275277}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6418020467460036418 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6322465284347885967, guid: 4c668226947932c4d99b9cb4f2c4c6a1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1057373058558275277}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4427678502086892387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfc187835e2c3eb4789f03f15afc2b5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7239757219224656331
 MonoBehaviour:
   m_ObjectHideFlags: 0

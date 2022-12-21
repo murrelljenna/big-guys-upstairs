@@ -18,13 +18,26 @@ public class Highlight : MonoBehaviour
     //Gets all the materials from each renderer
     private void Awake()
     {
+        if (!isEnabled)
+        {
+            return;
+        }
         materials = new List<Material>();
-        renderers = new List<Renderer>(GetComponentsInChildren<Renderer>());
+        renderers = new List<Renderer>(transform.Find("Model").GetComponentsInChildren<Renderer>());
         foreach (var renderer in renderers)
         {
             //A single child-object might have mutliple materials on it
             //that is why we need to all materials with "s"
             materials.AddRange(new List<Material>(renderer.materials));
+        }
+
+        // Code above is tanking the framerate because its holding on to thousands of renderers
+
+        if (materials.Count > 5)
+        {
+            isEnabled = false;
+            materials.Clear();
+            renderers.Clear();
         }
     }
 

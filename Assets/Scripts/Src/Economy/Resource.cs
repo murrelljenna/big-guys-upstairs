@@ -7,6 +7,7 @@ using UnityEngine.Events;
 using game.assets.ai;
 using game.assets.player;
 using Fusion;
+using static IsAUtils;
 
 namespace game.assets.economy {
     [RequireComponent(typeof(GameObjectSearcher))]
@@ -33,6 +34,19 @@ namespace game.assets.economy {
         {
             searcher = GetComponent<GameObjectSearcher>();
             ownership = GetComponent<Ownership>();
+
+            Instantiation.ObjectSpawned.AddListener((NetworkObject netObj) => netObj.gameObject.IfIsA(
+                IsATown,
+                (GameObject go) =>
+                {
+                    if (go.GetComponent<Ownership>().owner == ownership.owner)
+                    {
+                        upstream = closestDepositor();
+                    }
+
+                    return go;
+                })
+            );
         }
 
         [Rpc(RpcSources.StateAuthority, RpcTargets.All)]

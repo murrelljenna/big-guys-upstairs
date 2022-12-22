@@ -22304,6 +22304,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Resource Wood Large
       objectReference: {fileID: 0}
+    - target: {fileID: 5488012920349261397, guid: c5d31868289db5c42800bcd3dcda94d6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5488012920349261400, guid: c5d31868289db5c42800bcd3dcda94d6,
         type: 3}
       propertyPath: m_RootOrder
@@ -22377,7 +22382,7 @@ PrefabInstance:
     - target: {fileID: 5534647429889491975, guid: c5d31868289db5c42800bcd3dcda94d6,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 5534647429889491975, guid: c5d31868289db5c42800bcd3dcda94d6,
         type: 3}
@@ -24068,6 +24073,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Resource Wood Large (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5488012920349261397, guid: c5d31868289db5c42800bcd3dcda94d6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5488012920349261400, guid: c5d31868289db5c42800bcd3dcda94d6,
         type: 3}
       propertyPath: m_RootOrder
@@ -24141,7 +24151,7 @@ PrefabInstance:
     - target: {fileID: 5534647429889491975, guid: c5d31868289db5c42800bcd3dcda94d6,
         type: 3}
       propertyPath: Flags
-      value: 2561
+      value: 133633
       objectReference: {fileID: 0}
     - target: {fileID: 5534647429889491975, guid: c5d31868289db5c42800bcd3dcda94d6,
         type: 3}
@@ -24388,12 +24398,12 @@ Transform:
   - {fileID: 1265451240}
   - {fileID: 1504504530}
   - {fileID: 1607661410}
-  - {fileID: 877739230}
   - {fileID: 1414648555}
+  - {fileID: 877739230}
   - {fileID: 231024312}
   - {fileID: 1592227786}
-  - {fileID: 1404376999}
   - {fileID: 2107300090}
+  - {fileID: 1404376999}
   - {fileID: 688687863}
   m_Father: {fileID: 0}
   m_RootOrder: 15
@@ -31124,6 +31134,11 @@ PrefabInstance:
         type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[1]
       value: -4157409885680749905
+      objectReference: {fileID: 0}
+    - target: {fileID: 8397486968382021785, guid: 564fb39037ae70f478d870fedca5a29f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8531562727182631543, guid: 564fb39037ae70f478d870fedca5a29f,
         type: 3}

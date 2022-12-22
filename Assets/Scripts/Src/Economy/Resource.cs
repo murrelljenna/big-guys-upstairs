@@ -47,6 +47,8 @@ namespace game.assets.economy {
                     return go;
                 })
             );
+
+            getClosestDepositor();
         }
 
         [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
@@ -67,8 +69,6 @@ namespace game.assets.economy {
             }
 
             setOwner(worker);
-
-            upstream = closestDepositor();
 
             if (workers.Count < maxWorkers)
             {
@@ -116,6 +116,16 @@ namespace game.assets.economy {
             }
 
             return upstream;
+        }
+
+        private void getClosestDepositor()
+        {
+            upstream = closestDepositor();
+            Health upstreamHealth = upstream?.GetComponent<Health>();
+            if (upstreamHealth != null)
+            {
+                upstreamHealth.onZeroHP.AddListener((Health _) => getClosestDepositor());
+            }
         }
 
         private Depositor closestDepositor()

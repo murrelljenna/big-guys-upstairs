@@ -7157,7 +7157,7 @@ MonoBehaviour:
   escOnPressed:
     m_PersistentCalls:
       m_Calls: []
-  isEnabled: 1
+  isEnabled: 0
 --- !u!114 &3314977132909253114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7174,8 +7174,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8715000060130000661}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
+        m_TargetAssemblyTypeName: game.assets.interaction.NetworkKeyDownEvents, InteractionSystemAssembly
+        m_MethodName: setIsEnabled
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7213,8 +7213,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8715000060130000661}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
+        m_TargetAssemblyTypeName: game.assets.interaction.NetworkKeyDownEvents, InteractionSystemAssembly
+        m_MethodName: setIsEnabled
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

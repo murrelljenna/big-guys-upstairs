@@ -98,7 +98,7 @@ namespace game.assets.ai
         public void stop()
         {
             moveOrdered = false;
-            if (navAgent.isOnNavMesh)
+            if (navAgent != null && navAgent.isOnNavMesh)
             {
                 navAgent.isStopped = true;
                 navAgent.ResetPath();

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3637134996410565414}
   - component: {fileID: 3637134996407698182}
   - component: {fileID: 3637134996408664518}
+  - component: {fileID: 8498923068448443003}
   m_Layer: 0
   m_Name: LPW_Grass_A1_50cm_01
   m_TagString: Untagged
@@ -81,3 +82,15 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8498923068448443003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3637134996410867462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f55b375930044441bada6a711236765, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -154,6 +154,7 @@ namespace game.assets.economy {
             movement.goToSilently(destination);
             yield return new WaitUntil (() => gameObject.isInRangeOf(destination, COLLECT_RANGE));
             movement.stop();
+            construction.built.AddListener(() => cancelOrders());
             InvokeRepeating("build", 0f, BUILD_RATE);
         }
 
@@ -165,7 +166,7 @@ namespace game.assets.economy {
             }
             else
             {
-                clearBuilding();
+                cancelOrders();
                 buildNearestBuilding();
             }
         }

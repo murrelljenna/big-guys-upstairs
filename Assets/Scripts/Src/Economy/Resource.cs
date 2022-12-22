@@ -147,7 +147,6 @@ namespace game.assets.economy {
                     }
                 }
             }
-            Debug.Log("WRK - " + tMin.gameObject.name + " is this resource's closest place to deposit resources");
             return tMin?.GetComponent<Depositor>();
         }
     }

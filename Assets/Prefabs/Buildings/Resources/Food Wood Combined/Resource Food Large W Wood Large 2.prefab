@@ -23882,6 +23882,7 @@ MonoBehaviour:
   escOnPressed:
     m_PersistentCalls:
       m_Calls: []
+  isEnabled: 1
 --- !u!1 &1650297878635503846
 GameObject:
   m_ObjectHideFlags: 0
@@ -26342,7 +26343,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &8297020065131142814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49200,7 +49201,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 507fdde6f5bf19c428f6e29592faf50c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
 --- !u!114 &8642365776709281438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73524,6 +73524,7 @@ MonoBehaviour:
   escOnPressed:
     m_PersistentCalls:
       m_Calls: []
+  isEnabled: 1
 --- !u!1 &5930244397257082121
 GameObject:
   m_ObjectHideFlags: 0

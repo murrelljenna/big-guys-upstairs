@@ -163,6 +163,31 @@ namespace game.assets.interaction
             }
         }
 
+        public void GrabWorkersAtResource()
+        {
+            if (!Object.HasStateAuthority)
+            {
+                return;
+            }
+            RaycastHit hit;
+            Ray ray = cam.ViewportPointToRay(VIEWPORT_POINT_TO_RAY);
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, GameUtils.LayerMask.Resource))
+            {
+                Resource resource = hit.collider.gameObject.GetComponent<Resource>();
+                if (resource != null)
+                {
+                    resource.workers.ForEach((Worker worker) =>
+                    {
+                        var atk = worker.GetComponent<Attack>();
+                        if (worker.BelongsTo(ownership.owner) && atk != null)
+                        {
+                            addUnit(atk);
+                        }
+                    });
+                }
+            }
+        }
+
         private bool isActiveWorker(Attack unit) {
             if (unit == null) return false;
             Worker maybeWorker = unit.GetComponent<Worker>();

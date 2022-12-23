@@ -34,8 +34,13 @@ public class Destroy : NetworkBehaviour
         {
             var go = GameObject.Instantiate(leaveBehind, pos, rot);
             go?.GetComponent<UnitColourController>()?.SetColourToPlayer(player); // Hack so that unit deaths are all coloured correctly
-            go.GetComponent<Destroy>().destroyAfterAMinute(); // Clean yoself up
+            go.GetComponent<Destroy>().cleanupAfter30Seconds(); // Clean yoself up
         }
+    }
+
+    public void cleanupLocally()
+    {
+        Destroy(this.gameObject);
     }
 
     public void destroyAfterAMinute()
@@ -46,6 +51,11 @@ public class Destroy : NetworkBehaviour
     public void destroyAfterTenSeconds()
     {
         Invoke("destroy", 10f);
+    }
+
+    public void cleanupAfter30Seconds()
+    {
+        Invoke("cleanupLocally", 30f);
     }
 
     private void addToDeletePool()

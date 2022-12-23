@@ -29,7 +29,7 @@ namespace game.assets.ai
         public UnityEvent<float, float> onRaiseHP;
 
         [Tooltip("Invoked when HP is less than half")]
-        public UnityEvent onUnderHalfHP;
+        public UnityEvent onUnderHalfHP = new UnityEvent();
 
         [Tooltip("Invoked when HP is over half")]
         public UnityEvent onOverHalfHP;

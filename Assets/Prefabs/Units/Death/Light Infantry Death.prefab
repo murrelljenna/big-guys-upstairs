@@ -83,6 +83,30 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 505515138709573517}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &505515138711724557 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2321792, guid: 46628851bff3fa341a13534728534ea3,
+    type: 3}
+  m_PrefabInstance: {fileID: 505515138709573517}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &505515138711706593 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2331756, guid: 46628851bff3fa341a13534728534ea3,
+    type: 3}
+  m_PrefabInstance: {fileID: 505515138709573517}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &505515138711691757 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2354784, guid: 46628851bff3fa341a13534728534ea3,
+    type: 3}
+  m_PrefabInstance: {fileID: 505515138709573517}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &505515138712623261 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 13735696, guid: 46628851bff3fa341a13534728534ea3,
+    type: 3}
+  m_PrefabInstance: {fileID: 505515138709573517}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1854362726005159282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,6 +280,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8d7b7a84798bc2419f45f089e03b262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!205 &-5363741389659826376
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 697848560221306904}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: -0.014467113, y: 0.058230065, z: 0.045055322}
+  m_Size: 0.26143956
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.20410712
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 505515138711724557}
+    - renderer: {fileID: 505515138711706593}
+    - renderer: {fileID: 505515138711691757}
+    - renderer: {fileID: 505515138712623261}
+  - screenRelativeHeight: 0.097012766
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 505515138711706593}
+    - renderer: {fileID: 505515138712623261}
+  - screenRelativeHeight: 0.023981292
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 505515138712623261}
+  m_Enabled: 1
 --- !u!114 &2034790475843226849
 MonoBehaviour:
   m_ObjectHideFlags: 0

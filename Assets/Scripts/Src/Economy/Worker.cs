@@ -143,6 +143,10 @@ namespace game.assets.economy {
             if (!Object.HasStateAuthority){
                 return;
             }
+            construction.built.AddListener(() => {
+                cancelOrders();
+                buildNearestBuilding();
+            });
             cancelOrders();
             currentlyBuilding = true;
             StartCoroutine(orderToBuild(construction));
@@ -154,7 +158,6 @@ namespace game.assets.economy {
             movement.goToSilently(destination);
             yield return new WaitUntil (() => gameObject.isInRangeOf(destination, COLLECT_RANGE));
             movement.stop();
-            construction.built.AddListener(() => cancelOrders());
             InvokeRepeating("build", 0f, BUILD_RATE);
         }
 
@@ -166,7 +169,7 @@ namespace game.assets.economy {
             }
             else
             {
-                cancelOrders();
+                clearBuilding();
                 buildNearestBuilding();
             }
         }
